@@ -1,0 +1,342 @@
+  0   God Rooms
+  5   Kobold Settlement
+  6   The Great Unknown
+  7   Ako Village                                       
+  8   The High Road                                     
+  9   The Troll Hills                                   
+ 10   Valley of Crushk                                  
+ 11   RP ZONE - Annam                                   
+ 13   The Conquered Village                                                      
+ 15   the Deep Jungle                                   
+ 16   Southern Waterdeep Main City                      
+ 17   Northern Waterdeep Main City                      
+ 18   Central Waterdeep Main City                       
+ 19   Wilderness Roads                                  
+ 20   Waterdeep Trails                                  
+ 21   The Scardale Sewers                               
+ 22   The Elemental Groves                              
+ 23   Caves of Mt. Skelenak                             
+ 24   The Underworld                                    
+ 25   Alterian Region - Wilderness                      
+ 26   Alterian Region - Mountains                       
+ 27   Labyrinth of No Return                            
+ 28   The Great Harbor of Waterdeep                     
+ 29   The Guilds of Waterdeep                           
+ 30   The Ashstone Trail                                
+ 31   The Western Realms                                
+ 32   The Chionthar Ferry                               
+ 33   Scornubel                                         
+ 34   Mithril Hall - City of Dwarves                    
+ 35   The Tunnel to Ardn'ir                             
+ 36   Bloodstone Keep                                   
+ 37   Distro Rooms/Generic Objects                      
+ 38   Leuthilspar - City of Elves                       
+ 39   Ribcage: Gate Town to Baator                      
+ 40   Keprum Vhai'rels Design                           
+ 41   The Dark Gate                                     
+ 42   Keprum Vhai'rels Test                             
+ 43   The Lost Treasure of Zaor                         
+ 44   Klauthen Vale                                     
+ 45   Great Northern Road                               
+ 46   Village of Split Shield                           
+ 47   Griffon's Nest                                    
+ 48   The Valley of Graydawn                            
+ 49   The Realms Master - Ship                          
+ 50   The Silver Lady - Ship                            
+ 51   IX Curtain                                        
+ 52   Ghore - City of Trolls                            
+ 53   Lava Tubes One                                    
+ 54   Lava Tubes Two                                    
+ 55   Herd Island Chasm                                 
+ 56   Ixarkon Prison                                    
+ 57   The Temple of Baphomet                            
+ 58   Lake Skeldrach Island                             
+ 59   Lake Skeldrach Shore                              
+ 60   Lake Skeldrach                                    
+ 61   The Citadel                                       
+ 62   The Adamantite Mine                               
+ 63   The Lurkwood                                      
+ 64   The Evermoors                                     
+ 65   Talthalra Haszakkin                               
+ 66   Faerie Realm                                      
+ 67   Wilderness Near Waterdeep                         
+ 68   The Waterdeep Coast Road                          
+ 69   Evermeet Bay                                      
+ 70   The_Wildland_Trails                               
+ 71   Southern Forest                                   
+ 72   Tower of High Sorcery One                         
+ 73   New Cavecity                                      
+ 74   Faang - City of Ogres                             
+ 75   The Ice Prison                                    
+ 76   Beluir - City of Halflings                        
+ 77   The Keep of Finn McCumhail                        
+ 78   The Sunken Slave City                             
+ 79   The Ant Farm                                      
+ 80   The Blood Bayou                                   
+ 81   Earth Plane                                       
+ 82   The Dread Mist                                    
+ 83   Ashstone Keep Road                                
+ 84   Ashstone                                   
+ 85   The Nightwood                                     
+ 86   Nightwood Border                                  
+ 87   Ashstone Refugee Camp                             
+ 88   The Astral Plane - Main Grid                      
+ 89   The Astral Plane - Side Areas                     
+ 90   The Astral Plane - Tiamat                         
+ 91   Pirate Isles                                      
+ 92   Stronghold of Trahern Oakvale                     
+ 93   New Nhavan Island                                 
+ 94   The Calimshan Desert                              
+ 95   Viperstongue Outpost                              
+ 96   The Roads of the Heartland                        
+ 97   The Roads of the Heartland 2                      
+ 98   Shaman Quest/Spirit World                         
+ 99   Dobluth Kyor - Main City                          
+100   The Forest of Mir                                 
+101   Rimi Greatoath dagger quest                       
+102   Barnabas dagger quest                             
+103   Conquest Armor Quest                              
+104   The Marching Mountains                            
+106   Bloodstone Keep II                                
+107   Bloodstone Keep III                               
+108   The Ethereal Plane                                
+109   Deep Within the Toadsquat Mnts                    
+110   Tiamat - The Pillar of Skulls                     
+111   Tiamat - The Lair                                 
+112   Beneath the Ancient Pyramid                       
+113   The Plane of Air Part One                         
+114   The Plane of Fire Part One                        
+115   The Plane of Fire Part Two                        
+116   The Plane of Fire -Planar Grid-                   
+117   Cityguard's Armoury                               
+118   The Pit of Souls                                  
+119   The Shadow Swamp                                  
+120   Troll King                                        
+121   New Moonshae Island I                             
+122   The Ancient Oak                                   
+123   Myrloch Vale                                      
+124   The Headquarters of the Twisted Rune              
+125   The New Trackless Sea                             
+126   The Nine Hells - Avernus                          
+127   The Nine Hells - Avernus - Bronze Citadel         
+128   Bryn Shander                                      
+129   The Eastway                                       
+130   The Elemental Plane of Magma                      
+131   The Basin Wastes                                  
+132   Gloomhaven                                        
+133   The Derro Pit                                     
+134   The Tunnel of Dread                               
+135   The Gloomhaven Barge                              
+136   Ruins of Yath Oloth                               
+137   The Jungle City of Hyssk                          
+138   The River Trail to Hyssk                          
+139   The Necromancer's Laboratory                      
+140   Randars Hideout                                   
+141   The Orcish Hall of Plunder                        
+142   Rurrgr T'ohrr                                     
+143   The Sylvan Glades                                 
+144   The Shining Sea One                               
+145   Desert City of Nizari                             
+146   The Sedawi Mountain Village                       
+147   The Elder Anthology                               
+148   The High Road - Side Areas                        
+149   Dark Forest                                       
+150   Rogath Swamp                                      
+151   The Comarian Mines                                
+152   The Temple of Blipdoolpoolp                       
+153   The Temple of the Moon                            
+154   The Elder Forest                                  
+155   Demiplane of Artimus Nevarlith                    
+156   Ophidian Jungle                                   
+157   Hive of the Manscorpions                          
+158   Lost Library of the Seer Kings                    
+159   The Temple of Twisted Flesh                       
+160   Mosswood Village                                  
+161   Calimport, the City                               
+162   Calimport, the Sewers                             
+163   Calimport, the Docks                              
+164   Calimport, the Palace                             
+165   Calimport, The Sea Sprite                         
+166   Pirate Ship, Captain's Fancy                      
+167   Calimport, The Barracuda                          
+168   Hyssk Ship/Dragon Turtle Path                     
+169   Hyssk Ship/Dragon Turtle Stuff                    
+170   Thunderhead Peak                                  
+171   The Darktree                                      
+172   Caravan Trail to the Ten Towns                    
+173   Calimport Palace Vault                            
+174   Acheron 1, Avalas                                 
+175   Acheron 2, Thuldanin                              
+176   Acheron 3, Tintibulus                             
+177   Acheron 4, Ocanthus                               
+178   Arnd'ir                                           
+179   The Trade Way                                     
+180   Neshkal - The Dragon Trail                        
+181   Hulburg Trail                                     
+182   The Onyx Tower of Illusion                        
+183   Druids Grove                                      
+184   The Curse of Newhaven                             
+185   The Curse of Newhaven_II                          
+186   The Llyrath Forest                                
+187   Choking Palace                                    
+188   The Swamps of Meilech                             
+189   The Jungles of Ssrynss                            
+190   Trollbark                                         
+191   A Halruaan Airship 1                              
+192   A Halruaan Airship 2                              
+193   The Floating Fortress of Izan Frosteyes           
+194   The Lost Pyramid                                  
+195   The Sewers of Waterdeep                           
+196   The Blackwood                                     
+197   Cursed Cemetery                                   
+198   The Plane of Smoke                                
+199   Cloud Realms of Arlurrium                         
+200   Muspelhiem                                        
+201   Hulburg                                           
+202   The Minotaur Outpost                              
+203   A'Quarthus Velg'Larn                              
+204   The Para-Elemental Plane of Ice                   
+205   Ashgorrock, the Gargoyle City                     
+206   Tower of the Elementalist                         
+207   The Druid Forest                                  
+208   Seelie Faerie Court                               
+209   Yggdrasil                                         
+210   Scardale                                          
+211   Abandoned Temple                                  
+212   Soulprison of Bhaal                               
+213   The Golem Forge                                   
+214   Ashrumite_Village                                 
+215   The Neverwinter Wood Beta                         
+216   Jungle Village of the Batiri                      
+217   The Drider Cavern                                 
+218   Skullport, Port of Shadows                        
+219   Skullport Helper Zonelet                          
+220   Wyllowwood                                        
+221   The Dwarven Mining Settlement                     
+222   Spiderhaunt Woods                                 
+223   Farm of the Undead                                
+224   Fire Giants Village                               
+225   Temple of Dumathoin                               
+226   Zhentil Keep                                      
+227   Lair of the Deep Dragon                           
+228   UnderDark River Ruins                             
+229   Myth Drannor-Eastern City                         
+230   Roads of Cormanthor                               
+231   Myth Drannor-Central City                         
+232   Myth Drannor-Western City                         
+233   Silverymoon, Gem of the North                     
+234   Veldrin Z'har                                     
+235   Dragonsfall Forest                                
+236   Menden-on-the-Deep                                
+237   The Defense of Longhollow                         
+238   The Cursed City of West Falls                     
+239   The Bandit Hideout                                
+240   Scornubel Ferry                                   
+241   Calimshan Beach                                   
+242   The Tarsellian Forest                             
+243   The Dusk Road                                     
+244   The Fog Enshrouded Wood                           
+245   The Northern High Road                            
+246   The Northern High Road-2                          
+247   The Northern Caravan Trail                        
+248   The Mirar Ferry                                   
+249   The Abandoned Monastery                           
+250   Baldur's Gate - Main City                         
+251   Baldur's Gate - Docks                             
+252   Baldur's Gate - Harbor                            
+253   Baldur's Gate - Wave Dancer                       
+254   The Ruins of Undermountain I                      
+255   Myth Unnohyr                                      
+256   The Ruins of Undermountain II                     
+257   The Trader's Road                                 
+258   The Reaching Woods - Part I                       
+259   Darkhold Castle                                   
+260   Bloodtusk                                         
+261   Mistywood                                         
+262   Castle Drulak                                     
+263   Jotunheim                                         
+264   Talenrock                                         
+265   Ixarkon - City of Mindflayers                     
+266   The Greycloak Hills                               
+267   The Brain Stem Tunnel                             
+268   IceCrag Castle                                    
+269   IceCrag Castle - Lower Level                      
+270   Swift-Steel Company                               
+271   Havenport                                         
+272   The Spirit Raven                                  
+273   Skerttd-Gul                                       
+274   Trade                                             
+276   Guildhalls-Triterium                              
+277   Imphras Guild Hall                                
+278   Tooth and Maw - Grilled Grawl                     
+279   Pride of the Sabertooth Guildhall                 
+280   Valkurian Blades Guildhall                        
+281   Guildhalls - Warder's Vault                       
+282   Kingdoms and Houses                               
+284   Lizard Marsh                                      
+285   The Ruined Keep                                   
+286   The Stag Forest                                   
+287   The Stump Bog                                     
+288   The Way Inn                                       
+289   Evermeet- Elven Settlement                        
+290   The Evermoor Way                                  
+291   The Rauvin Ride                                   
+292   Ogre Lair                                         
+293   Fire Giant Lair                                   
+294   Ancient Mines                                     
+295   Evermeet- Rogue's Lair                            
+296   Kobold Caverns                                    
+297   Evermeet- Hidden Mine                             
+298   Dragonspear Castle                                
+299   Alabaster Caverns                                 
+300   Crystal Caverns                                   
+301   Seaweed Tribe                                     
+302   The Dark Dominion                                 
+303   Underdark Tunnels                                 
+304   The Luskan Outpost                                
+305   The Dragonspine Mountains Trail                   
+306   Darklake                                          
+307   The Trade Way                                     
+308   Illithid Enclave                                  
+309   The Labyrinth                                     
+310   The Tower of Kenjin                               
+311   Settlestone                                       
+312   Wormwrithings                                     
+313   Menzoberranzan                                    
+314   Water Plane                                       
+315   The Temple of Ghaunadaur                          
+316   The Fortress of the Dragon Cult                   
+317   Evermeet- Scorched Forest                         
+318   Evermeet- Serene Forest                           
+319   Amenth'G'narr                                     
+320   Elg'cahl Niar                                     
+321   The Rat Hills                                     
+322   Mithril Hall Palace                               
+323   Barbarian Encampment                              
+324   Evermeet- Main Road                               
+325   Evermeet- East Coast Road North                   
+326   Evermeet- West Coast Road North                   
+327   Evermeet- Ancient Forest-1                        
+328   Evermeet- Misc. Rooms/Mobs                        
+329   Evermeet- Road to Elven Settlement                
+330   The Underdark Trade Route                         
+331   Grid-Desert-Calimport1                            
+332   Grid-Desert-Calimport2                            
+333   Grid-Forest-Bloodtusk                             
+334   Grid-Hills-Bloodtusk                              
+335   Grid-Hills-Bloodtusk2                             
+336   Grid-Arctic-MH                                    
+337   Grid-Arctic-MH2                                   
+338   Grid-Arctic-GN                                    
+339   Grid-Hills-WD                                     
+340   Grid-Hills-Ashrumite                              
+341   Grid-Hills-GN                                     
+342   Grid-Jungle-Hyssk                                 
+343   Grid-Jungle-Hyssk2                                
+344   Grid-UD-Ixarkon                                   
+345   Grid-UD-GH                                        
+346   Grid-UD-Mir                                       
+347   Grid-Forest-WD                                    
+348   Grid-Forest-Faang                                 
+349   Grid-Forest-Leuthilspar                           
+350   Grid-Forest-Leuthilspar2                          
