@@ -922,12 +922,6 @@ local displayname = to_english(powerAliases:toSpell(castspell))
 
 cecho(&quot;&lt;red&gt; [Casting: &lt;green&gt;&quot; .. castspell .. &quot; (&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
 
-
--- sandstorm - add cooldown
-if castspell == &quot;ss&quot; then
-	timer:set(&quot;sandstorm&quot;, 12*60)
-end
-
 -- Update local spellcount
 
 local spellname= powerAliases:toSpell(castspell)
@@ -1087,8 +1081,11 @@ if matches[2] == &quot;are already affected by&quot; then
 	else
 		local castString = spell:getCurrent()
 
+		failedSpell = castString
+
 		echoDebug(&quot;\n&lt;red&gt;[ &quot; .. castString .. &quot; : Already affected by this spell ]&quot; )
 
+		-- send status on spell target: only works if grouped
 		for k,v in pairs( string.split(castString, &quot; &quot;) ) do
 			if k == 2 and groupList:ingroup(v) then
 				sendStatus(v)
@@ -1146,6 +1143,7 @@ end</script>
                         <string>You can't see a thing, you're blinded!</string>
                         <string>They have too much health to be affected by that.</string>
                         <string>You can't teleport there.</string>
+                        <string>You must be in the same room as the group leader to do that.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -1154,6 +1152,7 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -1554,6 +1553,28 @@ SpellsButton(&quot;init&quot;)</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>You seem to have misplaced your spell book during memorization.</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>You've created a devastating sandstorm!</name>
+                    <script>-- sandstorm - add 12 minute cooldown
+timer:set(&quot;sandstorm&quot;, 12*60)
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>You've created a devastating sandstorm!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -5940,7 +5961,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/11/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/13/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13617,7 +13638,9 @@ end</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>SpellGags</name>
-                    <script>if charData:get(&quot;condensed&quot;, true)[&quot;spells&quot;] then
+                    <script>-- A doppelganger of 
+
+if charData:get(&quot;condensed&quot;, true)[&quot;spells&quot;] then
 	eraseLine()
 end</script>
                     <triggerType>0</triggerType>
@@ -15143,6 +15166,49 @@ end</script>
                     <string>The nightwing .* fighting .*</string>
                 </regexCodeList>
                 <regexCodePropertyList>
+                    <integer>1</integer>
+                </regexCodePropertyList>
+            </Trigger>
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>recharge - sandstorm</name>
+                <script>--  - Sandstorm in 5 minutes 45 seconds 1 pulse 
+--  - Sandstorm in 2 minutes 2 seconds 2 pulses 
+
+display(&quot;X&quot;)
+
+local timeleft
+
+if matches[2] == &quot;recharging&quot; then
+	timeleft=0
+else
+	if matches[3] == nil then
+		timeleft = tonumber(matches[2])
+	else
+		timeleft = tonumber(matches[2])*60 + tonumber(matches[3])
+	end
+end
+
+timer:set(&quot;sandstorm&quot;, timeleft)</script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList>
+                    <string>Sandstorm in ([0-9]+) seconds .*</string>
+                    <string> - Sandstorm in ([0-9]) minutes ([0-9]+) seconds</string>
+                    <string>You do not have any powers (recharging).</string>
+                    <string> - Sandstorm in ([0-9]) minute ([0-9]+) seconds</string>
+                </regexCodeList>
+                <regexCodePropertyList>
+                    <integer>1</integer>
+                    <integer>1</integer>
+                    <integer>1</integer>
                     <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
@@ -17236,7 +17302,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 5/11/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 5/13/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -19686,7 +19752,8 @@ cmi:labelCmudZones(cmi.con)</script>
 [94219] = &quot;clangeddin&quot;,
 [94220] = &quot;moradin&quot;,
 [94221] = &quot;berronar&quot;,
-[94222] = &quot;marthammor&quot;
+[94222] = &quot;marthammor&quot;,
+[95059] = &quot;kartagan&quot;
 }
 
 --GN hall- say 'uthgar'
@@ -22034,6 +22101,11 @@ function SpellsEnc()
 		return
 	end
 
+	if 	scr_stoneskin() then
+		return
+	end
+
+
 	-- enlarge or reduce group members
 
 	if 	scr_resize() then
@@ -22046,8 +22118,10 @@ function SpellsEnc()
 	end
 
 	-- if fighting and no other spells - fire bolt
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
-		spell:cast(&quot;fb&quot;)
+	if charData:get(&quot;automissile&quot;) then
+		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+			spell:cast(&quot;fb&quot;)
+		end
 	end
 end	
 
@@ -22651,6 +22725,8 @@ function SpellsCle()
 			end
 		end
 	end
+
+	--display(&quot;X&quot;)
 
 	-- queue vitality
 	if charData:get(&quot;autovit&quot;) and charData:get(&quot;level&quot;) &gt;= 21 then
@@ -23341,9 +23417,9 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 function initEle()
-	addbutton(&quot;glitterdust&quot;, 4, 21)
 	addbutton(&quot;stoneskin&quot;, 7, 31)
 	addbutton(&quot;elemental_ward&quot;, 8, 46)
+	addbutton(&quot;glitterdust&quot;, 9, 21)
 
 	powerAliases:addButtons()
 end
@@ -23419,12 +23495,12 @@ function scr_stoneskin(xfirsttime)
 	--end
 
 	-- stone self if not stoned/scaled
-	if not buff:get(&quot;stoneskin&quot;) and not buff:get(&quot;dragonscales&quot;) then
-		if getSpellCount(&quot;stoneskin&quot;) &gt; 0 then
-			spell:cast(&quot;ss&quot;)
-			return
-		end
-	end
+	--if not buff:get(&quot;stoneskin&quot;) and not buff:get(&quot;dragonscales&quot;) then
+	--	if getSpellCount(&quot;stoneskin&quot;) &gt; 0 then
+	--		spell:cast(&quot;ss&quot;)
+	--		return
+	--	end
+	--end
 
 	if charData:get(&quot;autostone&quot;) == &quot;self&quot; then
 		return
@@ -23536,14 +23612,25 @@ end
 
 function SpellsInv()
 
+	-- if fighting - sandstorm
+	if charData:get(&quot;autostorm&quot;) and not timer:get(&quot;sandstorm&quot;) then
+		if getSpellCount(&quot;sandstorm&quot;) &gt; 0 then
+			if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+				spell:cast(&quot;ss&quot;)
+			end
+		end
+	end
+
 	-- if fighting and no other spells cast damage spells
 	if powerAliases:castDamage() then
 		return
 	end
 
 	-- if fighting and no other spells - ray of frost
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
-		spell:cast(&quot;rf&quot;)
+	if charData:get(&quot;automissile&quot;) then
+		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+			spell:cast(&quot;rf&quot;)
+		end
 	end
 end</script>
                     <eventHandlerList/>
@@ -23561,6 +23648,23 @@ function initIll()
 
 	addbutton(&quot;displacement&quot;, 7, 26)
 	addbutton(&quot;doppleganger&quot;, 9, 31)
+	addbutton(&quot;massmorph&quot;, 10, 41)
+end
+
+function massmorph(xcommand)
+	local fname=&quot;massmorph&quot;
+
+	if xcommand == &quot;update&quot; then
+--		updateButton(fname)
+		return
+	end
+
+	if xcommand ~= &quot;init&quot; then
+		spell:cast(&quot;massmorph&quot;)
+	end
+
+	setLabelImage(fname, &quot;massmorph-on.png&quot;)
+
 end
 
 function SpellsIll()
@@ -23617,8 +23721,8 @@ function scr_displace()
 --		end
 --	end
 
---	for k,char in pairs(groupList:pc(&quot;displace&quot;)) do
-	for k,char in pairs(groupList:pc(&quot;all&quot;)) do
+	for k,char in pairs(groupList:pc(&quot;displace&quot;)) do
+--	for k,char in pairs(groupList:pc(&quot;all&quot;)) do
 		if spell:attempt(char, &quot;displacement&quot;, &quot;ds&quot;) then
 			return(true)
 		end
@@ -23695,12 +23799,12 @@ function SpellsDru()
 		return
 	end
 
-
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
-		spell:cast(&quot;tw&quot;)
+	if charData:get(&quot;automissile&quot;) then
+		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+			spell:cast(&quot;tw&quot;)
+			return
+		end
 	end
-
-	return
 end</script>
                     <eventHandlerList/>
                 </Script>
@@ -24290,6 +24394,7 @@ end</script>
 
 -- 011dev
 
+-- self in group display uses cyan colour 
 -- file structure and installation updated - mudlet 3.1+ recommended
 -- grouped hell hounds are named 'wolf'
 -- set poisonbag - name of container containing all poisons
@@ -24304,7 +24409,7 @@ end</script>
 -- pets/undead/mounts added to grouplist / displayed on screen
 -- Change from necro to lich in wholist if needed
 -- bugfixes
--- Map updated: full size 316 areas 44491 rooms
+-- Map updated: full size 316 areas 44618 rooms
 
 -- 011a
 
@@ -26669,12 +26774,12 @@ charData = charData or {}
 
 	setvar = {
 -- { &quot;name&quot;, &quot;class&quot;, {&quot;val1&quot;, &quot;val2&quot;, &quot;val3&quot;}, &quot;default&quot;, &quot;instructions&quot; },
-	{ &quot;sound&quot;, &quot;&quot;, {&quot;off&quot;, &quot;limited&quot;, &quot;on&quot;}, &quot;false&quot;, &quot;play sounds&quot;},
+	{ &quot;sound&quot;, &quot;&quot;, {&quot;off&quot;, &quot;limited&quot;, &quot;on&quot;}, &quot;on&quot;, &quot;play sounds&quot;},
 	{ &quot;map&quot;, &quot;&quot;, {&quot;on&quot;, &quot;off&quot;}, &quot;on&quot;, &quot;display map&quot;},
 	{ &quot;swedish&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;translate acc/etc to swedish&quot;},
 	{ &quot;style&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;use Qt icon stylesheet&quot;},
 	{ &quot;hideicons&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;hide lower icon bar&quot;},
-	{ &quot;hideequip&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;hide left equip icon bar&quot;},
+	{ &quot;hideequip&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;hide left equip icon bar&quot;},
 	{ &quot;border&quot;, &quot;&quot;, {&quot;default&quot;, &quot;file&quot;, &quot;none&quot;}, &quot;default&quot;, &quot;&quot;},
 	{ &quot;numcolor&quot;, &quot;&quot;, {&quot;*&quot;}, &quot;blue&quot;, &quot;color of numbers on buttons&quot;},
 	{ &quot;statname&quot;, &quot;*&quot;, {&quot;*&quot;}, &quot;unset&quot;, &quot;&quot;},
@@ -27280,7 +27385,7 @@ powerAliases[&quot;Dru&quot;] =
 { &quot;harm&quot;, &quot;hm&quot;, 21, &quot;autoharm&quot;, &quot;&quot;},
 { &quot;dispel_magic&quot;, &quot;dism&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;control_weather&quot;, &quot;conweather&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;call_lightning&quot;, &quot;call&quot;, 21, &quot;&quot;, &quot;&quot;},
+{ &quot;call_lightning&quot;, &quot;call&quot;, 21, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;vitality&quot;, &quot;vt&quot;, 26, &quot;autovit&quot;, &quot;&quot;},
 { &quot;suffocate&quot;, &quot;sf&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;insect_plague&quot;, &quot;ip&quot;, 26, &quot;autoarea&quot;, &quot;&quot;},
@@ -27645,7 +27750,7 @@ powerAliases[&quot;Ele&quot;] =
 { &quot;sleep&quot;, &quot;slp&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;ray_of_enfeeblement&quot;, &quot;ray&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;levitate&quot;, &quot;lv&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;fireball&quot;, &quot;fbl&quot;, 16, &quot;&quot;, &quot;&quot;},
+{ &quot;fireball&quot;, &quot;fbl&quot;, 16, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;faerie_fog&quot;, &quot;ffog&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;thunder_lance&quot;, &quot;tl&quot;, 21, &quot;automissile&quot;, &quot;&quot;},
 { &quot;teleport&quot;, &quot;tele&quot;, 21, &quot;&quot;, &quot;&quot;},
@@ -27657,9 +27762,9 @@ powerAliases[&quot;Ele&quot;] =
 { &quot;stoneskin&quot;, &quot;ss&quot;, 26, &quot;autostone&quot;, &quot;&quot;},
 { &quot;feeblemind&quot;, &quot;feeb&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;earth_stones&quot;, &quot;es&quot;, 26, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;cone_of_cold&quot;, &quot;cone&quot;, 26, &quot;&quot;, &quot;&quot;},
+{ &quot;cone_of_cold&quot;, &quot;cone&quot;, 26, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;clairvoyance&quot;, &quot;clv&quot;, 26, &quot;&quot;, &quot;&quot;},
-{ &quot;blizzard_sphere&quot;, &quot;bs&quot;, 26, &quot;&quot;, &quot;&quot;},
+{ &quot;blizzard_sphere&quot;, &quot;bs&quot;, 26, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;earth_darts&quot;, &quot;ed&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;ice_tongue&quot;, &quot;it&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;ice_layer&quot;, &quot;il&quot;, 31, &quot;&quot;, &quot;&quot;},
@@ -28104,7 +28209,7 @@ Aetius=200,
 Alak=0,
 Alane=0,
 Alimam=0,
-Anashoa=200,
+Anashoa=0,
 Andreww=150,
 Annam=0,
 Arrithes=200,
@@ -28129,7 +28234,8 @@ Drahken=200,
 Drakkochian=100,
 Drake=465,
 Druzix=0,
-Duard=0,
+Duard=100,
+Elscint=0,
 Enth=100,
 Etrangere=100,
 Ezwar=300,
@@ -28140,22 +28246,22 @@ Flyngspaghetti=175,
 Frensolith=500,
 Gene=0,
 George=0,
-Gerin=0,
+Gerin=100,
 Gindipple=0,
 Gormal=100,
 Graum=100,
 Gruuggh=0,
 Grundar=75,
 Gubody=0,
-Gyrx=100,
+Gyrx=200,
 Hamwich=100,
 Hefa=275,
-Hibbidy=0,
-Hue=0,
+Hibbidy=100,
+Hue=100,
 Hyla=0,
 Iamtux=100,
 Ice=100,
-Ikhar=250,
+Ikhar=300,
 Iledor=50,
 Inames=100,
 Isisa=0,
@@ -28185,7 +28291,7 @@ Kugol=300,
 Kuno=180,
 Kwirl=100,
 Lenen=0,
-Lilithelle=425,
+Lilithelle=0,
 Lilmeshay=0,
 Lopi=100,
 Lusas=500,
@@ -28204,7 +28310,7 @@ Netonosel=250,
 Nolumakil=0,
 Ntwolfgang=0,
 Nurpy=300,
-Nyyrazzilyss=0,
+Nyyrazzilyss=100,
 Oggsk=50,
 Onut=0,
 Osheara=0,
@@ -28215,9 +28321,9 @@ Popinoples=50,
 Quinn=0,
 Raronsil=0,
 Redgoat=100,
-Rhazien=100,
+Rhazien=200,
 Rirus=0,
-Riwer=200,
+Riwer=300,
 Rorg=50,
 Rouse=0,
 Ruagh=400,
@@ -28230,7 +28336,7 @@ Selshanar=500,
 Shoshana=0,
 Silena=100,
 Silvenleif=0,
-Sipes=0,
+Sipes=100,
 Solah=100,
 Ssezef=0,
 Stephanie=500,
@@ -28238,9 +28344,9 @@ Stoutwoodarcanos=0,
 Sulaco=100,
 Susab=150,
 Syrac=100,
-Tafi=100,
+Tafi=50,
 Talomis=0,
-Tanji=0,
+Tanji=100,
 Teresias=65,
 Thegnome=100,
 Tibek=100,
@@ -28256,8 +28362,8 @@ Turxx=0,
 Typographer=0,
 Utheba=100,
 Venlarin=75,
-Verarb=0,
-Vooku=400,
+Verarb=100,
+Vooku=0,
 Wired=100,
 Wobb=0,
 Xboomx=300,
@@ -28267,11 +28373,11 @@ Yadir=0,
 Ykor=200,
 Yog=100,
 Yxageirr=175,
-Zarel=200,
+Zarel=0,
 Zellas=300,
 Zepharian=0,
 Zipalodok=0,
-Zoe=300,
+Zoe=400,
 Zusuk=100
 }
 
@@ -29764,19 +29870,27 @@ function genline(xchar, xcls, xhp, xmaxhp)
   		cls = xcls
 	end
 
+	-- scale/stone
+
 	if buff:get(&quot;dragonscales&quot;, xchar) then
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;dragonscales&quot;, &quot;scl&quot;)
 	else
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;stoneskin&quot;, &quot;stn&quot;)
 	end	
 
+	-- blur
+
 	buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;blur&quot;, &quot;blr&quot;)
+
+	-- globe/ward
 
 	if buff:get(&quot;elemental_ward&quot;, xchar) then
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;elemental_ward&quot;, &quot;wrd&quot;)
 	else
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;globe_of_invulnerability&quot;, &quot;glb&quot;)
 	end
+
+	-- display final item on each group display line
 
 	local endspell=charData:get(&quot;endspell&quot;)
 
@@ -29824,10 +29938,20 @@ function genline(xchar, xcls, xhp, xmaxhp)
 			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;           [[ VENOM ]]             &quot;))
 		end
 
+		-- No major penalties on char
+
 		if xhp == 0 then
+			-- character is not in room
+
 			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, &quot;----&quot;, &quot;----&quot;, xchar, buffdisplay))
 		else
-			return (col .. string.format(&quot;[%s] %4d/%-4d  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, buffdisplay))
+			-- default group line
+
+			if xchar == whoami() and groupList:size() ~= 1 then
+				return (col .. string.format(&quot;[%s] %4d/%-4d  &lt;cyan&gt;%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, buffdisplay))
+			else
+				return (col .. string.format(&quot;[%s] %4d/%-4d  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, buffdisplay))
+			end
 		end
 	end
 end
@@ -31344,6 +31468,8 @@ spell = spell or {}
 spell.spellcastqueue = spell.spellcastqueue or {}		-- queued spells
 --spell.varsendqueue = spell.varsendqueue or {}  -- queued non-spell cmds
 
+failedSpell = failedSpell or {}
+
 mud = mud or {}
 
 mud.varsendqueue = mud.varsendqueue or {}
@@ -31423,6 +31549,13 @@ end
 -- spell:attempt(tank, &quot;dragonscales&quot;, &quot;ds&quot;) then
 
 function spell:attempt(xchar, xspell, xcommand) -- if xchar doesn't have xspell and spells available/memorized, cast it
+
+	-- if failedSpell matches then return false
+
+	--if xcommand .. &quot; &quot; .. xchar == failedSpell then
+	--	echoDebug(&quot;&lt;red&gt;[failedSpell: &quot; .. failedSpell .. &quot;]\n&quot;)
+	--	return(false)
+	--end
 
 	-- trim to 25 chars
 
