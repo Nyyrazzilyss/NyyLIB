@@ -4129,7 +4129,7 @@ whoadd(matches[3], matches[2], matches[4])
 local profile=getProfile(matches[3])
 
 if profile then
-	cecho( &quot;&lt;grey&gt; (@&quot; .. profile .. &quot;)&quot; )
+	cecho( &quot;&lt;slate_grey&gt; [@&quot; .. profile .. &quot;]&quot; )
 
 	if profile == &quot;unknown&quot; or profile == 1 then
 		-- TODO needs to be corrected to not send when in paging mode
@@ -5961,7 +5961,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/13/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/15/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -14987,10 +14987,14 @@ end</script>
                     <integer>0</integer>
                 </regexCodePropertyList>
             </Trigger>
-            <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>auction claim</name>
                 <script>--    13)     127538                        the mask of the scorpion    100     10             Nirac  N/A   ENDED Nyyrazzilyss
-mud:send(&quot;auction claim &quot; .. matches[2] )</script>
+--    25)     127686                      a deep-blue set of sleeves    200     10          Nicrekas  N/A  SELLER Nyyrazzilyss
+
+if matches[3] == whoami() then
+	mud:send(&quot;auction claim &quot; .. matches[2] )
+end</script>
                 <triggerType>0</triggerType>
                 <conditonLineDelta>0</conditonLineDelta>
                 <mStayOpen>0</mStayOpen>
@@ -15002,7 +15006,7 @@ mud:send(&quot;auction claim &quot; .. matches[2] )</script>
                 <colorTriggerFgColor>#000000</colorTriggerFgColor>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
-                    <string> +([0-9]+)\) +[0-9]+ +[A-Za-z ]+ *[0-9]+ +[0-9]+ +[A-Za-z]+ +N/A.*Nyyrazzilyss</string>
+                    <string> +[0-9]+\) +([0-9]+) +.*[A-Za-z]+ +SELLER (.*)</string>
                 </regexCodeList>
                 <regexCodePropertyList>
                     <integer>1</integer>
@@ -17302,7 +17306,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 5/13/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 5/15/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -19301,6 +19305,7 @@ elseif matches[2] == &quot;init&quot; then
 	mudlet = mudlet or {}; mudlet.mapper_script = true
 
 	NyyLIB.mapwindow = Geyser.Mapper:new({name=&quot;mapper&quot;,x=&quot;33%&quot;,y=0,width=&quot;33%&quot;,height=&quot;50%&quot;})
+	NyyLIB.mapwindow:hide()
 
 	if setDefaultAreaVisible ~= nil then
 		setDefaultAreaVisible(false)
@@ -22105,6 +22110,11 @@ function SpellsEnc()
 		return
 	end
 
+	-- stoneskin
+
+	if 	scr_stoneskin() then
+		return
+	end
 
 	-- enlarge or reduce group members
 
@@ -22497,9 +22507,11 @@ end
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 function initSha()
-	addbutton(&quot;group_heal&quot;, 10, 41)
+	addbutton(&quot;group_heal&quot;, 4, 41)
 	addbutton(&quot;ancestral_shield&quot;, 11, 46)
-	addbutton(&quot;stoneskin&quot;, 12, 26)
+	addbutton(&quot;stoneskin&quot;, 10, 26)
+
+	addbutton(&quot;encSelf&quot;,12, 0)
 
 	powerAliases:addButtons()
 
@@ -22664,7 +22676,7 @@ function initCle()
 	addbutton(&quot;nestDPRM&quot;, 6, 16)
 --	addbutton(&quot;silence_person&quot;,9, 26)
 
-	addbutton(&quot;resurrect&quot;,7, 46)
+	addbutton(&quot;resurrect&quot;,4, 46)
 
 	powerAliases:addButtons()
 
@@ -23482,6 +23494,17 @@ end
 
 
 function scr_stoneskin(xfirsttime)
+
+	if charData:get(&quot;self&quot;) then
+		-- stone self if not stoned/scaled
+		if not buff:get(&quot;stoneskin&quot;) and not buff:get(&quot;dragonscales&quot;) then
+			if getSpellCount(&quot;stoneskin&quot;) &gt; 0 then
+				spell:cast(&quot;ss&quot;)
+				return
+			end
+		end
+	end
+
 	if charData:get(&quot;autostone&quot;) == &quot;off&quot; then
 		return
 	end
@@ -23493,18 +23516,6 @@ function scr_stoneskin(xfirsttime)
 	--		return(true)
 	--	end
 	--end
-
-	-- stone self if not stoned/scaled
-	--if not buff:get(&quot;stoneskin&quot;) and not buff:get(&quot;dragonscales&quot;) then
-	--	if getSpellCount(&quot;stoneskin&quot;) &gt; 0 then
-	--		spell:cast(&quot;ss&quot;)
-	--		return
-	--	end
-	--end
-
-	if charData:get(&quot;autostone&quot;) == &quot;self&quot; then
-		return
-	end
 
 	-- in combat, no other spells queued
 	if charData:get(&quot;autostone&quot;) == &quot;tanks&quot; then
@@ -24394,6 +24405,8 @@ end</script>
 
 -- 011dev
 
+-- trigger should autoclaim items from auctioneer (auction list charname)
+-- the function 'initCustom' will be called on initialization if it exists
 -- self in group display uses cyan colour 
 -- file structure and installation updated - mudlet 3.1+ recommended
 -- grouped hell hounds are named 'wolf'
@@ -26699,6 +26712,7 @@ end
 		nec = { &quot;Nec&quot; },
 		dire = { &quot;Dir&quot; },
 		all = { &quot;War&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot;, &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
+		self = { &quot;Enc&quot;, &quot;Sha&quot; },
 		petrescue = { &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot; },
 		traintanks = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Ran&quot;, &quot;Dir&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		warrior = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;},
@@ -26828,8 +26842,8 @@ charData = charData or {}
 	{ &quot;autocast&quot;, &quot;caster&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;cast/mem spells automatically&quot;, &quot;SpellsButton&quot;},
 	{ &quot;pokehaste&quot;, &quot;haster&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;cast haste when poked&quot; },
 	{ &quot;autots&quot;, &quot;enc&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;cast time stop&quot; },
-	{ &quot;self&quot;, &quot;enc&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;spellup includes self&quot;,
-				&quot;\n&lt;green&gt;[The enchanter will be blurred and scaled on spellup.]\n&quot;,
+	{ &quot;self&quot;, &quot;self&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;spellup includes self&quot;,
+				&quot;\n&lt;green&gt;[The caster will be blurred, scaled or stoned on spellup.]\n&quot;,
 				&quot;\n&lt;red&gt;[Spellups are not including me.]\n&quot;
 		},
 	{ &quot;bard&quot;, &quot;enc&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;rogue spellups includes bards&quot;,
@@ -26997,12 +27011,11 @@ charData = charData or {}
 			&quot;\n&lt;green&gt;[@ will be used.]\n&quot;,
 			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
 	},
-	{ &quot;autostone&quot;, &quot;stoner&quot;, { &quot;self&quot;, &quot;rogues&quot;, &quot;tanks&quot;, &quot;all&quot;, &quot;off&quot; }, &quot;off&quot;, &quot;&quot;,
+	{ &quot;autostone&quot;, &quot;stoner&quot;, { &quot;off&quot;, &quot;rogues&quot;, &quot;tanks&quot;, &quot;all&quot; }, &quot;off&quot;, &quot;&quot;,
 			&quot;\n&lt;green&gt;[@ will be used on self.]\n&quot;,
 			&quot;\n&lt;green&gt;[@ will be used on self and rogues.]\n&quot;,
 			&quot;\n&lt;green&gt;[@ will be used on self and tanks.]\n&quot;,
-			&quot;\n&lt;green&gt;[@ will be used on all group members.]\n&quot;,
-			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+			&quot;\n&lt;green&gt;[@ will be used on all group members.]\n&quot;
 	},
 	{ &quot;poisonbag&quot;, &quot;venomer&quot;, { &quot;*&quot; }, &quot;&quot;, &quot;name of container holding poisons&quot; },
 	{ &quot;primaryp&quot;, &quot;venomer&quot;, { &quot;*&quot; }, &quot;&quot;, &quot;poison for primary weapon&quot;},
@@ -27451,7 +27464,7 @@ powerAliases[&quot;Cle&quot;] =
 { &quot;protection_from_evil&quot;, &quot;pfe&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;protection_from_cold&quot;, &quot;pfc&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;protection_from_acid&quot;, &quot;pfa&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;flame_strike&quot;, &quot;fs&quot;, 16, &quot;&quot;, &quot;&quot;},
+{ &quot;flame_strike&quot;, &quot;fs&quot;, 16, &quot;automissile&quot;, &quot;&quot;},
 { &quot;blindness&quot;, &quot;bl&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;vitality&quot;, &quot;vt&quot;, 21, &quot;autovit&quot;, &quot;&quot;},
 { &quot;vigorize_critic&quot;, &quot;vc&quot;, 21, &quot;&quot;, &quot;&quot;},
@@ -27820,7 +27833,7 @@ powerAliases[&quot;Nec&quot;] =
 { &quot;ray_of_enfeeblement&quot;, &quot;ray&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;levitate&quot;, &quot;lv&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;infravision&quot;, &quot;iv&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;ice_storm&quot;, &quot;is&quot;, 21, &quot;automissile&quot;, &quot;&quot;},
+{ &quot;ice_storm&quot;, &quot;is&quot;, 21, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;heal_undead&quot;, &quot;hu&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;feeblemind&quot;, &quot;feeb&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;energy_drain&quot;, &quot;ed&quot;, 21, &quot;&quot;, &quot;&quot;},
@@ -27854,7 +27867,7 @@ powerAliases[&quot;Nec&quot;] =
 { &quot;soul_walk&quot;, &quot;soul&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;abi_dalzims_horrid_wilting&quot;, &quot;abi&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;rain_of_blood&quot;, &quot;rb&quot;, 46, &quot;autohlarea&quot;, &quot;&quot;},
-{ &quot;boneshatter&quot;, &quot;bs&quot;, 46, &quot;&quot;, &quot;&quot;},
+{ &quot;boneshatter&quot;, &quot;bs&quot;, 46, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;banshee_wail&quot;, &quot;bw&quot;, 46, &quot;&quot;, &quot;&quot;},
 { &quot;annihilate_undead&quot;, &quot;au&quot;, 46, &quot;turnundead&quot;, &quot;&quot;}
 					   }	
@@ -27891,11 +27904,11 @@ powerAliases[&quot;Lic&quot;] =
 { &quot;ray_of_enfeeblement&quot;, &quot;ray&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;levitate&quot;, &quot;lv&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;infravision&quot;, &quot;iv&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;ice_storm&quot;, &quot;is&quot;, 21, &quot;&quot;, &quot;&quot;},
+{ &quot;ice_storm&quot;, &quot;is&quot;, 21, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;heal_undead&quot;, &quot;hu&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;feeblemind&quot;, &quot;feeb&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;energy_drain&quot;, &quot;ed&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;cone_of_cold&quot;, &quot;cone&quot;, 21, &quot;&quot;, &quot;&quot;},
+{ &quot;cone_of_cold&quot;, &quot;cone&quot;, 21, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;coldshield&quot;, &quot;cshield&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;animate_wight&quot;, &quot;wight&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;ward_undead&quot;, &quot;wu&quot;, 26, &quot;turnundead&quot;, &quot;&quot;},
@@ -32150,7 +32163,7 @@ function powerAliases:addButtons()
 		end
 
 		if spellkey == &quot;autovit&quot; then
-			addbutton(name, 4, level)
+			addbutton(name, 7, level)
 		end
 
 		if spellkey == &quot;automissile&quot; then
