@@ -1580,6 +1580,69 @@ timer:set(&quot;sandstorm&quot;, 12*60)
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>You can't concentrate with all the racket!</name>
+                    <script>spell:setMoving(true)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>You can't concentrate with all the racket!</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>recharge - sandstorm</name>
+                    <script>--  - Sandstorm in 5 minutes 45 seconds 1 pulse 
+--  - Sandstorm in 2 minutes 2 seconds 2 pulses 
+
+display(&quot;X&quot;)
+
+local timeleft
+
+if matches[2] == &quot;recharging&quot; then
+	timeleft=0
+else
+	if matches[3] == nil then
+		timeleft = tonumber(matches[2])
+	else
+		timeleft = tonumber(matches[2])*60 + tonumber(matches[3])
+	end
+end
+
+timer:set(&quot;sandstorm&quot;, timeleft)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>Sandstorm in ([0-9]+) seconds .*</string>
+                        <string> - Sandstorm in ([0-9]) minutes ([0-9]+) seconds</string>
+                        <string>You do not have any powers (recharging).</string>
+                        <string> - Sandstorm in ([0-9]) minute ([0-9]+) seconds</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                        <integer>1</integer>
+                        <integer>1</integer>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>ClassTriggers</name>
@@ -3366,6 +3429,53 @@ end</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>kick trigger</name>
+                        <script>-- if autokick enabled send kick
+--TODO: should change to recognize group leader bashing (trains). Can't kick if mounted
+
+if charData:get(&quot;autokick&quot;) then
+	mud:send(&quot;kc&quot;)
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your bash at .* sends (him|her|it) sprawling.</string>
+                            <string>Bloogak sends .* sprawling with a powerful bash.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You get a rune graven adamantine longsword.</name>
+                        <script>mud:send(&quot;wield graven&quot;)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You get a rune graven adamantine longsword.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -5961,7 +6071,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/15/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/17/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -14531,32 +14641,6 @@ sound(&quot;85568__joelaudio__dragon-roar.wav&quot;)</script>
                 </TriggerGroup>
             </TriggerGroup>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>An ice golem stands in mid-air here, fighting YOU!</name>
-                <script>-- need to adjust if fighting cryo
-
--- You are currently in: The Golem Forge
-
-if prompt:get(&quot;enemy&quot;) ~= &quot;ice&quot; then
-	mud:send(&quot;kill ice&quot;)
-end</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>An ice golem .*, fighting</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>1</integer>
-                </regexCodePropertyList>
-            </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>A deafening roar causes the walls around you to shake and tremble!</name>
                 <script>cecho(&quot;&lt;red&gt;\n[Dragons summoned]\n&quot;)</script>
                 <triggerType>0</triggerType>
@@ -14596,7 +14680,7 @@ end</script>
                     <integer>0</integer>
                 </regexCodePropertyList>
             </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>An ice weird utters the words, 'iuophwabraz'.</name>
                 <script>-- should be cleric only
 spell:setNext(&quot;sp weird&quot;)</script>
@@ -14921,53 +15005,6 @@ timer:set(&quot;furiousassault&quot;, timeleft)</script>
                 </Trigger>
             </TriggerGroup>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>kick trigger</name>
-                <script>-- if autokick enabled send kick
---TODO: should change to recognize group leader bashing (trains). Can't kick if mounted
-
-if charData:get(&quot;autokick&quot;) then
-	mud:send(&quot;kc&quot;)
-end</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>Your bash at .* sends (him|her|it) sprawling.</string>
-                    <string>Bloogak sends .* sprawling with a powerful bash.</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>1</integer>
-                    <integer>1</integer>
-                </regexCodePropertyList>
-            </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>You get a rune graven adamantine longsword.</name>
-                <script>mud:send(&quot;wield graven&quot;)</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>You get a rune graven adamantine longsword.</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>0</integer>
-                </regexCodePropertyList>
-            </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>Resting now will most likely lead to your final rest!</name>
                 <script>-- in combat, though prompt might have yet to update</script>
                 <triggerType>0</triggerType>
@@ -14987,10 +15024,14 @@ end</script>
                     <integer>0</integer>
                 </regexCodePropertyList>
             </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>auction claim</name>
                 <script>--    13)     127538                        the mask of the scorpion    100     10             Nirac  N/A   ENDED Nyyrazzilyss
 --    25)     127686                      a deep-blue set of sleeves    200     10          Nicrekas  N/A  SELLER Nyyrazzilyss
+
+-- 161)     127839                             a dark shadowy ring     10      1          You (25)  N/A   ENDED Peri
+
+display(matches[3])
 
 if matches[3] == whoami() then
 	mud:send(&quot;auction claim &quot; .. matches[2] )
@@ -15007,9 +15048,11 @@ end</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
                     <string> +[0-9]+\) +([0-9]+) +.*[A-Za-z]+ +SELLER (.*)</string>
+                    <string> +[0-9]+\) +([0-9]+) +.*You.*ENDED.*</string>
                 </regexCodeList>
                 <regexCodePropertyList>
                     <integer>1</integer>
+                    <integer>0</integer>
                 </regexCodePropertyList>
             </Trigger>
             <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -15130,31 +15173,11 @@ sortpowerslist[#sortpowerslist+1] = {to_snake(powername), matches[2]:trim(), lev
                 </Trigger>
             </TriggerGroup>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>You can't concentrate with all the racket!</name>
-                <script>spell:setMoving(true)</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>You can't concentrate with all the racket!</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>0</integer>
-                </regexCodePropertyList>
-            </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>The nightwing stands, inches above the surface here, fighting Rugrag.</name>
+                <name>force switch</name>
                 <script>--
 
-if prompt:get(&quot;enemy&quot;) ~= &quot;nightwing&quot; then
-	mud:send(&quot;kill nightwing&quot;)
+if prompt:get(&quot;enemy&quot;) ~= matches[2] then
+	mud:send(&quot;kill &quot; .. matches[2] )
 end</script>
                 <triggerType>0</triggerType>
                 <conditonLineDelta>0</conditonLineDelta>
@@ -15167,51 +15190,10 @@ end</script>
                 <colorTriggerFgColor>#000000</colorTriggerFgColor>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
-                    <string>The nightwing .* fighting .*</string>
+                    <string>The (nightwing) .* fighting .*</string>
+                    <string>An (ice) golem .*, fighting</string>
                 </regexCodeList>
                 <regexCodePropertyList>
-                    <integer>1</integer>
-                </regexCodePropertyList>
-            </Trigger>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>recharge - sandstorm</name>
-                <script>--  - Sandstorm in 5 minutes 45 seconds 1 pulse 
---  - Sandstorm in 2 minutes 2 seconds 2 pulses 
-
-display(&quot;X&quot;)
-
-local timeleft
-
-if matches[2] == &quot;recharging&quot; then
-	timeleft=0
-else
-	if matches[3] == nil then
-		timeleft = tonumber(matches[2])
-	else
-		timeleft = tonumber(matches[2])*60 + tonumber(matches[3])
-	end
-end
-
-timer:set(&quot;sandstorm&quot;, timeleft)</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>Sandstorm in ([0-9]+) seconds .*</string>
-                    <string> - Sandstorm in ([0-9]) minutes ([0-9]+) seconds</string>
-                    <string>You do not have any powers (recharging).</string>
-                    <string> - Sandstorm in ([0-9]) minute ([0-9]+) seconds</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>1</integer>
-                    <integer>1</integer>
                     <integer>1</integer>
                     <integer>1</integer>
                 </regexCodePropertyList>
@@ -17306,7 +17288,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 5/15/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 5/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -20662,6 +20644,13 @@ tempTimer(5, &quot;genalias&quot;)</script>
                     <regex>^classpowers$</regex>
                 </Alias>
             </AliasGroup>
+            <Alias isActive="yes" isFolder="no">
+                <name>claimall</name>
+                <script>mud:send(&quot;auction list &quot; .. whoami() )</script>
+                <command></command>
+                <packageName></packageName>
+                <regex>^claimall$</regex>
+            </Alias>
         </AliasGroup>
     </AliasPackage>
     <ActionPackage/>
@@ -24405,9 +24394,8 @@ end</script>
 
 -- 011dev
 
--- trigger should autoclaim items from auctioneer (auction list charname)
 -- the function 'initCustom' will be called on initialization if it exists
--- self in group display uses cyan colour 
+-- self in group display if more then 1 person uses cyan colour 
 -- file structure and installation updated - mudlet 3.1+ recommended
 -- grouped hell hounds are named 'wolf'
 -- set poisonbag - name of container containing all poisons
@@ -30255,7 +30243,7 @@ function addLeftbutton(xname, xid, xlevel, xwidth, xheight)
 	local createname=&quot;lbutton&quot; .. xid
 
 	xwidth= xwidth or &quot;95%&quot;
-	xheight = xheight or &quot;9%&quot;
+	xheight = xheight or &quot;8%&quot;
 
 	if xid == nil then
 		cecho(&quot;\n&lt;red&gt;[addLeftbutton: nil xid]\n&quot;)
