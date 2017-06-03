@@ -30,9 +30,11 @@ The GUI for NyyLIB includes a sorted chat window in the top right corner, and a 
 
 Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
 
-The group window is either all at the bottom, all at the right hand side, or split with casters at the bottom, hitters/warriors at the right hand side. It is changed with the set command.  
+The left side of the screen has a vertical showing equipment related buttons.
 
-In the bottom left corner a countdown timer will display when stunned. To the right of it is a display that shows the current size of the character logged in. At levels less then 50, level/experience shows at the top of the screen. The map window shows to the left of the chat window.
+The group window is either all at the bottom, all at the right hand side, or split with casters at the bottom, hitters/warriors at the right hand side. 
+
+In the bottom left corner a countdown timer will display when stunned. To the right of it is a display that shows the current size of the character logged in. At levels less then 50, level/experience shows at the top of the screen. The map window shows above or to the left of the chat window.
 
 There are a number of buttons present for all classes. To change the status of a button, move the mouse pointer overtop of it and click with the left mouse button.
   Loot - Off, loot coins only, or loot everything
@@ -45,7 +47,11 @@ There are a number of buttons present for all classes. To change the status of a
 
 Related: set, map  
 ;;13,sound
-Sound effects can be enabled/disabled by typing 'set sound'
+Sound effects can be enabled/disabled by typing 'set sound  value'
+
+Possible choices for value are off, on and limited.
+
+Limited sounds are tell and petition only.
 
 Included sounds are sourced from https://www.freesound.org/
 
@@ -118,6 +124,18 @@ While this client should be workable with any class, it will work best with
   Psionicist, Bard, Battlechanter, and Shaman
 
 Related: cleric, bard, warrior
+;;27,spellcast
+	Spellcast Information
+
+All classes with spellcast capabilities have a number of specialized buttons available to them.
+
+Memorize/Pray:	This button will send a memorize/pray command, or a stand command
+
+Spells:		Enabling this button will enable automem and autocasting
+
+There are various spellcast buttons, including some class specific.
+
+1-6 circle single target, area, 7+ single target, area, Healing, Harm, Undead, and others
 ;;30,bard
 Bard/Battlechanter Commands
 
@@ -193,16 +211,14 @@ Psi specific aliases:
 
 Enchanters have a number of specialized buttons available to them.
 
-Memorize:	This button will send a mem command, or a stand command
-
-Spells:		Enabling this button will enable automem and autocasting
-Prismatic Spray:	Cast prismatic spray if fighting and not casting anything else
 Dragon Scale:	Scales warriors only if off, warriors+casters when on
 Blur:			Blur warriors only if off, warriors+casters when on
 Globe:			Whether to include globe with spells
 Bard:			Include bards when casting spells
 Self:			Cast blur/scale on self
 Resize:			Reduce/enlarge as needed
+
+Related: spellcast
 ;;40,cleric
 Aliases
 
@@ -217,6 +233,8 @@ set:
 [autovit] true|false  cast vit automatically
 [autoheal] true|false  cast fh/ha automatically
 [cdaura] true|false  cast aura on countdown
+
+Related: spellcast
 ;;50,map
 Torilmud Mapper 
 
@@ -548,7 +566,7 @@ The icon .png files are created at http://cooltext.com/
 Logo Style: White
 Font: AVQest
 Text Size: 15
-Glow Colour (red) F0 05 05
+Glow Colour (red) F0 05 05  (black) 00 00 00
 Image: Alignment: Centered
 Width: 64
 Height: 30

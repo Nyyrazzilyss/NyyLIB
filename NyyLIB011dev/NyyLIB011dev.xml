@@ -635,6 +635,57 @@ sound(&quot;365641__furbyguy__8-bit-alarm.wav&quot;,nil,true) </script>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>SAYS</name>
+                        <script>-- stuff to not capture. psi.
+-- A fire elemental sulkily says 'Your wish is my command, master!
+
+
+demonnic.chat:append(&quot;SAYS&quot;)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>^[A-Za-z]+ says '.*</string>
+                            <string>^[A-Za-z]+ projects '.*</string>
+                            <string>You say '</string>
+                            <string>You project '</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>1</integer>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>AUCTION</name>
+                        <script>-- Auction: a silvery war axe term ended with NO SALE
+demonnic.chat:append(&quot;AUC&quot;)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Auction: </string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -1144,6 +1195,7 @@ end</script>
                         <string>They have too much health to be affected by that.</string>
                         <string>You can't teleport there.</string>
                         <string>You must be in the same room as the group leader to do that.</string>
+                        <string>You can't do that underwater!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -1152,6 +1204,7 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -1468,7 +1521,7 @@ decSpellCount(spellname)</script>
 -- You clamber to your feet. &lt;- Can't use, won't cast
 
 spell:setMoving(true)
-</script>
+sendLook()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -1581,31 +1634,9 @@ timer:set(&quot;sandstorm&quot;, 12*60)
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>You can't concentrate with all the racket!</name>
-                    <script>spell:setMoving(true)</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>You can't concentrate with all the racket!</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>0</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>recharge - sandstorm</name>
                     <script>--  - Sandstorm in 5 minutes 45 seconds 1 pulse 
 --  - Sandstorm in 2 minutes 2 seconds 2 pulses 
-
-display(&quot;X&quot;)
 
 local timeleft
 
@@ -3438,7 +3469,9 @@ end</script>
 --TODO: should change to recognize group leader bashing (trains). Can't kick if mounted
 
 if charData:get(&quot;autokick&quot;) then
-	mud:send(&quot;kc&quot;)
+	if groupList:ingroup(matches[2]) or matches[2] == &quot;Your&quot; then
+		mud:send(&quot;kc&quot;)
+	end
 end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -3451,8 +3484,8 @@ end</script>
                         <colorTriggerFgColor>#000000</colorTriggerFgColor>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
-                            <string>Your bash at .* sends (him|her|it) sprawling.</string>
-                            <string>Bloogak sends .* sprawling with a powerful bash.</string>
+                            <string>(Your) bash at .* sends (him|her|it) sprawling.</string>
+                            <string>(.*) sends .* sprawling with a powerful bash.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
@@ -3624,33 +3657,6 @@ disableTrigger(&quot;RotTrigger&quot;)
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
-                        </regexCodePropertyList>
-                    </Trigger>
-                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                        <name>wight, ghoul, ghost</name>
-                        <script>--You breathe life into corpse of a frost giant warrior with the awesome power of your art.
---The wight of a frost giant warrior starts following you.
-
-pet:add( matches[2] )</script>
-                        <triggerType>0</triggerType>
-                        <conditonLineDelta>0</conditonLineDelta>
-                        <mStayOpen>0</mStayOpen>
-                        <mCommand></mCommand>
-                        <packageName></packageName>
-                        <mFgColor>#ff0000</mFgColor>
-                        <mBgColor>#ffff00</mBgColor>
-                        <mSoundFile></mSoundFile>
-                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                        <regexCodeList>
-                            <string>The (wight) of .* starts following you.</string>
-                            <string>The (ghoul) of .* starts following you.</string>
-                            <string>The (ghost) of .* starts following you.</string>
-                        </regexCodeList>
-                        <regexCodePropertyList>
-                            <integer>1</integer>
-                            <integer>1</integer>
-                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
@@ -3882,7 +3888,7 @@ end</script>
                     <regexCodePropertyList/>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You feel the presense of an otherworldly being enter the room.</name>
-                        <script>pet:add(&quot;spirit&quot;)</script>
+                        <script>mud:send(&quot;followers&quot;)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -3898,27 +3904,6 @@ end</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
-                        </regexCodePropertyList>
-                    </Trigger>
-                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                        <name>The spirit worg stops following you.</name>
-                        <script>-- The spirit worg stops following you.
-pet:delete(&quot;spirit&quot;)</script>
-                        <triggerType>0</triggerType>
-                        <conditonLineDelta>0</conditonLineDelta>
-                        <mStayOpen>0</mStayOpen>
-                        <mCommand></mCommand>
-                        <packageName></packageName>
-                        <mFgColor>#ff0000</mFgColor>
-                        <mBgColor>#ffff00</mBgColor>
-                        <mSoundFile></mSoundFile>
-                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                        <regexCodeList>
-                            <string>The spirit .* stops following you.</string>
-                        </regexCodeList>
-                        <regexCodePropertyList>
-                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
@@ -4113,26 +4098,6 @@ timer:set(&quot;assassinatetimer&quot;, 24*60)</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList/>
                     <regexCodePropertyList/>
-                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                        <name>An air mephit</name>
-                        <script>pet:add(&quot;air&quot;)</script>
-                        <triggerType>0</triggerType>
-                        <conditonLineDelta>0</conditonLineDelta>
-                        <mStayOpen>0</mStayOpen>
-                        <mCommand></mCommand>
-                        <packageName></packageName>
-                        <mFgColor>#ff0000</mFgColor>
-                        <mBgColor>#ffff00</mBgColor>
-                        <mSoundFile></mSoundFile>
-                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                        <regexCodeList>
-                            <string>An air mephit starts following you.</string>
-                        </regexCodeList>
-                        <regexCodePropertyList>
-                            <integer>0</integer>
-                        </regexCodePropertyList>
-                    </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -4599,8 +4564,10 @@ local consentchar= matches[2]
 
 consent:set( consentchar, true )
 
-if inwho(matches[2]) == false then
-	mud:send(&quot;who &quot; .. consentchar)
+if matches[2] ~= &quot;slaad&quot; then
+	if inwho(matches[2]) == false then
+		mud:send(&quot;who &quot; .. consentchar)
+	end
 end
 
 -- Send group command if char isn't currently grouped
@@ -5036,8 +5003,12 @@ mud:send(&quot;st&quot;)</script>
                         <string>is too huge for you to trip! You go crashing to the ground.</string>
                         <string>And just for the attempt, you fall down.</string>
                         <string>and you go down as well.</string>
+                        <string>Standing would be a good first step.</string>
+                        <string>You fall to the ground.  You stop riding.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -5248,8 +5219,9 @@ if NyyLIB.lookstart == 1 then
 
 	-- TODO look has been recieved if trying to circle
 
+	-- rogue: circle
 	if charData:get(&quot;autocircle&quot;) then
-		if prompt:get(&quot;tank&quot;) ~= whoami() and prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+		if prompt:get(&quot;tank&quot;) ~= whoami() and inCombat() then
 			if prompt:get(&quot;enemycondition&quot;) ~= &quot;awful&quot; then
 				expandAlias(&quot;cr&quot;, false)
 			end
@@ -5279,17 +5251,17 @@ RedrawGroupStatus()</script>
                     <name>You are getting hungry.</name>
                     <script>-- If not hidden, eat food
 
+if inCombat() then
+	return
+end
+
 if not getHide() then
 	if checkMask(&quot;psi&quot;) then
 		if charData:get(&quot;autosustain&quot;) then
-			if prompt:get(&quot;enemy&quot;) == &quot;&quot; then
-				send(&quot;sustain&quot;)
-			end
+			send(&quot;sustain&quot;)
 		end
 	else
-		if prompt:get(&quot;enemy&quot;) == &quot;&quot; then
-			mud:send(&quot;eat &quot; .. charData:get(&quot;food&quot;) .. &quot; &quot; .. charData:get(&quot;container&quot;) )
-		end
+		mud:send(&quot;eat &quot; .. charData:get(&quot;food&quot;) .. &quot; &quot; .. charData:get(&quot;container&quot;) )
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -5317,7 +5289,7 @@ if not getHide() then
 	if checkMask(&quot;psi&quot;) then
 		--
 	else
-		if prompt:get(&quot;enemy&quot;) == &quot;&quot; then
+		if not inCombat() then
 			mud:send(&quot;drink &quot; .. charData:get(&quot;canteen&quot;) )
 		end
 	end
@@ -6071,7 +6043,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: dev 5/17/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 11dev 6/3/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6186,9 +6158,7 @@ pet_rescue(&quot;init&quot;)</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A gray slaad has just given you its consent.</name>
-                        <script>pet:add(&quot;slaad&quot;)
-
-NyyLIB.slaadname=&quot;anvil&quot;
+                        <script>NyyLIB.slaadname=&quot;anvil&quot;
 
 mud:send(&quot;followers name slaad &quot; .. NyyLIB.slaadname)
 
@@ -6212,17 +6182,11 @@ sendLook()</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A gray slaad stops following you.</name>
-                        <script>pet:delete(&quot;slaad&quot;)
-
-if pet:status() == false then
-	NyyLIB.torescue=&quot;&quot;
-end
-
-if not getHide() then
-	mud:send(&quot;get all gray&quot;)
-end
-
-sendGroup()</script>
+                        <script>if matches[2] == &quot;A gray slaad&quot; then
+	if not getHide() then
+		mud:send(&quot;get all gray&quot;)
+	end
+end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -6234,7 +6198,7 @@ sendGroup()</script>
                         <colorTriggerFgColor>#000000</colorTriggerFgColor>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
-                            <string>^A gray slaad stops following you.$</string>
+                            <string>^(.*) stops following you.$</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
@@ -6500,7 +6464,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7549,8 +7513,13 @@ if NyyLIB.escapedir ~= nil then
 end
 
 if NyyLIB.torescue ~= &quot;&quot; and pet:status() then
-	cecho(&quot;&lt;red&gt;\n[Queuing: order followers rescue &lt;green&gt;&quot; .. NyyLIB.torescue .. &quot;&lt;red&gt;]\n&quot;)
-	mud:send(&quot;o followers rescue &quot; .. NyyLIB.torescue)
+	if pet:status(&quot;spectre&quot;) then
+		cecho(&quot;&lt;red&gt;\n[Queuing: order spectre rescue &lt;green&gt;&quot; .. NyyLIB.torescue .. &quot;&lt;red&gt;]\n&quot;)
+		mud:send(&quot;o spectre rescue &quot; .. NyyLIB.torescue)
+	else
+		cecho(&quot;&lt;red&gt;\n[Queuing: order followers rescue &lt;green&gt;&quot; .. NyyLIB.torescue .. &quot;&lt;red&gt;]\n&quot;)
+		mud:send(&quot;o followers rescue &quot; .. NyyLIB.torescue)
+	end
 end
 
 NyyLIB.torescue = &quot;&quot;</script>
@@ -7573,7 +7542,9 @@ NyyLIB.torescue = &quot;&quot;</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^Exits: .*</name>
-                    <script>NyyLIB.torescue=&quot;&quot;</script>
+                    <script>NyyLIB.torescue=&quot;&quot;
+
+roomCombat=false</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7597,6 +7568,13 @@ NyyLIB.torescue = &quot;&quot;</script>
 
 local petrescue=rescuelist:get()
 
+-- last command entered was too look in a direction - return
+if string.find(command, &quot;look &quot;) == 1 or string.find(command, &quot;l &quot;) == 1 then
+	return
+end
+
+-- combat is occuring in this room
+roomCombat=true
 
 if petrescue == nil then
 	return
@@ -7642,7 +7620,7 @@ end</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>.*[,] fighting ([A-Za-z]+)[.]</string>
+                        <string>.*[,] fighting (.*)[.]</string>
                         <string>.*[,] fighting (YOU)!.*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
@@ -8998,8 +8976,10 @@ spell:clear()</script>
                             <string>A carnivorous vine reaches up and wraps itself about you, making it difficult to move, or even breathe!</string>
                             <string>You wait mindlessly for direction from your master.</string>
                             <string>Your body becomes rigid as the paralyzation takes effect.</string>
+                            <string>You remain paralyzed and can't do a thing to defend yourself...</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
@@ -9429,9 +9409,9 @@ end</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Your mount rises up on its hind legs at lets forth a baleful howl!</name>
-                    <script>send(&quot;howl&quot;)</script>
+                    <script>timer:set(&quot;howlcd&quot;, 7)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9449,9 +9429,9 @@ end</script>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Your wolf refuses to obey your command!</name>
-                    <script>send(&quot;howl&quot;)</script>
+                    <script>mud:send(&quot;howl&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9684,9 +9664,8 @@ mud:send(&quot;dismount&quot;)</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>A vicious nightmare stops following you.</name>
-                    <script>-- not mounted
-mud:send(&quot;followers&quot;)</script>
+                    <name>You maneuver your wolf to outflank Shalyssa Lurialar!</name>
+                    <script>timer:set(&quot;outflankcd&quot;, 6)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9698,9 +9677,11 @@ mud:send(&quot;followers&quot;)</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>stops following you.</string>
+                        <string>You maneuver your wolf to outflank</string>
+                        <string>You fail to outflank</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
@@ -10670,14 +10651,17 @@ mud:send(&quot;gsay &lt;&lt;&lt; The door is open! After &quot; .. belcount .. &
                     <regexCodePropertyList/>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>Tuw group-says 'Attacking: Forell'</name>
-                        <script>local nextroom = NyyLIB.nextroomstop or map:getRoom()
+                        <script>-- only do this if not already in combat
+if not inCombat() and assistSent == nil then
+	local nextroom = NyyLIB.nextroomstop or map:getRoom()
 
--- move to correct room if lost
+	-- move to correct room if lost
 
-if nextroom ~= map:getRoom() then
-	expandAlias(&quot;#fwalk &quot; .. nextroom)	
-else
-	fleeMem()
+	if nextroom ~= map:getRoom() then
+		expandAlias(&quot;#fwalk &quot; .. nextroom)	
+	else
+		fleeMem()
+	end
 end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -11190,36 +11174,31 @@ mud:send(matches[3])</script>
                 <regexCodePropertyList/>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Autoassist - barely wounds</name>
-                    <script>-- Vori group-says 'Our enemy is losing his will to fight! Let our 
--- wounds be struck back upon Elaith with a righteous fury never 
---seen before!! (Nasty Wounds)'
--- TODO: triggered by above
+                    <script>-- The spectre of a human noble barely wounds a human noble with its average drain.
+-- The spectre of a human noble misses a human noble with its drain.
+-- The spectre of a human noble barely wounds a human noble with its average drain.
+
+-- triggered by combat occuring in same room
 
 if matches[2] == whoami() then
 	return
 end
 
-
 if charData:get(&quot;autoassist&quot;) then
--- commented out - maybe?
---	if prompt:get(&quot;tank&quot;) ~= &quot;&quot; then
---		assistSent=nil
---	end
-
-	if prompt:get(&quot;tank&quot;) == &quot;&quot; and prompt:get(&quot;enemy&quot;) == &quot;&quot; and groupList:getTanking(whoami()) == 0 then
+	if not inCombat() and groupList:getTanking(whoami()) == 0 then
 		if groupList:ingroup(matches[2]) then
 			if matches[2] ~= whoami() then
 				sendAssist(matches[2])
 			end
 		end
+
+		-- TODO: send assist if ungrouped pet following self
+
+		if pet:member(matches[2]) then
+			sendAssist( idMob(matches[2]) )
+		end
 	end
 end
-
---if checkMask(&quot;fighter&quot;) then
---	if charData:get(&quot;autoshieldpunch&quot;) then
---		send(&quot;shieldpunch&quot;)
---	end
---end
 </script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -11232,20 +11211,22 @@ end
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>^([A-Za-z]+) .* wounds .* with .*</string>
-                        <string>^([A-Za-z]+) attack only grazes .*</string>
-                        <string>^([A-Za-z]+) slams his shield into .*</string>
-                        <string>.* attacks ([A-Za-z]+), landing .*</string>
-                        <string>^([A-Za-z]+) sends .* sprawling with a powerful bash.</string>
+                        <string>^(.+) barely wounds .* with .*</string>
+                        <string>^(.+) attack only grazes .*</string>
+                        <string>^(.+) slams .* shield into .*</string>
+                        <string>.* attacks (.+), landing .*</string>
+                        <string>^(.+) sends .* sprawling with a powerful bash.</string>
                         <string>^([A-Za-z]+) tried to backstab.*</string>
                         <string>^([A-Za-z]+) places .* in the back of.*</string>
-                        <string>.* assists ([A-Za-z]+) heroically.$</string>
-                        <string>^([A-Za-z]+) sends a powerful force missile slamming into .*</string>
-                        <string>^([A-Za-z]+) heroically rescues.*</string>
-                        <string>^([A-Za-z]+) does an acrobatic maneuver in battle, and trips up .*</string>
-                        <string>^([A-Za-z]+) dodges .*</string>
+                        <string>.* assists (.+) heroically.$</string>
+                        <string>^(.+) sends a powerful force missile slamming into .*</string>
+                        <string>^(.+) heroically rescues.*</string>
+                        <string>^(.+) does an acrobatic maneuver in battle, and trips up .*</string>
+                        <string>^(.+) dodges .*</string>
+                        <string>^(.+) misses .* with .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
@@ -13105,7 +13086,9 @@ table.remove(NyyLIB.Mapper.movement, 1)</script>
                     <name>You sit down.</name>
                     <script>NyyLIB.Mapper.movement = {}
 
-spell:setMoving(false)</script>
+spell:setMoving(false)
+
+setHide(false)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13809,6 +13792,9 @@ end</script>
                         <string>burst of negative energy!</string>
                         <string>You wave the gasses towards</string>
                         <string>directs waves of fire toward</string>
+                        <string>The pummeling violence of hail echoes through the region!</string>
+                        <string>Waves of heat seem to drink the water right out of your bones!</string>
+                        <string>Then leaps and blasts into</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -13850,6 +13836,9 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -14346,7 +14335,7 @@ if groupList:ingroup( charname ) then
 			return
 		end
 
-		if charData:get(&quot;autores&quot;) and prompt:get(&quot;enemy&quot;) == &quot;&quot; then
+		if charData:get(&quot;autores&quot;) and not inCombat() then
 			-- mark as to res
 
 			if getSpellCount(&quot;resurrect&quot;) &gt; 0 then
@@ -14639,6 +14628,26 @@ sound(&quot;85568__joelaudio__dragon-roar.wav&quot;)</script>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>You find</name>
+                    <script>-- You find a secret exit south!</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^You find .*</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
             </TriggerGroup>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>A deafening roar causes the walls around you to shake and tremble!</name>
@@ -14921,8 +14930,10 @@ end</script>
                         <string>You already have that power in your spellbook.</string>
                         <string>You already have that spell in your spellbook.</string>
                         <string>You can't learn that power.</string>
+                        <string>You don't have that spell in any of your books or scrolls in learnable form!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -14981,26 +14992,6 @@ timer:set(&quot;furiousassault&quot;, timeleft)</script>
                         <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>You do not have any powers recharging.</name>
-                    <script>timer:set(&quot;furiousassault&quot;, nil)</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>You do not have any powers recharging.</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -15198,6 +15189,144 @@ end</script>
                     <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
+            <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>Followers</name>
+                <script></script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList/>
+                <regexCodePropertyList/>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>NPC:</name>
+                    <script>-- start of followers on screen
+
+--Follower summary for Nyyrazzilyss:
+--Number of Followers: 1
+
+--NPC:
+--   274/274   HP  137/137  MV      + an opulent merchant (merchant opulent)
+
+pet:reset()
+
+enableTrigger(&quot;endfollowers&quot;)
+enableTrigger(&quot;capturefollower&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^NPC:$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>endfollowers</name>
+                    <script>-- disable trigger on first prompt
+
+disableTrigger(&quot;capturefollower&quot;)
+disableTrigger(&quot;endfollowers&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^&lt; .*</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>capturefollower</name>
+                    <script>--   2505/2505  HP  152/152  MV      + a gray slaad (gray slaad anvil)
+--   2471/2569  HP  192/192  MV      + a hell hound (hell hound direraidermount wolf)
+--     72/72    HP  167/167  MV      + a pack pony (pony pack)&quot;a pack pony&quot;
+--  2317/2401  HP  197/197  MV      + a zealous griffon (griffon zealous mount paladinmount)
+
+-- matches[2] all keywords
+
+--display(matches[2])
+--display(matches[3])
+
+local keywords= string.split(matches[5], &quot; &quot;)
+
+local keyword=keywords[1]
+
+local fullname=matches[4]:trim()
+
+if table.contains( keywords, &quot;slaad&quot;) then
+	keyword=&quot;slaad&quot;
+end
+
+pet:add(keyword, fullname, tonumber(matches[2]), tonumber(matches[3]) )</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^ *([0-9]+)/([0-9]+) +HP +[0-9]+/[0-9]+ +MV *\+ (.*)\((.*)\)$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>starts/stops following you.</name>
+                    <script>--You breathe life into corpse of a frost giant warrior with the awesome power of your art.
+--The wight of a frost giant warrior starts following you.
+
+mud:send(&quot;followers&quot;)
+sendGroup()</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>starts following you.</string>
+                        <string>Smoke begins to pour out of your bracer, swirling around you in a dizzying</string>
+                        <string>stops following you.</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+            </TriggerGroup>
         </TriggerGroup>
     </TriggerPackage>
     <TimerPackage/>
@@ -15996,7 +16125,16 @@ end</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>restart</name>
-                <script>cecho(&quot;&lt;red&gt;[NyyLIB requires minimum non-beta Mudlet version 3.x.x http://www.mudlet.org/download/ ]\n&quot;)</script>
+                <script>local ver=getMudletVersion()
+
+if ver[&quot;major&quot;] == 3 then
+	if ver[&quot;build&quot;] == &quot;&quot; or ver[&quot;build&quot;] == &quot;-dev&quot; then
+		cecho(&quot;&lt;red&gt;[NyyLIB requires restart after installation.]\n&quot;)
+		return
+	end
+end
+
+cecho(&quot;&lt;red&gt;[NyyLIB requires minimum non-beta Mudlet version 3.x.x http://www.mudlet.org/download/ ]\n&quot;)</script>
                 <command></command>
                 <packageName></packageName>
                 <regex>^.+$</regex>
@@ -16427,6 +16565,8 @@ if groupList:whoTanking() then
 	cecho(&quot;&lt;red&gt;Who's tanking (groupList:whoTanking()):\n&quot;)
 	display ( groupList:whoTanking() )
 end
+
+display( enteredPortal )
 
 cecho(&quot;&lt;red&gt;[End debug]\n&quot;)</script>
                     <command></command>
@@ -17141,7 +17281,7 @@ end
 
 if tonumber(matches[2]) ~= nil then
 
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+	if inCombat() then
 		cecho(&quot;&lt;red&gt;[Can't fwalk while in combat]\n&quot;)
 		return(false)
 	end
@@ -17278,7 +17418,7 @@ end</script>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>advert</name>
-                    <script>mud:send(&quot;nhc Mudlet Script updated: 3/25/17 011a http://www.torilmud.com/phpBB3/viewtopic.php?f=4&amp;t=25455&quot;)</script>
+                    <script>mud:send(&quot;nhc Toril Mud Client Script Updated: 5/19/17 011b http://www.torilmud.com/phpBB3/viewtopic.php?f=4&amp;t=25455&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^advert$</regex>
@@ -17288,7 +17428,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 5/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 6/3/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -17506,7 +17646,7 @@ if charData:get(&quot;memcount&quot;) == nil or charData:get(&quot;memcount&quot
 	return
 end
 
-if prompt:get(&quot;tank&quot;) ~= &quot;&quot; or prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+if inCombat() then
 	echoDebug(&quot;&lt;red&gt;[Fighting, can't memorize]\n&quot;)
 	return
 end
@@ -18142,7 +18282,7 @@ mud:send(&quot;equip&quot;)</script>
                 <Alias isActive="yes" isFolder="no">
                     <name>tintin # repeat</name>
                     <script>for nx=1, matches[2], 1 do
-	mud:send(matches[3])
+	send(matches[3])
 end</script>
                     <command></command>
                     <packageName></packageName>
@@ -18406,6 +18546,14 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^who (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>stpm - stop moving</name>
+                    <script>cecho(&quot;&lt;green&gt;[Not currently moving]\n&quot;)
+spell:setMoving(false)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^stpm$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -19246,7 +19394,7 @@ if matches[2] == &quot;updateok&quot; then
 	cecho(&quot;&lt;red&gt;[Done]\n&quot;)
 end
 
-if matches[2] == &quot;erase&quot; then
+if matches[2] == &quot;reset&quot; then
 	loadMap(mainpath(&quot;toril.map&quot;))
 
 	expandAlias(&quot;#find&quot;, false)
@@ -19295,7 +19443,7 @@ elseif matches[2] == &quot;init&quot; then
 end</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^#map ?(info|on|off|erase|update|updateok|save|init|empty)?$</regex>
+                    <regex>^#map ?(info|on|off|reset|update|updateok|save|init|empty)?$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>#find</name>
@@ -19961,311 +20109,17 @@ end</script>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>starttrain</name>
-                    <script>-- TODO: update inittrain path in Silverymoon
+                    <script>local tankmode=matches[2]
 
-	smtrain = {
-		{84203, &quot;bankDeposit&quot;},
-		{48882, &quot;Willa O'Greensleeves&quot;},
-		{48873, &quot;Aratha Sul&quot;},
-		{48524, &quot;Lavis Ryl&quot;},
-		{48525, &quot;Elaith Waterstill&quot;},
-		{48518, &quot;Shalyssa Lurialar&quot;},
-		{48850, &quot;Forell Luckaun&quot;},
-		{48721, &quot;Seipora Rein&quot;},
-		{48681, &quot;Corland Deepforge&quot;},
-		{48586, &quot;Ersenas&quot;},
-		{49135, &quot;Ultrumm&quot;},
---		{49054, &quot;Tathshandra Tyrar&quot;},
---		{94648, &quot;Otasit&quot;},
-		{49117, &quot;devout priest&quot;},
-		{49036, &quot;Dragor Keenblade&quot;}
-	}
+configureTrain()
 
-	ashtrain = {
-		{87415, &quot;bankDeposit&quot;},
---		{87411, &quot;Stephan&quot;},
---		{87402, &quot;lich&quot;},
-		{87263, &quot;gambler&quot;},
-		{87270, &quot;bouncer&quot;},
---		{87271, &quot;naked man&quot;},
-		{87272, &quot;prostitute&quot;},
-		{87275, &quot;aging prostitute&quot;},
-		{87276, &quot;naked woman&quot;},
-		{87254, &quot;Ashstone noble&quot;},
-		{87251, &quot;Ashstone noble&quot;},
-		{87249, &quot;Ashstone noble&quot;},
-		{87314, &quot;kindly priest&quot;},
-		{87253, &quot;Ashstone noble&quot;},
-		{87258, &quot;Ashstone noble&quot;},
-		{87257, &quot;Ashstone noble&quot;}
-	}
-
-	wdtrain = {
-		{13402, &quot;elite&quot;},
-		{13359, &quot;elite&quot;},
-		{13343, &quot;elite&quot;},
-		{13354, &quot;master&quot;},
-		{13397, &quot;master&quot;}
---		{85354, &quot;elite guard&quot;},
---		{85358, &quot;elite guard&quot;},
---		{85356, &quot;elite guard&quot;},
---		{85410, &quot;elite guard&quot;},
---		{85421, &quot;elite guard&quot;},
---		{85349, &quot;elite guard&quot;}
-	}
-
-function bankDeposit()
-	expandAlias(&quot;dep&quot;, false)
-	botWarning()
-end
-
-function NextTrainStop()
-	local currentroom = map:getRoom()
-
-	callNextTrain=nil
-
-	--display(&quot;function: NextTrainStop()&quot;)
-	--display( currentroom )
-
-	-- if currently tanking anything, don't move
-
-	if prompt:get(&quot;tank&quot;) ~= &quot;&quot; or prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
-		cecho(&quot;&lt;red&gt;[Still in combat - not leaving room]\n&quot;)
-		--display ( prompt:get(&quot;tank&quot;) )
-		--display ( prompt:get(&quot;enemy&quot;) )
-		return
-	end	
-
-	-- look has been sent but not received - recall function after 1 second if grouped player fighting
-	if type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
-		for k,v in pairs( groupList:whoTanking() ) do
-			if groupList:ingroup( k) then
-				--cecho(&quot;resending NextTrainStop in 1 second\n&quot;)
-				--display(k)
-				--display( groupList:whoTanking() )
-				tempTimer(1, [[NextTrainStop()]])
-				return
-			end
-		end
-	end
-
-	if NyyLIB.smtrainposition == nil then
-		assert(currentroom, &quot;[Error: room id is nil]&quot;)
-
-		if getZone() == &quot;Ashstone&quot; then
-			getPath(currentroom, 87415)
-			mud:send(&quot;gcmd [Stopping train and returning to bank (87415)&quot; .. &quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
-			expandAlias(&quot;#fwalk 87415&quot;, false)
-		else
-			getPath(currentroom, 48603)
-			mud:send(&quot;gcmd [Stopping train and returning to inn (48603)&quot; .. &quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
-			expandAlias(&quot;#fwalk 48603&quot;, false)
-		end
-
-		if checkMask(&quot;fighter&quot;) then
-			cecho(&quot;&lt;red&gt;[Setting rescue type to BASIC]\n&quot;)
-			charData:set(&quot;rescuetype&quot;, &quot;basic&quot;)
-			rescue(&quot;init&quot;, &quot;rescue&quot;)
-
-			cecho(&quot;&lt;red&gt;[Disabling autobash]\n&quot;)
-			charData:set(&quot;autobash&quot;, false)
-		end
-
-		disableTrigger(&quot;SMTrain&quot;)
-	else
-		--display(&quot;Y&quot;)
-
-		NyyLIB.smtrainposition = NyyLIB.smtrainposition + 1
-
-		if NyyLIB.smtrainposition &gt; #NyyLIB.smtrainstops then
-			NyyLIB.smtrainposition = 1
-
-			printStats(3)
-
-			--expandAlias(&quot;#stats gsay&quot;, false)
-			expandAlias(&quot;#stats write&quot;, false)
-
-			mud:send(&quot;gcmd [Resetting Stats]&quot;)
-			resetStats()
-		end
-
-		NyyLIB.nextstop = NyyLIB.smtrainstops[NyyLIB.smtrainposition][1]
-		enableTrigger(&quot;trainstation&quot;)
-
-		assert(currentroom, &quot;[Error: room id is nil]&quot;)
-		if getPath(currentroom, NyyLIB.nextstop) then
-
-			local str = NyyLIB.smtrainstops[NyyLIB.smtrainposition][2]
-			local nextmob = string.gsub(&quot; &quot;..str, &quot;%W%l&quot;, string.upper):sub(2)
-
-			mud:send(&quot;gcmd [Moving to: &quot; .. nextmob ..
-							&quot; (&quot; .. NyyLIB.smtrainstops[NyyLIB.smtrainposition][1] .. &quot;) &quot; ..
- 							&quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
-		end
-		NyyLIB.traintarget=false
-	
-		if currentroom ~= NyyLIB.nextstop then
-			--display(&quot;Queing fwalk to &quot; .. NyyLIB.nextstop)
-			tempTimer(3, [[expandAlias(&quot;#fwalk &quot; .. NyyLIB.nextstop)]])
-			-- expandAlias(&quot;#fwalk &quot; .. NyyLIB.nextstop)
-		end
-	end
-end
-
-function StartFight()
-	local mobtarget = string.split(NyyLIB.smtrainstops[NyyLIB.smtrainposition][2], &quot; &quot;)[1]
-
-	if NyyLIB.traintarget then
-
-		setEnemy(mobtarget)
-
-
-		mud:send(&quot;gcmd [Attacking: &quot; ..  string.title(mobtarget) .. &quot;]&quot;)
-
-		if checkMask(&quot;venomer&quot;) then
-			sendPoison()
-		end	
-
-		if checkMask(&quot;rog&quot;) then
-			if not sendAssassinate() then
-				mud:send(&quot;bs &quot; .. mobtarget)
-			end
-
-			return
-		end
-
-		if checkMask(&quot;traintanks&quot;) then
-			if checkMask(&quot;fighter&quot;) then
-				if mount:get() == nil then
-					if whorace(whoami()) == &quot;Ogre&quot; then
-						mud:send(&quot;bs &quot; .. mobtarget)
-					else
-						mud:send(&quot;bash &quot; .. mobtarget)
-					end
-				else
-					mud:send(&quot;mount&quot;)
-					mount:charge(mobtarget)
-				end
-				return
-			end
-		end			
-
-		send(&quot;kill &quot; .. mobtarget)
-	else
-		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
-		NextTrainStop()
-	end
-end
-
-function botWarning()
-	mud:send(&quot;gsay * [       Warning! Use at own risk!       ]&quot;)
-	mud:send(&quot;gsay * Toril discourages use of robots. Use may be&quot;)
-	mud:send(&quot;gsay * permitted if at or near keys, but not for&quot;)
-	mud:send(&quot;gsay * long periods of time. This may result in&quot;)
-	mud:send(&quot;gsay * arbitrary punishment, including aggressive&quot;)
-	mud:send(&quot;gsay * mob loads, teleportation, caging, freezing&quot;)
-	mud:send(&quot;gsay * and deletion.&quot;)
-	mud:send(&quot;gsay * [       Warning! Use at own risk!       ]&quot;)
-end
-
--- initialization --
---
-
-if getZone() == &quot;Ashstone&quot; then
-	NyyLIB.smtrainstops = ashtrain
-elseif getZone() == &quot;Silverymoon, Gem of the North&quot; then
-	NyyLIB.smtrainstops = smtrain
-elseif getZone() == &quot;Northern Waterdeep Main City&quot; then
-	NyyLIB.smtrainstops = wdtrain
-elseif getZone() == &quot;The Great Harbor of Waterdeep&quot; then
-	NyyLIB.smtrainstops = wdtrain
-end
-
-local tankmode=matches[2] or &quot;&quot;
-
--- disable any active triggers prior to enabling
-cecho(&quot;&lt;green&gt;[Starting train engine...]\n&quot;)
-NyyLIB.nextroomstop=nil
-expandAlias(&quot;resettrain&quot;, false)
-
-if checkMask(&quot;warrior&quot;) or tankmode == &quot;tank&quot; then
-	charData:set(&quot;autoloot&quot;, &quot;coins&quot;)
-	charData:set(&quot;flee&quot;, &quot;off&quot;)
-	flee(&quot;init&quot;)
-	mud:send(&quot;tog wimp 0&quot;)
-
-	traintank = true
-
-	if checkMask(&quot;fighter&quot;) then
-		cecho(&quot;&lt;red&gt;[Setting rescue type to ALL]\n&quot;)
-		charData:set(&quot;rescuetype&quot;, &quot;all&quot;)
-		rescue(&quot;init&quot;, &quot;rescue&quot;)
-
-		cecho(&quot;&lt;red&gt;[Enabling autobash]\n&quot;)
-		charData:set(&quot;autobash&quot;, true)
-		bashing(&quot;init&quot;)
-
-		cecho(&quot;&lt;red&gt;[Disabling powersbash]\n&quot;)
-		charData:set(&quot;powersbash&quot;, false)
-
-		if whoclass() ~= &quot;Pal&quot; then
-			cecho(&quot;&lt;red&gt;[Enabling autokick]\n&quot;)
-			charData:set(&quot;autokick&quot;, true)
-			KickButton(&quot;init&quot;)
-		end
-
-		-- dismount if currently mounted
-		if mount:getMounted() then
-			mud:send(&quot;dismount&quot;)
-		end
-	end
-
-	charData:set(&quot;statname&quot;, &quot;train&quot;)
-
-	mud:send(&quot;gcmd [Resetting Stats]&quot;)
-	resetStats()
-
-	NyyLIB.smtrainposition=0
-	enableTrigger(&quot;SMTrain&quot;)
+if tankmode == &quot;tank&quot; then
+	trainEngine()
 
 	echo(&quot;[Sending starting movement]\n&quot;)
-
 	NextTrainStop()
 else
-	cecho(&quot;&lt;green&gt;[Starting train car...]\n&quot;)
-
-	traintank = false
-
-	-- disable loot / enable flee
-	charData:set(&quot;autoloot&quot;, &quot;off&quot;)
-	charData:set(&quot;flee&quot;, &quot;on&quot;)
-	loot(&quot;init&quot;)
-	flee(&quot;init&quot;)
-
-	-- set wimpy to maximum
-	mud:send(&quot;tog wimp &quot; .. prompt:get(&quot;maxhp&quot;) )
-
-	-- enable autoassist
-	charData:set(&quot;autoassist&quot;, true)
-	autoassist(&quot;init&quot;)
-
-
-	if checkMask(&quot;rogue&quot;) then
-		return
-	end
-
-	cecho(&quot;&lt;red&gt;[Starting: Caster train triggers]\n&quot;)
-	enableTrigger(&quot;SMTrainCaster&quot;)
-
-	NyyLIB.castertrain=nil
-
-	if checkMask(&quot;missile&quot;) then
-		-- enable casting of missile spells
-		charData:set(&quot;automissile&quot;, true)
-
-		charData:set(&quot;autocast&quot;, true)
-		SpellsButton(&quot;init&quot;)
-	end
+	trainCar()
 end</script>
                     <command></command>
                     <packageName></packageName>
@@ -20301,7 +20155,10 @@ send(&quot;put scroll &quot; .. charData:get(&quot;container&quot;) )</script>
                     <name>resettrain</name>
                     <script>-- turn it off in full
 
+NyyLIB.nextroomstop=nil
+NyyLIB.castertrain=nil
 NyyLIB.smtrainposition=nil
+
 disableTrigger(&quot;trainstation&quot;)
 expandAlias(&quot;set statname unset&quot;, false)
 
@@ -20340,10 +20197,12 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>test</name>
-                <script>
-display( string.match(&quot;test string&quot;, &quot;aa&quot;) )
+                <script>display( pet )
 
-display( string.match( &quot;You peer into a wormhole and see&quot;, &quot;You peer into (.*) and see&quot; ) )
+
+--display( string.match(&quot;test string&quot;, &quot;aa&quot;) )
+
+--display( string.match( &quot;You peer into a wormhole and see&quot;, &quot;You peer into (.*) and see&quot; ) )
 
 --	local dopplechar = string.match(spellname, &quot;^dopple (.*)&quot;)
 
@@ -20650,6 +20509,13 @@ tempTimer(5, &quot;genalias&quot;)</script>
                 <command></command>
                 <packageName></packageName>
                 <regex>^claimall$</regex>
+            </Alias>
+            <Alias isActive="yes" isFolder="no">
+                <name>reset</name>
+                <script>spell:setMoving(false)</script>
+                <command></command>
+                <packageName></packageName>
+                <regex>^reset$</regex>
             </Alias>
         </AliasGroup>
     </AliasPackage>
@@ -21068,6 +20934,7 @@ Each entry must be a string. The defaults should be a pretty effective guide.
 
 demonnic.chat.config.channels = {
   &quot;ALL&quot;,
+	&quot;SAYS&quot;,
 	&quot;SKILL&quot;,
   &quot;TELLS&quot;,
   &quot;GSAY&quot;,
@@ -21075,6 +20942,7 @@ demonnic.chat.config.channels = {
   &quot;GCC&quot;,
   &quot;OOC&quot;,
   &quot;ACC&quot;,
+  &quot;AUC&quot;
 }
 
 
@@ -22064,8 +21932,8 @@ function SpellsEnc()
 	-- bring up timestop if not fighting
 
 	if charData:get(&quot;autots&quot;) then
-		--if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; or type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
-		if prompt:get(&quot;enemy&quot;) == &quot;&quot; and assistSent == nil then
+		--if not inCombat() or type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
+		if not inCombat() and assistSent == nil then
 			if not buff:get(&quot;time_stop&quot;) then
 				if getSpellCount(&quot;time_stop&quot;) &gt; 0 then
 					spell:cast(&quot;ts&quot;)
@@ -22118,7 +21986,7 @@ function SpellsEnc()
 
 	-- if fighting and no other spells - fire bolt
 	if charData:get(&quot;automissile&quot;) then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+		if inCombat() and spell:count() == 0 then
 			spell:cast(&quot;fb&quot;)
 		end
 	end
@@ -22324,18 +22192,10 @@ function scr_blur()
 end
 
 function scr_scale()
-	if charData:get(&quot;autoscale&quot;) then
-		for k,char in pairs(groupList:pc(&quot;casterPsiSinger&quot;)) do
-			if char ~= whoami() then
-				if spell:attempt(char, &quot;dragonscales&quot;, &quot;ds&quot;) then
-					return(true)
-				end
-			end
-		end
-	end
+	local wuss=charData:get(&quot;wuss&quot;)
 
-	for k,char in pairs(groupList:pc(&quot;warrior&quot;)) do
-		if spell:attempt(char, &quot;dragonscales&quot;, &quot;ds&quot;) then
+	if groupList:ingroup( wuss ) then
+		if spell:attempt(wuss, &quot;dragonscales&quot;, &quot;ds&quot;) then
 			return(true)
 		end
 	end
@@ -22346,11 +22206,19 @@ function scr_scale()
 		end
 	end
 
-	local wuss=charData:get(&quot;wuss&quot;)
-
-	if groupList:ingroup( wuss ) then
-		if spell:attempt(wuss, &quot;dragonscales&quot;, &quot;ds&quot;) then
+	for k,char in pairs(groupList:pc(&quot;warrior&quot;)) do
+		if spell:attempt(char, &quot;dragonscales&quot;, &quot;ds&quot;) then
 			return(true)
+		end
+	end
+
+	if charData:get(&quot;autoscale&quot;) then
+		for k,char in pairs(groupList:pc(&quot;casterPsiSinger&quot;)) do
+			if char ~= whoami() then
+				if spell:attempt(char, &quot;dragonscales&quot;, &quot;ds&quot;) then
+					return(true)
+				end
+			end
 		end
 	end
 end
@@ -23443,7 +23311,7 @@ function SpellsEle()
 	end
 
 	if charData:get(&quot;autoblind&quot;) then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+		if inCombat() and spell:count() == 0 then
 			if getSpellCount(&quot;glitterdust&quot;) &gt; 0 then
 				spell:cast(&quot;gl&quot;)
 				return
@@ -23508,7 +23376,7 @@ function scr_stoneskin(xfirsttime)
 
 	-- in combat, no other spells queued
 	if charData:get(&quot;autostone&quot;) == &quot;tanks&quot; then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+		if inCombat() and spell:count() == 0 then
 			local tank=prompt:get(&quot;tank&quot;)
 
 			if not (tank == nil or tank == &quot;&quot;) then
@@ -23549,6 +23417,8 @@ end</script>
 -------------------------------------------------
 function initNec()
 	powerAliases:addButtons()
+
+	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
 end
 
 function SpellsNec()
@@ -23569,6 +23439,7 @@ end</script>
 -------------------------------------------------
 function initLic()
 	addbutton(&quot;protection_from_undead&quot;, 7, 6)
+	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
 
 	powerAliases:addButtons()
 end
@@ -23579,6 +23450,10 @@ function SpellsLic()
 		if scr_pfu() then
 			return
 		end
+	end
+
+	if 	scr_globe() then
+		return
 	end
 
 	-- if fighting and no other spells cast damage spells
@@ -23615,7 +23490,7 @@ function SpellsInv()
 	-- if fighting - sandstorm
 	if charData:get(&quot;autostorm&quot;) and not timer:get(&quot;sandstorm&quot;) then
 		if getSpellCount(&quot;sandstorm&quot;) &gt; 0 then
-			if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+			if inCombat() and spell:count() == 0 then
 				spell:cast(&quot;ss&quot;)
 			end
 		end
@@ -23628,7 +23503,7 @@ function SpellsInv()
 
 	-- if fighting and no other spells - ray of frost
 	if charData:get(&quot;automissile&quot;) then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+		if inCombat() and spell:count() == 0 then
 			spell:cast(&quot;rf&quot;)
 		end
 	end
@@ -23715,7 +23590,7 @@ function scr_doppelganger()
 end
 
 function scr_displace()
---	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+--	if inCombat() and spell:count() == 0 then
 --		if spell:attempt(prompt:get(&quot;tank&quot;), &quot;displacement&quot;, &quot;ds&quot;) then
 --			return(true)
 --		end
@@ -23769,6 +23644,8 @@ end</script>
 -------------------------------------------------
 function initDru()
 	powerAliases:addButtons()
+
+	mud:send(&quot;powers info vit&quot;)
 end
 
 function SpellsDru()
@@ -23794,13 +23671,20 @@ function SpellsDru()
 		end
 	end
 
+	-- queue vitality
+	if charData:get(&quot;autovit&quot;) and charData:get(&quot;level&quot;) &gt;= 26 then
+		if 	scr_vitality() then
+			return
+		end
+	end
+
 	-- if fighting and no other spells cast damage spells
 	if powerAliases:castDamage() then
 		return
 	end
 
 	if charData:get(&quot;automissile&quot;) then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; and spell:count() == 0 then
+		if inCombat() and spell:count() == 0 then
 			spell:cast(&quot;tw&quot;)
 			return
 		end
@@ -23889,6 +23773,9 @@ end</script>
 -------------------------------------------------
 function initDir()
 	powerAliases:addButtons()
+
+	addbutton(&quot;outflank&quot;, 13, 30)
+	addbutton(&quot;howl&quot;, 14, 15)
 end
 
 
@@ -23898,6 +23785,14 @@ function SpellsDir()
 	if powerAliases:castDamage() then
 		return
 	end
+end
+
+function howl(xcommand)
+	shiftSkillButton(&quot;howl&quot;, &quot;autohowl&quot;, xcommand)
+end
+
+function outflank(xcommand)
+	shiftSkillButton(&quot;outflank&quot;, &quot;outflank&quot;, xcommand)
 end
 </script>
                     <eventHandlerList/>
@@ -24392,7 +24287,17 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 
--- 011dev
+
+-- dev
+
+-- autoassist will work with ungrouped pet followers
+-- added outflank
+-- refactored train - use 'starttrain tank' to start as engine
+-- alias: stpm - sets the character as not moving
+-- Added say, auction to tabbed chat windows
+-- Map updated: full size 316 areas 44632 rooms
+
+-- 011b
 
 -- the function 'initCustom' will be called on initialization if it exists
 -- self in group display if more then 1 person uses cyan colour 
@@ -24967,6 +24872,317 @@ end</script>
                         <eventHandlerList/>
                     </Script>
                 </ScriptGroup>
+                <Script isActive="yes" isFolder="no">
+                    <name>TrainScripts</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+-- various functions used with the xp trains
+
+function NextTrainStop()
+	local currentroom = map:getRoom()
+
+	callNextTrain=nil
+
+	-- if currently tanking anything, don't move
+	if prompt:get(&quot;tank&quot;) ~= &quot;&quot; or inCombat() then
+		cecho(&quot;&lt;red&gt;[Still in combat - not leaving room]\n&quot;)
+		return
+	end	
+
+	-- look has been sent but not received - recall function after 1 second if grouped player fighting
+	if type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
+		for k,v in pairs( groupList:whoTanking() ) do
+			if groupList:ingroup(k) then
+				tempTimer(1, [[NextTrainStop()]])
+				return
+			end
+		end
+	end
+
+	if NyyLIB.smtrainposition == nil then
+		assert(currentroom, &quot;[Error: room id is nil]&quot;)
+
+		if getZone() == &quot;Ashstone&quot; then
+			getPath(currentroom, 87415)
+			mud:send(&quot;gcmd [Stopping train and returning to bank (87415)&quot; .. &quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
+			expandAlias(&quot;#fwalk 87415&quot;, false)
+		else
+			getPath(currentroom, 48603)
+			mud:send(&quot;gcmd [Stopping train and returning to inn (48603)&quot; .. &quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
+			expandAlias(&quot;#fwalk 48603&quot;, false)
+		end
+
+		expandAlias(&quot;resettrain&quot;, false)
+	else
+		NyyLIB.smtrainposition = NyyLIB.smtrainposition + 1
+
+		if NyyLIB.smtrainposition &gt; #NyyLIB.smtrainstops then
+			NyyLIB.smtrainposition = 1
+
+			printStats(3)
+
+			expandAlias(&quot;#stats write&quot;, false)
+
+			mud:send(&quot;gcmd [Resetting Stats]&quot;)
+			resetStats()
+		end
+
+		NyyLIB.nextstop = NyyLIB.smtrainstops[NyyLIB.smtrainposition][1]
+		enableTrigger(&quot;trainstation&quot;)
+
+		assert(currentroom, &quot;[Error: room id is nil]&quot;)
+		if getPath(currentroom, NyyLIB.nextstop) then
+
+			local str = NyyLIB.smtrainstops[NyyLIB.smtrainposition][2]
+			local nextmob = string.gsub(&quot; &quot;..str, &quot;%W%l&quot;, string.upper):sub(2)
+
+			mud:send(&quot;gcmd [Moving to: &quot; .. nextmob ..
+							&quot; (&quot; .. NyyLIB.smtrainstops[NyyLIB.smtrainposition][1] .. &quot;) &quot; ..
+ 							&quot; &lt;.&quot; .. compressSpeedwalk() .. &quot;&gt;]&quot;)
+		end
+		NyyLIB.traintarget=false
+	
+		if currentroom ~= NyyLIB.nextstop then
+			tempTimer(3, [[expandAlias(&quot;#fwalk &quot; .. NyyLIB.nextstop)]])
+		end
+	end
+end
+
+function StartFight()
+	local mobtarget = string.split(NyyLIB.smtrainstops[NyyLIB.smtrainposition][2], &quot; &quot;)[1]
+
+	if NyyLIB.traintarget then
+		setEnemy(mobtarget)
+
+		mud:send(&quot;gcmd [Attacking: &quot; ..  string.title(mobtarget) .. &quot;]&quot;)
+
+		-- rogue, anti-paladin - apply poison
+		if checkMask(&quot;venomer&quot;) then
+			sendPoison()
+		end	
+
+
+		-- rogue: start with assassinate
+		if checkMask(&quot;rog&quot;) then
+			if not sendAssassinate() then
+				mud:send(&quot;bs &quot; .. mobtarget)
+			end
+
+			return
+		end
+
+
+		-- warrior classed - start with bash, bodyslam, mounted charge
+		if checkMask(&quot;traintanks&quot;) then
+			if checkMask(&quot;fighter&quot;) then
+				if mount:get() == nil then
+					if whorace(whoami()) == &quot;Ogre&quot; then
+						mud:send(&quot;bs &quot; .. mobtarget) -- bodyslam
+					else
+						mud:send(&quot;bash &quot; .. mobtarget)
+					end
+				else
+					mud:send(&quot;mount&quot;)
+					mount:charge(mobtarget)
+				end
+				return
+			end
+		end			
+
+		-- shouldn't be reached
+		send(&quot;kill &quot; .. mobtarget)
+	else
+		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
+		NextTrainStop()
+	end
+end
+
+function bankDeposit()
+	expandAlias(&quot;dep&quot;, false)
+
+	if groupList:size() &gt; 1 then
+		botWarning()
+	end
+end
+
+function botWarning()
+	mud:send(&quot;gsay * [       Warning! Use at own risk!       ]&quot;)
+	mud:send(&quot;gsay * Toril discourages use of robots. Use may be&quot;)
+	mud:send(&quot;gsay * permitted if at or near keys, but not for&quot;)
+	mud:send(&quot;gsay * long periods of time. This may result in&quot;)
+	mud:send(&quot;gsay * arbitrary punishment, including aggressive&quot;)
+	mud:send(&quot;gsay * mob loads, teleportation, caging, freezing&quot;)
+	mud:send(&quot;gsay * and deletion.&quot;)
+	mud:send(&quot;gsay * [       Warning! Use at own risk!       ]&quot;)
+end</script>
+                    <eventHandlerList/>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>setupTrain config</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+-- TODO: update inittrain path in Silverymoon
+
+	smtrain = {
+		{84203, &quot;bankDeposit&quot;},
+		{48882, &quot;Willa O'Greensleeves&quot;},
+		{48873, &quot;Aratha Sul&quot;},
+		{48524, &quot;Lavis Ryl&quot;},
+		{48525, &quot;Elaith Waterstill&quot;},
+		{48518, &quot;Shalyssa Lurialar&quot;},
+		{48850, &quot;Forell Luckaun&quot;},
+		{48721, &quot;Seipora Rein&quot;},
+		{48681, &quot;Corland Deepforge&quot;},
+		{48586, &quot;Ersenas&quot;},
+		{49135, &quot;Ultrumm&quot;},
+--		{49054, &quot;Tathshandra Tyrar&quot;},
+--		{94648, &quot;Otasit&quot;},
+		{49117, &quot;devout priest&quot;},
+		{49036, &quot;Dragor Keenblade&quot;}
+	}
+
+	ashtrain = {
+		{87415, &quot;bankDeposit&quot;},
+--		{87411, &quot;Stephan&quot;},
+--		{87402, &quot;lich&quot;},
+		{87263, &quot;gambler&quot;},
+		{87270, &quot;bouncer&quot;},
+--		{87271, &quot;naked man&quot;},
+		{87272, &quot;prostitute&quot;},
+		{87275, &quot;aging prostitute&quot;},
+		{87276, &quot;naked woman&quot;},
+		{87254, &quot;Ashstone noble&quot;},
+		{87251, &quot;Ashstone noble&quot;},
+		{87249, &quot;Ashstone noble&quot;},
+		{87314, &quot;kindly priest&quot;},
+		{87253, &quot;Ashstone noble&quot;},
+		{87258, &quot;Ashstone noble&quot;},
+		{87257, &quot;Ashstone noble&quot;}
+	}
+
+	wdtrain = {
+		{13402, &quot;elite&quot;},
+		{13359, &quot;elite&quot;},
+		{13343, &quot;elite&quot;},
+		{13354, &quot;master&quot;},
+		{13397, &quot;master&quot;}
+--		{85354, &quot;elite guard&quot;},
+--		{85358, &quot;elite guard&quot;},
+--		{85356, &quot;elite guard&quot;},
+--		{85410, &quot;elite guard&quot;},
+--		{85421, &quot;elite guard&quot;},
+--		{85349, &quot;elite guard&quot;}
+	}
+
+
+function configureTrain()
+	-- disable any active triggers prior to enabling
+	expandAlias(&quot;resettrain&quot;, false)
+
+	cecho(&quot;&lt;green&gt;[Laying train tracks...]\n&quot;)
+
+	if getZone() == &quot;Ashstone&quot; then
+		NyyLIB.smtrainstops = ashtrain
+	elseif getZone() == &quot;Silverymoon, Gem of the North&quot; then
+		NyyLIB.smtrainstops = smtrain
+	elseif getZone() == &quot;Northern Waterdeep Main City&quot; then
+		NyyLIB.smtrainstops = wdtrain
+	elseif getZone() == &quot;The Great Harbor of Waterdeep&quot; then
+		NyyLIB.smtrainstops = wdtrain
+	end
+end
+
+</script>
+                    <eventHandlerList/>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>setupTrain mode</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+
+function trainEngine()
+	charData:set(&quot;autoloot&quot;, &quot;coins&quot;)
+	charData:set(&quot;flee&quot;, &quot;off&quot;)
+	flee(&quot;init&quot;)
+	mud:send(&quot;tog wimp 0&quot;)
+
+	if checkMask(&quot;fighter&quot;) then
+		cecho(&quot;&lt;red&gt;[Setting rescue type to ALL]\n&quot;)
+		charData:set(&quot;rescuetype&quot;, &quot;all&quot;)
+		rescue(&quot;init&quot;, &quot;rescue&quot;)
+
+		cecho(&quot;&lt;red&gt;[Enabling autobash]\n&quot;)
+		charData:set(&quot;autobash&quot;, true)
+		bashing(&quot;init&quot;)
+
+		cecho(&quot;&lt;red&gt;[Disabling powersbash]\n&quot;)
+		charData:set(&quot;powersbash&quot;, false)
+
+		if whoclass() ~= &quot;Pal&quot; then
+			cecho(&quot;&lt;red&gt;[Enabling autokick]\n&quot;)
+			charData:set(&quot;autokick&quot;, true)
+			KickButton(&quot;init&quot;)
+		end
+
+		-- dismount if currently mounted
+		if mount:getMounted() then
+			mud:send(&quot;dismount&quot;)
+		end
+	end
+
+	charData:set(&quot;statname&quot;, &quot;train&quot;)
+
+	mud:send(&quot;gcmd [Resetting Stats]&quot;)
+	resetStats()
+
+	NyyLIB.smtrainposition=0
+	enableTrigger(&quot;SMTrain&quot;)
+end
+
+function trainCar()
+	cecho(&quot;&lt;green&gt;[Starting train car...]\n&quot;)
+
+	-- disable loot / enable flee
+	charData:set(&quot;autoloot&quot;, &quot;off&quot;)
+	charData:set(&quot;flee&quot;, &quot;on&quot;)
+	loot(&quot;init&quot;)
+	flee(&quot;init&quot;)
+
+	-- set wimpy to maximum
+	mud:send(&quot;tog wimp &quot; .. prompt:get(&quot;maxhp&quot;) )
+
+	-- enable autoassist
+	charData:set(&quot;autoassist&quot;, true)
+	autoassist(&quot;init&quot;)
+
+	if checkMask(&quot;missile&quot;) then
+		cecho(&quot;&lt;red&gt;[Starting: Caster train triggers]\n&quot;)
+		enableTrigger(&quot;SMTrainCaster&quot;)
+
+		-- enable casting of missile spells
+		charData:set(&quot;automissile&quot;, true)
+
+		-- don't enable casting for dire - removed
+		--if not checkMask(&quot;dire&quot;) then
+			charData:set(&quot;autocast&quot;, true)
+			SpellsButton(&quot;init&quot;)
+		--end
+	end
+end</script>
+                    <eventHandlerList/>
+                </Script>
             </ScriptGroup>
             <ScriptGroup isActive="yes" isFolder="yes">
                 <name>Mapper.002</name>
@@ -26729,7 +26945,7 @@ end
 		tiavit = { &quot;Sha&quot;, &quot;Enc&quot;, &quot;Ill&quot;, &quot;Bar&quot;, &quot;Ele&quot;, &quot;Rog&quot;, &quot;Nec&quot;, &quot;Psi&quot;},
 		missile = { &quot;Sha&quot;, &quot;Ele&quot;, &quot;Dir&quot;, &quot;Enc&quot;, &quot;Nec&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Dru&quot;, &quot;Ran&quot; },
 		hlarea = { &quot;Cle&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Sha&quot;, &quot;Ele&quot;, &quot;Dir&quot;, &quot;Enc&quot;, &quot;Nec&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Dru&quot;, &quot;Ran&quot; },
-		ffire = { &quot;Enc&quot;, &quot;Ill&quot;, &quot;Inv&quot;, &quot;Dru&quot;, &quot;Ran&quot;, &quot;Dir&quot;, &quot;Sha&quot;},
+		ffire = { &quot;Enc&quot;, &quot;Ill&quot;, &quot;Inv&quot;, &quot;Dru&quot;, &quot;Ran&quot;, &quot;Sha&quot;},
 		stoner = { &quot;Sha&quot;, &quot;Ele&quot;, &quot;Enc&quot; },
 		venomer = { &quot;Rog&quot;, &quot;A-P&quot; },
 		dmgundead = { &quot;Cle&quot;, &quot;Nec&quot;, &quot;Lic&quot;, &quot;Pal&quot;},
@@ -26785,14 +27001,13 @@ charData = charData or {}
 	{ &quot;border&quot;, &quot;&quot;, {&quot;default&quot;, &quot;file&quot;, &quot;none&quot;}, &quot;default&quot;, &quot;&quot;},
 	{ &quot;numcolor&quot;, &quot;&quot;, {&quot;*&quot;}, &quot;blue&quot;, &quot;color of numbers on buttons&quot;},
 	{ &quot;statname&quot;, &quot;*&quot;, {&quot;*&quot;}, &quot;unset&quot;, &quot;&quot;},
-	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;auto-open doors&quot; },
+	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto-open doors&quot; },
 	{ &quot;echodrag&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;echo when a corpse is dragged&quot; },
 	{ &quot;autoportal&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto enter rifts/portals/etc&quot; },
 	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;}, &quot;&quot;, &quot;&quot; },
 	{ &quot;vnum&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;display room vnum&quot; },
 	{ &quot;chatfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;12&quot;, &quot;fontsize to use for the chat window&quot; },
 	{ &quot;grpfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;14&quot;, &quot;fontsize to use for the group window&quot; },
--- { &quot;rfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;8&quot;, &quot;fontsize to use for the right group window&quot; },
 	{ &quot;reconnect&quot;, &quot;*&quot;, {&quot;false&quot;, &quot;#&quot;}, &quot;false&quot;, &quot;auto login this char number&quot; },
 	{ &quot;endspell&quot;, &quot;*&quot;, {&quot;vit&quot;, &quot;dsp&quot;, &quot;pwt&quot;, &quot;fly&quot;, &quot;grp&quot;, &quot;pfu&quot;, &quot;hst&quot;, &quot;dop&quot;}, &quot;vit&quot;, &quot;&quot; },
 	{ &quot;gcmd&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use gcmd instead of gsay&quot;},
@@ -26810,7 +27025,7 @@ charData = charData or {}
 	{ &quot;container&quot;, &quot;*&quot;, { &quot;*&quot; }, &quot;&quot;, &quot;set the name of your main container&quot;},
 	{ &quot;food&quot;, &quot;noPsi&quot;, { &quot;*&quot; }, &quot;&quot;, &quot;food name to eat&quot;},
 	{ &quot;canteen&quot;, &quot;noPsi&quot;, { &quot;*&quot; }, &quot;&quot;, &quot;name of water container&quot;},
-	{ &quot;autoloot&quot;, &quot;*&quot;, {&quot;off&quot;, &quot;coins&quot;, &quot;all&quot;}, &quot;coins&quot;, &quot;&quot;},
+	{ &quot;autoloot&quot;, &quot;*&quot;, {&quot;off&quot;, &quot;coins&quot;, &quot;all&quot;}, &quot;off&quot;, &quot;&quot;},
 	{ &quot;flee&quot;, &quot;*&quot;, {&quot;on&quot;, &quot;off&quot;, &quot;dragon&quot;, &quot;lich&quot;}, &quot;on&quot;, &quot;&quot;,
 				&quot;\n&lt;red&gt;[If you panic but can't get out, you'll flee again.]\n&quot;,
 				&quot;\n&lt;red&gt;[All flee triggers are turned off.]\n&quot;,
@@ -26821,7 +27036,7 @@ charData = charData or {}
 				&quot;\n&lt;green&gt;[Any group member is combat will be assisted.]\n&quot;,
 				&quot;\n&lt;red&gt;[Assist commands will not be sent.]\n&quot;,
 		},
-	{ &quot;petrescue&quot;, &quot;*&quot;, {&quot;NONE&quot;, &quot;ALL&quot;, &quot;ME&quot;}, &quot;ALL&quot;, &quot;&quot;,
+	{ &quot;petrescue&quot;, &quot;*&quot;, {&quot;NONE&quot;, &quot;ALL&quot;, &quot;ME&quot;}, &quot;ME&quot;, &quot;&quot;,
 				&quot;\n&lt;red&gt;[Commands will not be generated to rescue anyone]\n&quot;,
 				&quot;\n&lt;green&gt;[Order pets to rescue all non-warriors]\n&quot;,
 				&quot;\n&lt;green&gt;[Only rescue me]\n&quot;
@@ -27012,8 +27227,14 @@ charData = charData or {}
 			&quot;\n&lt;green&gt;[@ will be used.]\n&quot;,
 			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
 		},
-
-
+	{ &quot;outflank&quot;, &quot;dire&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;outflank during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;autohowl&quot;, &quot;dire&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;howl during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		}
 
  }
 
@@ -27035,6 +27256,8 @@ function charData:init(xkey, xval, xtop)
 		end
 	end
 end
+
+-- TODO: change charData:set to update matching button
 
 function charData:set(xkey, xval, xtop)
 	if xtop ~= nil then
@@ -27283,7 +27506,7 @@ powerAliases[&quot;Dir&quot;] =
 { &quot;create_water&quot;, &quot;cwater&quot;, 6, &quot;&quot;, &quot;&quot;},
 { &quot;create_food&quot;, &quot;cfood&quot;, 6, &quot;&quot;, &quot;&quot;},
 { &quot;vigorize_serious&quot;, &quot;vs&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;faerie_fire&quot;, &quot;ff&quot;, 11, &quot;autoffire&quot;, &quot;&quot;},
+{ &quot;faerie_fire&quot;, &quot;ff&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;detect_invisibility&quot;, &quot;di&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;command_undead&quot;, &quot;comu&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;bless&quot;, &quot;bls&quot;, 11, &quot;&quot;, &quot;&quot;},
@@ -27847,7 +28070,7 @@ powerAliases[&quot;Nec&quot;] =
 { &quot;contagion&quot;, &quot;ctg&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;blackmantle&quot;, &quot;bm&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;animate_spectre&quot;, &quot;spect&quot;, 36, &quot;&quot;, &quot;&quot;},
-{ &quot;globe_of_invulnerability&quot;, &quot;gi&quot;, 41, &quot;&quot;, &quot;&quot;},
+{ &quot;globe_of_invulnerability&quot;, &quot;gi&quot;, 41, &quot;autoglobe&quot;, &quot;&quot;},
 { &quot;eradicate_undead&quot;, &quot;eu&quot;, 41, &quot;turnundead&quot;, &quot;&quot;},
 { &quot;animate_ghost&quot;, &quot;ghost&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;vampiric_curse&quot;, &quot;vc&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
@@ -27921,7 +28144,7 @@ powerAliases[&quot;Lic&quot;] =
 { &quot;blackmantle&quot;, &quot;bm&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;animate_spectre&quot;, &quot;spect&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;lich_touch&quot;, &quot;lt&quot;, 41, &quot;&quot;, &quot;&quot;},
-{ &quot;globe_of_invulnerability&quot;, &quot;gi&quot;, 41, &quot;&quot;, &quot;&quot;},
+{ &quot;globe_of_invulnerability&quot;, &quot;gi&quot;, 41, &quot;autoglobe&quot;, &quot;&quot;},
 { &quot;eradicate_undead&quot;, &quot;eu&quot;, 41, &quot;turnundead&quot;, &quot;&quot;},
 { &quot;animate_ghost&quot;, &quot;ghost&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;abi_dalzims_horrid_wilting&quot;, &quot;abi&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
@@ -28210,10 +28433,10 @@ Aetius=200,
 Alak=0,
 Alane=0,
 Alimam=0,
-Anashoa=0,
+Anashoa=100,
 Andreww=150,
 Annam=0,
-Arrithes=200,
+Arrithes=275,
 Ashades=0,
 Azralek=0,
 Babo=0,
@@ -28235,7 +28458,7 @@ Drahken=200,
 Drakkochian=100,
 Drake=465,
 Druzix=0,
-Duard=100,
+Duard=200,
 Elscint=0,
 Enth=100,
 Etrangere=100,
@@ -28246,7 +28469,7 @@ Flib=75,
 Flyngspaghetti=175,
 Frensolith=500,
 Gene=0,
-George=0,
+George=75,
 Gerin=100,
 Gindipple=0,
 Gormal=100,
@@ -28254,11 +28477,11 @@ Graum=100,
 Gruuggh=0,
 Grundar=75,
 Gubody=0,
-Gyrx=200,
+Gyrx=300,
 Hamwich=100,
 Hefa=275,
-Hibbidy=100,
-Hue=100,
+Hibbidy=0,
+Hue=200,
 Hyla=0,
 Iamtux=100,
 Ice=100,
@@ -28295,7 +28518,7 @@ Lenen=0,
 Lilithelle=0,
 Lilmeshay=0,
 Lopi=100,
-Lusas=500,
+Lusas=0,
 Maxler=200,
 Mayoung=100,
 Mij=0,
@@ -28311,9 +28534,9 @@ Netonosel=250,
 Nolumakil=0,
 Ntwolfgang=0,
 Nurpy=300,
-Nyyrazzilyss=100,
+Nyyrazzilyss=200,
 Oggsk=50,
-Onut=0,
+Onut=100,
 Osheara=0,
 Ozzec=100,
 Parsnip=400,
@@ -28327,7 +28550,7 @@ Rirus=0,
 Riwer=300,
 Rorg=50,
 Rouse=0,
-Ruagh=400,
+Ruagh=500,
 Saerian=100,
 Samiam=0,
 Sasin=150,
@@ -28344,17 +28567,17 @@ Stephanie=500,
 Stoutwoodarcanos=0,
 Sulaco=100,
 Susab=150,
-Syrac=100,
-Tafi=50,
+Syrac=0,
+Tafi=150,
 Talomis=0,
-Tanji=100,
+Tanji=0,
 Teresias=65,
 Thegnome=100,
 Tibek=100,
 Tilsen=250,
 Timok=0,
 Todd=0,
-Toraza=0,
+Toraza=100,
 Torlin=100,
 Torsoul=300,
 Travok=0,
@@ -28362,9 +28585,9 @@ Turg=100,
 Turxx=0,
 Typographer=0,
 Utheba=100,
-Venlarin=75,
-Verarb=100,
-Vooku=0,
+Venlarin=175,
+Verarb=0,
+Vooku=100,
 Wired=100,
 Wobb=0,
 Xboomx=300,
@@ -28374,9 +28597,10 @@ Yadir=0,
 Ykor=200,
 Yog=100,
 Yxageirr=175,
-Zarel=0,
+Zarel=100,
 Zellas=300,
 Zepharian=0,
+Zerogod=100,
 Zipalodok=0,
 Zoe=400,
 Zusuk=100
@@ -28935,6 +29159,17 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 
+
+-- return true if in combat - incomplete
+
+function inCombat()
+	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; or prompt:get(&quot;tank&quot;) ~= &quot;&quot; then
+		return(true)
+	end
+
+	return(false)
+end
+
 -- return true if hidden
 
 function getHide()
@@ -29236,6 +29471,10 @@ end
 
 
 function sendAssist(xchar)
+	if NyyLIB.castertrain then
+		return
+	end
+
 	-- if hp not listed send group
 	if groupList:getHP(xchar) == 0 then
 		sendGroup()
@@ -29245,8 +29484,8 @@ function sendAssist(xchar)
 		return
 	end
 
-	-- if prompt already shows attacking, why assist again?
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+	-- already in combat: why assist again?
+	if inCombat() then
 		return
 	end
 
@@ -32191,7 +32430,7 @@ function powerAliases:castDamage()
 	local charDataEntries= {}
 
 	-- not in combat or other spells currently queued
-	if prompt:get(&quot;enemy&quot;) == &quot;&quot; or spell:count() &gt; 0 then
+	if not inCombat() or spell:count() &gt; 0 then
 		return(false)
 	end
 
@@ -32380,16 +32619,41 @@ pet.followers = pet.followers or {}
 -- pet:status() - return true if currently have any tracked pets
 
 
-function pet:add(petname)
-	self.followers[petname] = self.followers[petname] or 0
+function pet:reset()
+	self.followers = {}
+end
 
-	self.followers[petname] = self.followers[petname] + 1
+function pet:member(xfullname)
+	for k,v in pairs(self.followers) do
+		if v[2]:lower() == xfullname:lower() then
+			return(true)
+		end
+	end
+
+	return(false)
+end
+
+
+function pet:list()
+-- return table of pet keywords
+
+
+
+end
+
+function pet:add(petname, fullname, xhp, xmaxhp)
+	self.followers[petname] = self.followers[petname] or {0, &quot;&quot;, 0, 0}
+	self.followers[petname][1] = self.followers[petname][1] + 1
+	self.followers[petname][2] = fullname
+
+	self.followers[petname][3] = xhp
+	self.followers[petname][4] = xmaxhp
 end
 
 function pet:delete(petname)
 	if self.followers[petname] ~= nil then
-		if self.followers[petname] &gt; 1 then
-			self.followers[petname] = self.followers[petname] - 1
+		if self.followers[petname][1] &gt; 1 then
+			self.followers[petname][1] = self.followers[petname][1] - 1
 		else
 			self.followers[petname] = nil
 		end
@@ -32487,6 +32751,10 @@ function idMob(xname)
 				{ &quot;zombie&quot;, &quot;ghoul&quot;, &quot;skeleton&quot;, &quot;wight&quot;, &quot;spectre&quot;, &quot;ghast&quot;, &quot;ghost&quot;}
 
 	local enemytable = string.split(xname, &quot; &quot;)
+
+	if string.find(xname, &quot;elderly priest of Mielikki&quot;) then
+		return(&quot;priest&quot;)
+	end
 
 	if string.find(xname, &quot;doppelganger&quot;) then
 		return(&quot;doppelganger&quot;)
@@ -32691,7 +32959,7 @@ function promptEvent(event)
 	local current=spell:getCurrent() or &quot;nil&quot;
 	local memcount= charData:get(&quot;memcount&quot;) or 0
 
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+	if inCombat() then
 		assistSent = nil
 
 		-- send con to update database if needed
@@ -32706,7 +32974,7 @@ function promptEvent(event)
 	end
 
 	-- If engaged in combat AND a look command was not sent/unreceived, set not moving
-	if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; or type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
+	if inCombat() or type(groupList:whoTanking()) == &quot;table&quot; and NyyLIB.tolook == 0 then
 		automem=0
 
 		if spell:getMoving() then
@@ -32719,10 +32987,30 @@ function promptEvent(event)
 
 	-- send furious assault
 	if whorace( whoami() ) == &quot;Half-Orc&quot; then
-		if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
+		if inCombat() then
 			if timer:get(&quot;furiousassult&quot;) == nil then
 				timer:set(&quot;furiousassult&quot;, 90)
 				mud:send(&quot;fa&quot;)
+			end
+		end
+	end
+
+	-- dire: howl - howl if in combat and enabled
+	if mount:getMounted() then
+		if charData:get(&quot;autohowl&quot;) and inCombat() then
+			if not timer:get(&quot;howcd&quot;) then
+				timer:set(&quot;howlcd&quot;, 7)
+				mud:send(&quot;howl&quot;)	
+			end
+		end
+	end
+
+	-- dire: outflank - outflank if in combat and enabled
+	if mount:getMounted() then
+		if charData:get(&quot;outflank&quot;) and inCombat() then
+			if not timer:get(&quot;outflankcd&quot;) then
+				timer:set(&quot;outflankcd&quot;, 6)
+				mud:send(&quot;outflank&quot;)	
 			end
 		end
 	end
@@ -32760,6 +33048,8 @@ function promptEvent(event)
 
 	-- if inside fugue return
 	if map:getRoom() == 93848 then
+		-- Remove any fugue proc'd buffs
+		buff:del(whoami())
 		return
 	end
 
@@ -32782,17 +33072,19 @@ function promptEvent(event)
 
 	memsent = memsent or false
 
-	if (automem ~= 0 and automem ~= 1) or groupList:size() == 1 then
+	if (automem ~= 0 and automem ~= 1) or groupList:size() == 1 and not roomCombat then
 		if spell:count() ~= 0 or spell:getCurrent() ~= nil then
 			return
 		end
 		if checkMask(&quot;casterPsi&quot;) or checkMask(&quot;nonPriestCaster&quot;) then
 			if charData:get(&quot;autocast&quot;) then
 				if charData:get(&quot;memcount&quot;) ~= 0 and not spell:getMem() and spell:getCurrent() == nil and not memsent then
-					echoDebug(&quot;&lt;red&gt;[initiating automem]\n&quot;)
-					mud:send(&quot;mem&quot;)
-					memsent = true
-					--automem = 0
+					if not inCombat() then
+						echoDebug(&quot;&lt;red&gt;[initiating automem]\n&quot;)
+						mud:send(&quot;mem&quot;)
+						memsent = true
+						--automem = 0
+					end
 				end
 			end
 		end
