@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE MudletPackage>
-<MudletPackage version="1.000">
+<MudletPackage version="1.001">
     <TriggerPackage>
         <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
             <name>NyyLIB</name>
@@ -4797,7 +4797,10 @@ end</script>
                 </Trigger>
                 <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>endprompt</name>
-                    <script>disableTrigger(&quot;endprompt&quot;)
+                    <script>-- group has been recieved. can check for vit (send status) now
+groupList:checkMaxHP()
+
+disableTrigger(&quot;endprompt&quot;)
 rescuelist:generate()
 echoDebug(&quot;&lt;red&gt;\n[Group received]\n&quot;)
 sendGroup(false)
@@ -5846,7 +5849,7 @@ disableTrigger(&quot;DepositTrigger&quot;)
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>DepositTrigger</name>
                     <script>-- display(&quot;trigger matches&quot;)</script>
                     <triggerType>0</triggerType>
@@ -6047,7 +6050,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 11dev 6/3/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 6/11/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6081,7 +6084,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 11dev 6/3/201
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6121,7 +6124,7 @@ timer:set(&quot;TiaSleeves&quot;, 24*60)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Baatorian</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6380,7 +6383,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6468,7 +6471,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -9219,7 +9222,12 @@ end
 
 --echo(&quot;\n&quot;)
 --display(&quot;Capturing status: &quot; .. matches[2])
-</script>
+
+if not showstatus then
+	enableTrigger(&quot;gagstatus&quot;)
+end
+
+enableTrigger(&quot;endstatusgag&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9274,6 +9282,10 @@ if NyyLIB.statuschar ~= &quot;&quot; then
 		buff:set(NyyLIB.statuschar, to_snake(matches[6]), dur)
 
 	end
+
+	if not showstatus then
+		eraseLine()
+	end
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -9287,6 +9299,49 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>([A-Za-z ]+) +\([ ]*([0-9]+):([0-9]+)\)</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>gagstatus</name>
+                    <script>--
+eraseLine()</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^(.*)$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>endstatusgag</name>
+                    <script>disableTrigger(&quot;gagstatus&quot;)
+disableTrigger(&quot;endstatusgag&quot;)
+showstatus=false</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^&lt; .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -12109,7 +12164,10 @@ sendGroup()</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Nilebbeple starts casting a spell called 'Vitality'</name>
                     <script>
-addStat(matches[2], &quot;Vitality&quot;)</script>
+addStat(matches[2], &quot;Vitality&quot;)
+
+
+tempTimer(3, [[sendGroup()]])</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -17333,6 +17391,7 @@ else
 	cecho(&quot;&lt;red&gt;       #fwalk add name   - adds a fastwalk to the currently occupied room using 'name' \n&quot;)
    cecho(&quot;&lt;red&gt;       #fwalk del name   - deletes fastwalk 'name'\n&quot;)
 	cecho(&quot;&lt;red&gt;       #fwalk all        - list all fwalks regardless of location\n&quot;)
+	cecho(&quot;&lt;red&gt;       #fwalk area       - list all fwalks in current area\n&quot;)
 
 	echo(&quot;\n&quot;)
 
@@ -17365,6 +17424,45 @@ else
 
 		return
 	end
+
+	if var1 == &quot;area&quot; then
+
+		local roomid= map:getRoom()
+
+		local internalid = getRoomArea( roomid )
+		local zone=getRoomUserData(roomid, &quot;zoneid&quot;)
+		local currentareazoneid=tonumber(zone)
+
+		for k,v in pairs(charData:get(&quot;fwalk&quot;, true)) do
+
+			if roomExists(v) then
+				local zoneid=tonumber(getRoomUserData(v, &quot;zoneid&quot;) )
+				local pathlength=0
+
+				if roomLocked(v) == false then
+					if getPath( map:getRoom(), v) then
+						pathlength=#speedWalkPath
+					end
+				end
+
+				if zoneid == currentareazoneid then
+					if pathlength ~= 0 then
+						tmplist[#tmplist+1] = string.format(&quot;[%-30s] [%6d %-15s] [%3d] %s\n&quot;, NyyLIB.areaTable[zoneid], v, k, pathlength, getRoomName(v))
+					else
+						tmplist[#tmplist+1] = string.format(&quot;[%-30s] [%6d %-15s] [%3d] %s\n&quot;, NyyLIB.areaTable[zoneid], v, k, pathlength, getRoomName(v))
+					end
+				end
+			--else
+			--	tmplist[#tmplist+1] = string.format(&quot;[%-30s] [%6d %-15s] [%3s] %s\n&quot;, &quot;&quot;, v, k, &quot;&quot;, &quot;&quot;)
+			end
+		end
+
+		cecho(&quot;&lt;white&gt;             Area                  Room#      fwalk     Distance          Room Name\n&quot;)
+		printSorted(tmplist)
+
+		return
+	end
+
 
 	if map:getRoom() == nil then
 		cecho(&quot;&lt;red&gt;[Current room is unknown]\n&quot;)
@@ -17465,7 +17563,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 6/3/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 6/11/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -18591,6 +18689,21 @@ spell:setMoving(false)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^stpm$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>status</name>
+                    <script>showstatus=true
+
+local charname=matches[2]
+
+if charname ~= nil then
+	mud:send(&quot;STATUS &quot; .. charname)
+else
+	mud:send(&quot;STATUS&quot;)
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^status ?([A-Za-z]+)?$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -23264,11 +23377,17 @@ function sendTrip()
 	end
 end
 
-function sendAssassinate()
+function sendAssassinate(xtarget)
 	if charData:get(&quot;autoassassinate&quot;) then
 		if timer:get(&quot;assassinatetimer&quot;) == nil and charData:get(&quot;level&quot;) &gt; 39 then
 			timer:set(&quot;assassinatetimer&quot;, 25*60)
-			mud:send(&quot;assassinate &quot; .. enemytarget)
+
+			if xtarget == nil then
+				cecho(&quot;&lt;red&gt;[Assassinate target is nil]\n&quot;)
+				return(false)
+			end
+
+			mud:send(&quot;ASSASSINATE &quot; .. xtarget)
 			sendLook()
 			return(true)
 		end
@@ -23478,10 +23597,19 @@ function initLic()
 	addbutton(&quot;protection_from_undead&quot;, 7, 6)
 	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
 
+	addbutton(&quot;SoulShackleButton&quot;, 9, 36)
+
 	powerAliases:addButtons()
 end
 
 function SpellsLic()
+
+	if prompt:get(&quot;hp&quot;) &lt; .65 * prompt:get(&quot;maxhp&quot;) then
+		if getSpellCount(&quot;heal_undead&quot;) &gt; 0 then
+			spell:cast(&quot;hu &quot; .. whoami())
+			return
+		end
+	end
 
 	if charData:get(&quot;autopfu&quot;) then
 		if scr_pfu() then
@@ -23496,6 +23624,108 @@ function SpellsLic()
 	-- if fighting and no other spells cast damage spells
 	if powerAliases:castDamage() then
 		return
+	end
+end
+
+function ghostCast()
+	-- do I have a ghost that needs a spell to cast
+	if timer:get(&quot;ghostcast&quot;) or not pet:status(&quot;ghost&quot;) then
+		return
+	end
+
+	timer:set(&quot;ghostcast&quot;, 4)
+
+	-- these spells should only be cast in combat			
+	if inCombat() then
+		if charData:get(&quot;turnundead&quot;) then
+			mud:send(&quot;o ghost cast 'annihilate undead'&quot;)
+			return
+		end
+
+		if charData:get(&quot;autohlarea&quot;) then
+			mud:send(&quot;o ghost cast 'rain of blood'&quot;)
+			return
+		end
+
+		mud:send(&quot;o ghost cast 'boneshatter' &quot; .. prompt:get(&quot;enemy&quot;) )
+	else
+
+
+
+	end
+end
+
+
+function SoulShackleButton(xcommand)
+	local fname=&quot;SoulShackleButton&quot;
+
+	if xcommand == &quot;init&quot; then
+		setLabelImage(fname, &quot;soul_shackles-off.png&quot;)
+	else
+		spell:cast(&quot;ssh&quot;)
+	end
+end
+
+
+-- TODO: broken
+
+function petcast(xchar, xspell, xcommand) -- if xchar doesn't have xspell and spells available/memorized, cast it
+
+	-- no target set for spell
+	if not xchar then
+		mud:send(&quot;o ghost cast '&quot; .. xcommand .. &quot;'&quot;)
+		return(true)
+	end
+
+	if groupList:getHP(xchar) ~= 0 then
+		spell:cast(xcommand .. &quot; &quot; .. xchar)
+		return(true)	
+	end
+
+	return(false)
+end
+
+function ghost_globe()
+	if charData:get(&quot;autoglobe&quot;) == true then
+		for k,char in pairs(groupList:pc()) do
+			if checkMask(&quot;hitter&quot;, char ) then
+				if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+					return(true)
+				end
+			end
+
+			if charData:get(&quot;bard&quot;) and checkMask(&quot;singer&quot;, char ) then
+				if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+					return(true)
+				end
+			end
+		end
+
+		for k,char in pairs(groupList:pc(&quot;war&quot;)) do
+			if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+				return(true)
+			end
+		end
+	elseif charData:get(&quot;autoglobe&quot;) == &quot;hitters&quot; then
+		for k,char in pairs(groupList:pc()) do
+			if checkMask(&quot;hitter&quot;, char ) then
+				if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+					return(true)
+				end
+			end
+		
+			if whoclass(char) == &quot;War&quot; and whorace(char) == &quot;Ogre&quot; then
+				if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+					return(true)
+				end
+			end
+
+			if charData:get(&quot;bard&quot;) and checkMask(&quot;singer&quot;, char ) then
+				if spell:attempt(char, &quot;globe_of_invulnerability&quot;, &quot;gi&quot;) then
+					return(true)
+				end
+			end
+		end
 	end
 end
 
@@ -24327,6 +24557,9 @@ end</script>
 
 -- dev
 
+-- all generated status requests are now gagged
+-- #fwalk area - list fwalks for current area only
+-- soul shackles button
 -- autoassist will work with ungrouped pet followers
 -- added outflank
 -- refactored train - use 'starttrain tank' to start as engine
@@ -25008,7 +25241,7 @@ function StartFight()
 
 		-- rogue: start with assassinate
 		if checkMask(&quot;rog&quot;) then
-			if not sendAssassinate() then
+			if not sendAssassinate(mobtarget) then
 				mud:send(&quot;bs &quot; .. mobtarget)
 			end
 
@@ -27245,7 +27478,7 @@ charData = charData or {}
 			&quot;\n&lt;green&gt;[Doppelganger will be used.]\n&quot;,
 			&quot;\n&lt;red&gt;[Doppelganger will not be used.]\n&quot;
 	},
-	{ &quot;displacemask&quot;, &quot;mask&quot;, { }, &quot;&quot;, &quot;&quot;,	},
+	{ &quot;displacemask&quot;, &quot;ill&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,	},
 	{ &quot;autoblind&quot;, &quot;ele&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
 			&quot;\n&lt;green&gt;[@ will be used.]\n&quot;,
 			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
@@ -28183,7 +28416,7 @@ powerAliases[&quot;Lic&quot;] =
 { &quot;contagion&quot;, &quot;ctg&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;blackmantle&quot;, &quot;bm&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;animate_spectre&quot;, &quot;spect&quot;, 36, &quot;&quot;, &quot;&quot;},
-{ &quot;lich_touch&quot;, &quot;lt&quot;, 41, &quot;&quot;, &quot;&quot;},
+{ &quot;lich_touch&quot;, &quot;lt&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;globe_of_invulnerability&quot;, &quot;gi&quot;, 41, &quot;autoglobe&quot;, &quot;&quot;},
 { &quot;eradicate_undead&quot;, &quot;eu&quot;, 41, &quot;turnundead&quot;, &quot;&quot;},
 { &quot;animate_ghost&quot;, &quot;ghost&quot;, 41, &quot;&quot;, &quot;&quot;},
@@ -29491,10 +29724,10 @@ function sendStatus(xcharname)
 	sendingStatus = true
 
 	if xcharname == nil then
-		mud:send(&quot;status&quot;)
+		mud:send(&quot;STATUS&quot;)
 	else
-		cecho(&quot;&lt;red&gt;\n[Sending status: &quot; .. xcharname .. &quot;]\n&quot;)
-		mud:send(&quot;status &quot; .. xcharname )
+		echoDebug(&quot;&lt;red&gt;\n[Sending status: &quot; .. xcharname .. &quot;]\n&quot;)
+		mud:send(&quot;STATUS &quot; .. xcharname )
 	end
 end
 
@@ -29549,7 +29782,7 @@ function sendAssist(xchar)
 			local enemytarget = getEnemy()
 
 			if enemytarget ~= &quot;&quot; then
-				if sendAssassinate() then
+				if sendAssassinate(enemytarget) then
 					return
 				end
 
@@ -29646,6 +29879,9 @@ end</script>
 -------------------------------------------------
 
 groupList = groupList or {}
+
+previous = previous or {}
+
 tankingList = tankingList or {}
 
 -- return grouplist in a table
@@ -29663,10 +29899,38 @@ end
 -- delete all members in current grouplist
 
 function groupList:reset()
+	-- copy table before erasing
+	previous=table.deepcopy(groupList)
+
 	local nx
 
 	for nx=1, groupList:size(), 1 do
 		groupList[nx]=nil
+	end
+end
+
+-- identify if anyone has been vitalized
+
+function groupList:checkMaxHP()
+	local nx
+
+	--display(previous)
+
+	for nx=1, #previous, 1 do
+		local charname=previous[nx][1]
+		local maxhp= tonumber(previous[nx][4])
+
+		local newmaxhp= groupList:getMaxHP(charname)
+
+		if newmaxhp ~= nil then
+			if maxhp ~= 0 then
+				if tonumber(newmaxhp) &gt; (maxhp+50) then
+					if not buff:get(&quot;vitality&quot;, charname) then
+						sendStatus(charname)
+					end
+				end
+			end
+		end
 	end
 end
 
@@ -30211,7 +30475,7 @@ function genline(xchar, xcls, xhp, xmaxhp)
 		end
 
 		if buff:get(&quot;silence_person&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ SILENT ]]             &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ SILENT ]]      &quot;))
 		end
 
 		if buff:get(&quot;venom&quot;, xchar) then
@@ -31161,6 +31425,7 @@ end
 function setStyle()
 local background_color = &quot;#26192f&quot;
 local border_color = &quot;#b8731b&quot;
+local black_color = &quot;#000000&quot;
 
 --		spacing: 10;
 -- 	QToolButton:pressed {	background-color: red;}
@@ -31203,7 +31468,7 @@ setAppStyleSheet([[
   }
 
   QStatusBar {
-     background: ]]..border_color..[[;
+     background: ]]..background_color..[[;
   }
   QScrollBar:vertical {
      background: ]]..background_color..[[;
@@ -33101,9 +33366,8 @@ function promptEvent(event)
 	-- call class specific spell script if autocast enabled
 	if charData:get(&quot;autocast&quot;) then
 
-		if not timer:get(&quot;ghostcast&quot;) then
-			--timer:set(&quot;ghostcast&quot;, 8)
-			--mud:send(&quot;o ghost cast 'globe of invul' &quot; ..)
+		if checkMask(&quot;necros&quot;) then
+			ghostCast()
 		end
 
 		local cname=&quot;Spells&quot; .. string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)
