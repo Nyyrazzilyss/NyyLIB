@@ -863,7 +863,7 @@ MemButton(&quot;MemButton&quot;, buttons.UPDATE)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>You can pray for no more spells.</name>
                     <script>if prompt:get(&quot;position&quot;) == &quot;sit&quot; and charData:get(&quot;memcount&quot;) == 0 then
-	send(&quot;st&quot;)
+	mud:send(&quot;ST&quot;)
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -1335,7 +1335,7 @@ if checkMask(&quot;psi&quot;) then
 	if getHide() then
 		echo(&quot;\n[Not standing, currently hidden.]\n&quot;)
 	else
-		mud:send(&quot;st&quot;)
+		mud:send(&quot;ST&quot;)
 	end
 end
 
@@ -1345,7 +1345,7 @@ if checkMask(&quot;caster&quot;) or checkMask(&quot;nonPriestCaster&quot;) or ch
 	if getHide() then
 		echo(&quot;\n[Not standing, currently hidden.]\n&quot;)
 	else
-		mud:send(&quot;st&quot;)
+		mud:send(&quot;ST&quot;)
 	end
 end
 
@@ -1791,8 +1791,8 @@ end</script>
                         <script>-- if you get attacked by a dragon and aren't singing heal, switch to heal
 if checkMask(&quot;singer&quot;) then
 	if charData:get(&quot;song&quot;) ~= &quot;song of healing&quot; then
- 		send(&quot;st&quot;)
- 		send(&quot;rem ravenous&quot;)
+ 		mud:send(&quot;ST&quot;)
+ 		mud:send(&quot;REM ravenous&quot;)
  		music( charData:get(&quot;lute&quot;), &quot;song of healing&quot;, &quot;&quot;)
 	end
 end</script>
@@ -2277,6 +2277,8 @@ buff:del(whoami(), &quot;harmonious_blessing&quot;)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Determine char class level</name>
                     <script>charData:set(&quot;level&quot;, tonumber(matches[2]))
+
+followersSent=nil
 
 sqlinwho(whoami())
 
@@ -3676,7 +3678,7 @@ NyyLIB.mtank=matches[2]
 if checkMask(&quot;Cle&quot;) then
 	--if charData:get(&quot;autoheal&quot;) then
 		if spell:getMem() then
-			send(&quot;st&quot;)
+			mud:send(&quot;ST&quot;)
 		end
 
 		--spell:cast(&quot;ha &quot; .. NyyLIB.mtank)
@@ -5725,12 +5727,15 @@ if charData:get(&quot;pokehaste&quot;) then
 		local level = charData:get(&quot;level&quot;)
 
 		if whoclass() == &quot;Enc&quot; and level &gt;= 16 then
-			spell:cast(&quot;hs &quot; .. matches[2])
+			spell:cast(&quot;HS &quot; .. matches[2])
 		elseif whoclass() == &quot;Ele&quot; and level &gt;= 31 then
-			spell:cast(&quot;hs &quot; .. matches[2])
+			spell:cast(&quot;HS &quot; .. matches[2])
 		elseif whoclass() == &quot;Nec&quot; and level &gt;= 31 then
-			spell:cast(&quot;hs &quot; .. matches[2])
+			spell:cast(&quot;HS &quot; .. matches[2])
+		elseif whoclass() == &quot;Lic&quot; and level &gt;= 31 then
+			spell:cast(&quot;HS &quot; .. matches[2])
 		end
+
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -6020,7 +6025,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 6/25/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 6/28/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6346,7 +6351,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -10699,9 +10704,9 @@ send(&quot;open door&quot;)</script>
                         <name>The door SLAMS shut and locks with a heavy thud.</name>
                         <script>belcount=0
 
-send(&quot;gsay door is closed!&quot;)
-send(&quot;st&quot;)
-send(&quot;open door&quot;)</script>
+mud:send(&quot;GSAY door is closed!&quot;)
+mud:send(&quot;ST&quot;)
+mud:send(&quot;OPEN door&quot;)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -10831,7 +10836,7 @@ end</script>
                         <script>fightreturn=true
 
 if NyyLIB.castertrain ~= nil then
-	mud:send(&quot;st&quot;)
+	mud:send(&quot;ST&quot;)
 
 	if NyyLIB.reversedirs[NyyLIB.castertrain] == nil then
 		display(&quot;error&quot;)
@@ -11067,7 +11072,7 @@ if groupList:ingroup(charname) and charData:get(&quot;autoportal&quot;, false) t
 
 		spell:clear()
 
-		mud:send(&quot;st&quot;)
+		mud:send(&quot;ST&quot;)
 
 		if portalname == &quot;fades&quot; then
 		-- special exit or invis
@@ -13439,6 +13444,8 @@ sendGroup()</script>
 -- Lilebeple summons a holy light to surround Tatris and close his wounds.
 -- Diac summons a holy light to surround Kitra and close her wounds.
 
+--display(&quot;Z&quot;)
+
 if matches[2] ~= nil then
 	sendStatus(matches[2])
 end
@@ -15137,10 +15144,11 @@ timer:set(&quot;furiousassault&quot;, timeleft)</script>
 --    25)     127686                      a deep-blue set of sleeves    200     10          Nicrekas  N/A  SELLER Nyyrazzilyss
 
 -- 161)     127839                             a dark shadowy ring     10      1          You (25)  N/A   ENDED Peri
+--    7)     128002                           a dusty glass ampoule    500     10         You (500)  N/A   BUYER Fibble
 
 display(matches[3])
 
-if matches[3] == whoami() then
+if matches[3] == whoami() or matches[3] == &quot;BUYER&quot; then
 	mud:send(&quot;auction claim &quot; .. matches[2] )
 end</script>
                 <triggerType>0</triggerType>
@@ -15155,11 +15163,11 @@ end</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
                     <string> +[0-9]+\) +([0-9]+) +.*[A-Za-z]+ +SELLER (.*)</string>
-                    <string> +[0-9]+\) +([0-9]+) +.*You.*ENDED.*</string>
+                    <string> +[0-9]+\) +([0-9]+) +.*You.*(ENDED|BUYER).*</string>
                 </regexCodeList>
                 <regexCodePropertyList>
                     <integer>1</integer>
-                    <integer>0</integer>
+                    <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -15232,9 +15240,11 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>^Follower summary for .*:$</string>
+                        <string>You have no followers.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
+                        <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -15313,6 +15323,10 @@ pet:add(keyword, fullname, tonumber(matches[2]), tonumber(matches[3]), inroom, k
 
 if gagfollowers then
 	eraseLine()
+end
+
+if inroom == &quot;-&quot; then
+	cecho(&quot;\n&lt;blue&gt;[&lt;green&gt;&quot; .. string.title(fullname) .. &quot; &lt;blue&gt;is not in the room]\n&quot;)
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -15335,6 +15349,7 @@ end</script>
                     <name>starts/stops following you.</name>
                     <script>--You breathe life into corpse of a frost giant warrior with the awesome power of your art.
 --The wight of a frost giant warrior starts following you.
+-- The spectre of a human noble starts following you.
 
 gagfollowers=true
 
@@ -18110,7 +18125,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 6/25/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 6/28/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -23558,7 +23573,7 @@ function sendRescue(xchar)
 
 		-- stand first if sitting
 		if spell:getMem() == true then
-			mud:send(&quot;st&quot;)
+			mud:send(&quot;ST&quot;)
 		end
 
 
@@ -24298,7 +24313,7 @@ function MemButton(fname, xcommand)
 		if checkMask(&quot;psi&quot;) then
 			if spell:getMem() then
 				setLabelImage(fname, &quot;psiMeditate.png&quot;)
-				send(&quot;st&quot;)			
+				mud:send(&quot;ST&quot;)			
 			else
 				setLabelImage(fname, &quot;psiStand.png&quot;)
 				mud:send(&quot;mem&quot;)
@@ -24308,7 +24323,7 @@ function MemButton(fname, xcommand)
 				mud:send(&quot;mem&quot;)
 			else
 				spell:setMem(false)
-				mud:send(&quot;st&quot;)
+				mud:send(&quot;ST&quot;)
 			end
 		end
 	end
@@ -24664,12 +24679,12 @@ end</script>
 -------------------------------------------------
 function initLic()
 	addbutton(&quot;protection_from_undead&quot;, 7, 6)
-	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
-
-	addbutton(&quot;SoulShackleButton&quot;, 14, 36)
-
 	addbutton(&quot;death_pact&quot;, 9, 46)
-	addbutton(&quot;banshee_wail&quot;, 11, 46)
+	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
+	addbutton(&quot;haste&quot;,11, 31)
+
+	addbutton(&quot;banshee_wail&quot;, 13, 46)
+	addbutton(&quot;SoulShackleButton&quot;, 14, 36)
 
 	powerAliases:addButtons()
 end
@@ -24706,9 +24721,11 @@ function SpellsLic()
 		local petname= pet:getTable(&quot;spectre&quot;)[1]
 
 		if not buff:get(&quot;protection_from_undead&quot;, petname) and pet:getInRoom(petname) then
-			spell:cast(&quot;pfu &quot; .. petname)
-			buff:set(petname, &quot;protection_from_undead&quot;, 15)
-			return
+			if getSpellCount(&quot;protection_from_undead&quot;) &gt; 0 then
+				spell:cast(&quot;pfu &quot; .. petname)
+				buff:set(petname, &quot;protection_from_undead&quot;, 15)
+				return
+			end
 		end
 	end
 
@@ -28062,7 +28079,7 @@ powerAliases[&quot;Enc&quot;] =
 { &quot;mass_invisibility&quot;, &quot;massi&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;lightning_bolt&quot;, &quot;lb&quot;, 16, &quot;automissile&quot;, &quot;&quot;},
 { &quot;levitate&quot;, &quot;lv&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;haste&quot;, &quot;hs&quot;, 16, &quot;&quot;, &quot;&quot;},
+{ &quot;haste&quot;, &quot;hs&quot;, 16, &quot;pokehaste&quot;, &quot;&quot;},
 { &quot;fumble&quot;, &quot;fmb&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;farsee&quot;, &quot;fs&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;dispel_magic&quot;, &quot;dism&quot;, 16, &quot;&quot;, &quot;&quot;},
@@ -28140,7 +28157,7 @@ powerAliases[&quot;Ele&quot;] =
 { &quot;earth_darts&quot;, &quot;ed&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;ice_tongue&quot;, &quot;it&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;ice_layer&quot;, &quot;il&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;&quot;, &quot;&quot;},
+{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;pokehaste&quot;, &quot;&quot;},
 { &quot;elemental_water_embodiment&quot;, &quot;ewe&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;dimension_door&quot;, &quot;dim&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;whirlwind&quot;, &quot;ww&quot;, 36, &quot;autohlmissile&quot;, &quot;&quot;},
@@ -28208,7 +28225,7 @@ powerAliases[&quot;Nec&quot;] =
 { &quot;age&quot;, &quot;age&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;magic_missile&quot;, &quot;mg&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;protect_undead&quot;, &quot;pu&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;&quot;, &quot;&quot;},
+{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;pokehaste&quot;, &quot;&quot;},
 { &quot;dimension_door&quot;, &quot;dim&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;corpse_glamor&quot;, &quot;cglam&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;beltyns_burning_blood&quot;, &quot;bbb&quot;, 31, &quot;autohlmissile&quot;, &quot;&quot;},
@@ -28280,7 +28297,7 @@ powerAliases[&quot;Lic&quot;] =
 { &quot;magic_missile&quot;, &quot;mg&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;protect_undead&quot;, &quot;pu&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;locate_remains&quot;, &quot;locr&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;&quot;, &quot;&quot;},
+{ &quot;haste&quot;, &quot;hs&quot;, 31, &quot;pokehaste&quot;, &quot;&quot;},
 { &quot;dimension_door&quot;, &quot;dim&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;corpse_glamor&quot;, &quot;cglam&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;beltyns_burning_blood&quot;, &quot;bbb&quot;, 31, &quot;autohlmissile&quot;, &quot;&quot;},
@@ -29680,7 +29697,7 @@ function sendAssist(xchar)
 
 		-- if memorizing stand before sending assist
 		if spell:getMem() or memsent then
-			mud:send(&quot;st&quot;)
+			mud:send(&quot;ST&quot;)
 		end
 
 		echoDebug(&quot;&lt;red&gt;[assist &quot; .. xchar .. &quot;]\n&quot;)
@@ -29752,6 +29769,8 @@ end
 function eraseLine()
 	if not charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;] then
 		deleteLine()
+	else
+		cecho(&quot;&lt;red&gt;-&quot;)
 	end
 end</script>
                     <eventHandlerList/>
@@ -30863,7 +30882,7 @@ function leftIcons()
 
 		lLabel:resize(5, nil)
 	else
-		setBorderLeft ( math.ceil(WindowWidth/20) )
+		setBorderLeft ( math.ceil(WindowWidth/20)+4 )
 
 		exitLabel:show()
 
@@ -30885,7 +30904,7 @@ function hideLeftIcons()
 
 		setBorderLeft( 10 )
 	else
-		setBorderLeft ( math.ceil(WindowWidth/20) )
+		setBorderLeft ( math.ceil(WindowWidth/20)+4 )
 	end
 end
 
@@ -30902,7 +30921,7 @@ function showLeftIcons()
 
 	lLabel:resize(&quot;5%&quot;, nil)
 
-	setBorderLeft ( math.ceil(WindowWidth/20) )
+	setBorderLeft ( math.ceil(WindowWidth/20)+4 )
 end
 
 function leftsideOnEnter()
@@ -30922,7 +30941,8 @@ function createLeftsideContainers()
 
 -- if charData:get(&quot;level&quot;) == 50 then -- xp window = 32
 
-	local label = Geyser.Label:new({name=&quot;LeftLabel&quot;, x=&quot;0%&quot;, y=32, width=&quot;5%&quot;, height=&quot;100%&quot;,})
+--	local label = Geyser.Label:new({name=&quot;LeftLabel&quot;, x=&quot;0%&quot;, y=32, width=&quot;5%&quot;, height=&quot;100%&quot;,})
+	local label = Geyser.Label:new({name=&quot;LeftLabel&quot;, x=&quot;0%&quot;, y=0, width=&quot;5%&quot;, height=&quot;100%&quot;,})
 	Geyser.Container:new({name=&quot;LeftPanel&quot;, x=&quot;1%&quot;, y=&quot;2%&quot;, width=&quot;98%&quot;, height=&quot;75%&quot;,}, label)
 
 	local exitlabel = Geyser.Label:new({name=&quot;LeftExitLabel&quot;, x=&quot;5%&quot;, y=0, width=&quot;10%&quot;, height=&quot;100%&quot;,})
@@ -31116,6 +31136,8 @@ function initgui()
 	
 	if NyyLIB.gRoomWindow == nil then
 		NyyLIB.gRoomWindow = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		--NyyLIB.gRoomWindow = Geyser.Label:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		--NyyLIB.gRoomWindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;leftbar.png&quot;) .. [[)]])
 
 		--createBuffer( &quot;roomwindow&quot; )
 	end
