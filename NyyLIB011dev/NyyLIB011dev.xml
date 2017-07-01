@@ -1031,7 +1031,7 @@ if spellname ~= nil then
 
 	local displayname = to_english(powerAliases:toSpell(spellname))
 
-	cecho(&quot;&lt;green&gt; [Completed spell: &quot; .. spellname .. &quot; (&quot; .. displayname .. &quot;) ]&quot;)
+	cecho(&quot;&lt;red&gt;[&lt;green&gt;Completed spell: &quot; .. spellname .. &quot; (&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
 
 	-- [Completed spell: dopple Bombum (Doppleganger) ]
 
@@ -1110,7 +1110,7 @@ if spellname ~= nil then
 		end
 	end
 else
-	cecho(&quot; &lt;green&gt;[Completed spell: &lt;red&gt;unknown&lt;green&gt;]&quot; )
+	cecho(&quot; &lt;red&gt;[&lt;green&gt;Completed spell: &lt;red&gt;unknown]&quot; )
 end
 </script>
                     <triggerType>0</triggerType>
@@ -3415,7 +3415,11 @@ end</script>
                         <regexCodePropertyList/>
                         <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                             <name>Lilithelle group-says 'tanks ([nsewud])'</name>
-                            <script>if checkMask(&quot;fighter&quot;) == false then
+                            <script>if checkMask(&quot;necros&quot;) and matches[3] == &quot;spectre&quot; then
+	mud:send(&quot;ORDER spectre &quot; .. matches[4])
+end
+
+if checkMask(&quot;fighter&quot;) == false then
 	return
 end
 
@@ -3453,8 +3457,10 @@ end</script>
                                 <string>([A-Za-z]+) group-says '(Adud|adud|tanks) ([nsewud])( .*)?'</string>
                                 <string>([A-Za-z]+) group-says '(Adud|adud|tanks) (north|south|east|west|up|down)'</string>
                                 <string>([A-Za-z]+) group-says '(Adud|adud|tanks) (en) (.*)'</string>
+                                <string>([A-Za-z]+) group-says '(spectre) ([nsewud])( .*)?'</string>
                             </regexCodeList>
                             <regexCodePropertyList>
+                                <integer>1</integer>
                                 <integer>1</integer>
                                 <integer>1</integer>
                                 <integer>1</integer>
@@ -3646,6 +3652,26 @@ spell:setCast(&quot;bw&quot;)</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You feel powers of darkness strengthen you!</name>
+                        <script>sendGroup()</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You feel powers of darkness strengthen you!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -4544,7 +4570,7 @@ end
 if groupList:ingroup(consentchar) then
 	--
 else
-	mud:send(&quot;group &quot; .. consentchar)
+	mud:send(&quot;GROUP &quot; .. consentchar)
 	sendGroup()
 end
 
@@ -6025,7 +6051,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 6/28/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/1/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6138,7 +6164,7 @@ timer:set(&quot;TiaSleeves&quot;, 24*60)
                         <name>Smoke begins to pour out of your bracer, swirling around you in a dizzying</name>
                         <script>rescuelist:generate()
 mud:send(&quot;ORDER slaad consent &quot; .. whoami(), false)
-mud:send(&quot;FOLLOWERS&quot;)
+sendFollowers()
 timer:set(&quot;baatorian&quot;, 24*60)
 baatorian(&quot;baatorian&quot;, buttons.INIT)
 pet_rescue(&quot;pet_rescue&quot;, buttons.INIT)
@@ -6351,7 +6377,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -14415,8 +14441,10 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>screams in exquisite pain as a lightning bolt unleashed by</string>
+                        <string>Bits of flesh fall to the floor as</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
@@ -14965,7 +14993,7 @@ toPractice[skillname] = true
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>capture scribable spells</name>
+                    <name>capture scribable spells - trainer</name>
                     <script>toScribe = toScribe or {}
 
 local spellname = matches[2]:trim()
@@ -15035,6 +15063,7 @@ toScribe[spellname] = true</script>
                     <script>-- scribe next
 for k,v in pairs(toScribe) do
 	mud:send(&quot;prac &quot; .. k)
+--	mud:send(&quot;scribe &quot; .. k)
 	toScribe[k]=nil
 	return
 end</script>
@@ -15061,6 +15090,34 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>copyspells</name>
+                    <script>-- Detect Invisibility        1st circle [in spellbook]
+
+toScribe = toScribe or {}
+
+local spellname = matches[2]:trim()
+
+toScribe[spellname] = true</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>(.*) +([0-9]+)(nd|rd|th) circle \[in spellbook\]</string>
+                        <string>^(.*) +1st circle $</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                        <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -15384,7 +15441,9 @@ sendGroup()</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>One, is the loneliest number...</name>
-                    <script>pet.followers = {}
+                    <script>-- You have no followers.
+
+pet.followers = {}
 pet.used = {}
 
 if checkMask(&quot;fighter&quot;) then
@@ -15409,10 +15468,8 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>One, is the loneliest number...</string>
-                        <string>You have no followers.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
-                        <integer>0</integer>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
@@ -15706,7 +15763,7 @@ end</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Aren't we funny today...</name>
-                    <script>mud:send(&quot;FOLLOWERS&quot;)</script>
+                    <script>sendFollowers()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -18125,7 +18182,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 6/28/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/1/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -18551,10 +18608,12 @@ end
 if whoami() == &quot;Ajac&quot; or whoami() == &quot;Imseh&quot; or whoami() == &quot;Aynep&quot; or whoami() == &quot;Rrassulis&quot; or whoami() == &quot;Caged&quot; then
 	removeAll()
 
-	if whoami() == &quot;Imseh&quot; or whoami() == &quot;Aynep&quot; or whoami() == &quot;Rrassulis&quot; or whoami() == &quot;Caged&quot; then
-		mud:send(&quot;get planetar hole&quot;)
-	else
+	if whoami() == &quot;Aynep&quot; then
+		mud:send(&quot;get tome hole&quot;)
+	elseif whoami() == &quot;Ajac&quot; then
 		mud:send(&quot;get midnight-blue hole&quot;)
+	else
+		mud:send(&quot;get planetar hole&quot;)
 	end
 
    	mud:send(&quot;get barrel hole&quot;)
@@ -18592,12 +18651,12 @@ if whoami() == &quot;Nyyrazzilyss&quot; then
 	mud:send(&quot;put sandals hole&quot;)
 end
 
-if whoami() == &quot;Titter&quot; then
+if whoami() == &quot;Samem&quot; then
 	mud:send(&quot;rem planetar&quot;)
 	mud:send(&quot;storage store planetar&quot;)
 end
 
-if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Titter&quot; or whoami() == &quot;Ihgod&quot; then
+if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Samem&quot; or whoami() == &quot;Ihgod&quot; then
 	mud:send(&quot;rem valhalla&quot;)
 	mud:send(&quot;storage store valhalla&quot;)
 	removeAll()
@@ -18782,7 +18841,7 @@ if whoami() == &quot;Rrissun&quot; then
 	mud:send(&quot;powers info vit&quot;)
 end
 
-if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Titter&quot; or whoami() == &quot;Ihgod&quot; then
+if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Samem&quot; or whoami() == &quot;Ihgod&quot; then
 	mud:send(&quot;storage retrieve valhalla&quot;)
 	mud:send(&quot;wield valhalla&quot;)
 	mud:send(&quot;get shield hole&quot;)
@@ -18813,7 +18872,7 @@ if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == 
 	mud:send(&quot;get seal hole&quot;)
 end
 
-if whoami() == &quot;Titter&quot; then
+if whoami() == &quot;Samem&quot; then
 	mud:send(&quot;storage retrieve planetar&quot;)
 end
 
@@ -19264,7 +19323,10 @@ end</script>
                     <name>followers</name>
                     <script>gagfollowers=nil
 
-mud:send(&quot;FOLLOWERS&quot;)</script>
+-- reset flag and resend
+sendFollowers(false)
+sendFollowers()
+</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^followers$</regex>
@@ -19277,6 +19339,16 @@ mud:send(&quot;ST&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^st$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>group</name>
+                    <script>mud:send(&quot;GROUP&quot;)
+
+-- send followers after group
+sendFollowers()</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^group$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -20979,6 +21051,8 @@ end
 if matches[2] == &quot;start&quot; then
 	for k,v in pairs(toScribe) do
 		mud:send(&quot;prac &quot; .. k)
+		--mud:send(&quot;scribe &quot; .. k)
+
 		toScribe[k]=nil
 		return
 	end
@@ -21305,6 +21379,7 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- dev
 
+-- ungrouped followers are shown on group display
 -- added ancient staff of the ashen soul
 -- pet casting scripts
 -- bugfixes
@@ -21327,7 +21402,7 @@ echo(&quot;[End import]\n&quot;)</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 316 areas 44647 rooms
+-- Map updated: full size 316 areas 44658 rooms
 
 -- 011b
 
@@ -29646,6 +29721,12 @@ function sendAssist(xchar)
 		return
 	end
 
+	-- currently sitting: send stand first
+
+	if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
+		mud:send(&quot;ST&quot;)
+	end
+
 	-- sm caster train is active : flee to mem?
 	if isActive(&quot;SMTrainCaster&quot;, &quot;trigger&quot;) ~= 0 then
 		if not fightreturn then
@@ -29743,6 +29824,9 @@ function sendGroup(xval)
 	if groupSent == nil then
 		groupSent = true
 		mud:send(&quot;GROUP&quot;)
+
+		--send the followers command after sending group
+		sendFollowers()
 	end
 end
 
@@ -30373,7 +30457,7 @@ function genline(xchar, xcls, xhp, xmaxhp)
 		-- blind, paralyzed, or silenced
 
 		if buff:get(&quot;blindness&quot;, xchar) or buff:get(&quot;blind&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ BLIND ]]              &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ BLIND ]]       &quot;))
 		end
 
 		if buff:get(&quot;major_paralysis&quot;, xchar) then
@@ -30427,26 +30511,73 @@ function RedrawGroupStatus()
 	local count=0
 	local i=0
 
+	local numchars = groupList:size() + pet:size()
+
 	if groupRedraw ~= nil then
 		return
 	end
 
-	if charData:get(&quot;groupwindow&quot;) == &quot;bottom&quot;	and groupList:size() &gt; 4 then
+	if charData:get(&quot;groupwindow&quot;) == &quot;bottom&quot;	and numchars &gt; 4 then
 		charData:set(&quot;groupwindow&quot;, &quot;split&quot;)
 		selectGroupWindows()
 	end
 
-	if charData:get(&quot;groupwindow&quot;) == &quot;split&quot;	and groupList:size() &lt; 5 then
+	if charData:get(&quot;groupwindow&quot;) == &quot;split&quot;	and numchars &lt; 5 then
 		charData:set(&quot;groupwindow&quot;, &quot;bottom&quot;)
+		rightGroupWindowLines=0
 		selectGroupWindows()
 	end
 
-	for k,char in pairs(groupList:pc()) do
-		i=i+1
+	-- loop through group list
 
+	for k,char in pairs(groupList:pc()) do
 		local cls=whoclass(char) or &quot;UNK&quot;
 
 		local charline = genline( char, cls, groupList:getHP(char), groupList:getMaxHP(char) )
+
+		if not ( cls == &quot;UNK&quot; and pet:status(char) ) then
+			i=i+1
+			if charData:get(&quot;groupwindow&quot;) == &quot;split&quot; then
+				if checkMask(&quot;rightWindow&quot;, char) then
+					rightwin = rightwin .. charline .. &quot;\n&quot;
+				else
+					count=count+1	
+							
+					if charData:get(&quot;iconbar&quot;) == &quot;left&quot; then
+						if count % 2 ~= 0 then	-- indent window for left iconbar
+							bottomwin = bottomwin .. &quot;          &quot;
+						end
+					end
+
+					bottomwin = bottomwin .. charline
+						
+					if count % 2 == 0 then
+						bottomwin = bottomwin .. &quot;\n&quot;
+					end
+				end			
+			else
+				if i &gt; 1 and (i % 2) == 0 then		
+					bottomwin = bottomwin .. &quot;                  &quot;
+				end
+
+				bottomwin = bottomwin .. charline
+				rightwin = rightwin .. charline .. &quot;\n&quot;
+
+				if i ~= groupList:size() and (i % 2) == 0 then
+					bottomwin = bottomwin .. &quot;\n&quot;
+				end
+			end
+		end
+	end
+
+	-- loop through followers
+
+	for k,char in pairs( pet:getTable() ) do
+		i=i+1
+
+		local cls=&quot;UNK&quot;
+
+		local charline = genline( char, &quot;UNK&quot;, pet:getHP(char) or 0, pet:getMaxHP(char) or 0 )
 
 		if charData:get(&quot;groupwindow&quot;) == &quot;split&quot; then
 			if checkMask(&quot;rightWindow&quot;, char) then
@@ -30474,7 +30605,7 @@ function RedrawGroupStatus()
 			bottomwin = bottomwin .. charline
 			rightwin = rightwin .. charline .. &quot;\n&quot;
 
-			if i ~= groupList:size() and (i % 2) == 0 then
+			if i ~= numchars and (i % 2) == 0 then
 				bottomwin = bottomwin .. &quot;\n&quot;
 			end
 		end
@@ -30494,7 +30625,6 @@ function RedrawGroupStatus()
 
 	resizeGroupWindow(force)
 	force=nil
-
 
 	local grw=charData:get(&quot;groupwindow&quot;)
 
@@ -30537,9 +30667,11 @@ function parseLine(xline)
 		if v ~= &quot;&quot; then
 			local tmp = 	string.split(v, &quot;&gt;&quot;)
 		
-			retval = retval .. [[&lt;span style=&quot;color:]] .. tmp[1] .. [[&quot;&gt;]] .. 
-				 string.gsub(tmp[2], &quot; &quot;, &quot;&amp;nbsp;&quot;)
-				 .. [[&lt;/span&gt;]]
+			if tmp[2] ~= nil then
+				retval = retval .. [[&lt;span style=&quot;color:]] .. tmp[1] .. [[&quot;&gt;]] .. 
+					 string.gsub(tmp[2], &quot; &quot;, &quot;&amp;nbsp;&quot;)
+					 .. [[&lt;/span&gt;]]
+			end
 		end
 	end
 
@@ -32878,6 +33010,12 @@ pet.used = pet.used or {}
 
 
 
+function pet:size()
+	return( #pet:getTable() )
+end
+
+
+
 -- return true if that pet is undead
 function pet:isUndead(xpetname)
 	if self.followers[xpetname] ~= nil then
@@ -33016,10 +33154,14 @@ function pet:isNamed(xnamelist)
 	return(nil)
 end
 
--- pet:generateName(xname) return first 3 letters of whoami, first 4 letters of petname passed
+-- pet:generateName(xname) return first 3 letters of whoami, first 8 letters of petname passed
 
 function pet:generateName(xname)
-	return(string.sub(whoami():lower(), 1, 3) .. string.sub(xname,1,4))
+	if xname == &quot;gray&quot; then
+		xname= &quot;slaad&quot;
+	end
+
+	return(string.sub(whoami():lower(), 1, 3) .. string.sub(xname,1,8))
 end
 
 
@@ -33055,6 +33197,12 @@ function pet:rescue(xchar)
 	end
 
 	if spell[&quot;casting&quot;] ~= nil or NyyLIB.escapedir ~= nil then
+		return
+	end
+
+	-- paralyzed, can't send orders
+
+	if buff:get(&quot;minor_paralysis&quot;) or buff:get(&quot;major_paralysis&quot;) then
 		return
 	end
 
@@ -33642,7 +33790,7 @@ function promptEvent(event)
 		if not petcommand then
 			local tank=prompt:get(&quot;tank&quot;)
 
-			if tank == whoami() or tank == &quot;ghost&quot; or tank == &quot;wraith&quot; or tank == &quot;wight&quot; then
+			if table.contains( {whoami(), &quot;gray&quot;, &quot;ghost&quot;, &quot;wraith&quot;, &quot;wight&quot;, &quot;ghoul&quot; }, tank ) then
 				pet:rescue( tank )
 				petcommand=true
 			end
@@ -33667,6 +33815,10 @@ function promptEvent(event)
 	-- Disengage from nightmares (tiamat)
 	if prompt:get(&quot;enemy&quot;) == &quot;nightmare&quot; then
 		if getZone() ~= &quot;Ashstone&quot; then
+			if prompt:get(&quot;position&quot;) ~= &quot;std&quot; then
+				mud:send(&quot;STAND&quot;)
+			end
+
 			mud:send(&quot;disengage&quot;)
 			return
 		end
@@ -33700,8 +33852,8 @@ function promptEvent(event)
 		return
 	end
 
-	-- call class specific spell script if autocast enabled and no spell currently being cast, standing
-	if charData:get(&quot;autocast&quot;) and not spell:getCurrent() then
+	-- call class specific spell script if autocast enabled and no spell currently being cast, standing, not stunned
+	if charData:get(&quot;autocast&quot;) and not spell:getCurrent() and not buff:get(&quot;stun&quot;) then
 		if prompt:get(&quot;position&quot;) == &quot;std&quot; then
 			local cname=&quot;Spells&quot; .. string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)
 			-- local cname=&quot;Spells&quot; .. whoclass()
