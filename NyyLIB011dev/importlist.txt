@@ -229,7 +229,7 @@
 {250, 17}, --   Baldur's Gate - Main City 
 {251,377}, --   Baldur's Gate - Docks 
 {252,   }, --   Baldur's Gate - Harbor
-{253,   }, --   Baldur's Gate - Wave Dancer   
+{253,415}, --   Baldur's Gate - Wave Dancer   
 {254,255}, --   The Ruins of Undermountain I  
 {255,267}, --   Myth Unnohyr  
 {256,218}, --   The Ruins of Undermountain II 

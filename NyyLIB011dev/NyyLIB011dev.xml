@@ -169,16 +169,20 @@ NyyLIB.initgui=false
 -- erase current value of assassinate timer
 timer:set(&quot;assassinatetimer&quot;, nil)
 
+setHide(false)
+sendGroup(false)
+sendFollowers(false)
+
 mud:send(&quot;display enemypos&quot;, false)
 mud:send(&quot;display position&quot;, false)
 mud:send(&quot;display twoline&quot;, false)
 mud:send(&quot;ATT&quot;, false)
 mud:send(&quot;SC&quot;, false)
 mud:send(&quot;EQUIP&quot;, false)
-mud:send(&quot;GROUP&quot;, false)
+sendGroup()
+sendStatus()
 mud:send(&quot;EXP&quot;, true)
 mud:send(&quot;CONSENT&quot;, false)
-sendFollowers(xval)
 
 local assocchar = charData:get(&quot;assocchar&quot;, true)
 
@@ -1206,6 +1210,7 @@ end</script>
                         <string>You can't do that underwater!</string>
                         <string>You don't see that corpse here.</string>
                         <string>No target for your power could be found!</string>
+                        <string>Pardon?</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -1214,6 +1219,7 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -2564,7 +2570,8 @@ setBackgroundColor(&quot;combatmind&quot;, 0,0,150,255)</script>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>Drawing darkness itself around you,</name>
                         <script>setHide(true)
-look:send()</script>
+look:send()
+sendStatus()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -5008,8 +5015,10 @@ mud:send(&quot;ST&quot;)</script>
                         <string>You fall to the ground.  You stop riding.</string>
                         <string>Damn!  Lost your train of thought!</string>
                         <string>With a powerful heave on the whip, an elite cornugon sends you crashing to the ground in a spray of blood!</string>
+                        <string>You can't do this sitting!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -5189,10 +5198,15 @@ end
 
 NyyLIB.statuschar=&quot;&quot;
 
+-- room capture: display if present
+
 disableTrigger(&quot;RoomCapture&quot;)
 
---copy(&quot;roomwindow&quot;)
---appendBuffer(&quot;gRoomWindow&quot;)
+if getLastLineNumber(&quot;roomBuffer&quot;) &gt; 0 then
+	clearWindow(&quot;gRoomWindow&quot;)
+	copyBuffer(&quot;roomBuffer&quot;, &quot;gRoomWindow&quot;)
+	clearWindow(&quot;roomBuffer&quot;)
+end
 
 disableTrigger(&quot;lootlist&quot;)
 
@@ -5984,6 +5998,12 @@ if NyyLIB.mtank ~= nil then
 	end
 end
 
+-- don't proceed if npc (= following)
+
+if not inwho(matchchar) then
+	return
+end
+
 -- update group info if autoheal enabled
 
 if charData:get(&quot;autoheal&quot;) then
@@ -6051,7 +6071,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/1/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/9/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7425,71 +7445,13 @@ timer:set(&quot;AshenStaff&quot;, 24*60)</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>StartRoomCapture</name>
-                    <script>if NyyLIB.gRoomWindow == nil then
-	return
-end
-
-NyyLIB.gRoomWindow:hide()
-
-clearWindow(&quot;gRoomWindow&quot;)
---clearWindow(&quot;roomwindow&quot;)
-enableTrigger(&quot;RoomCapture&quot;)
-
-local roomline = getLines(getLineNumber()-1, getLineNumber())[1]
-
-local linecheck = string.find(roomline, &quot;&gt; &quot;)
-
-moveCursor(0, getLineNumber()-1)
-
-if linecheck ~= nil then
-	selectSection(linecheck+1, string.len(roomline)-linecheck-1)
-else
-	-- include full line in capture window
-	selectCurrentLine()
-end
-
-copy()
-appendBuffer(&quot;gRoomWindow&quot;)
---appendBuffer(&quot;roomwindow&quot;)
-moveCursor(0, getLineNumber()+1)
-
--- in case roomname was on same line as prompt (it happens!)
---if string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;) ~= nil then
---	NyyLIB.Mapper.roomname = string.sub(NyyLIB.Mapper.roomname, string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;)+2)
---end
-
-look:set(&quot;LOOKSTART&quot;)
-
-if gaglook then
-	-- todo: double erase likely only works in brief
-	moveCursor(0, getLineNumber()-1)
-	eraseLine()
-end</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#aa007f</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>^Exits: (.*)</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
                 <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>RoomCapture</name>
-                    <script>selectCurrentLine()
+                    <script>-- location matters on this trigger to prevent double firing
+
+selectCurrentLine()
 copy()
-appendBuffer(&quot;gRoomWindow&quot;)
---appendBuffer(&quot;roomwindow&quot;)
+appendBuffer(&quot;roomBuffer&quot;)
 
 if gaglook then
 	eraseLine()
@@ -7506,6 +7468,101 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>^.*</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>StartRoomCapture</name>
+                    <script>if NyyLIB.gRoomWindow == nil then
+	return
+end
+
+if roomBuffer == nil then
+	roomBuffer = createBuffer(&quot;roomBuffer&quot;)
+end
+
+clearWindow(&quot;roomBuffer&quot;)
+
+enableTrigger(&quot;RoomCapture&quot;)
+
+local exitLine = getLineNumber()
+local lineOffset = 1
+
+
+-- capture line prior to exits (room name in brief)
+local roomline = getLines(exitLine-lineOffset, exitLine)[1]
+local linecheck = string.find(roomline, &quot;%[&quot;)
+
+while linecheck ~= nil do
+	lineOffset=lineOffset+1
+
+	roomline = getLines(getLineNumber()-lineOffset, getLineNumber())[1]
+	linecheck = string.find(roomline, &quot;%[&quot;)
+
+	if lineOffset &gt; 100 then
+		cecho(&quot;&lt;red&gt;[StartRoomCapture: error]\n&quot;)
+		return
+	end
+end
+
+-- move to line prior to exits that doesn't start with a [:
+moveCursor(0, exitLine-lineOffset)
+
+
+local linecheck = string.find(roomline, &quot;&gt; &quot;)
+
+-- previous line started with a prompt
+if linecheck ~= nil then
+	selectSection(linecheck+1, string.len(roomline)-linecheck-1)
+else
+	-- include full line in capture window
+	selectCurrentLine()
+end
+
+-- this is the room title
+copy()
+appendBuffer(&quot;roomBuffer&quot;)
+
+if gaglook then
+	eraseLine()
+end
+
+-- return to to exits line
+moveCursorEnd( &quot;main&quot; )
+
+-- include full line in capture window
+selectCurrentLine()
+
+copy()
+appendBuffer(&quot;roomBuffer&quot;)
+
+if gaglook then
+	eraseLine()
+end
+
+
+-- in case roomname was on same line as prompt (it happens!)
+--if string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;) ~= nil then
+--	NyyLIB.Mapper.roomname = string.sub(NyyLIB.Mapper.roomname, string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;)+2)
+--end
+
+look:set(&quot;LOOKSTART&quot;)
+
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#aa007f</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^Exits: (.*)</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -8778,8 +8835,10 @@ end</script>
                             <string>([A-Za-z]+) is blinded by .*</string>
                             <string>([A-Za-z]+)  group-says '&lt;&lt; BLIND! &gt;&gt;'</string>
                             <string>(Your) body turns to stone as a petralisk gazer stares at you!</string>
+                            <string>An elite gelugon's spear erupts in a spray of frost as he plunges it through ([A-Za-z]+)!</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>1</integer>
                             <integer>1</integer>
                             <integer>1</integer>
                             <integer>1</integer>
@@ -9058,8 +9117,10 @@ spell:clear()</script>
                             <string>You wait mindlessly for direction from your master.</string>
                             <string>Your body becomes rigid as the paralyzation takes effect.</string>
                             <string>You remain paralyzed and can't do a thing to defend yourself...</string>
+                            <string>tail radiates freezing cold, causing your bones to lock up.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
@@ -9391,6 +9452,54 @@ showstatus=false
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>^&lt; .*</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>effects</name>
+                    <script>--Status of Innanin
+---------------------------------------------------------------------------
+
+--Effects
+---------------------------------------------------------------------------
+--haste                     hide                      infravision               
+--no summon                 protection from evil      sense life                
+--slow poison               sneak          </script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^Effects$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>effect: hide</name>
+                    <script>setHide(true)
+look:send()</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>   hide                      </string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -12915,8 +13024,17 @@ if map:getRoom() ~= nil then
 
 	-- build list of special exits
 	for k,v in pairs(specialexit) do
-		for k2,v2 in pairs(string.split(k, &quot;|&quot;)) do
-			if command == k then
+		-- key will be each special exit from this room example: &quot;enter wave|dancer&quot;
+		local specialExit = string.split(k, &quot; &quot;)
+		
+		--display(command)
+		--display(specialExit)
+		
+		for k2,v2 in pairs(string.split(specialExit[2], &quot;|&quot;)) do
+			
+			--display(specialExit[1] .. &quot; &quot; .. v2)
+			
+			if string.lower(command) == string.lower(specialExit[1] .. &quot; &quot; .. v2) then
 				cecho(&quot;\n&lt;green&gt;[Using special exit '&quot; .. k .. &quot;' to room &quot; .. v .. &quot; : &quot; .. getRoomName(v) .. &quot;]\n&quot;)
 				map:setRoom(v)
 				centerview( map:getRoom() )
@@ -12926,7 +13044,7 @@ if map:getRoom() ~= nil then
 	end
 end
 
--- find last blank line received, name is first following line of format title, doesn't end in period
+-- find last blank line received, name is first following line of format title the doesn't end in period or start with [
 
 local lineindex=1
 
@@ -12940,8 +13058,11 @@ while isStringPrompt( getLines(getLineNumber()-lineindex, getLineNumber())[1] ) 
 	end
 end
 
-while isRoomName(lineindex) == false do
+local teststring = getLines(getLineNumber()-lineindex, getLineNumber())[1]
+
+while isRoomName(teststring) == false do
 	lineindex=lineindex-1
+	teststring = getLines(getLineNumber()-lineindex, getLineNumber())[1]
 end
 
 -- if claired decrease index by 1
@@ -13094,12 +13215,10 @@ tempTimer(1.5, [[expandAlias(&quot;#find&quot;, false)]])</script>
                         <string>You feel a Presence touch you, its divine hand cupping itself</string>
                         <string>Your vision descends into darkness as your feel your soul pulled back into</string>
                         <string>The world goes dark.  When you can see again, you are in your guild.</string>
-                        <string>You board something.</string>
                         <string>You disembark this ship.</string>
                         <string>OH NO!  Something has gone wrong!  You feel lost!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
-                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -14373,6 +14492,7 @@ end</script>
                         <string>seems to wilt under the positive energy discharge, cringing back away from the glare.</string>
                         <string>it's giant max.  The head of Ilxarzzinazzium chews through</string>
                         <string>spits the lifeless, partially eatten body on the ground.  As suddenly as the head appeared,</string>
+                        <string>is scorched by the storm of fire.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -14407,6 +14527,7 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -14515,7 +14636,11 @@ local charname = matches[3]
 
 if groupList:ingroup( charname ) then
 	if consent:get(charname) then
-		cecho(&quot; &lt;green&gt;(consented)&quot;)
+
+		-- should only echo if not gagged
+		if not gaglook then
+			cecho(&quot; &lt;green&gt;(consented)&quot;)
+		end
 
 		if not checkMask(&quot;cle&quot;) or not charData:get(&quot;autocast&quot;) then
 			return
@@ -15281,6 +15406,7 @@ pet:reset()
 
 enableTrigger(&quot;endfollowers&quot;)
 enableTrigger(&quot;capturefollower&quot;)
+enableTrigger(&quot;gagpcfol&quot;)
 
 if gagfollowers then
 	eraseLine()
@@ -15315,6 +15441,7 @@ gagfollowers=true
 
 disableTrigger(&quot;capturefollower&quot;)
 disableTrigger(&quot;endfollowers&quot;)
+disableTrigger(&quot;gagpcfol&quot;)
 
 pet:cleanNames()</script>
                     <triggerType>0</triggerType>
@@ -15378,6 +15505,16 @@ end
 
 pet:add(keyword, fullname, tonumber(matches[2]), tonumber(matches[3]), inroom, keywords )
 
+-- set pet as being in this room
+if inroom == &quot;+&quot; then
+	pet:setRoom(keyword, map:getRoom() )
+else
+	-- use last known room for pet
+	pet:setRoom(keyword, pet:getOldRoom(keyword) )
+end
+
+
+
 if gagfollowers then
 	eraseLine()
 end
@@ -15408,6 +15545,10 @@ end</script>
 --The wight of a frost giant warrior starts following you.
 -- The spectre of a human noble starts following you.
 
+if matches[2] == &quot;otherworldly&quot; then
+	mud:send(&quot;O followers snap&quot;)
+end
+
 gagfollowers=true
 
 sendFollowers()
@@ -15426,7 +15567,7 @@ sendGroup()</script>
                         <string>starts following you.</string>
                         <string>Smoke begins to pour out of your bracer, swirling around you in a dizzying</string>
                         <string>stops following you.</string>
-                        <string>You feel the presense of an otherworldly being enter the room.</string>
+                        <string>You feel the presense of an (otherworldly) being enter the room.</string>
                         <string>That person isn't here.</string>
                         <string>hates your guts!</string>
                     </regexCodeList>
@@ -15434,7 +15575,7 @@ sendGroup()</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
-                        <integer>0</integer>
+                        <integer>1</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                     </regexCodePropertyList>
@@ -15781,6 +15922,108 @@ end</script>
                     <regexCodePropertyList>
                         <integer>0</integer>
                         <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>follower movement</name>
+                    <script>-- The skeleton of a dapper noble shambles in from the south.
+-- The skeleton of a dapper noble shambles in from below.
+-- A gray slaad flies in from the south.
+-- The spirit worg flies in from the east.
+
+-- TODO: multiple pets with identical names
+
+local shortname= idMob(matches[2])
+--local petname= pet:member( matches[2] )
+
+for k,name in pairs( pet:getTable(shortname) ) do
+	if pet:getRoom(name) ~= map:getRoom() then
+		pet:setRoom(name, map:getRoom() )
+		pet:setInRoom(name, true)
+		return
+	end
+end
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^(.*) shambles in from .*[.]</string>
+                        <string>^(.*) flies in from .*[.]</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>follower ordered movement</name>
+                    <script>-- The spectre of a human noble flies west.
+
+-- TODO: move pet to room
+
+local roomid = map:getRoom()
+local petname = pet:member(matches[2])
+local dirmoved = matches[3]
+
+if roomid == nil or not petname then
+	return
+end
+
+-- newroom: getRoomExits(roomid)[dirmoved]
+-- function pet:setRoom(xpet, xroom)
+-- pet:member(xfullname)
+
+pet:setRoom(petname, getRoomExits(roomid)[dirmoved])
+pet:setInRoom(petname, false)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^(.*) flies (north|south|east|west|up|down)[.]</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>gagpcfol</name>
+                    <script>-- ^ *([-0-9]+)/([0-9]+) +HP +[0-9]+/[0-9]+ +MV *([+-]) (.*)\((.*)\)$
+
+-- gag pc followers
+
+if gagfollowers then
+	eraseLine()
+end</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^ *([-0-9]+)/([0-9]+) +HP +[0-9]+/[0-9]+ +MV *([+-]) (.*)$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -16269,7 +16512,7 @@ spell:setNext(&quot;SPECT &quot; .. matches[2])</script>
 spell:setMoving(false)
 
 if petname ~= nil and not timer:get(&quot;petcast&quot;) then
-	timer:set(&quot;petcast&quot;, 5)
+	timer:set(&quot;petcast&quot;, 6)
 	mud:send(&quot;ORDER &quot; .. petname .. &quot; cast 'soul shackles'&quot;)
 	return
 end
@@ -16342,6 +16585,15 @@ spell:setNext(&quot;SHADOW &quot; .. matches[2])</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^shadow (.+)$</regex>
+                    </Alias>
+                    <Alias isActive="yes" isFolder="no">
+                        <name>lt</name>
+                        <script>spell:setMoving(false)
+
+spell:setNext(&quot;LT &quot; .. matches[2])</script>
+                        <command></command>
+                        <packageName></packageName>
+                        <regex>^lt (.+)$</regex>
                     </Alias>
                 </AliasGroup>
                 <AliasGroup isActive="yes" isFolder="yes">
@@ -16938,7 +17190,14 @@ end</script>
                     </Alias>
                     <Alias isActive="yes" isFolder="no">
                         <name>resc</name>
-                        <script>mud:send(&quot;ORDER followers rescue &quot; .. matches[3])</script>
+                        <script>-- attempt rescue if have that skill, otherwise direct command to followers
+-- TODO: Should confirm you have followes before sending
+
+if checkMask(&quot;fighter&quot;) then
+	sendRescue(matches[3])
+else
+	mud:send(&quot;ORDER followers rescue &quot; .. matches[3])
+end</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^resc(ue)? ([A-Za-z]+)$</regex>
@@ -17921,7 +18180,7 @@ end
 		mud:send(&quot;gsay &lt;&quot; .. NyyLIB.countdown .. &quot;&gt;&quot;)
 		tempTimer(1, [[countdown()]])
 	else
-		expandAlias(NyyLIB.countdir, false)
+		expandAlias(&quot;movea &quot; .. NyyLIB.countdir, false)
 
 		if NyyLIB.target ~= nil then
 			mud:send(&quot;kill &quot; .. NyyLIB.target)
@@ -18182,7 +18441,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/1/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/9/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -18214,12 +18473,12 @@ cecho (&quot;\n&lt;red&gt;Script version: 7/1/2017 &quot; .. NyyLIB.version .. &
                     <script>local tmpvar = charData:get(&quot;gags&quot;, true)
 
 if matches[2] == &quot;reset&quot; then
-	echo(&quot;Resetting all custom gags.\n&quot;)
+	cecho(&quot;&lt;red&gt;[ Resetting all custom gags ]\n&quot;)
 	charData:set(&quot;gags&quot;, {}, true)
 else
 	if matches[2] == &quot;&quot; then
-		echo(&quot;usage:\n #gag text to gag\n #gag reset\n&quot;)
-		echo(&quot;Existing gags:\n&quot;)
+		cecho(&quot;&lt;red&gt;Usage:\n&lt;green&gt; #gag text to gag\n&lt;green&gt; #gag reset\n&quot;)
+		cecho(&quot;&lt;red&gt;Existing gags:\n&quot;)
 		display(tmpvar)
 	else
 		table.insert(tmpvar, matches[2]:lower())
@@ -18633,6 +18892,8 @@ if whoami() == &quot;Nyyrazzilyss&quot; then
 	mud:send(&quot;put force hole&quot;)
 	mud:send(&quot;rem swirling&quot;)
 	mud:send(&quot;put swirling hole&quot;)
+	mud:send(&quot;rem pixie&quot;)
+	mud:send(&quot;put pixie hole&quot;)
 	mud:send(&quot;rem belt&quot;)
 	mud:send(&quot;put belt hole&quot;)
 	mud:send(&quot;rem sleeves&quot;)
@@ -19329,7 +19590,7 @@ sendFollowers()
 </script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^followers$</regex>
+                    <regex>^(fols|followers)$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>stand</name>
@@ -20251,7 +20512,7 @@ NyyLIB.Mapper.queueroomID = nil
 if matches[2] ~= nil and matches[2] ~= &quot;&quot; then
 	local fullmap = getRooms()
 
-	cecho(&quot;\n&lt;red&gt;[Matching rooms in discovered map]\n&quot;)
+	cecho(&quot;\n&lt;red&gt;[Matching rooms in the known world]\n&quot;)
 
 	for roomid, roomname in pairs(fullmap) do
 		if matches[2] == &quot;*&quot; then
@@ -20560,6 +20821,25 @@ end</script>
                     <packageName></packageName>
                     <regex>^#zone (.*)</regex>
                 </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>movealone</name>
+                    <script>-- currently moving
+spell:setMoving(true)
+
+-- erase spellqueue if any spells present
+spell:eraseQueue()
+
+
+-- erase scanned table
+scanned={}
+
+local dir=matches[2]:sub(1,1):lower()
+
+processMovement(dir)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^movea (n|e|s|w|u|d)</regex>
+                </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
                 <name>SQL Aliases</name>
@@ -20779,7 +21059,17 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>test</name>
-                <script>
+                <script>-- window:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+
+
+display( setLabelStyleSheet(&quot;gRoomWindow&quot;, [[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]]) )
+
+
+--roomLabel = Geyser.Label:new({name=&quot;gRoomLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+--roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+
+
+
 --local WindowWidth, WindowHeight = getMainWindowSize()
 
 --display(WindowWidth)
@@ -21358,6 +21648,76 @@ echo(&quot;[End import]\n&quot;)</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
+            <Alias isActive="yes" isFolder="no">
+                <name>#fpet</name>
+                <script>local currentroom = map:getRoom()
+local missingpet
+
+cecho(&quot;&lt;red&gt;#fpet: find pets\n&quot;)
+cecho(&quot;&lt;red&gt;Type '#fpet get' to retrieve lost pets\n\n&quot;)
+
+if currentroom ~= nil then
+	cecho(&quot;&lt;green&gt;Currently in: (&quot; .. currentroom .. &quot;) &quot; .. getRoomName(currentroom) .. &quot;\n\n&quot;)
+else
+	cecho(&quot;&lt;red&gt;Current room: unknown\n\n&quot;)
+end
+
+for k, petname in pairs(pet:getTable()) do
+	local petroom = pet:getRoom(petname)
+
+	if currentroom ~= nil and petroom ~= nil then
+		local roomname = getRoomName(petroom)
+
+		if petroom == currentroom then
+  			cecho(string.format(&quot;&lt;green&gt;%16s : (%6s) %s\n&quot;, petname, tostring( pet:getRoom(petname) ), roomname) )
+		else
+  			cecho(string.format(&quot;&lt;red&gt;%16s : (%6s) %s\n&quot;, petname, tostring( pet:getRoom(petname) ), roomname) )
+			missingpet = pet:getRoom(petname)
+		end
+	else
+		cecho(string.format(&quot;&lt;red&gt;%16s : %6s\n&quot;, petname, tostring( pet:getRoom(petname) ) ) )
+	end
+end
+
+if matches[2] == &quot;get&quot; then
+	if currentroom == nil or missingpet == nil then
+		cecho(&quot;&lt;green&gt;\n[No missing pets]\n&quot;)
+		return
+	end
+
+	if not charData:get(&quot;autoopen&quot;) then
+		cecho(&quot;&lt;red&gt;\n[autoopen is currently disabled. '&lt;green&gt;set autoopen true&lt;red&gt;' prior to using fpet get]\n&quot;)
+		return
+	end
+
+	-- fwalk to room, then return to current room
+
+	cecho(&quot;&lt;green&gt;Retrieving pet from: &quot; .. missingpet .. &quot;\n&quot;)
+
+	local path=getPath( currentroom, missingpet )
+
+	if path then
+		path= compressSpeedwalk()
+	end
+
+	local reversepath= getPath( missingpet, currentroom)
+
+	if reversepath then
+		reversepath= compressSpeedwalk()
+	end
+
+
+	if path and reversepath then
+		cecho(&quot;&lt;green&gt;Moving: &quot; .. path .. &quot;, &quot; .. reversepath .. &quot;\n&quot;)
+
+		expandAlias(&quot;.&quot; .. path, false)
+		expandAlias(&quot;.&quot; .. reversepath, false)
+	end
+end</script>
+                <command></command>
+                <packageName></packageName>
+                <regex>^#fpet ?(get)?$</regex>
+            </Alias>
         </AliasGroup>
     </AliasPackage>
     <ActionPackage/>
@@ -21379,10 +21739,12 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- dev
 
+-- bugfixes
+-- #room window is now flicker free
+-- #fpet - retrieves lost pets
 -- ungrouped followers are shown on group display
 -- added ancient staff of the ashen soul
 -- pet casting scripts
--- bugfixes
 -- pet followers are named/numbered with unique names
 -- gui windows redesign
 -- spirit wrack added to a-p, fell frost to invoker
@@ -21402,7 +21764,7 @@ echo(&quot;[End import]\n&quot;)</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 316 areas 44658 rooms
+-- Map updated: full size 317 areas 44777 rooms
 
 -- 011b
 
@@ -22367,7 +22729,7 @@ Number of characters to wrap the chatlines at.
 This will also determine how wide the chat windows are.
 ]]
 
-demonnic.chat.config.width = 90
+demonnic.chat.config.width = 64
 
 --[[
 Set the color for the active tab. R,G,B format.
@@ -22603,6 +22965,19 @@ function demonnic.chat:append(chat)
 		selectCurrentLine()
 	end
 
+
+	-- don't echo gagged text
+
+	local gag = charData:get(&quot;gags&quot;, true)
+
+	if gag ~= nil then
+		for key,val in pairs(gag) do
+			if string.findPattern(roomline:lower(), val) then
+				return
+			end
+		end
+	end
+
 	-- don't echo [] gsay, or empty lines
 
 	if getCurrentLine() == nil then
@@ -22820,7 +23195,13 @@ end
 
 function Geyser.MiniConsole:append()
   appendBuffer(self.name)
-end</script>
+end
+
+function Geyser.MiniConsole:setStyleSheet(style)
+  appendBuffer(self.name)
+end
+
+-- rLabel:setStyleSheet([[border-image: url(]] .. iconpath(&quot;frame-1.png&quot;) .. [[)]])</script>
                             <eventHandlerList/>
                         </Script>
                     </ScriptGroup>
@@ -23127,10 +23508,10 @@ function psidarkness(fname, xcommand)
 	if xcommand ~= buttons.INIT then
 		if charData:get(&quot;autohide&quot;) then
 			charData:set(&quot;autohide&quot;, false)
-			echo(&quot;\nSome illithids choose not to hide.\n&quot;)
+			cecho(&quot;\n&lt;red&gt;Some illithids choose not to hide.\n&quot;)
 		else
 			charData:set(&quot;autohide&quot;, true)
-			echo(&quot;\nA cautious illithid brings up darkness to hide after fleeing.\n&quot;)
+			cecho(&quot;\n&lt;green&gt;A cautious illithid brings up darkness to hide after fleeing.\n&quot;)
 		end
 	end
 
@@ -23364,15 +23745,15 @@ function PopulateTimestop()
 	end
 end
 
-function encBard(xcommand)
+function encBard(fname, xcommand)
 	shiftSkillButton(&quot;encBard&quot;, &quot;bard&quot;, xcommand)
 end
 
-function encSelf(xcommand)
+function encSelf(fname, xcommand)
 	shiftSkillButton(&quot;encSelf&quot;, &quot;self&quot;, xcommand)
 end
 
-function encResize(xcommand)
+function encResize(fname, xcommand)
 	shiftSkillButton(&quot;encResize&quot;, &quot;resize&quot;, xcommand)
 end
 
@@ -23652,7 +24033,7 @@ function sendRescue(xchar)
 		end
 
 
-		cecho(&quot;\n&lt;red&gt;[Rescue: &quot; .. xchar .. &quot;]\n&quot;)
+		cecho(&quot;\n&lt;red&gt;[ Rescue: &quot; .. xchar .. &quot; ]\n&quot;)
 		send(&quot;rescue &quot; .. xchar)
 
 		if xchar == &quot;ghost&quot; then
@@ -24774,6 +25155,14 @@ function SpellsLic()
 				spell:cast(&quot;hu &quot; .. whoami())
 				return
 			end
+
+			-- use lifedrain if no heal undead left
+			if charData:get(&quot;autohlmissile&quot;) then
+				if getSpellCount(&quot;life_drain&quot;) &gt; 0 then
+					spell:cast(&quot;ld&quot;)
+					return
+				end
+			end
 		end
 
 		-- if not in combat and less then .95hp heal self
@@ -24839,7 +25228,7 @@ function undeadSpell(xcaster)
 		if pet:getMaxHP(v) ~= nil and pet:getHP(v) ~= nil and pet:getInRoom(v) and pet:isUndead(v) then
 			if pet:getMaxHP(v) - pet:getHP(v)  &gt; 100 then
 				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'heal undead' &quot; .. v)
-				timer:set(&quot;petcast&quot;, 5)
+				timer:set(&quot;petcast&quot;, 6)
 				pet:setHP(v, pet:getHP(v)+100)
 				return
 			end
@@ -24854,7 +25243,7 @@ function undeadSpell(xcaster)
 
 		if not buff:get(&quot;haste&quot;, petname) and pet:getInRoom(petname) then
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'haste' &quot; .. petname )
-			timer:set(&quot;petcast&quot;, 5)
+			timer:set(&quot;petcast&quot;, 6)
 			buff:set(petname, &quot;haste&quot;, 15)
 			return
 		end
@@ -24863,7 +25252,7 @@ function undeadSpell(xcaster)
 	-- caster undead - keep globed
 	if not buff:get(&quot;globe_of_invulnerability&quot;, xcaster) then
 		mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'globe of invulnerability' &quot; .. xcaster)
-		timer:set(&quot;petcast&quot;, 5)
+		timer:set(&quot;petcast&quot;, 6)
 		buff:set(xcaster, &quot;globe_of_invulnerability&quot;, 60)
 		return
 	end
@@ -24875,30 +25264,30 @@ function undeadSpell(xcaster)
 				if not (spell:getCast())[&quot;bw&quot;] then
 					mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'banshee wail'&quot;)
 					spell:setCast(&quot;bw&quot;)
-					timer:set(&quot;petcast&quot;, 5)
+					timer:set(&quot;petcast&quot;, 6)
 					return
 				end
 			end
 
 			if charData:get(&quot;turnundead&quot;) then
 				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'annihilate undead'&quot;)
-				timer:set(&quot;petcast&quot;, 5)
+				timer:set(&quot;petcast&quot;, 6)
 				return
 			end
 
 			if charData:get(&quot;autohlarea&quot;) then
 				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'rain of blood'&quot;)
-				timer:set(&quot;petcast&quot;, 5)
+				timer:set(&quot;petcast&quot;, 6)
 				return
 			end
 
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'boneshatter' &quot; .. prompt:get(&quot;enemy&quot;) )
-			timer:set(&quot;petcast&quot;, 5)
+			timer:set(&quot;petcast&quot;, 6)
 		end	
 
 		if pet:status(&quot;wraith&quot;) then
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'abi dalzims'&quot;)
-			timer:set(&quot;petcast&quot;, 5)
+			timer:set(&quot;petcast&quot;, 6)
 		end
 	else
 		-- These spells are cast if not in combat
@@ -24906,7 +25295,7 @@ function undeadSpell(xcaster)
 		-- vampiric touch
 		if not buff:get(&quot;vampiric_touch&quot;, xcaster) then
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'vampiric touch'&quot;)
-			timer:set(&quot;petcast&quot;, 5)
+			timer:set(&quot;petcast&quot;, 6)
 			buff:set(xcaster, &quot;vampiric_touch&quot;, 60)
 			return
 		end
@@ -24914,7 +25303,7 @@ function undeadSpell(xcaster)
 		-- coldshield
 		if not buff:get(&quot;coldshield&quot;, xcaster) then
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'coldshield'&quot;)
-			timer:set(&quot;petcast&quot;, 5)
+			timer:set(&quot;petcast&quot;, 6)
 			buff:set(xcaster, &quot;coldshield&quot;, 60)
 			return
 		end
@@ -24939,7 +25328,7 @@ function ghost_globe(xcaster)
 
 			if not buff:get(&quot;globe_of_invulnerability&quot;, petname) and pet:getInRoom(petname) then
 				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'globe of invulnerability' &quot; .. petname )
-				timer:set(&quot;petcast&quot;, 5)
+				timer:set(&quot;petcast&quot;, 6)
 				buff:set(petname, &quot;globe_of_invulnerability&quot;, 15)
 				return
 			end
@@ -24951,7 +25340,7 @@ function ghost_globe(xcaster)
 
 			if not buff:get(&quot;globe_of_invulnerability&quot;, char) and hp ~= 0 then
 				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'globe of invulnerability' &quot; .. char )
-				timer:set(&quot;petcast&quot;, 5)
+				timer:set(&quot;petcast&quot;, 6)
 				buff:set(char, &quot;globe_of_invulnerability&quot;, 15)
 				return
 			end
@@ -25282,11 +25671,11 @@ function SpellsDir()
 	end
 end
 
-function howl(xcommand)
+function howl(fname, xcommand)
 	shiftSkillButton(&quot;howl&quot;, &quot;autohowl&quot;, xcommand)
 end
 
-function outflank(xcommand)
+function outflank(fname, xcommand)
 	shiftSkillButton(&quot;outflank&quot;, &quot;outflank&quot;, xcommand)
 end
 
@@ -26135,9 +26524,7 @@ function processMovement(xdir)
 	end
 end
 
-function isRoomName(testindex)
-	local teststring = getLines(getLineNumber()-testindex, getLineNumber())[1]
-
+function isRoomName(teststring)
 	if teststring == nil then
 		return
 	end
@@ -26319,6 +26706,14 @@ function setDoorName(xroomid, xdir, xdoorname)
 			exitNames = yajl.to_value(exitNames)
 		end
 			
+		if xdir == nil then
+			cecho(&quot;&lt;RED&gt;Import Error:\n&quot;)
+			display(xroomid)
+			display(xdir)
+			display(xdoorname)
+			return
+		end
+
 		--echo(&quot;Door name: &quot; .. xdoorname .. &quot; Room id: &quot; .. xroomid .. &quot;\n&quot;)
 
 		exitNames[NyyLIB.Mapper.exitmap[xdir]] = xdoorname
@@ -29403,6 +29798,26 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 
+-- copy entire contents from src to dst
+
+function copyBuffer(srcBuffer, dstBuffer)
+	local srcBufferSize = getLastLineNumber(srcBuffer)
+	local nx
+	
+	if srcBufferSize &gt; 100 then
+		cecho(&quot;&lt;red&gt;[ copyBuffer: srcBuffer &gt; 100 lines ]\n&quot;)
+		return
+	end
+
+	-- buffer is 0 based
+	
+	for nx=0, srcBufferSize, 1 do
+		moveCursor(srcBuffer, 0, nx)
+		selectCurrentLine(srcBuffer)
+		copy(srcBuffer)
+		appendBuffer(dstBuffer)
+	end
+end
 
 -- return true if in combat - incomplete
 
@@ -29599,11 +30014,18 @@ function condenseLine(newline)
 			moveCursor(0, getLineCount()-1)
 			eraseLine()
 
-			-- if previous line had (x#) at the end, echo (x#+1)
-			if string.findPattern(previousline, &quot;(x[0-9]+)&quot; ) ~= nil then
-				cecho(&quot; &lt;red&gt;(x&quot; .. (tonumber(string.findPattern(string.findPattern(previousline, &quot;%(x([0-9]+)%)&quot; ), &quot;[0-9]+&quot; ))+1) .. &quot;)&quot;)
-			else
-				cecho(&quot; &lt;red&gt;(x2)&quot;)
+
+			-- don't suffix counter on prompt lines
+			local linecheck = string.find(matches[2], &quot;^&lt; .* &gt; &quot;)
+
+	
+			if not string.find(previousline, &quot;^&lt; .* &gt; &quot;) then
+				-- if previous line had (x#) at the end, echo (x#+1)
+				if string.findPattern(previousline, &quot;(x[0-9]+)&quot; ) ~= nil then
+					cecho(&quot; &lt;red&gt;(x&quot; .. (tonumber(string.findPattern(string.findPattern(previousline, &quot;%(x([0-9]+)%)&quot; ), &quot;[0-9]+&quot; ))+1) .. &quot;)&quot;)
+				else
+					cecho(&quot; &lt;red&gt;(x2)&quot;)
+				end
 			end
 		end
 	end
@@ -29791,7 +30213,7 @@ end
 -- Multiple calls to the command will not complete.
 
 function sendFollowers(xval)
-	if xval == false then
+	if xval == false or getHide() then
 		followersSent=nil
 		return
 	end
@@ -29854,7 +30276,8 @@ function eraseLine()
 	if not charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;] then
 		deleteLine()
 	else
-		cecho(&quot;&lt;red&gt;-&quot;)
+		cinsertText(&quot;&lt;red&gt;-&quot;)
+		--cecho(&quot;&lt;red&gt;-&quot;)
 	end
 end</script>
                     <eventHandlerList/>
@@ -30448,28 +30871,45 @@ function genline(xchar, xcls, xhp, xmaxhp)
 
 	-- various display formats
 
+	-- TODO: colour can't be included in name, it offsets %s calculation
+
+	local displayname= xchar
+	local displaynamecol=col
+
+	local petname=pet:getShortName(xchar)
+
+	if petname then
+		displayname=petname
+
+		if pet:getInRoom(xchar) then
+			displaynamecol=&quot;&lt;cyan&gt;&quot;
+		else
+			displaynamecol=&quot;&lt;grey&gt;&quot;
+		end
+	end
 
 	if table.contains(NyyLIB.deadpeople, xchar) then
-		-- This group member is dead
+		-- This group member is dead 
+		-- pets should never show here
 
-		return (&quot;&lt;navy&gt;&quot; .. string.format(&quot;[%s]            %-16s                             &quot;, xcls, xchar))
+		return (&quot;&lt;navy&gt;&quot; .. string.format(&quot;[%s]            %-16s                             &quot;, xcls, displayname))
 	else
 		-- blind, paralyzed, or silenced
 
 		if buff:get(&quot;blindness&quot;, xchar) or buff:get(&quot;blind&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ BLIND ]]       &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %s%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displaynamecol, displayname, &quot;          [[ BLIND ]]       &quot;))
 		end
 
 		if buff:get(&quot;major_paralysis&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;           [[ PARA ]]              &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %s%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displaynamecol, displayname, &quot;           [[ PARA ]]              &quot;))
 		end
 
 		if buff:get(&quot;silence_person&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;          [[ SILENT ]]      &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %s%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displaynamecol, displayname, &quot;          [[ SILENT ]]      &quot;))
 		end
 
 		if buff:get(&quot;venom&quot;, xchar) then
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, &quot;           [[ VENOM ]]             &quot;))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %s%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displaynamecol, displayname, &quot;           [[ VENOM ]]             &quot;))
 		end
 
 		-- No major penalties on char
@@ -30477,14 +30917,14 @@ function genline(xchar, xcls, xhp, xmaxhp)
 		if xhp == 0 then
 			-- character is not in room
 
-			return (col .. string.format(&quot;[%s] %4s/%4s  %-16s&lt;green&gt; %s&quot;, xcls, &quot;----&quot;, &quot;----&quot;, xchar, buffdisplay))
+			return (col .. string.format(&quot;[%s] %4s/%4s  %s%-16s&lt;green&gt; %s&quot;, xcls, &quot;----&quot;, &quot;----&quot;, displaynamecol, displayname, buffdisplay))
 		else
 			-- default group line
 
-			if xchar == whoami() and groupList:size() ~= 1 then
-				return (col .. string.format(&quot;[%s] %4d/%-4d  &lt;cyan&gt;%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, buffdisplay))
+			if xchar == whoami() and (groupList:size() ~= 1 or pet:size() &gt; 0 ) then
+				return (col .. string.format(&quot;[%s] %4d/%-4d  &lt;cyan&gt;%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displayname, buffdisplay))
 			else
-				return (col .. string.format(&quot;[%s] %4d/%-4d  %-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, xchar, buffdisplay))
+				return (col .. string.format(&quot;[%s] %4d/%-4d  %s%-16s&lt;green&gt; %s&quot;, xcls, xhp, xmaxhp, displaynamecol, displayname, buffdisplay))
 			end
 		end
 	end
@@ -30570,7 +31010,10 @@ function RedrawGroupStatus()
 		end
 	end
 
-	-- loop through followers
+	-- loop through followers (pets) - should cyan highlight, title
+
+	-- pet:getShortName(xname)
+
 
 	for k,char in pairs( pet:getTable() ) do
 		i=i+1
@@ -31267,11 +31710,9 @@ function initgui()
 	-- room window
 	
 	if NyyLIB.gRoomWindow == nil then
-		NyyLIB.gRoomWindow = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
-		--NyyLIB.gRoomWindow = Geyser.Label:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		  NyyLIB.gRoomWindow = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		--roomLabelNyyLIB.gRoomWindow = Geyser.Label:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
 		--NyyLIB.gRoomWindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;leftbar.png&quot;) .. [[)]])
-
-		--createBuffer( &quot;roomwindow&quot; )
 	end
 
 	NyyLIB.gRoomWindow:setFontSize(9)
@@ -32082,10 +32523,9 @@ function mud:sendCommands()
 
 			local assistcheck = string.match(sendcommand, &quot;^assist (.*)&quot;)
 
-			local ordercheck = string.match(sendcommand, &quot;^ORDER (.*)&quot;)
-	
-			if ordercheck then
-				cecho(&quot;\n&lt;yellow&gt;[&quot; .. sendcommand .. &quot;]\n&quot;)
+			-- screen echo if command is order
+			if string.match(sendcommand, &quot;^ORDER (.*)&quot;) then
+					cecho(&quot;\n&lt;yellow&gt;[ &quot; .. sendcommand .. &quot; ]\n&quot;)
 			end 
 
 
@@ -33001,6 +33441,7 @@ end
 
 pet = pet or {}
 pet.followers = pet.followers or {}
+pet.oldfollowers = pet.oldfollowers or {}
 pet.used = pet.used or {}
 
 -- pet:add(petname, fullname, xhp, xmaxhp, inroom) - add pet to table
@@ -33010,11 +33451,34 @@ pet.used = pet.used or {}
 
 
 
+function pet:setRoom(xpet, xroom)
+	if xpet == nil then
+		return
+	end
+
+	echoDebug(&quot;&lt;red&gt;[Setting &quot; .. xpet .. &quot; to &quot; .. tostring(xroom) .. &quot;]\n&quot;)
+	self.followers[xpet][6] = xroom
+end
+
+function pet:getRoom(xpet)
+	if self.followers[xpet] ~= nil then
+		return( self.followers[xpet][6] )
+	end
+
+	return(nil)
+end
+
+function pet:getOldRoom(xpet)
+	if self.oldfollowers[xpet] ~= nil then
+		return( self.oldfollowers[xpet][6] )
+	end
+
+	return(nil)
+end
+
 function pet:size()
 	return( #pet:getTable() )
 end
-
-
 
 -- return true if that pet is undead
 function pet:isUndead(xpetname)
@@ -33078,6 +33542,12 @@ end
 
 function pet:getInRoom(petname)
 	if self.followers[petname] ~= nil then
+		if map:getRoom() ~= nil then
+			if map:getRoom() == pet:getRoom(petname) then
+				return(true)
+			end
+		end
+
 		if self.followers[petname][4] == &quot;+&quot; then
 			return(true)
 		else
@@ -33153,6 +33623,21 @@ function pet:isNamed(xnamelist)
 	-- no name matches found
 	return(nil)
 end
+
+-- pet:getShortName(xname) - return the 8 letter petname segment
+
+function pet:getShortName(xname)
+	local prefix= string.sub(whoami():lower(), 1, 3)
+
+	local capture
+
+	-- return existing formatted petname
+
+	capture = string.match(xname, prefix .. &quot;([a-z]+)[0-9]+&quot;)
+
+	return(capture) 
+end
+
 
 -- pet:generateName(xname) return first 3 letters of whoami, first 8 letters of petname passed
 
@@ -33298,6 +33783,7 @@ end
 -- pet:reset - sets all used entries to 1 in preperation to be confirmed
 
 function pet:reset()
+	self.oldfollowers = self.followers
 	self.followers = {}
 
 	for k,v in pairs(self.used) do
@@ -33378,7 +33864,7 @@ end</script>
 
 function idMob(xname)
 	local mobnames=
-				{ &quot;zombie&quot;, &quot;ghoul&quot;, &quot;skeleton&quot;, &quot;wight&quot;, &quot;spectre&quot;, &quot;ghast&quot;, &quot;ghost&quot;}
+				{ &quot;zombie&quot;, &quot;ghoul&quot;, &quot;skeleton&quot;, &quot;wight&quot;, &quot;spectre&quot;, &quot;ghast&quot;, &quot;ghost&quot;, &quot;spirit&quot;}
 
 	local enemytable = string.split(xname, &quot; &quot;)
 
@@ -34197,7 +34683,7 @@ function cmi:decimalToRGB(num)
 		-- download luabit from http://files.luaforge.net/releases/bit/bit/luabitv0.4
 		-- copy bit.lua to mudlet install directory
 
-        -- require(&quot;bit&quot;)
+        require(&quot;bit&quot;)
         local r,g,b
         r = bit.band(num,0x0000ff)
         g = bit.band(num, 0x00ff00)
