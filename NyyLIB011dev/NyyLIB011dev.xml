@@ -2454,13 +2454,13 @@ look:send()</script>
                         <name>Exits: .*</name>
                         <script>if NyyLIB.psilag == &quot;ultra&quot; then
 	if setLabelImage(&quot;ultrablast&quot;, &quot;ultrablast-off.png&quot;) == nil then
-		addbutton(&quot;ultrablast&quot;, 6, 47)
+		addbutton(&quot;ultrablast&quot;, 2, 47)
 	end
 end
 
 if NyyLIB.psilag == &quot;death&quot; then
 	if setLabelImage(&quot;deathfield&quot;, &quot;deathfield-off.png&quot;)	== nil then
-		addbutton(&quot;deathfield&quot;, 6, 20)
+		addbutton(&quot;deathfield&quot;, 2, 20)
 	end
 end 
 
@@ -4901,6 +4901,27 @@ groupList:resetTanking()</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>disable looting when grouped</name>
+                    <script>echo(&quot;\n&quot;)
+buttons:change(&quot;autoloot&quot;, &quot;off&quot;, &quot;autoloot&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>You are now a member of</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>MiscTriggers</name>
@@ -5202,11 +5223,7 @@ NyyLIB.statuschar=&quot;&quot;
 
 disableTrigger(&quot;RoomCapture&quot;)
 
-if getLastLineNumber(&quot;roomBuffer&quot;) &gt; 0 then
-	clearWindow(&quot;gRoomWindow&quot;)
-	copyBuffer(&quot;roomBuffer&quot;, &quot;gRoomWindow&quot;)
-	clearWindow(&quot;roomBuffer&quot;)
-end
+roomWindow:update()
 
 disableTrigger(&quot;lootlist&quot;)
 
@@ -5220,17 +5237,14 @@ if Geyser.Label:getWindow(&quot;gIconBarWindow&quot;) == nil then
 	return
 end
 
-if NyyLIB.gRoomWindow ~= nil then
-	local var=getLastLineNumber(&quot;gRoomWindow&quot;)
+roomWindow:resize()
 
-	if var ~= nil and var ~= -1 then
-		if charData:get(&quot;roomwindow&quot;) then
-			NyyLIB.gRoomWindow:resize(nil, var .. &quot;c&quot;)
-			NyyLIB.gRoomWindow:move(&quot;60%&quot;, &quot;8%&quot;)
-			NyyLIB.gRoomWindow:show()
-		end
-	end
-end
+-- don't enable gagging look until a prompt has been receieved subsequent to sending the command
+if toGagLook == true then
+	gaglook=true
+	toGagLook=nil
+end	
+
 
 -- first prompt after a look recieved
 if look:get() == &quot;LOOKSTART&quot; then
@@ -6071,7 +6085,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/9/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/10/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6397,7 +6411,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7449,6 +7463,17 @@ timer:set(&quot;AshenStaff&quot;, 24*60)</script>
                     <name>RoomCapture</name>
                     <script>-- location matters on this trigger to prevent double firing
 
+-- terminate capture on blank line
+if matches[1] == &quot;&quot; then
+	disableTrigger(&quot;RoomCapture&quot;)
+
+	if gaglook then
+		eraseLine()
+	end
+
+	return
+end
+
 selectCurrentLine()
 copy()
 appendBuffer(&quot;roomBuffer&quot;)
@@ -7475,7 +7500,7 @@ end</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>StartRoomCapture</name>
-                    <script>if NyyLIB.gRoomWindow == nil then
+                    <script>if not roomWindow:exists() then
 	return
 end
 
@@ -7541,12 +7566,6 @@ appendBuffer(&quot;roomBuffer&quot;)
 if gaglook then
 	eraseLine()
 end
-
-
--- in case roomname was on same line as prompt (it happens!)
---if string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;) ~= nil then
---	NyyLIB.Mapper.roomname = string.sub(NyyLIB.Mapper.roomname, string.find(NyyLIB.Mapper.roomname, &quot;&gt; &quot;)+2)
---end
 
 look:set(&quot;LOOKSTART&quot;)
 
@@ -12956,6 +12975,10 @@ NyyLIB.Mapper.movement = NyyLIB.Mapper.movement or {}
 --end
 
 
+-- TODO: correct room number is looking n/e/s/w/etc
+-- You extend your sights northwards.
+-- You extend your sights upwards.
+
 -- clair - 'cast your sights far out' in the last 6 lines
 
 for nx=1,6,1 do
@@ -13123,7 +13146,6 @@ if charData:get(&quot;vnum&quot;, true) and not gaglook then
 	if not roomPortal then
 		if map:getRoom() ~= nil then
 			cecho(&quot;&lt;forest_green&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, map:getRoom() ))
-			-- cecho(&quot;&lt;forest_green&gt;&quot; .. string.format(&quot; [%s] &quot;, map:getRoom() ))
 		else
 			cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (20-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, &quot;Unmapped&quot;))
 		end
@@ -14630,7 +14652,6 @@ consent:set(matches[2], true)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Corpse of Ilinal is lying here.</name>
                     <script>-- ressurect corpses if have consent, not fighting, autores enabled, and spellcast enabled
--- TODO - need to check if spell memd
 
 local charname = matches[3]
 
@@ -15967,8 +15988,6 @@ end
                     <name>follower ordered movement</name>
                     <script>-- The spectre of a human noble flies west.
 
--- TODO: move pet to room
-
 local roomid = map:getRoom()
 local petname = pet:member(matches[2])
 local dirmoved = matches[3]
@@ -15977,9 +15996,7 @@ if roomid == nil or not petname then
 	return
 end
 
--- newroom: getRoomExits(roomid)[dirmoved]
--- function pet:setRoom(xpet, xroom)
--- pet:member(xfullname)
+-- move pet to bordering room
 
 pet:setRoom(petname, getRoomExits(roomid)[dirmoved])
 pet:setInRoom(petname, false)</script>
@@ -18441,7 +18458,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/9/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/10/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -18602,15 +18619,9 @@ end
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>#room</name>
-                    <script>if charData:get(&quot;roomwindow&quot;) then
-	charData:set(&quot;roomwindow&quot;, false)
-	cecho(&quot;&lt;red&gt;[Room capture display is OFF.]\n&quot;)
-	hideWindow(&quot;gRoomWindow&quot;)
-else
-	charData:set(&quot;roomwindow&quot;, true)
-	cecho(&quot;&lt;red&gt;[Room capture display is ON.]\n&quot;)
-	showWindow(&quot;gRoomWindow&quot;)
-end</script>
+                    <script>-- toggle display of room window on/off
+
+roomWindow:toggle()</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^#room$</regex>
@@ -20754,7 +20765,9 @@ scanned={}
 
 local dir=matches[2]:sub(1,1):lower()
 
-processMovement(dir)</script>
+processMovement(dir)
+
+gaglook=nil</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^(n|N|no|nor|nort|north|s|S|so|sou|sout|south|e|E|ea|eas|east|w|W|we|wes|west|u|U|up|d|D|do|dow|down)$</regex>
@@ -21062,11 +21075,11 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
                 <script>-- window:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
 
-display( setLabelStyleSheet(&quot;gRoomWindow&quot;, [[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]]) )
+--display( setLabelStyleSheet(&quot;gRoomWindow&quot;, [[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]]) )
 
 
 --roomLabel = Geyser.Label:new({name=&quot;gRoomLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
---roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
 
 
@@ -21740,6 +21753,7 @@ end</script>
 -- dev
 
 -- bugfixes
+-- looting is disabled when you join a group
 -- #room window is now flicker free
 -- #fpet - retrieves lost pets
 -- ungrouped followers are shown on group display
@@ -26714,8 +26728,6 @@ function setDoorName(xroomid, xdir, xdoorname)
 			return
 		end
 
-		--echo(&quot;Door name: &quot; .. xdoorname .. &quot; Room id: &quot; .. xroomid .. &quot;\n&quot;)
-
 		exitNames[NyyLIB.Mapper.exitmap[xdir]] = xdoorname
 
 		setRoomUserData(xroomid, &quot;exitNames&quot;, yajl.to_string(exitNames))
@@ -26838,8 +26850,7 @@ end
 function doSpeedWalk()
 	if #speedWalkDir &gt; 0 then
 		cecho(&quot;&lt;green&gt;[Path: .&quot; .. compressSpeedwalk() .. &quot;]\n&quot;)
-		--cecho(&quot;&lt;green&gt;[Rooms: &quot; .. table.concat(speedWalkPath, &quot;, &quot;) .. &quot;]\n&quot;)
-
+		
 		if #speedWalkPath &gt; 100 then
 			cecho(&quot;&lt;red&gt;[Path in excess of 100 rooms: &quot; .. #speedWalkPath .. &quot;]\n&quot;)
 			cecho(&quot;&lt;red&gt;[100th room: &lt;green&gt;&quot; .. speedWalkPath[100] .. &quot;&lt;red&gt; ]\n&quot;)
@@ -27255,8 +27266,6 @@ function findRoomIDTable(xname, xexits, xsuppress)
 	end
 
 	if #match == 0 then
-		-- map:setRoom(nil) don't set room
-		
 		if xsuppress == nil then
 			echo(&quot;No matches found: &quot; .. xname .. &quot;]\n&quot;)
 		end
@@ -27345,16 +27354,6 @@ function getExitTable(xmudstr)
 	return( exitsarray )
 end
 
-function mapperExits(xroomid)
-	local stubs = getExitStubs(xroomid)
-
-	display(stubs)
-
-	--for i = 0, stubs, 1 do
- 	--	print(NyyLIB.mapper.exitmap[stubs[i]])
-	--end
-end
-
 -- [Searching... Match found: Silverymoon, Gem of the North : At the End of Bowshot Ride : 48908]
 
 function solveScan(xsuppress)
@@ -27423,29 +27422,6 @@ function filterScan(xkey)
 
 		scanned[xkey].roomids = nil
 	end
-end
-
-Set = {}
-    
-function Set.new (t)
-   local set = {}
-   for _, l in ipairs(t) do set[l] = true end
-   return set
-end
-    
-function Set.union (a,b)
-  local res = Set.new{}
-  for k in pairs(a) do res[k] = true end
-  for k in pairs(b) do res[k] = true end
-  return res
-end
-    
-function Set.intersection (a,b)
-  local res = Set.new{}
-  for k in pairs(a) do
-   res[k] = b[k]
-  end
-  return res
 end</script>
                     <eventHandlerList/>
                 </Script>
@@ -29809,9 +29785,9 @@ function copyBuffer(srcBuffer, dstBuffer)
 		return
 	end
 
-	-- buffer is 0 based
+	-- buffer is 0 based, final line is blank from the previous newline
 	
-	for nx=0, srcBufferSize, 1 do
+	for nx=0, srcBufferSize-1, 1 do
 		moveCursor(srcBuffer, 0, nx)
 		selectCurrentLine(srcBuffer)
 		copy(srcBuffer)
@@ -30603,8 +30579,6 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 
--- TODO - call buff function (if exists) every second with charname as argument
-
 buff = buff or {}
 
 power = {
@@ -30648,8 +30622,6 @@ end
 -- function decreasebuffs() 				   	: internal - decrement all buffs by 1 second
 
 function buff:get(xbuff, xname)
--- 111616 changed to xbuff, xname. if xname is left blank, whoami is inserted
-
 	if xname == nil then
 		xname=whoami()
 	end
@@ -30871,8 +30843,6 @@ function genline(xchar, xcls, xhp, xmaxhp)
 
 	-- various display formats
 
-	-- TODO: colour can't be included in name, it offsets %s calculation
-
 	local displayname= xchar
 	local displaynamecol=col
 
@@ -31003,7 +30973,7 @@ function RedrawGroupStatus()
 				bottomwin = bottomwin .. charline
 				rightwin = rightwin .. charline .. &quot;\n&quot;
 
-				if i ~= groupList:size() and (i % 2) == 0 then
+				if i ~= numchars and (i % 2) == 0 then
 					bottomwin = bottomwin .. &quot;\n&quot;
 				end
 			end
@@ -31453,13 +31423,13 @@ function leftIcons()
 	if charData:get(&quot;hideequip&quot;, true) then
 		setBorderLeft( 10 )
 
-		exitLabel:hide()
+		exitLabel:show()
 
 		lLabel:resize(5, nil)
 	else
 		setBorderLeft ( math.ceil(WindowWidth/20)+4 )
 
-		exitLabel:show()
+		exitLabel:hide()		
 
 		lLabel:resize(&quot;5%&quot;, nil)
 	end
@@ -31690,15 +31660,13 @@ function initgui()
 		window = Geyser.Label:new({name=&quot;gIconBarWindow&quot;, x=&quot;0%&quot;, y=-51, width=&quot;100%&quot;, height=&quot;40&quot;,})
 		setBorder()
 
-		--window=Geyser.Label:getWindow(&quot;gIconBarWindow&quot;)
-
 		window:show()
 		window:hide()
 	end
 
 	window:setFontSize(8)
 
-	--setBorderLeft ( math.ceil(WindowWidth/20) )
+	-- hide buttons
 
 	for i,v in pairs(window.windowList) do
 		v:show()
@@ -31707,23 +31675,8 @@ function initgui()
 
 	showIconbar()
 
-	-- room window
+	roomWindow:create()
 	
-	if NyyLIB.gRoomWindow == nil then
-		  NyyLIB.gRoomWindow = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
-		--roomLabelNyyLIB.gRoomWindow = Geyser.Label:new({name=&quot;gRoomWindow&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
-		--NyyLIB.gRoomWindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;leftbar.png&quot;) .. [[)]])
-	end
-
-	NyyLIB.gRoomWindow:setFontSize(9)
-
-	charData:init(&quot;roomwindow&quot;, false)
-
-	if charData:get(&quot;roomwindow&quot;) == false then
-		NyyLIB.gRoomWindow:show()
-		NyyLIB.gRoomWindow:hide()
-	end
-
 	-- non-specific buttons
 
 	baseButtons()
@@ -32530,7 +32483,9 @@ function mud:sendCommands()
 
 
 			if assistcheck == nil then
-				echoDebug(&quot;&lt;green&gt;[Sending: &quot; .. sendcommand .. &quot;] : &quot;)
+				if sendcommand ~= &quot;\n&quot; then
+					echoDebug(&quot;&lt;green&gt;[ Send: &quot; .. sendcommand .. &quot; ] &quot;)
+				end
 				lastsent = sendcommand
 				expandAlias(sendcommand, charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;])
 			else
@@ -32554,7 +32509,9 @@ function mud:send(xcmd)
 	-- don't queue duplicates commands?
 
 	if table.contains(mud.varsendqueue, xcmd) == false then
-		echoDebug(&quot;\n&lt;red&gt;[Queuing: &quot; .. xcmd .. &quot;]&quot;)
+		if xcmd ~= &quot;\n&quot; then
+				echoDebug(&quot;\n&lt;red&gt;[ Que: &quot; .. xcmd .. &quot; ]&quot;)
+		end
 		table.insert(mud.varsendqueue, xcmd)
 	else
 		echoDebug(&quot;\n&lt;red&gt;[NOT Queuing: &quot; .. xcmd .. &quot;]&quot;)
@@ -32603,6 +32560,14 @@ function spell:attempt(xchar, xspell, xcommand) -- if xchar doesn't have xspell 
 			return(true)
 		end
 		return(false)
+	end
+
+	
+	-- don't cast spells on people outside room, dead
+	-- TODO: may need to check for death pact
+	
+	if groupList:getHP(xchar) == 0 or table.contains(NyyLIB.deadpeople, xchar) then
+		return
 	end
 
 	if not buff:get(string.sub(xspell, 1, 25), xchar) then
@@ -34072,7 +34037,8 @@ look = look or {}
 
 function look:send()
 	if not look:get() then
-		gaglook=true
+		toGagLook=true
+		--gaglook=true
 		mud:send(&quot;LOOK&quot;)
 		look:set(&quot;LOOKSENT&quot;)
 	end
@@ -34216,6 +34182,95 @@ end
 </script>
                     <eventHandlerList/>
                 </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>GUIRoomWindow</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+roomWindow = roomWindow or {}
+
+-- Resize and reposition the room window
+
+function roomWindow:resize()
+	if self:exists() then
+		local var=getLastLineNumber(&quot;gRoomWindow&quot;)
+
+		if var ~= nil and var ~= -1 then
+			if charData:get(&quot;roomwindow&quot;) then
+				roomLabel:resize(nil, (var+4) .. &quot;c&quot;)
+				roomLabel:move(&quot;60%&quot;, &quot;8%&quot;)
+				roomLabel:show()
+		
+				self.windowid:resize(nil, var .. &quot;c&quot;)
+				--self.windowid:move(&quot;.5c&quot;, &quot;.5c&quot;)
+				--self.windowid:show()
+			
+			
+			end
+		end
+	end
+end
+
+-- Update the room window from the buffer
+
+function roomWindow:update()
+	if getLastLineNumber(&quot;roomBuffer&quot;) &gt; 0 then
+		clearWindow(&quot;gRoomWindow&quot;)
+		copyBuffer(&quot;roomBuffer&quot;, &quot;gRoomWindow&quot;)
+		clearWindow(&quot;roomBuffer&quot;)
+	end
+end
+
+-- Create the room window
+
+function roomWindow:create()
+	if not self:exists() then
+		  roomLabel = Geyser.Label:new({name=&quot;gRoomWindowLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;34%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+			roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+
+			self.windowid = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;5%&quot;, y=&quot;5%&quot;, width=&quot;90%&quot;, height=&quot;90%&quot;,}, roomLabel) -- -92c, -80c
+		--roomLabel = Geyser.Label:new({name=&quot;gRoomWindowLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		--NyyLIB.gRoomWindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;leftbar.png&quot;) .. [[)]])
+	end
+
+	self.windowid:setFontSize(9)
+
+	if charData:get(&quot;roomwindow&quot;) == false then
+		self.windowid:show()
+		self.windowid:hide()
+	end
+end
+
+-- Toggle the room window on/off
+
+function roomWindow:toggle()
+	if charData:get(&quot;roomwindow&quot;) then
+		charData:set(&quot;roomwindow&quot;, false)
+		cecho(&quot;&lt;red&gt;[Room capture display is OFF.]\n&quot;)
+		roomLabel:hide()
+		--hideWindow(&quot;gRoomWindow&quot;)
+	else
+		charData:set(&quot;roomwindow&quot;, true)
+		cecho(&quot;&lt;red&gt;[Room capture display is ON.]\n&quot;)
+		roomLabel:show()
+		--showWindow(&quot;gRoomWindow&quot;)
+	end
+end
+
+-- Return true if the room window has been created
+
+function roomWindow:exists()
+	if self.windowid ~= nil then
+		return(true)
+	else
+		return(false)
+	end
+end</script>
+                    <eventHandlerList/>
+                </Script>
             </ScriptGroup>
             <ScriptGroup isActive="yes" isFolder="yes">
                 <name>Events</name>
@@ -34272,13 +34327,14 @@ function promptEvent(event)
 			end
 		end
 
-		-- if tank=me, ghost, wraith, wight order rescue
+		-- if tank=me, slaad, ghost, wraith, wight order rescue
 		if not petcommand then
 			local tank=prompt:get(&quot;tank&quot;)
-
-			if table.contains( {whoami(), &quot;gray&quot;, &quot;ghost&quot;, &quot;wraith&quot;, &quot;wight&quot;, &quot;ghoul&quot; }, tank ) then
-				pet:rescue( tank )
-				petcommand=true
+			if not (pet:getTable() == 1) then
+				if table.contains( {whoami(), &quot;gray&quot;, &quot;ghost&quot;, &quot;wraith&quot;, &quot;wight&quot;, &quot;ghoul&quot; }, tank ) then
+					pet:rescue( tank )
+					petcommand=true
+				end
 			end
 		end
 	end
