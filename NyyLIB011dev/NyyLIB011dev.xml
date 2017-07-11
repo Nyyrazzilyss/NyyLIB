@@ -6411,7 +6411,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -17110,7 +17110,7 @@ spell:setNext(&quot;EE&quot; .. (matches[2] or &quot;&quot;) )</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
-            <Alias isActive="yes" isFolder="no">
+            <Alias isActive="no" isFolder="no">
                 <name>restart</name>
                 <script>local ver=getMudletVersion()
 
@@ -34205,10 +34205,6 @@ function roomWindow:resize()
 				roomLabel:show()
 		
 				self.windowid:resize(nil, var .. &quot;c&quot;)
-				--self.windowid:move(&quot;.5c&quot;, &quot;.5c&quot;)
-				--self.windowid:show()
-			
-			
 			end
 		end
 	end
@@ -34228,19 +34224,17 @@ end
 
 function roomWindow:create()
 	if not self:exists() then
-		  roomLabel = Geyser.Label:new({name=&quot;gRoomWindowLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;34%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
+		  roomLabel = Geyser.Label:new({name=&quot;gRoomWindowLabel&quot;, x=&quot;60%&quot;, y=&quot;8%&quot;, width=&quot;34%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
 			roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
 			self.windowid = Geyser.MiniConsole:new({name=&quot;gRoomWindow&quot;, x=&quot;5%&quot;, y=&quot;5%&quot;, width=&quot;90%&quot;, height=&quot;90%&quot;,}, roomLabel) -- -92c, -80c
-		--roomLabel = Geyser.Label:new({name=&quot;gRoomWindowLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
-		--NyyLIB.gRoomWindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;leftbar.png&quot;) .. [[)]])
 	end
 
 	self.windowid:setFontSize(9)
 
 	if charData:get(&quot;roomwindow&quot;) == false then
-		self.windowid:show()
-		self.windowid:hide()
+		--self.windowid:hide()
+		roomLabel:hide()
 	end
 end
 
@@ -34251,12 +34245,12 @@ function roomWindow:toggle()
 		charData:set(&quot;roomwindow&quot;, false)
 		cecho(&quot;&lt;red&gt;[Room capture display is OFF.]\n&quot;)
 		roomLabel:hide()
-		--hideWindow(&quot;gRoomWindow&quot;)
+		self.windowid:hide()
 	else
 		charData:set(&quot;roomwindow&quot;, true)
 		cecho(&quot;&lt;red&gt;[Room capture display is ON.]\n&quot;)
 		roomLabel:show()
-		--showWindow(&quot;gRoomWindow&quot;)
+		self.windowid:show()
 	end
 end
 
