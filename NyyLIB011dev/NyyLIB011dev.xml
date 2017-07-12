@@ -3761,7 +3761,7 @@ if not checkMask(&quot;priest&quot;) or not charData:get(&quot;autoquake&quot;) 
 end
 
 -- last command entered was look direction or scan - return
-if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;scan&quot; then
+if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;SCAN&quot; then
 	return
 end
 
@@ -6085,7 +6085,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/10/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/12/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13459,11 +13459,16 @@ NyyLIB.doorbash=nil</script>
                     <regexCodePropertyList/>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A portal of swirling clouds hovers here.</name>
-                        <script>if map:getRoom() ~= nil then
-	return
-end
+                        <script>-- set room on ethereal
 
-if command == &quot;scan&quot; then
+--if map:getRoom() ~= nil then
+--	return
+--end
+
+map:setRoom(88233)
+centerview( map:getRoom() )
+
+if command == &quot;SCAN&quot; then
 	-- You scan north...
 	local lineindex=1
 
@@ -13480,10 +13485,12 @@ if command == &quot;scan&quot; then
 
 	local setroom = getRoomExits(88233)[NyyLIB.reversedirs[scandir]]
 
+	--display(setroom)
+
 	map:setRoom(setroom)
 	centerview( map:getRoom() )
 
-	-- display(&quot;Found on scan in dir &quot; .. scandir)
+	--display(&quot;Found on scan in dir &quot; .. scandir)
 end
 
 if string.match(command, &quot;^[nsewud]$&quot;) then
@@ -13516,7 +13523,7 @@ NyyLIB.Mapper = NyyLIB.Mapper or {}
 NyyLIB.Mapper.movement = NyyLIB.Mapper.movement or {}
 
 -- last command entered was look or scan - return
-if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;scan&quot; then
+if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;SCAN&quot; then
 	return
 end
 
@@ -14668,7 +14675,7 @@ if groupList:ingroup( charname ) then
 		end
 
 		-- last command entered was look direction or scan - return
-		if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;scan&quot; then
+		if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;SCAN&quot; then
 			return
 		end
 
@@ -17110,7 +17117,7 @@ spell:setNext(&quot;EE&quot; .. (matches[2] or &quot;&quot;) )</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
-            <Alias isActive="no" isFolder="no">
+            <Alias isActive="yes" isFolder="no">
                 <name>restart</name>
                 <script>local ver=getMudletVersion()
 
@@ -18000,7 +18007,7 @@ if matches[2] == &quot;copy&quot; then
 
 		backupFile(&quot;chardata.dat&quot;)
 		backupFile(&quot;stats.dat&quot;)
-		backupFile(&quot;wholist_v2&quot;)
+		backupFile(&quot;wholist_v3&quot;)
 
 		backupFile(&quot;toril.map&quot;)
 	else
@@ -18016,7 +18023,7 @@ if matches[2] == &quot;restore&quot; then
 
 		restoreFile(&quot;chardata.dat&quot;)
 		restoreFile(&quot;stats.dat&quot;)
-		restoreFile(&quot;wholist_v2&quot;)
+		restoreFile(&quot;wholist_v3&quot;)
 
 		restoreFile(&quot;toril.map&quot;)
 
@@ -18456,9 +18463,9 @@ end</script>
                 <Alias isActive="yes" isFolder="no">
                     <name>version</name>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/10/2015&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/10/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/12/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -18565,7 +18572,7 @@ end
 
 function showfastwalk(xroomid)
 	if roomLocked(xroomid) then
-		echo(&quot;[Error: Destination room is locked]\n&quot;)
+		cecho(&quot;&lt;red&gt;[Error: Destination room is locked]\n&quot;)
 		return
 	end
 
@@ -18598,7 +18605,7 @@ function showfastwalk(xroomid)
 		cecho(&quot;&lt;green&gt;Speedwalk: .&quot; .. compressSpeedwalk() .. &quot;\n\n&quot;)
 
 	else
-		echo(&quot;[Unable to find path to room#&quot; .. xroomid .. &quot;]\n&quot;)
+		cecho(&quot;&lt;red&gt;[Unable to find path to room#&quot; .. xroomid .. &quot;]\n&quot;)
 	end
 end
 
@@ -21079,8 +21086,9 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
 
 
 --roomLabel = Geyser.Label:new({name=&quot;gRoomLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
-roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+-- roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
+roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;flames.png&quot;) .. [[)]])
 
 
 --local WindowWidth, WindowHeight = getMainWindowSize()
@@ -21752,6 +21760,7 @@ end</script>
 
 -- dev
 
+-- katumi database update - 7/11/17
 -- bugfixes
 -- looting is disabled when you join a group
 -- #room window is now flicker free
@@ -21778,7 +21787,7 @@ end</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 317 areas 44777 rooms
+-- Map updated: full size 317 areas 44808 rooms
 
 -- 011b
 
@@ -29012,7 +29021,7 @@ end
 function opendb()
 	NyyLIB.env = assert (luasql.sqlite3())
 	
-	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2015_10_10&quot;)))
+	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-07-11&quot;)))
 
 	display(NyyLIB.conn)
 end
@@ -32904,23 +32913,23 @@ function fixwholist()
 end
 
 function savewholist()
-	table.save( homepath(&quot;wholist_v2&quot;), NyyLIB.WhoClass.wholist)
+	table.save( homepath(&quot;wholist_v3&quot;), NyyLIB.WhoClass.wholist)
 end
 
 function loadwholist()
 	NyyLIB.WhoClass = NyyLIB.WhoClass or {}
 	NyyLIB.WhoClass.wholist = NyyLIB.WhoClass.wholist or {}
 
-	local is_file = io.open( homepath(&quot;wholist_v2&quot;) )
+	local is_file = io.open( homepath(&quot;wholist_v3&quot;) )
 	
 	if is_file == nil then
 		echo(&quot;[Creating wholist]\n&quot;)
 
-		table.load( mainpath(&quot;wholist_v2&quot;), NyyLIB.WhoClass.wholist )
+		table.load( mainpath(&quot;wholist_v3&quot;), NyyLIB.WhoClass.wholist )
 		savewholist()
 	end
 
-	table.load( homepath(&quot;wholist_v2&quot;), NyyLIB.WhoClass.wholist)
+	table.load( homepath(&quot;wholist_v3&quot;), NyyLIB.WhoClass.wholist)
 end
 
 -- inwho(xname) - returns false or profilename
@@ -33259,7 +33268,7 @@ function powerAliases:castDamage()
 				-- don't cast spells limited to 1/fight
 				if not (spell:getCast())[powerAliases[charclass][nx][2]] then
 					-- uppercase means gagging screen echo of the command being sent
-					cecho(&quot;&lt;green&gt;\n[ powerAliases:castDamage() - &quot; .. powerAliases[charclass][nx][2] .. &quot;]\n&quot;)
+					cecho(&quot;&lt;green&gt;\n[ powerAliases:castDamage() - &quot; .. powerAliases[charclass][nx][2] .. &quot; ]\n&quot;)
 					spell:cast( string.upper(powerAliases[charclass][nx][2]) )
 					return(true)
 				end
@@ -34191,6 +34200,7 @@ end
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 roomWindow = roomWindow or {}
+roomWindow.oldCount = roomWindow.oldCount or 0
 
 -- Resize and reposition the room window
 
@@ -34198,14 +34208,26 @@ function roomWindow:resize()
 	if self:exists() then
 		local var=getLastLineNumber(&quot;gRoomWindow&quot;)
 
-		if var ~= nil and var ~= -1 then
-			if charData:get(&quot;roomwindow&quot;) then
-				roomLabel:resize(nil, (var+4) .. &quot;c&quot;)
-				roomLabel:move(&quot;60%&quot;, &quot;8%&quot;)
-				roomLabel:show()
+		if var == roomWindow.oldCount then
+			return
+		end
 		
-				self.windowid:resize(nil, var .. &quot;c&quot;)
-			end
+		roomWindow.oldCount = var
+
+		if var ~= nil and var ~= -1 then
+			local WindowWidth, WindowHeight = getMainWindowSize()
+			local wwidth,wheight = calcFontSize(9)
+
+			-- TODO: font size will need to be related to screensize.
+
+			local ys = wheight * var
+
+
+			roomLabel:resize(nil, ys+ 2*wheight)
+			roomLabel:move(&quot;60%&quot;, &quot;8%&quot;)
+		
+			self.windowid:resize(nil, var .. &quot;c&quot;)
+			self.windowid:move(nil, wheight)
 		end
 	end
 end
@@ -34324,7 +34346,7 @@ function promptEvent(event)
 		-- if tank=me, slaad, ghost, wraith, wight order rescue
 		if not petcommand then
 			local tank=prompt:get(&quot;tank&quot;)
-			if not (pet:getTable() == 1) then
+			if not (#pet:getTable() == 1) then
 				if table.contains( {whoami(), &quot;gray&quot;, &quot;ghost&quot;, &quot;wraith&quot;, &quot;wight&quot;, &quot;ghoul&quot; }, tank ) then
 					pet:rescue( tank )
 					petcommand=true
@@ -34348,9 +34370,9 @@ function promptEvent(event)
 	-- Dire raiders - furious assault, howl, outflank
 	procPromptDire()
 
-	-- Disengage from nightmares (tiamat)
+	-- Disengage from nightmares (tiamat zone only)
 	if prompt:get(&quot;enemy&quot;) == &quot;nightmare&quot; then
-		if getZone() ~= &quot;Ashstone&quot; then
+		if getZone() == &quot;Tiamat - The Pillar of Skulls&quot; then
 			if prompt:get(&quot;position&quot;) ~= &quot;std&quot; then
 				mud:send(&quot;STAND&quot;)
 			end
