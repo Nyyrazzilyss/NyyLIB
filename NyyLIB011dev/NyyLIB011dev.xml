@@ -4076,6 +4076,37 @@ timer:set(&quot;assassinatetimer&quot;, 24*60)</script>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>assassinate in cooldown</name>
+                        <script>-- You may only attempt to assassinate someone once a day!
+
+-- unknown cooldown, setting to 5 minutes
+
+timer:set(&quot;assassinatetimer&quot;, 5*60)
+
+-- train portion: backstab if unable to assassinate
+
+if NyyLIB.traintarget then
+		mud:send(&quot;bs &quot; .. getEnemy() )
+end
+</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You may only attempt to assassinate someone once a day!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
                 </TriggerGroup>
                 <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Ill</name>
@@ -6156,7 +6187,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/15/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/17/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9751,6 +9782,10 @@ mount:setMounted(true)</script>
 -- You dismount a hell hound.
 -- You stop riding a hell hound.
 
+--Your mount heads south, and you head for the ground!
+--You fall to the ground.  You stop riding.
+
+
 if not checkMask(&quot;mountedCombat&quot;) then
 	return
 end
@@ -10332,7 +10367,7 @@ else
 		display( map:getRoom() )
 		display( NyyLIB.nextstop )
 
-		expandAlias(&quot;#fwalk &quot; .. NyyLIB.nextstop)
+		tempTimer(6, [[expandAlias(&quot;#fwalk &quot; .. NyyLIB.nextstop)]])
 	else
 		NyyLIB.trainecho=0
 
@@ -18611,7 +18646,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/15/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21744,6 +21779,7 @@ cmi:labelCmudZones(cmi.con)</script>
 [78562] = &quot;trahern&quot;,
 [78577] = &quot;vrazgal&quot;,
 [79003] = &quot;yylirmog&quot;,
+[84994] = &quot;blood&quot;,
 [87034] = &quot;bloodstone&quot;,
 [92882] = &quot;ancients&quot;,
 [94218] = &quot;dugmaren&quot;,
@@ -21953,7 +21989,7 @@ end</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 317 areas 44808 rooms
+-- Map updated: full size 317 areas 44816 rooms
 
 -- 011b
 
@@ -25896,7 +25932,7 @@ function procPromptDire()
 	-- dire: howl - howl if in combat and enabled
 	if mount:getMounted() then
 		if charData:get(&quot;autohowl&quot;) and inCombat() then
-			if not timer:get(&quot;howcd&quot;) then
+			if not timer:get(&quot;howlcd&quot;) then
 				timer:set(&quot;howlcd&quot;, 7)
 				mud:send(&quot;howl&quot;)	
 			end
