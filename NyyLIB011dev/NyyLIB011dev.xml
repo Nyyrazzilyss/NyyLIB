@@ -5760,35 +5760,6 @@ mud:send(&quot;consent &quot; .. matches[2])</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>Every line of text</name>
-                    <script>local gag = charData:get(&quot;gags&quot;, true)
-
-if gag ~= nil then
-	for key,val in pairs(gag) do
-		if string.findPattern(matches[2]:lower(), val) then
-				eraseLine()
-				return
-		end
-	end
-end</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>^(.*)$</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>You think Coburaxximus has spotted you!</name>
                     <script>setHide(false)</script>
                     <triggerType>0</triggerType>
@@ -6187,7 +6158,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/17/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/20/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9027,8 +8998,10 @@ buff:del(whoami(), &quot;venom&quot;)</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>A warm flush runs throughout your body as the toxins are neutralized.</string>
+                            <string>You feel much healthier as the toxins within are neutralized.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -9084,6 +9057,37 @@ sendStatus()</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>add venom</name>
+                        <script>-- Lilabipple writhes in agony.
+--pupilless eyes glow bright red as its tail spur sinks into Kerishai's
+--Kerishai shudders in pain, and looks very pale.
+
+
+if groupList:ingroup(matches[2]) then
+	buff:set(matches[2], &quot;venom&quot;, 600)
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>(.*) writhes in agony.</string>
+                            <string>(.*) shudders in pain, and looks very pale.</string>
+                            <string>pupilless eyes glow bright red as its tail spur sinks into (.*)i's</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>1</integer>
+                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
@@ -16118,6 +16122,8 @@ end</script>
 -- A gray slaad flies in from the south.
 -- The spirit worg flies in from the east.
 
+-- The shadow of a dockhand flies in from the west.
+
 -- TODO: multiple pets with identical names
 
 local shortname= idMob(matches[2])
@@ -16204,6 +16210,44 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>^ *([-0-9]+)/([0-9]+) +HP +[0-9]+/[0-9]+ +MV *([+-]) (.*)$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>The shadow of a dockhand stands here.</name>
+                    <script>-- check current room
+
+-- command ~= &quot;look&quot; then
+
+if command ~= &quot;L&quot; and command ~= &quot;LOOK&quot; then
+	return
+end
+
+local shortname= idMob(matches[2])
+--local petname= pet:member( matches[2] )
+
+for k,name in pairs( pet:getTable(shortname) ) do
+	if pet:getRoom(name) ~= map:getRoom() then
+		pet:setRoom(name, map:getRoom() )
+		pet:setInRoom(name, true)
+		return
+	end
+end
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>(.*) stands here.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -16343,6 +16387,26 @@ sortpowerslist[#sortpowerslist+1] = {to_snake(powername), matches[2]:trim(), lev
                     </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>added gags</name>
+                <script></script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList>
+                    <string>^(.*)$</string>
+                </regexCodeList>
+                <regexCodePropertyList>
+                    <integer>1</integer>
+                </regexCodePropertyList>
+            </Trigger>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>Rugrag futilely tries to rescue Lilabipple!</name>
                 <script>if groupList:ingroup(matches[2]) then
@@ -18646,7 +18710,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/20/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21989,7 +22053,7 @@ end</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 317 areas 44816 rooms
+-- Map updated: full size 317 areas 44832 rooms
 
 -- 011b
 
@@ -22009,7 +22073,7 @@ end</script>
 -- pets/undead/mounts added to grouplist / displayed on screen
 -- Change from necro to lich in wholist if needed
 -- bugfixes
--- Map updated: full size 316 areas 44618 rooms
+-- Map updated: full size 317 areas 44822 rooms
 
 -- 011a
 
@@ -25350,14 +25414,39 @@ end</script>
 function initNec()
 	powerAliases:addButtons()
 
-	addbutton(&quot;SoulShackleButton&quot;, 14, 36)
+	addbutton(&quot;protection_from_undead&quot;, 7, 6)
 	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
 	addbutton(&quot;banshee_wail&quot;, 11, 46)
+	addbutton(&quot;SoulShackleButton&quot;, 14, 36)
+
+	--addbutton(&quot;haste&quot;,11, 31)
 end
 
 function SpellsNec()
-	-- if fighting and no other spells cast damage spells
+	if charData:get(&quot;autopfu&quot;) then
+		if scr_pfu() then
+			return
+		end
+	end
 
+	-- powers pfu spectre whether enabled or not
+	if pet:status(&quot;spectre&quot;) then
+		local petname= pet:getTable(&quot;spectre&quot;)[1]
+
+		if not buff:get(&quot;protection_from_undead&quot;, petname) and pet:getInRoom(petname) then
+			if getSpellCount(&quot;protection_from_undead&quot;) &gt; 0 then
+				spell:cast(&quot;pfu &quot; .. petname)
+				buff:set(petname, &quot;protection_from_undead&quot;, 15)
+				return
+			end
+		end
+	end
+
+	if 	scr_globe() then
+		return
+	end
+
+	-- if fighting and no other spells cast damage spells
 	if powerAliases:castDamage() then
 		return
 	end
@@ -25489,11 +25578,13 @@ function undeadSpell(xcaster)
 	end
 
 	-- caster undead - keep globed
-	if not buff:get(&quot;globe_of_invulnerability&quot;, xcaster) then
-		mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'globe of invulnerability' &quot; .. xcaster)
-		timer:set(&quot;petcast&quot;, 6)
-		buff:set(xcaster, &quot;globe_of_invulnerability&quot;, 60)
-		return
+	if pet:status(&quot;wraith&quot;) or pet:status(&quot;ghost&quot;) then
+		if not buff:get(&quot;globe_of_invulnerability&quot;, xcaster) then
+			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'globe of invulnerability' &quot; .. xcaster)
+			timer:set(&quot;petcast&quot;, 6)
+			buff:set(xcaster, &quot;globe_of_invulnerability&quot;, 60)
+			return
+		end
 	end
 
 	-- these spells should only be cast in combat
@@ -25528,23 +25619,32 @@ function undeadSpell(xcaster)
 			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'abi dalzims'&quot;)
 			timer:set(&quot;petcast&quot;, 6)
 		end
+	
+		if pet:status(&quot;shadow&quot;) then
+			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'magic missile'&quot;)
+			timer:set(&quot;petcast&quot;, 6)
+		end
 	else
 		-- These spells are cast if not in combat
 
-		-- vampiric touch
-		if not buff:get(&quot;vampiric_touch&quot;, xcaster) then
-			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'vampiric touch'&quot;)
-			timer:set(&quot;petcast&quot;, 6)
-			buff:set(xcaster, &quot;vampiric_touch&quot;, 60)
-			return
+		-- vampiric touch (shadow can't cast)
+		if pet:status(&quot;wraith&quot;) or pet:status(&quot;ghost&quot;) then
+			if not buff:get(&quot;vampiric_touch&quot;, xcaster) then
+				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'vampiric touch'&quot;)
+				timer:set(&quot;petcast&quot;, 6)
+				buff:set(xcaster, &quot;vampiric_touch&quot;, 60)
+				return
+			end
 		end
 
-		-- coldshield
-		if not buff:get(&quot;coldshield&quot;, xcaster) then
-			mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'coldshield'&quot;)
-			timer:set(&quot;petcast&quot;, 6)
-			buff:set(xcaster, &quot;coldshield&quot;, 60)
-			return
+		-- coldshield (shadow can't cast)
+		if pet:status(&quot;wraith&quot;) or pet:status(&quot;ghost&quot;) then
+			if not buff:get(&quot;coldshield&quot;, xcaster) then
+				mud:send(&quot;ORDER &quot; .. xcaster .. &quot; cast 'coldshield'&quot;)
+				timer:set(&quot;petcast&quot;, 6)
+				buff:set(xcaster, &quot;coldshield&quot;, 60)
+				return
+			end
 		end
 	end
 end
@@ -28682,7 +28782,7 @@ powerAliases[&quot;Inv&quot;] = {
 { &quot;burning_hands&quot;, &quot;bh&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;shocking_grasp&quot;, &quot;sg&quot;, 6, &quot;automissile&quot;, &quot;&quot;},
 { &quot;minor_creation&quot;, &quot;minor&quot;, 6, &quot;&quot;, &quot;&quot;},
---{ &quot;faerie_fire&quot;, &quot;ff&quot;, 6, &quot;autoffire&quot;, &quot;&quot;},
+{ &quot;faerie_fire&quot;, &quot;ff&quot;, 6, &quot;autoffire&quot;, &quot;&quot;},
 { &quot;acid_blast&quot;, &quot;acb&quot;, 6, &quot;automissile&quot;, &quot;&quot;},
 { &quot;locate_object&quot;, &quot;loco&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;lightning_bolt&quot;, &quot;lb&quot;, 11, &quot;automissile&quot;, &quot;&quot;},
@@ -28713,12 +28813,12 @@ powerAliases[&quot;Inv&quot;] = {
 { &quot;major_paralysis&quot;, &quot;mp&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;force_missiles&quot;, &quot;fm&quot;, 36, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;blazing_beam&quot;, &quot;bb&quot;, 26, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;incendiary_cloud&quot;, &quot;ic&quot;, 31, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;fell_frost&quot;, &quot;frost&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
+{ &quot;sandblast&quot;, &quot;sb&quot;, 46, &quot;autohlmissile&quot;, &quot;&quot;},
+{ &quot;incendiary_cloud&quot;, &quot;ic&quot;, 31, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;meteor_swarm&quot;, &quot;ms&quot;, 41, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;relocate&quot;, &quot;relo&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;gate&quot;, &quot;gate&quot;, 41, &quot;&quot;, &quot;&quot;},
-{ &quot;sandblast&quot;, &quot;sb&quot;, 46, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;ball_lightning&quot;, &quot;bl&quot;, 46, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;inferno&quot;, &quot;inf&quot;, 46, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;sandstorm&quot;, &quot;ss&quot;, 46, &quot;autostorm&quot;, &quot;&quot;},
@@ -31362,7 +31462,9 @@ function buttons:change(xchardata, xvalue, xbutton)
 
 	charData:set(xchardata, xvalue)
 
-	_G[xbutton](xbutton, buttons.INIT)
+	if _G[xbutton] ~= nil then
+		_G[xbutton](xbutton, buttons.INIT)
+	end
 end
 
 function buttons:sync()
@@ -31532,6 +31634,11 @@ function addbutton(xname, xid, xlevel, xwidth, xheight)
 
 	if xid == nil then
 		cecho(&quot;\n&lt;red&gt;[addbutton: nil xid : non-existant button: &quot; .. xname .. &quot;]\n&quot;)
+
+		-- TODO: call add loop
+
+		powerAliases:addButtons()
+	
 		return
 	end
 
@@ -34062,7 +34169,7 @@ end</script>
 
 function idMob(xname)
 	local mobnames=
-				{ &quot;zombie&quot;, &quot;ghoul&quot;, &quot;skeleton&quot;, &quot;wight&quot;, &quot;spectre&quot;, &quot;ghast&quot;, &quot;ghost&quot;, &quot;spirit&quot;}
+				{ &quot;zombie&quot;, &quot;ghoul&quot;, &quot;skeleton&quot;, &quot;wight&quot;, &quot;shadow&quot;, &quot;spectre&quot;, &quot;ghast&quot;, &quot;ghost&quot;, &quot;spirit&quot;}
 
 	local enemytable = string.split(xname, &quot; &quot;)
 
