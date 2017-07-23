@@ -475,6 +475,32 @@ Edge of a Sphere of Air - To - Brass: sw2un
 Jet of Flame - To - Brass: 2esun
 Sphere of Fire - To - Jet of Flame: 2eu
 Edge of a Sphere of Air - To - Jet of Flame: su2en 
+;;252,water
+Since some of the areas usually have aggro mobs there, all dirs will put you 1 room away, except from dirs to fortress.
+
+from - Outside a Floating Coral Reef
+to A Rising Shaft of Bubbles: .ene2u
+to A Rushing Maelstrom: .2eseu
+to The Edge of a Massive Group of Slimes: .e2n2wu
+to The Rushing Waters of the Pale River: .en2ed
+to The Murky Depths: .2e2s2d
+to A Jet Stream in air plane (needs fly): .ene4uneuswune2u
+to ice plane (unless ice invasion is up. aggro): .e2n2wunund
+
+from -The Edge of a Massive Group of Slimes
+to Outside a Floating Coral Reef: .2s2esdw
+
+from - The Murky Depths
+to Outside a Floating Coral Reef: .uw2n2uw
+
+from - A Rising Shaft of Bubbles (Airy)
+to Outside a Floating Coral Reef: .dws2dw
+
+from - A Rushing Maelstrom
+to Outside a Floating Coral Reef: .2wnd2w
+
+from - The Rushing Waters of the Pale River
+to Outside a Floating Coral Reef: .n2wsuw
 ;;301,nern1
 Nern 1: 
 Seal:Loads Nern Loads Item:

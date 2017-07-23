@@ -6158,7 +6158,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/20/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/23/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7172,7 +7172,9 @@ setHide(true)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>As you say 'blend' to a dark gray cloak with a rune embroidered hem,</name>
                     <script>-- warder cloak still isn't charged
-timer:set(&quot;TiaWarder&quot;, 2*60)</script>
+if not timer:get(&quot;TiaWarder&quot;) then
+	timer:set(&quot;TiaWarder&quot;, 2*60)
+end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9444,6 +9446,29 @@ look:send()</script>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>There are no active status effects.</name>
+                    <script>if command == &quot;STATUS &quot; then
+	buff:del(whoami())
+end
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>There are no active status effects.</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -18710,7 +18735,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/20/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/23/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21226,13 +21251,13 @@ for k,v in pairs(NyyLIB.groupitems) do
 		if stats[1] ~= nil then
 			mud:send(&quot;gsay * &quot; .. stats[1])
 		else
-			mud:send(&quot;gsay * &quot; .. v .. &quot; : not found in database.&quot;)
+			mud:send(&quot;gsay * &quot; .. v .. &quot; : not found in database. identify and mmail to katumi&quot;)
 		end
 	else
 		if stats[1] ~= nil then
 			echo(stats[1] .. &quot;\n&quot;)
 		else
-			echo(v .. &quot; : not found in database.\n&quot;)
+			echo(v .. &quot; : not found in database. identify and mmail to katumi\n&quot;)
 		end
 	end
 end</script>
@@ -24935,10 +24960,10 @@ function baseButtons()
 	if checkMask(&quot;fighter&quot;) then
 		addbutton(&quot;autobash&quot;, 3, 1)
 		addbutton(&quot;DisarmButton&quot;, 11, 22)	
+	end
 
-		if whoclass() ~= &quot;Pal&quot; then
-			addbutton(&quot;KickButton&quot;, 12, 1)	
-		end
+	if checkMask(&quot;kicker&quot;) then
+		addbutton(&quot;KickButton&quot;, 12, 1)	
 	end
 
 	if checkMask(&quot;summonmount&quot;) then
@@ -26711,6 +26736,7 @@ end</script>
 		{87276, &quot;naked woman&quot;},
 		{87254, &quot;Ashstone noble&quot;},
 		{87251, &quot;Ashstone noble&quot;},
+		{87255, &quot;Ashstone noble&quot;},
 		{87249, &quot;Ashstone noble&quot;},
 		{87314, &quot;kindly priest&quot;},
 		{87253, &quot;Ashstone noble&quot;},
@@ -26786,7 +26812,7 @@ function trainEngine()
 
 		charData:set(&quot;powersbash&quot;, false)
 
-		if whoclass() ~= &quot;Pal&quot; then
+		if checkMask(&quot;kicker&quot;) then
 			buttons:change(&quot;autokick&quot;, true, &quot;KickButton&quot; )
 		end
 
@@ -26822,7 +26848,7 @@ function trainCar()
 
 		-- enable spellcasting, missile spells
 		buttons:change(&quot;autocast&quot;, true, &quot;SpellsButton&quot;)
-		buttons:change(&quot;automissile&quot;, true, &quot;automissile&quot;)
+		buttons:change(&quot;automissile&quot;, true)
 	end
 end</script>
                     <eventHandlerList/>
@@ -27839,6 +27865,7 @@ end
 		traintanks = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Ran&quot;, &quot;Dir&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		warrior = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;},
 		fighter = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Ran&quot;, &quot;Dir&quot; },
+		kicker = {&quot;War&quot;, &quot;A-P&quot;, &quot;Ran&quot; },
 		hitter = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;A-P&quot;, &quot;Pal&quot; },
 		hitterToRescue = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
 		singer = {&quot;Bar&quot;, &quot;Ctr&quot;},
@@ -28059,7 +28086,7 @@ charData = charData or {}
 				&quot;\n&lt;red&gt;[Auto-bash is turned on.]\n&quot;,
 				&quot;\n&lt;red&gt;[Auto-bash is turned off.]\n&quot;
 		 },
-	{ &quot;autokick&quot;, &quot;fighter&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+	{ &quot;autokick&quot;, &quot;kicker&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
 				&quot;\n&lt;green&gt;[Auto-kick is turned on.]\n&quot;,
 				&quot;\n&lt;red&gt;[Auto-kick is turned off.]\n&quot;
 		 },
@@ -28851,7 +28878,7 @@ powerAliases[&quot;Enc&quot;] =
 { &quot;mass_invisibility&quot;, &quot;massi&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;lightning_bolt&quot;, &quot;lb&quot;, 16, &quot;automissile&quot;, &quot;&quot;},
 { &quot;levitate&quot;, &quot;lv&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;haste&quot;, &quot;hs&quot;, 16, &quot;pokehaste&quot;, &quot;&quot;},
+{ &quot;haste&quot;, &quot;hs&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;fumble&quot;, &quot;fmb&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;farsee&quot;, &quot;fs&quot;, 16, &quot;&quot;, &quot;&quot;},
 { &quot;dispel_magic&quot;, &quot;dism&quot;, 16, &quot;&quot;, &quot;&quot;},
@@ -31462,9 +31489,11 @@ function buttons:change(xchardata, xvalue, xbutton)
 
 	charData:set(xchardata, xvalue)
 
-	if _G[xbutton] ~= nil then
-		_G[xbutton](xbutton, buttons.INIT)
-	end
+	buttons:sync()
+
+	--if _G[xbutton] ~= nil then
+	--	_G[xbutton](xbutton, buttons.INIT)
+	--end
 end
 
 function buttons:sync()
@@ -31633,12 +31662,8 @@ function addbutton(xname, xid, xlevel, xwidth, xheight)
 	local newbutton=nil
 
 	if xid == nil then
-		cecho(&quot;\n&lt;red&gt;[addbutton: nil xid : non-existant button: &quot; .. xname .. &quot;]\n&quot;)
-
-		-- TODO: call add loop
-
+		cecho(&quot;\n&lt;red&gt;[Adding non-existant button: &quot; .. xname .. &quot;]\n&quot;)
 		powerAliases:addButtons()
-	
 		return
 	end
 
@@ -32324,271 +32349,6 @@ setAppStyleSheet([[
 	setBackgroundColor(&quot;gGroupStatusWindow&quot;, 0,0,0,255)
 end</script>
                     <eventHandlerList/>
-                </Script>
-                <Script isActive="yes" isFolder="no">
-                    <name>saveNyyLIB</name>
-                    <packageName></packageName>
-                    <script>-------------------------------------------------
---         Put your Lua functions here.        --
---                                             --
--- Note that you can also use external Scripts --
--------------------------------------------------
-function saveNyyLIB()
-	local ver=getMudletVersion()
-
-	if ver[&quot;major&quot;] == 3 then
-		if ver[&quot;build&quot;] == &quot;&quot; or ver[&quot;build&quot;] == &quot;-dev&quot; then
-			disableAlias(&quot;restart&quot;)
-		end
-	end
-
-	charData:save()
-
-	-- save to map folder
-	saveMap( &quot;&quot; )
-
-	expandAlias(&quot;#map save&quot;, false)
-
-	savewholist()
-end</script>
-                    <eventHandlerList>
-                        <string>sysExitEvent</string>
-                    </eventHandlerList>
-                </Script>
-                <Script isActive="yes" isFolder="no">
-                    <name>initNyyLIB</name>
-                    <packageName></packageName>
-                    <script>-------------------------------------------------
---         Put your Lua functions here.        --
---                                             --
--- Note that you can also use external Scripts --
--------------------------------------------------
-
-NyyLIB = NyyLIB or {}
-automem = automem or 0
-
-function initNyyLIB()
-
-	echo(&quot;\n\n\n&quot;)
-
-	cecho([[&lt;green&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO]])
-	cecho(&quot;&lt;green&gt;THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&quot;)
-	cecho(&quot;&lt;green&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,&quot;)
-	cecho(&quot;&lt;green&gt;TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN&quot;)
-	cecho(&quot;&lt;green&gt;THE SOFTWARE.&quot;)
-
-	echo(&quot;\n\n\n&quot;)
-
-	cecho(&quot;&lt;red&gt;[Initializing NyyLIB...]\n&quot;)
-
-	expandAlias(&quot;version&quot;, false)
-
-	NyyLIB.homedir = getMudletHomeDir() .. &quot;\\&quot; .. NyyLIB.version .. &quot;\\&quot;
-
-	local WindowWidth, WindowHeight = getMainWindowSize()
-
-	splashwindow = Geyser.Label:new({name=&quot;splash&quot;, x=&quot;10%&quot;, y=&quot;10%&quot;, width=&quot;50%&quot;, height=&quot;75%&quot;})
-	splashwindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;splash.png&quot;) .. [[)]])
-	tempTimer(6, [[splashwindow:hide()]] )
-
-	NyyLIB.areaTable = {}
-
-	-- load list of all area names on the mud
-	for line in io.lines(mainpath(&quot;arealist.txt&quot;)) do
-		local areainfo = string.split(line, &quot;   &quot;)
-
-		local areaid = areainfo[1]:trim()
-		local areaname = areainfo[2]
-
-		NyyLIB.areaTable[tonumber(areaid)] = areaname
-	end
-
-	-- loading charData table
-	charData:load()
-
-	NyyLIB.buttonarray = {}
-	NyyLIB.leftbuttonarray = {}
-
-	NyyLIB.deadpeople = NyyLIB.deadpeople or {}
-
-	NyyLIB.initgui = false
-	NyyLIB.ticktimer = 60
-
-	if charData:get(&quot;style&quot;, true) then
-		setStyle()
-	end
-
-	NyyLIB.classes = { &quot;War&quot;, &quot;UNK&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, 
- 	 &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot;, &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; }
-
-	NyyLIB.fullclasslist = { {&quot;Rogue&quot;, &quot;Rog&quot;},
-								{&quot;Cleric&quot;, &quot;Cle&quot;},
-								{&quot;Paladin&quot;, &quot;Pal&quot;},
-								{&quot;Shaman&quot;, &quot;Sha&quot;},
-								{&quot;Illusionist&quot;, &quot;Ill&quot;},
-								{&quot;Ranger&quot;, &quot;Ran&quot;},
-								{&quot;Lich&quot;, &quot;Lic&quot;},
-								{&quot;Anti-Paladin&quot;, &quot;A-P&quot;},
-								{&quot;Necromancer&quot;, &quot;Nec&quot;},
-								{&quot;Battlechanter&quot;, &quot;Ctr&quot;},
-								{&quot;Invoker&quot;, &quot;Inv&quot;},
-								{&quot;Enchanter&quot;, &quot;Enc&quot;},
-								{&quot;Druid&quot;, &quot;Dru&quot;},
-								{&quot;Warrior&quot;, &quot;War&quot;},
-								{&quot;Elementalist&quot;, &quot;Ele&quot;},
-								{&quot;Dire Raider&quot;, &quot;Dir&quot;},
-								{&quot;Bard&quot;, &quot;Bar&quot;},
-								{&quot;Psionicist&quot;, &quot;Psi&quot;}
-							}
-
-	NyyLIB.fullracelist = { {&quot;Human&quot;, &quot;M&quot;},
-									{&quot;Barbarian&quot;, &quot;M&quot;},
-									{&quot;Drow Elf&quot;, &quot;M&quot;},
-									{&quot;Moon Elf&quot;, &quot;M&quot;},
-									{&quot;Half-Elf&quot;, &quot;M&quot;},
-									{&quot;Shield Dwarf&quot;, &quot;M&quot;},
-									{&quot;Half-Orc&quot;, &quot;M&quot;},
-									{&quot;Duergar Dwarf&quot;, &quot;M&quot;},
-									{&quot;Gnome&quot;, &quot;S&quot;},
-									{&quot;Halfling&quot;, &quot;S&quot;},
-									{&quot;Ogre&quot;, &quot;L&quot;},
-									{&quot;Troll&quot;, &quot;M&quot;},
-									{&quot;Illithid&quot;, &quot;M&quot;},
-									{&quot;Orc&quot;, &quot;M&quot;},
-									{&quot;Yuan-Ti&quot;, &quot;M&quot;}
-								}
-
-	NyyLIB.reversedirs   =   {
-                     n   = &quot;s&quot;,
-                     e   = &quot;w&quot;,
-                     s   = &quot;n&quot;,
-                     w   = &quot;e&quot;,
-                     u   = &quot;d&quot;,
-                     d   = &quot;u&quot;,
-						  north = &quot;south&quot;,
-						  east = &quot;west&quot;,
-						  south = &quot;north&quot;,
-						  west = &quot;east&quot;,
-						  up = &quot;down&quot;,
-						  down = &quot;up&quot;
-                     }
-
-	NyyLIB.statuschar=&quot;&quot;
-
-
-	NyyLIB.damagelevels = { &quot;Excellent&quot;, &quot;Few Scratches&quot;, &quot;Small Wounds&quot;, &quot;Few Wounds&quot;, &quot;nasty wounds&quot;, &quot;Pretty Hurt&quot;, &quot;Awful&quot; }
-
-	NyyLIB.torescue=&quot;&quot;
-
-	NyyLIB.psilag=&quot;none&quot;
-
-	loadwholist()
-
-	opendb()
-
-	createconsumabledb()
-	
-	demonnicOnStart()
-
-	setBorder()
-
-	-- enable mapper
-
-	NyyLIB.Mapper = NyyLIB.Mapper or {}
-
-	mudlet = mudlet or {}; mudlet.mapper_script = true
-	expandAlias(&quot;#map init&quot;, false)
-
-	-- only load mapfile if loaded map is &lt; 35000 rooms i.e. not mudlet loaded mapfile
-
-	if map:count() &lt; 35000 then
-		loadTorilMap( &quot;toril.map&quot; )
-	end
-
-	NyyLIB.initcompleted = true
-
-	registerAnonymousEventHandler(&quot;sysWindowResizeEvent&quot;, &quot;GUIScripts&quot;)
-	registerAnonymousEventHandler(&quot;newRoomEvent&quot;, &quot;newRoomEvent&quot;)
-
-	expandAlias(&quot;#stats reset&quot;, false)
-
-	--local WindowWidth, WindowHeight = getMainWindowSize()
-	--setBorderLeft ( math.ceil(WindowWidth/20) )
-
-	cecho (&quot;&lt;red&gt;[NyyLIB initialized.]\n&quot;)
-end
-
-function initFullData()
-	echoDebug(&quot;&lt;red&gt;[initFullData called]\n&quot;)
-
-	charData:init(whoami(), {}, true)
-
-	charData:init(&quot;memcount&quot;, 0)
-	charData:init(&quot;groupwindow&quot;, &quot;split&quot;)
-	charData:init(&quot;iconbar&quot;, &quot;bottom&quot;)
-
-	charData:init(&quot;statname&quot;, &quot;unset&quot;)
-
-	if NyyLIB.initgui == false then
-		if NyyLIB.mapwindow == nil then
-			cecho(&quot;&lt;red&gt;[error: mapwindow is nil]\n&quot;)
-		else
-			map:hide()
-		end
-
-		if whoami() == nil then
-			cecho(&quot;&lt;red&gt;[error: whoami() is nil]\n&quot;)
-		end
-
-		if whoclass(whoami()) == nil then
-			cecho(&quot;&lt;red&gt;[error: whoclass(whoami) is nil]\n&quot;)
-		end
-
-		local nx
-		local label
-
-		for nx=1, 20, 1 do
-			label=findlabel(&quot;button&quot; .. nx)
-
-			if label ~= nil then
-				label:hide()
-			end
-		end
-
-		NyyLIB.buttonarray = {}
-
-		-- only load mapfile if loaded map is &lt; 35000 rooms i.e. not mudlet loaded mapfile
-
-		--if map:count() &lt; 35000 then
-		--	loadTorilMap( &quot;toril.map&quot; )
-		--end
-
-		initgui()
-
-		-- call class initialization script
-
-		local fnInit=&quot;init&quot; .. string.gsub(whoclass(whoami()), &quot;-&quot;, &quot;_&quot;)
-
-		if _G[fnInit] ~= nil then
-			_G[fnInit]()
-		else
-			echoDebug(&quot;\n&lt;red&gt;[Class script &quot; .. fnInit .. &quot; does not exist]\n&quot;)
-		end
-
-		-- call custom initaliziation script 'initCustom()' if it exists
-
-		if _G[&quot;initCustom&quot;] ~= nil then
-			_G[&quot;initCustom&quot;]()
-		else
-			echoDebug(&quot;\n&lt;red&gt;[Custom script initCustom() does not exist]\n&quot;)
-		end
-
-		NyyLIB.initgui = true
-	end
-end</script>
-                    <eventHandlerList>
-                        <string>sysLoadEvent</string>
-                    </eventHandlerList>
                 </Script>
                 <Script isActive="yes" isFolder="no">
                     <name>TimerScripts</name>
@@ -34958,6 +34718,271 @@ function onNetworkOutput(__, xcommand)
 end</script>
                     <eventHandlerList>
                         <string>sysDataSendRequest</string>
+                    </eventHandlerList>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>initNyyLIB</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+
+NyyLIB = NyyLIB or {}
+automem = automem or 0
+
+function initNyyLIB()
+
+	echo(&quot;\n\n\n&quot;)
+
+	cecho([[&lt;green&gt;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO]])
+	cecho(&quot;&lt;green&gt;THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&quot;)
+	cecho(&quot;&lt;green&gt;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,&quot;)
+	cecho(&quot;&lt;green&gt;TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN&quot;)
+	cecho(&quot;&lt;green&gt;THE SOFTWARE.&quot;)
+
+	echo(&quot;\n\n\n&quot;)
+
+	cecho(&quot;&lt;red&gt;[Initializing NyyLIB...]\n&quot;)
+
+	expandAlias(&quot;version&quot;, false)
+
+	NyyLIB.homedir = getMudletHomeDir() .. &quot;\\&quot; .. NyyLIB.version .. &quot;\\&quot;
+
+	local WindowWidth, WindowHeight = getMainWindowSize()
+
+	splashwindow = Geyser.Label:new({name=&quot;splash&quot;, x=&quot;10%&quot;, y=&quot;10%&quot;, width=&quot;50%&quot;, height=&quot;75%&quot;})
+	splashwindow:setStyleSheet([[border-image: url(]] .. mainpath(&quot;splash.png&quot;) .. [[)]])
+	tempTimer(6, [[splashwindow:hide()]] )
+
+	NyyLIB.areaTable = {}
+
+	-- load list of all area names on the mud
+	for line in io.lines(mainpath(&quot;arealist.txt&quot;)) do
+		local areainfo = string.split(line, &quot;   &quot;)
+
+		local areaid = areainfo[1]:trim()
+		local areaname = areainfo[2]
+
+		NyyLIB.areaTable[tonumber(areaid)] = areaname
+	end
+
+	-- loading charData table
+	charData:load()
+
+	NyyLIB.buttonarray = {}
+	NyyLIB.leftbuttonarray = {}
+
+	NyyLIB.deadpeople = NyyLIB.deadpeople or {}
+
+	NyyLIB.initgui = false
+	NyyLIB.ticktimer = 60
+
+	if charData:get(&quot;style&quot;, true) then
+		setStyle()
+	end
+
+	NyyLIB.classes = { &quot;War&quot;, &quot;UNK&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, 
+ 	 &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot;, &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; }
+
+	NyyLIB.fullclasslist = { {&quot;Rogue&quot;, &quot;Rog&quot;},
+								{&quot;Cleric&quot;, &quot;Cle&quot;},
+								{&quot;Paladin&quot;, &quot;Pal&quot;},
+								{&quot;Shaman&quot;, &quot;Sha&quot;},
+								{&quot;Illusionist&quot;, &quot;Ill&quot;},
+								{&quot;Ranger&quot;, &quot;Ran&quot;},
+								{&quot;Lich&quot;, &quot;Lic&quot;},
+								{&quot;Anti-Paladin&quot;, &quot;A-P&quot;},
+								{&quot;Necromancer&quot;, &quot;Nec&quot;},
+								{&quot;Battlechanter&quot;, &quot;Ctr&quot;},
+								{&quot;Invoker&quot;, &quot;Inv&quot;},
+								{&quot;Enchanter&quot;, &quot;Enc&quot;},
+								{&quot;Druid&quot;, &quot;Dru&quot;},
+								{&quot;Warrior&quot;, &quot;War&quot;},
+								{&quot;Elementalist&quot;, &quot;Ele&quot;},
+								{&quot;Dire Raider&quot;, &quot;Dir&quot;},
+								{&quot;Bard&quot;, &quot;Bar&quot;},
+								{&quot;Psionicist&quot;, &quot;Psi&quot;}
+							}
+
+	NyyLIB.fullracelist = { {&quot;Human&quot;, &quot;M&quot;},
+									{&quot;Barbarian&quot;, &quot;M&quot;},
+									{&quot;Drow Elf&quot;, &quot;M&quot;},
+									{&quot;Moon Elf&quot;, &quot;M&quot;},
+									{&quot;Half-Elf&quot;, &quot;M&quot;},
+									{&quot;Shield Dwarf&quot;, &quot;M&quot;},
+									{&quot;Half-Orc&quot;, &quot;M&quot;},
+									{&quot;Duergar Dwarf&quot;, &quot;M&quot;},
+									{&quot;Gnome&quot;, &quot;S&quot;},
+									{&quot;Halfling&quot;, &quot;S&quot;},
+									{&quot;Ogre&quot;, &quot;L&quot;},
+									{&quot;Troll&quot;, &quot;M&quot;},
+									{&quot;Illithid&quot;, &quot;M&quot;},
+									{&quot;Orc&quot;, &quot;M&quot;},
+									{&quot;Yuan-Ti&quot;, &quot;M&quot;}
+								}
+
+	NyyLIB.reversedirs   =   {
+                     n   = &quot;s&quot;,
+                     e   = &quot;w&quot;,
+                     s   = &quot;n&quot;,
+                     w   = &quot;e&quot;,
+                     u   = &quot;d&quot;,
+                     d   = &quot;u&quot;,
+						  north = &quot;south&quot;,
+						  east = &quot;west&quot;,
+						  south = &quot;north&quot;,
+						  west = &quot;east&quot;,
+						  up = &quot;down&quot;,
+						  down = &quot;up&quot;
+                     }
+
+	NyyLIB.statuschar=&quot;&quot;
+
+
+	NyyLIB.damagelevels = { &quot;Excellent&quot;, &quot;Few Scratches&quot;, &quot;Small Wounds&quot;, &quot;Few Wounds&quot;, &quot;nasty wounds&quot;, &quot;Pretty Hurt&quot;, &quot;Awful&quot; }
+
+	NyyLIB.torescue=&quot;&quot;
+
+	NyyLIB.psilag=&quot;none&quot;
+
+	loadwholist()
+
+	opendb()
+
+	createconsumabledb()
+	
+	demonnicOnStart()
+
+	setBorder()
+
+	-- enable mapper
+
+	NyyLIB.Mapper = NyyLIB.Mapper or {}
+
+	mudlet = mudlet or {}; mudlet.mapper_script = true
+	expandAlias(&quot;#map init&quot;, false)
+
+	-- only load mapfile if loaded map is &lt; 35000 rooms i.e. not mudlet loaded mapfile
+
+	if map:count() &lt; 35000 then
+		loadTorilMap( &quot;toril.map&quot; )
+	end
+
+	NyyLIB.initcompleted = true
+
+	registerAnonymousEventHandler(&quot;sysWindowResizeEvent&quot;, &quot;GUIScripts&quot;)
+	registerAnonymousEventHandler(&quot;newRoomEvent&quot;, &quot;newRoomEvent&quot;)
+
+	expandAlias(&quot;#stats reset&quot;, false)
+
+	--local WindowWidth, WindowHeight = getMainWindowSize()
+	--setBorderLeft ( math.ceil(WindowWidth/20) )
+
+	cecho (&quot;&lt;red&gt;[NyyLIB initialized.]\n&quot;)
+end
+
+function initFullData()
+	echoDebug(&quot;&lt;red&gt;[initFullData called]\n&quot;)
+
+	charData:init(whoami(), {}, true)
+
+	charData:init(&quot;memcount&quot;, 0)
+	charData:init(&quot;groupwindow&quot;, &quot;split&quot;)
+	charData:init(&quot;iconbar&quot;, &quot;bottom&quot;)
+
+	charData:init(&quot;statname&quot;, &quot;unset&quot;)
+
+	if NyyLIB.initgui == false then
+		if NyyLIB.mapwindow == nil then
+			cecho(&quot;&lt;red&gt;[error: mapwindow is nil]\n&quot;)
+		else
+			map:hide()
+		end
+
+		if whoami() == nil then
+			cecho(&quot;&lt;red&gt;[error: whoami() is nil]\n&quot;)
+		end
+
+		if whoclass(whoami()) == nil then
+			cecho(&quot;&lt;red&gt;[error: whoclass(whoami) is nil]\n&quot;)
+		end
+
+		local nx
+		local label
+
+		for nx=1, 20, 1 do
+			label=findlabel(&quot;button&quot; .. nx)
+
+			if label ~= nil then
+				label:hide()
+			end
+		end
+
+		NyyLIB.buttonarray = {}
+
+		-- only load mapfile if loaded map is &lt; 35000 rooms i.e. not mudlet loaded mapfile
+
+		--if map:count() &lt; 35000 then
+		--	loadTorilMap( &quot;toril.map&quot; )
+		--end
+
+		initgui()
+
+		-- call class initialization script
+
+		local fnInit=&quot;init&quot; .. string.gsub(whoclass(whoami()), &quot;-&quot;, &quot;_&quot;)
+
+		if _G[fnInit] ~= nil then
+			_G[fnInit]()
+		else
+			echoDebug(&quot;\n&lt;red&gt;[Class script &quot; .. fnInit .. &quot; does not exist]\n&quot;)
+		end
+
+		-- call custom initaliziation script 'initCustom()' if it exists
+
+		if _G[&quot;initCustom&quot;] ~= nil then
+			_G[&quot;initCustom&quot;]()
+		else
+			echoDebug(&quot;\n&lt;red&gt;[Custom script initCustom() does not exist]\n&quot;)
+		end
+
+		NyyLIB.initgui = true
+	end
+end</script>
+                    <eventHandlerList>
+                        <string>sysLoadEvent</string>
+                    </eventHandlerList>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>saveNyyLIB</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+function saveNyyLIB()
+	local ver=getMudletVersion()
+
+	if ver[&quot;major&quot;] == 3 then
+		if ver[&quot;build&quot;] == &quot;&quot; or ver[&quot;build&quot;] == &quot;-dev&quot; then
+			disableAlias(&quot;restart&quot;)
+		end
+	end
+
+	charData:save()
+
+	-- save to map folder
+	saveMap( &quot;&quot; )
+
+	expandAlias(&quot;#map save&quot;, false)
+
+	savewholist()
+end</script>
+                    <eventHandlerList>
+                        <string>sysExitEvent</string>
                     </eventHandlerList>
                 </Script>
             </ScriptGroup>
