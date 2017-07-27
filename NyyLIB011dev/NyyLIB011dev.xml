@@ -170,7 +170,7 @@ NyyLIB.initgui=false
 timer:set(&quot;assassinatetimer&quot;, nil)
 
 setHide(false)
-sendGroup(false)
+group:send(false)
 sendFollowers(false)
 
 mud:send(&quot;display enemypos&quot;, false)
@@ -179,7 +179,7 @@ mud:send(&quot;display twoline&quot;, false)
 mud:send(&quot;ATT&quot;, false)
 mud:send(&quot;SC&quot;, false)
 mud:send(&quot;EQUIP&quot;, false)
-sendGroup()
+group:send()
 sendStatus()
 mud:send(&quot;EXP&quot;, true)
 mud:send(&quot;CONSENT&quot;, false)
@@ -1349,7 +1349,7 @@ spell:stop() -- set spell.casting=nil
 
 -- only have priests send group command after casting
 if checkMask(&quot;pray&quot;) then
-	sendGroup()
+	group:send()
 end
 
 look:send()
@@ -2834,9 +2834,13 @@ setLabelImage(&quot;mysizeDisplay&quot;, &quot;size&quot; .. charData:get(&quot;
 
 end
 
-if checkMask(&quot;psi&quot;) then
-	if charData:get(&quot;autohide&quot;) then
+if charData:get(&quot;autohide&quot;) then
+	if checkMask(&quot;psi&quot;) then
 		send(&quot;darkness&quot;)
+	end
+
+	if checkMask(&quot;rog&quot;) then
+		send(&quot;hide&quot;)
 	end
 end</script>
                         <triggerType>0</triggerType>
@@ -3711,7 +3715,7 @@ spell:setCast(&quot;bw&quot;)</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You feel powers of darkness strengthen you!</name>
-                        <script>sendGroup()</script>
+                        <script>group:send()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4107,6 +4111,51 @@ end
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>wraithform mobs</name>
+                        <script>timer:set(&quot;wraithform&quot;, 30)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You would pass right through them!</string>
+                            <string>You try to trip .*, only to sprawl completely THROUGH it.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>set notrip</name>
+                        <script>-- Such a maneuver appears to be useless against the fire drake!
+-- Such a maneuver appears to be useless against Quturac, the skeletal death dragon!
+
+timer:set(&quot;notrip&quot;, 30)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Such a maneuver appears to be useless against</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
                 </TriggerGroup>
                 <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Ill</name>
@@ -4474,7 +4523,7 @@ end</script>
                     <name>Add from group display</name>
                     <script>local temp = whoclass(matches[8]) or &quot;UNK&quot;
 
-if 	groupSent == nil then
+if gagGroup == nil then
 	groupList:display(matches[8], matches[6], matches[7], matches[4], matches[5], matches[2], matches[3] )
 else
 	eraseLine()
@@ -4508,13 +4557,15 @@ groupList:reset()
 
 NyyLIB.groupname = matches[2]
 
-if groupSent == nil then
+if gagGroup == nil then
 	if charData:get(&quot;group&quot;, true) then
 		cecho(&quot;                                 &lt;yellow&gt;[Stats: &quot; .. charData:get(&quot;statname&quot;) .. &quot;]\n&quot;)
 	end
 else
 	eraseLine()
-end</script>
+end
+
+group:set(&quot;GROUPSTART&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -4538,8 +4589,8 @@ end</script>
 
 groupList:reset()
 
-if groupSent then
-	sendGroup(false)
+if gagGroup then
+	group:send(false)
 	eraseLine()
 	echoDebug(&quot;\n&lt;red&gt;[empty group received]&quot;)
 end
@@ -4550,7 +4601,9 @@ rescuelist:generate()
 
 RedrawGroupStatus()
 
-resizeGroupWindow(true)</script>
+resizeGroupWindow(true)
+
+group:set(&quot;GROUPSTART&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -4574,7 +4627,7 @@ resizeGroupWindow(true)</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Joined group</name>
-                    <script>sendGroup()
+                    <script>group:send()
 tempTimer(2, [[resizeGroupWindow(true)]])</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -4603,7 +4656,7 @@ tempTimer(2, [[resizeGroupWindow(true)]])</script>
                     <name>Add when not in same room</name>
                     <script>local temp = whoclass(matches[2]) or &quot;UNK&quot;
 
-if 	groupSent == nil then
+if 	gagGroup == nil then
 	groupList:display(matches[2])
 else
 	eraseLine()
@@ -4633,7 +4686,7 @@ groupList:add( idMob(matches[2]),temp, 0, 0)</script>
                     <name>add from group no mana</name>
                     <script>local temp = whoclass(matches[6]) or &quot;UNK&quot;
 
-if 	groupSent == nil then
+if 	gagGroup == nil then
 	groupList:display(matches[6], matches[4], matches[5], matches[2], matches[3] )
 else
 	eraseLine()
@@ -4676,7 +4729,7 @@ if groupList:ingroup(consentchar) then
 	--
 else
 	mud:send(&quot;GROUP &quot; .. consentchar)
-	sendGroup()
+	group:send()
 end
 
 look:send()</script>
@@ -4711,7 +4764,7 @@ local matchchar=matches[2]
 -- if grouplist doesn't have hp send group
 if groupList:ingroup(matchchar) then
 	if groupList:getHP(matchchar) == 0 then
-		sendGroup()
+		group:send()
 	end
 end
 
@@ -4720,7 +4773,7 @@ if table.contains(NyyLIB.deadpeople, matches[2]) then
 
 	table.remove(NyyLIB.deadpeople, table.index_of(NyyLIB.deadpeople, matchchar))
 
-	sendGroup()
+	group:send()
 end
 </script>
                     <triggerType>0</triggerType>
@@ -4779,7 +4832,7 @@ end
 		sound(&quot;195954_minian89_death-blood-splatter.wav&quot;)
 	end
 
-	sendGroup()
+	group:send()
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -4864,7 +4917,7 @@ end
 
 enableTrigger(&quot;endprompt&quot;)
 
-if 	groupSent == nil then
+if 	gagGroup == nil then
 	if charData:get(&quot;group&quot;, true) then
 		eraseLine()
 
@@ -4895,14 +4948,14 @@ end</script>
                 <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>endprompt</name>
                     <script>-- group has been recieved. can check for vit (send status) now
-groupSent=nil
+gagGroup=nil
 
 groupList:checkMaxHP()
 
 disableTrigger(&quot;endprompt&quot;)
 rescuelist:generate()
 echoDebug(&quot;&lt;red&gt;\n[Group received]\n&quot;)
-sendGroup(false)
+group:send(false)
 groupRedraw = nil
 raiseEvent(&quot;promptEvent&quot;)</script>
                     <triggerType>0</triggerType>
@@ -5347,16 +5400,18 @@ if toGagLook == true then
 	toGagLook=nil
 end	
 
-
 -- first prompt after a look recieved
 if look:get() == &quot;LOOKSTART&quot; then
 	look:set(nil)
 
 	-- re-raise prompt event
 	raiseEvent(&quot;promptEvent&quot;)
+end
 
-	-- TODO look has been recieved if trying to circle
-
+-- first prompt after a group recieved
+if group:get() == &quot;GROUPSTART&quot; then
+	group:set(false)
+	
 	-- rogue: circle
 	if charData:get(&quot;autocircle&quot;) then
 		if prompt:get(&quot;tank&quot;) ~= whoami() and inCombat() then
@@ -6071,7 +6126,7 @@ if groupList:ingroup(matchchar) then
 	enteredPortal[matchchar] = nil
 
 	if groupList:getHP(matchchar) == 0 then
-		sendGroup()
+		group:send()
 		return
 	end
 end
@@ -6080,7 +6135,7 @@ end
 
 if NyyLIB.mtank ~= nil then
 	if NyyLIB.mtank == matchchar then
-		sendGroup()
+		group:send()
 		return
 	end
 end
@@ -6095,7 +6150,7 @@ end
 
 if charData:get(&quot;autoheal&quot;) then
 	if groupList:ingroup(matchchar) then
-		sendGroup()
+		group:send()
 		return
 	end
 end</script>
@@ -6158,7 +6213,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/23/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/27/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7035,7 +7090,7 @@ NyyLIB.warmaul=0
 
 TiaWarmaul(&quot;TiaWarmaul&quot;, buttons.UPDATE)
 
-sendGroup()</script>
+group:send()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -8291,7 +8346,7 @@ else
 	end
 end
 
-sendGroup()</script>
+group:send()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -8871,7 +8926,7 @@ buff:del(matches[2], &quot;blindness&quot;)</script>
 buff:del(whoami(), &quot;blind&quot;)
 buff:del(whoami(), &quot;blindness&quot;)
 
-sendGroup()
+group:send()
 
 mud:send(&quot;chkstat&quot;)</script>
                         <triggerType>0</triggerType>
@@ -8896,7 +8951,7 @@ mud:send(&quot;chkstat&quot;)</script>
                         <script>buff:del(whoami(), &quot;blind&quot;)
 buff:del(whoami(), &quot;blindness&quot;)
 
-sendGroup()</script>
+group:send()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -9129,7 +9184,7 @@ charData:set(&quot;memcount&quot;, 25)
 
 spell:clear()
 
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9357,6 +9412,30 @@ end</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>endstatusgag</name>
+                    <script>-- this trigger must be located above the gagstatus trigger
+
+disableTrigger(&quot;gagstatus&quot;)
+disableTrigger(&quot;endstatusgag&quot;)
+showstatus=false</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^&lt; .*</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>gagstatus</name>
                     <script>--
 eraseLine()</script>
@@ -9372,29 +9451,6 @@ eraseLine()</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>^(.*)$</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>endstatusgag</name>
-                    <script>disableTrigger(&quot;gagstatus&quot;)
-disableTrigger(&quot;endstatusgag&quot;)
-showstatus=false
---deleteLine()</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>^&lt; .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -9430,7 +9486,7 @@ showstatus=false
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>effect: hide</name>
                     <script>setHide(true)
-look:send()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -11403,8 +11459,13 @@ if testname == whoami() then
 	return
 end
 
+--display(inCombat())
+--display(groupList:getTanking(whoami()))
+
 if charData:get(&quot;autoassist&quot;) then
+	--display(&quot;X&quot;)
 	if not inCombat() and groupList:getTanking(whoami()) == 0 then
+		--display(testname)
 		if groupList:ingroup(testname) then
 			if testname ~= whoami() then
 				sendAssist(testname)
@@ -11830,7 +11891,7 @@ if matches[2] == &quot;you&quot; then
 else
 	if groupList:ingroup(matches[2]) then
 		addStat(whoami(), &quot;defHit&quot;)
-		sendGroup()
+		group:send()
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -12268,7 +12329,7 @@ end
 
 addStat(matches[2], &quot;GroupHeal&quot;)
 
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -12296,7 +12357,7 @@ sendGroup()</script>
 addStat(matches[2], &quot;Vitality&quot;)
 
 
-tempTimer(3, [[sendGroup()]])</script>
+tempTimer(3, [[group:send()]])</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -12501,7 +12562,7 @@ for k,char in pairs(groupList:pc()) do
 	buff:del(char, &quot;blindness&quot;)
 end
 
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13563,10 +13624,11 @@ end</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>StartRoomCapture</name>
-                    <script>if not roomWindow:exists() then
+                    <script>gaglook=nil
+
+if not roomWindow:exists() then
 	return
 end
-
 
 -- last command entered was look direction - return
 if string.find(command, &quot;L &quot;) == 1 then
@@ -13623,8 +13685,10 @@ end
 -- move to line prior to exits that doesn't start with a [:
 moveCursor(0, exitLine-lineOffset)
 
+local roomline = getLines(exitLine-lineOffset, exitLine)[1]
 
-local linecheck = string.find(roomline, &quot;&gt; &quot;)
+-- changed was &quot;&gt; &quot;
+local linecheck = string.find(roomline, &quot;&gt;&quot;)
 
 -- previous line started with a prompt
 if linecheck ~= nil then
@@ -13638,36 +13702,14 @@ end
 copy()
 appendBuffer(&quot;roomBuffer&quot;)
 
+--display( getLines(getLineNumber()-lineOffset-5, getLineNumber()+2) )
+
 if gaglook then
 	eraseLine()
 end
 
--- return to to exits line
+-- return to exits line
 moveCursorEnd( &quot;main&quot; )
-
--- display vnum at the end of exits line
---if charData:get(&quot;vnum&quot;, true) and not gaglook then
---	if not roomPortal then
---		if map:getRoom() ~= nil then
---			cecho(&quot;&lt;forest_green&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, map:getRoom() ))
---		else
---			cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (20-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, &quot;Unmapped&quot;))
---		end
---	else
---		local clairedroomid = findRoomID(NyyLIB.Mapper.roomname, NyyLIB.Mapper.exits, true)
---		local clairzone = findRoomArea(NyyLIB.Mapper.roomname, NyyLIB.Mapper.exits)
-
---		if clairzone == nil then
---			cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, roomPortal))
---		else
---			if clairedroomid == nil then
---				cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s: &lt;green&gt;%s&lt;red&gt;] &quot;, &quot; &quot;, roomPortal, clairzone))
---			else
---				cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s: %d &lt;green&gt;%s&lt;red&gt;] &quot;, &quot; &quot;, roomPortal, clairedroomid, clairzone))
---			end
---		end
---	end
---end
 
 -- include full line in capture window
 selectCurrentLine()
@@ -13680,6 +13722,9 @@ if gaglook then
 end
 
 look:set(&quot;LOOKSTART&quot;)
+
+--display(linecheck)
+--display(roomline)
 
 </script>
                     <triggerType>0</triggerType>
@@ -13774,7 +13819,7 @@ for k,char in pairs(groupList:pc()) do
 	buff:del(char, &quot;blindness&quot;)
 end
 
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13799,7 +13844,7 @@ sendGroup()</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>to sendGroup</name>
+                    <name>call group:send</name>
                     <script>-- You summon a holy light to surround Hosol and close his wounds.
 -- Lilebeple summons a holy light to surround Tatris and close his wounds.
 -- Diac summons a holy light to surround Kitra and close her wounds.
@@ -13810,7 +13855,7 @@ if matches[2] ~= nil then
 	sendStatus(matches[2])
 end
 
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -13887,10 +13932,17 @@ if charData:get(&quot;condensed&quot;, true)[&quot;duplicate&quot;] then
 			linecheck = string.find(matches[2], &quot;&gt; &quot;)+1
 
 			if moveCursor(string.find(matches[2], &quot;&gt;&quot;)+#(&quot;&gt;&quot;)-1, getLineNumber()) then
-  				insertText(&quot;\n\n&quot;)
-			
+				--display( getLines(getLineNumber()-5, getLineNumber()) )
+				
+  			--demonnic.chat:append(&quot;GSAY&quot;)
+				
+				insertText(&quot;\n\n&quot;)
+
+				moveCursorEnd( &quot;main&quot; )
 
 				-- feedTriggers
+
+				--demonnic.chat:append(&quot;GSAY&quot;)
 			end
 		end
 	else
@@ -15768,7 +15820,7 @@ end
 gagfollowers=true
 
 sendFollowers()
-sendGroup()</script>
+group:send()</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -15808,7 +15860,7 @@ if checkMask(&quot;fighter&quot;) then
 	mount:set(nil)
 end
 
-sendGroup()
+group:send()
 
 if gagfollowers then
 	eraseLine()
@@ -16412,26 +16464,6 @@ sortpowerslist[#sortpowerslist+1] = {to_snake(powername), matches[2]:trim(), lev
                     </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>added gags</name>
-                <script></script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>^(.*)$</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>1</integer>
-                </regexCodePropertyList>
-            </Trigger>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>Rugrag futilely tries to rescue Lilabipple!</name>
                 <script>if groupList:ingroup(matches[2]) then
@@ -17185,8 +17217,18 @@ spell:setNext(&quot;HEX &quot; .. (matches[2] or &quot;&quot;) )</script>
                     <Alias isActive="yes" isFolder="no">
                         <name>cr</name>
                         <script>if checkMask(&quot;rogue&quot;) then
+	if timer:get(&quot;wraithform&quot;) then
+		return
+	end
+
+	if buff:get(&quot;blind&quot;) then
+		return
+	end
+
+
 	mud:send(&quot;CR&quot;)
-	look:send()
+	group:send()
+
 	cecho(&quot;\n&lt;red&gt;[Attacking with circle]\n&quot;)
 else
 	spell:setNext(&quot;cr&quot;)
@@ -17323,7 +17365,7 @@ expandAlias(&quot;mpp&quot;, false)</script>
                     <Alias isActive="yes" isFolder="no">
                         <name>backstab</name>
                         <script>mud:send(&quot;BS &quot; .. matches[2])
-look:send()</script>
+group:send()</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^bs (.*)</regex>
@@ -17572,7 +17614,7 @@ end</script>
                     <Alias isActive="yes" isFolder="no">
                         <name>aid</name>
                         <script>mud:send(&quot;say aid my companions&quot;)
-sendGroup()</script>
+group:send()</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^aid$</regex>
@@ -17890,7 +17932,7 @@ if matches[2] == &quot;set&quot; then
 				if key == &quot;condensed&quot; then
 					local count=0
 
-					cecho ( string.format(&quot;&lt;green&gt;%14s&lt;white&gt;\n&quot;, 	&quot;[&quot; .. key .. &quot;]&quot;) )
+					cecho ( string.format(&quot;&lt;green&gt;%17s&lt;white&gt;\n&quot;, 	&quot;[&quot; .. key .. &quot;]&quot;) )
 
 					for k,v in pairs(charData:get(&quot;condensed&quot;, true)) do
 						count = count + 1
@@ -17906,8 +17948,9 @@ if matches[2] == &quot;set&quot; then
 							echo(&quot;\n&quot;)
 						end
 					end
+					echo(&quot;\n&quot;)
 				else
-					cecho ( string.format(&quot;&lt;green&gt;%14s&lt;white&gt; %-15s %20s  %s\n&quot;, 
+					cecho ( string.format(&quot;&lt;green&gt;%17s&lt;white&gt; %-15s %20s  %s\n&quot;, 
 								&quot;[&quot; .. key .. &quot;]&quot;,
 								value,
 								table.concat(setvar[nx][3], &quot;|&quot;),
@@ -17917,7 +17960,7 @@ if matches[2] == &quot;set&quot; then
 			else
 				if setvar[nx][2] ~= &quot;equip&quot; then
 					if checkMask(setvar[nx][2]) then
-						cecho ( string.format(&quot;&lt;green&gt;%14s&lt;white&gt; %-15s %20s  %s\n&quot;, 
+						cecho ( string.format(&quot;&lt;green&gt;%17s&lt;white&gt; %-15s %20s  %s\n&quot;, 
 								&quot;[&quot; .. key .. &quot;]&quot;,
 								value,
 								table.concat(setvar[nx][3], &quot;|&quot;),
@@ -18735,7 +18778,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/23/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/27/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -19893,8 +19936,10 @@ mud:send(&quot;ST&quot;)</script>
                     <name>group</name>
                     <script>mud:send(&quot;GROUP&quot;)
 
--- send followers after group
-sendFollowers()</script>
+-- send followers after group if not rogue
+if not checkMask(&quot;rog&quot;) then
+	sendFollowers()
+end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^group$</regex>
@@ -21062,6 +21107,7 @@ local dir=matches[2]:sub(1,1):lower()
 
 processMovement(dir)
 
+toGagLook=nil
 gaglook=nil</script>
                     <command></command>
                     <packageName></packageName>
@@ -21368,7 +21414,9 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>test</name>
-                <script>-- window:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
+                <script>cecho(&quot;&lt;red&gt;&lt;test line&gt; extra stuff&quot;)
+
+-- window:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
 
 --display( setLabelStyleSheet(&quot;gRoomWindow&quot;, [[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]]) )
@@ -21377,7 +21425,7 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
 --roomLabel = Geyser.Label:new({name=&quot;gRoomLabel&quot;, x=&quot;33%&quot;, y=&quot;0%&quot;, width=&quot;33%&quot;, height=&quot;15c&quot;,}) -- -92c, -80c
 -- roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;roomborder.png&quot;) .. [[)]])
 
-roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;flames.png&quot;) .. [[)]])
+--roomLabel:setStyleSheet([[border-image: url(]] .. mainpath(&quot;flames.png&quot;) .. [[)]])
 
 
 --local WindowWidth, WindowHeight = getMainWindowSize()
@@ -22051,6 +22099,7 @@ end</script>
 -- dev
 
 -- bugfixes
+-- added autohide to rogue
 -- .. will walk reverse paths example: ..5ne will walk .w5s
 -- katumi database update - 7/11/17
 -- looting is disabled when you join a group
@@ -22078,7 +22127,7 @@ end</script>
 -- refactored train - use 'starttrain tank' to start as engine
 -- alias: stpm - sets the character as not moving
 -- Added say, auction to tabbed chat windows
--- Map updated: full size 317 areas 44832 rooms
+-- Map updated: full size 317 areas 44914 rooms
 
 -- 011b
 
@@ -23807,10 +23856,10 @@ function initPsi()
 		addbutton(&quot;deathfield&quot;, 2, 20)
 	end
 
-	addbutton(&quot;psidarkness&quot;, 3, 35)
+	addbutton(&quot;battletrance&quot;, 3, 45)
 	addbutton(&quot;tower&quot;, 4, 37)
 	addbutton(&quot;combatmind&quot;, 5, 0)
-	addbutton(&quot;battletrance&quot;, 6, 45)
+	addbutton(&quot;psidarkness&quot;, 6, 35)
 	addbutton(&quot;wormhole&quot;, 7, 46)
 end
 
@@ -25205,7 +25254,8 @@ function initRog()
 	addbutton(&quot;assassinate&quot;, 1, 40)
 	addbutton(&quot;trip&quot;, 2, 25)
 	addbutton(&quot;circle&quot;, 3, 5)
-	addbutton(&quot;poisonRogue&quot;, 7, 20)
+	addbutton(&quot;autohide&quot;, 6, 1)
+	addbutton(&quot;poisonRogue&quot;, 	7, 20)
 
 end
 
@@ -25222,6 +25272,11 @@ function getTripping()
 end
 
 function sendTrip()
+	if timer:get(&quot;wraithform&quot;) or timer:get(&quot;notrip&quot;) then
+		return
+	end
+	
+	
 	-- can only trip if standing
 
 	if not prompt:get(&quot;position&quot;) == &quot;std&quot; then
@@ -25235,6 +25290,8 @@ function sendTrip()
 	end
 
 	if not getTripping() then
+		cecho(&quot;&lt;green&gt;\n[trip]\n&quot;)
+
 		mud:send(&quot;trip&quot;)
 
 		setTripping(true)
@@ -25286,6 +25343,10 @@ end
 
 function trip(fname, xcommand)
 	shiftSkillButton(&quot;trip&quot;, &quot;autotrip&quot;, xcommand)
+end
+
+function autohide(fname, xcommand)
+	shiftSkillButton(&quot;autohide&quot;, &quot;autohide&quot;, xcommand)
 end
 
 function circle(fname, xcommand)
@@ -27869,6 +27930,7 @@ end
 		hitter = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;A-P&quot;, &quot;Pal&quot; },
 		hitterToRescue = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
 		singer = {&quot;Bar&quot;, &quot;Ctr&quot;},
+		autohide = {&quot;Psi&quot;, &quot;Rog&quot;},
 		hitterSinger = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		displace = { &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot;, &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
 		rightWindow = {&quot;UNK&quot;, &quot;War&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Bar&quot;, &quot;Ctr&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;Rog&quot;},
@@ -27950,7 +28012,7 @@ charData = charData or {}
 	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto-open doors&quot; },
 	{ &quot;echodrag&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;echo when a corpse is dragged&quot; },
 	{ &quot;autoportal&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto enter rifts/portals/etc&quot; },
-	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;}, &quot;&quot;, &quot;&quot; },
+	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;, &quot;debug2&quot;}, &quot;&quot;, &quot;&quot; },
 	{ &quot;vnum&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;display room vnum&quot; },
 	{ &quot;chatfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;12&quot;, &quot;fontsize to use for the chat window&quot; },
 	{ &quot;grpfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;14&quot;, &quot;fontsize to use for the group window&quot; },
@@ -28106,6 +28168,10 @@ charData = charData or {}
 			&quot;\n&lt;green&gt;[Auto-circle is turned on.]\n&quot;,
 			&quot;\n&lt;red&gt;[Auto-circle is turned off.]\n&quot;
 		},
+	{ &quot;autohide&quot;, &quot;autohide&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+			&quot;\n&lt;green&gt;[Autohide is turned on.]\n&quot;,
+			&quot;\n&lt;red&gt;[Autohide is turned off.]\n&quot;
+		 },
 	{ &quot;autotrip&quot;, &quot;rog&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
 			&quot;\n&lt;green&gt;[Auto-trip is turned on.]\n&quot;,
 			&quot;\n&lt;red&gt;[Auto-trip is turned off.]\n&quot;
@@ -30435,155 +30501,6 @@ function togBoolean(xvar)
 	return(xvar)
 end
 
--- The sendStatus(xcharname) command requests status for that char
-
-function sendStatus(xcharname)
-
-	sendingStatus = true
-
-	if xcharname == nil then
-		mud:send(&quot;STATUS&quot;)
-	else
-		echoDebug(&quot;&lt;red&gt;\n[Sending status: &quot; .. xcharname .. &quot;]\n&quot;)
-		mud:send(&quot;STATUS &quot; .. xcharname )
-	end
-end
-
-function sendAssist(xchar)
-	if NyyLIB.castertrain then
-		return
-	end
-
-	-- if hp not listed send group
-	if groupList:getHP(xchar) == 0 then
-		sendGroup()
-	end
-
-	if charData:get(&quot;autoassist&quot;) == false then
-		return
-	end
-
-	-- already in combat: why assist again?
-	if inCombat() then
-		return
-	end
-
-	-- currently sitting: send stand first
-
-	if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
-		mud:send(&quot;ST&quot;)
-	end
-
-	-- sm caster train is active : flee to mem?
-	if isActive(&quot;SMTrainCaster&quot;, &quot;trigger&quot;) ~= 0 then
-		if not fightreturn then
-			-- send flee
-			fleeMem()
-			return
-		end
-	end
-
-	echoDebug(&quot;&lt;red&gt;[assist]&quot;)
-
-	if assistSent == nil then
-		assistSent = true
-
-		sendPoison()
-
-		if checkMask(&quot;rog&quot;) then
-			local enemytarget = getEnemy()
-
-			if enemytarget ~= &quot;&quot; then
-				if sendAssassinate(enemytarget) then
-					return
-				end
-
-				-- nonpowers backstab for practice
-				local backstab
-
-
-				if prompt:get(&quot;hp&quot;) &gt; 1000 then
-					backstab = &quot;backstab &quot; .. enemytarget
-				else
-					backstab = &quot;bs &quot; .. enemytarget
-				end
-
-				cecho(&quot;\n&lt;red&gt;[&quot; .. backstab .. &quot;]\n&quot;)
-				mud:send(backstab)
-			end
-
-			look:send()
-
-			return
-		end
-
-		-- mount before assisting
-		if mount:get() ~= nil and not mount:getMounted() then
-			--send(&quot;mount &quot; .. mount:get() )
-			mud:send(&quot;mount&quot;)
-		end
-
-		-- if memorizing stand before sending assist
-		if spell:getMem() or memsent then
-			mud:send(&quot;ST&quot;)
-		end
-
-		echoDebug(&quot;&lt;red&gt;[assist &quot; .. xchar .. &quot;]\n&quot;)
-
-		mud:send(&quot;assist &quot; .. xchar)
-	end
-end
-
--- The sendFollowers() command will send a single (gagged) followers command to the mud
--- Multiple calls to the command will not complete.
-
-function sendFollowers(xval)
-	-- don't send followers if hidden
-	if xval == false or getHide() then
-		followersSent=nil
-		return
-	end
-
-	-- don't send followers if meditating (psi)
-	if checkMask(&quot;psi&quot;) and spell:getMem() then
-		followersSent=nil
-		return
-	end
-
-	if followersSent then
-		echoDebug(&quot;\n&lt;blue&gt;[followers command already sent]&quot;)
-	end
-
-	if followersSent == nil then
-		followersSent = true
-		mud:send(&quot;FOLLOWERS&quot;)
-	end
-end
-
-
--- The sendGroup() command will send a single (gagged) group command to the mud
--- The output from it will update the display, but not show on the main window.
--- Multiple calls to the command will not complete.
-
-function sendGroup(xval)
-	if xval == false then
-		groupSent=nil
-		return
-	end
-
-	if groupSent then
-		echoDebug(&quot;\n&lt;blue&gt;[group command already sent]&quot;)
-	end
-
-	if groupSent == nil then
-		groupSent = true
-		mud:send(&quot;GROUP&quot;)
-
-		--send the followers command after sending group
-		sendFollowers()
-	end
-end
-
 function g(xitem)
 	local container= charData:get(&quot;container&quot;)
 
@@ -30605,11 +30522,12 @@ function p(xitem)
 end
 
 function eraseLine()
-	if not charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;] then
+	if not charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;] and not charData:get(&quot;condensed&quot;, true)[&quot;debug2&quot;] then
 		deleteLine()
-	else
+	end
+	
+	if charData:get(&quot;condensed&quot;, true)[&quot;debug&quot;] then
 		cinsertText(&quot;&lt;red&gt;-&quot;)
-		--cecho(&quot;&lt;red&gt;-&quot;)
 	end
 end</script>
                     <eventHandlerList/>
@@ -32702,6 +32620,8 @@ function spell:setMoving(xstatus)
 
 	if xstatus then
 		automem = 0
+		setEnemy(&quot;&quot;)
+		assistSent=nil
 	end
 
 	self.moving = xstatus
@@ -34125,7 +34045,7 @@ end</script>
                     <eventHandlerList/>
                 </Script>
                 <Script isActive="yes" isFolder="no">
-                    <name>LookScript</name>
+                    <name>singleSendScript</name>
                     <packageName></packageName>
                     <script>-------------------------------------------------
 --         Put your Lua functions here.        --
@@ -34157,7 +34077,189 @@ function look:get()
 
 	return(self.status)
 end
-</script>
+
+-- The group:send() command will send a single group command to the mud.
+-- All group responses from using this command are gagged
+
+group = group or {}
+
+-- gagGroup = true -&gt; gag group
+-- gagGroup = nil  -&gt; don't gag
+
+function group:send(xval)
+	if xval == false then
+		gagGroup=nil
+		return
+	end
+
+	if gagGroup == nil then
+		gagGroup=true
+		mud:send(&quot;GROUP&quot;)
+		group:set(&quot;GROUPSENT&quot;)
+
+		--send the followers command after sending group if NOT rogue
+		
+		if not checkMask(&quot;rog&quot;) then
+			sendFollowers()
+		end
+	end
+end
+
+function group:set(xstatus)
+	self.status=xstatus
+end
+
+function group:get()
+	if self.status == nil then
+		return(false)
+	end
+
+	return(self.status)
+end
+
+-- The sendFollowers() command will send a single (gagged) followers command to the mud
+-- Multiple calls to the command will not complete.
+
+function sendFollowers(xval)
+	-- don't send followers if hidden
+	if xval == false or getHide() then
+		followersSent=nil
+		return
+	end
+
+	-- don't send followers if rogue
+	
+	if checkMask(&quot;rog&quot;) then
+		followersSent=nil
+		return
+	end
+
+	-- don't send followers if meditating (psi)
+	if checkMask(&quot;psi&quot;) and spell:getMem() then
+		followersSent=nil
+		return
+	end
+
+	if followersSent then
+		echoDebug(&quot;\n&lt;blue&gt;[followers command already sent]&quot;)
+	end
+
+	if followersSent == nil then
+		followersSent = true
+		mud:send(&quot;FOLLOWERS&quot;)
+	end
+end
+
+-- The sendStatus(xcharname) command requests status for that char
+
+function sendStatus(xcharname)
+
+	sendingStatus = true
+
+	if xcharname == nil then
+		mud:send(&quot;STATUS&quot;)
+	else
+		echoDebug(&quot;&lt;red&gt;\n[Sending status: &quot; .. xcharname .. &quot;]\n&quot;)
+		mud:send(&quot;STATUS &quot; .. xcharname )
+	end
+end
+
+function sendAssist(xchar)
+
+	--if xchar ~= nil then
+	--	cecho(&quot;&lt;green&gt;[sendASsist: &quot; .. xchar .. &quot;]\n&quot;)
+	--end
+
+	if NyyLIB.castertrain then
+		return
+	end
+
+	-- if hp not listed send group
+	if groupList:getHP(xchar) == 0 then
+		group:send()
+	end
+
+	if charData:get(&quot;autoassist&quot;) == false then
+		return
+	end
+
+	-- already in combat: why assist again?
+	if inCombat() then
+		return
+	end
+
+	-- currently sitting: send stand first
+
+	if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
+		mud:send(&quot;ST&quot;)
+	end
+
+	-- sm caster train is active : flee to mem?
+	if isActive(&quot;SMTrainCaster&quot;, &quot;trigger&quot;) ~= 0 then
+		if not fightreturn then
+			-- send flee
+			fleeMem()
+			return
+		end
+	end
+
+	echoDebug(&quot;&lt;red&gt;[assist]&quot;)
+
+	if assistSent == nil then
+		assistSent = true
+
+		sendPoison()
+
+		if checkMask(&quot;rog&quot;) then
+			local enemytarget = getEnemy()
+
+			if enemytarget ~= &quot;&quot; then
+				-- if wraith kill, not backstab
+
+				if timer:get(&quot;wraithform&quot;) then
+					mud:send(&quot;KILL &quot; .. enemytarget)
+					return
+				end
+
+				if sendAssassinate(enemytarget) then
+					return
+				end
+
+				-- nonpowers backstab for practice
+				local backstab
+
+
+				if prompt:get(&quot;hp&quot;) &gt; 1000 then
+					backstab = &quot;backstab &quot; .. enemytarget
+				else
+					backstab = &quot;bs &quot; .. enemytarget
+				end
+
+				cecho(&quot;\n&lt;red&gt;[&quot; .. backstab .. &quot;]\n&quot;)
+				mud:send(backstab)
+			end
+
+			look:send()
+
+			return
+		end
+
+		-- mount before assisting
+		if mount:get() ~= nil and not mount:getMounted() then
+			--send(&quot;mount &quot; .. mount:get() )
+			mud:send(&quot;mount&quot;)
+		end
+
+		-- if memorizing stand before sending assist
+		if spell:getMem() or memsent then
+			mud:send(&quot;ST&quot;)
+		end
+
+		echoDebug(&quot;&lt;red&gt;[assist &quot; .. xchar .. &quot;]\n&quot;)
+
+		mud:send(&quot;assist &quot; .. xchar)
+	end
+end</script>
                     <eventHandlerList/>
                 </Script>
                 <Script isActive="yes" isFolder="no">
@@ -34426,6 +34528,9 @@ function promptEvent(event)
 
 	if inCombat() then
 		assistSent = nil
+
+		-- can't be hidden if in combat
+		setHide(false)
 
 		-- send con to update database if needed
 		local roomid = map:getRoom()
