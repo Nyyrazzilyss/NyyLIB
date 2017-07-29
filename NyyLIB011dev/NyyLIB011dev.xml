@@ -2841,6 +2841,7 @@ if charData:get(&quot;autohide&quot;) then
 
 	if checkMask(&quot;rog&quot;) then
 		send(&quot;hide&quot;)
+		mud:send(&quot;save&quot;)
 	end
 end</script>
                         <triggerType>0</triggerType>
@@ -4138,7 +4139,7 @@ end
                         <script>-- Such a maneuver appears to be useless against the fire drake!
 -- Such a maneuver appears to be useless against Quturac, the skeletal death dragon!
 
-timer:set(&quot;notrip&quot;, 30)</script>
+timer:set(&quot;notrip&quot;, 60)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4151,8 +4152,12 @@ timer:set(&quot;notrip&quot;, 30)</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>Such a maneuver appears to be useless against</string>
+                            <string>You have no footing here!</string>
+                            <string>is too huge for you to trip! You go crashing to the ground.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -5862,6 +5867,13 @@ if NyyLIB.roguereturn ~= nil then
 	end
 
 	NyyLIB.roguereturn = nil
+else
+	if charData:get(&quot;autohide&quot;) then
+		if checkMask(&quot;rog&quot;) then
+			send(&quot;hide&quot;)
+			mud:send(&quot;save&quot;)
+		end
+	end
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -6213,7 +6225,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/27/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/29/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6267,7 +6279,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 7/27/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6451,7 +6463,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6539,7 +6551,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6597,7 +6609,7 @@ setLabelImage(&quot;TiaMask&quot;, &quot;TiaMask-on.png&quot;)</script>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaBane</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -17880,6 +17892,12 @@ end
 
 display( enteredPortal )
 
+cecho(&quot;&lt;red&gt;getEnemy(): &quot; .. getEnemy() .. &quot;\n&quot;)
+cecho(&quot;&lt;red&gt;inCombat(): &quot; .. tostring(inCombat()) .. &quot;\n&quot;)
+cecho(&quot;&lt;red&gt;assistSent: &quot;)
+display(assistSent)
+
+
 cecho(&quot;&lt;red&gt;[End debug]\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
@@ -18778,7 +18796,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 7/27/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 7/29/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -20115,12 +20133,10 @@ if matches[2] == &quot;init&quot; then
 
 	NyyLIB.trackbid = {}
 
-	echo(&quot;\nSplit script enabled:\n&quot;)
+	cecho(&quot;\n&lt;green&gt;[Split script enabled:]\n&quot;)
 
-	echo(&quot;Total number of bidders: &quot; .. #NyyLIB.validbidders .. &quot;\n&quot;)
+	cecho(&quot;&lt;green&gt;[Total number of bidders: &quot; .. #NyyLIB.validbidders .. &quot;]\n&quot;)
 	display(NyyLIB.validbidders)
-	
-
 end
 
 if matches[2] == &quot;delchar&quot; then
@@ -20158,7 +20174,7 @@ if matches[2] == &quot;add&quot; then
 	local itemMatches=0
 
 	if isActive(&quot;acceptbid&quot;, &quot;trigger&quot;) == 0 then
-		echo(&quot;\nBidding is currently closed.\n&quot;)
+		cecho(&quot;\n&lt;red&gt;[Bidding is currently closed.]\n&quot;)
 		return
 	end
 
@@ -20170,17 +20186,9 @@ if matches[2] == &quot;add&quot; then
 	end
 
 	if abort == 1 then
-		echo(&quot;[Not a valid bidder]\n&quot;)
+		cecho(&quot;&lt;red&gt;[Not a valid bidder]\n&quot;)
 		return
 	end
-
-	--display(matches)
-	-- display(matches[2]) add
-	-- display(matches[3]) charname
-	--display(matches[4])  itemname
-	-- biditem= matches[4]
-
-	-- if table.contains(NyyLIB.groupitems, matches[3]) then  should be 4?
 
 	if table.contains(NyyLIB.groupitems, matches[3]) then
 		biditem= NyyLIB.groupitems[table.index_of(NyyLIB.groupitems, xname)]
@@ -20190,7 +20198,7 @@ if matches[2] == &quot;add&quot; then
 		local testitem = string.gsub(biditem, &quot;-&quot;, &quot;[-]&quot;) -- testitem is regex
 
 		for nx=1, #NyyLIB.groupitems, 1 do
-			if string.findPattern(NyyLIB.groupitems[nx], testitem) then
+			if string.findPattern(NyyLIB.groupitems[nx]:lower(), testitem:lower()) then
 				founditem = NyyLIB.groupitems[nx]
 				itemMatches=itemMatches+1
 			end
@@ -22099,6 +22107,7 @@ end</script>
 -- dev
 
 -- bugfixes
+-- poisons will be identified when looking in containers
 -- added autohide to rogue
 -- .. will walk reverse paths example: ..5ne will walk .w5s
 -- katumi database update - 7/11/17
@@ -29384,26 +29393,26 @@ function createconsumabledb()
 	--recs:close()
 
 
-	--recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items WHERE item_type = 'poison']]))
+	recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items WHERE item_type = 'poison']]))
 
-	--row = recs:fetch({})
+	row = recs:fetch({})
 
-	--while row do
-	--	if string.find(row[2], &quot;%(Poison%) &quot;) ~= nil then
-	--		local st, en, retval
+	while row do
+		if string.find(row[2], &quot;%(Poison%) &quot;) ~= nil then
+			local st, en, retval
 
-	--		st, en, retval = string.find (row[2], &quot;%(Poison%)([A-Za-z0-9: -]+)%*&quot;)
+			st, en, retval = string.find (row[2], &quot;%(Poison%)([A-Za-z0-9: -]+)%*&quot;)
 
-	--		NyyLIB.itemdb[row[1]]={&quot;poison&quot;, retval:trim()}
-	--	end
+			NyyLIB.itemdb[row[1]]={&quot;poison&quot;, retval:trim()}
+		end
 
-	--	row= recs:fetch({})
-	--end
+		row= recs:fetch({})
+	end
 
-	--recs:close()
+	recs:close()
 
 
-	cecho(&quot;&lt;red&gt;[Consumable database cached: Potions, Scrolls]\n&quot;)
+	cecho(&quot;&lt;red&gt;[Consumable database cached: Potions, Scrolls, Poisons]\n&quot;)
 end
 
 
@@ -34165,7 +34174,6 @@ function sendStatus(xcharname)
 end
 
 function sendAssist(xchar)
-
 	--if xchar ~= nil then
 	--	cecho(&quot;&lt;green&gt;[sendASsist: &quot; .. xchar .. &quot;]\n&quot;)
 	--end
@@ -34204,6 +34212,18 @@ function sendAssist(xchar)
 	end
 
 	echoDebug(&quot;&lt;red&gt;[assist]&quot;)
+
+	if checkMask(&quot;rog&quot;) then
+		local enemytarget = getEnemy()
+
+		if enemytarget ~= &quot;&quot; then
+			if enemytarget == &quot;mage&quot; or enemytarget == &quot;wight&quot; then
+				if not buff:get(&quot;globe_of_invulnerability&quot;) then
+					return
+				end
+			end
+		end
+	end
 
 	if assistSent == nil then
 		assistSent = true
