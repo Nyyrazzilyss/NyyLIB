@@ -83,6 +83,9 @@ eraseLine()</script>
                     <script>-- &lt; 416h/416H 110v/110V T: Zusuk TC: excellent E: ultrumm EC: nasty wounds EP: sit P: std &gt; 
 -- &lt; 1037h/1037H 134v/134V P: std &gt;
 
+-- display(matches)
+
+
 NyyLIB = NyyLIB or {}
 
 if matches[2] ~= &quot;&quot; then
@@ -148,7 +151,7 @@ end
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>&lt; (?:(\d+)h)?\/?(?:(\d+)H)? ?(?:(\d+)p)?\/?(?:(\d+)P)? ?(?:(\d+)v)?\/?(?:(\d+)V)? ?(?:T: ([A-Za-z ]+))? ?(?:TC: ([A-Za-z ]+))? ?(?:E: ([A-Za-z ]+))? ?(?:EC: ([A-Za-z ]+))? ?(?:EP: ([A-Za-z ]+))? (?:P: (.*)) &gt;</string>
+                        <string>&lt; (?:(\d+)h)?\/?(?:(\d+)H)? ?(?:(\d+)p)?\/?(?:(\d+)P)? ?(?:(\d+)v)?\/?(?:(\d+)V)? ?(?:[|].*[|])? ?(?:T: ([A-Za-z ]+))? ?(?:TC: ([A-Za-z ]+))? ?(?:E: ([A-Za-z ]+))? ?(?:EC: ([A-Za-z ]+))? ?(?:EP: ([A-Za-z ]+))? (?:P: (.*)) &gt;</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -6250,7 +6253,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/21/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/24/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6304,7 +6307,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/21/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6488,7 +6491,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6576,7 +6579,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -18845,7 +18848,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 8/21/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 8/24/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -22080,6 +22083,10 @@ cmi:colorAreas()
 echo(&quot;[Labeling zone edges]\n&quot;)
 cmi:labelCmudZones(cmi.con)
 
+-- set weight on specific exits to exclude from path finding
+
+setExitWeight(48767, &quot;down&quot;, 500) -- down entrance to underdark from silverymoon
+
 echo(&quot;[Adding room password information]\n&quot;)
 
 for k,v in pairs(NyyLIB.passwords) do
@@ -22191,11 +22198,12 @@ end</script>
 -- 011dev
 
 -- bugfixes
+-- 'powers prompt' added to prompt regex
 -- #find will accept room numbers when searching
 -- bash will be switched to powersbash if you bounce off something
--- fwalk buffers path, and send in 5-10 room bursts
+-- fwalk buffers path, and sends in 5-10 room bursts
 -- Removed fwalk distance limit
--- Map update: full size 317 areas 44970 rooms
+-- Map update: full size 317 areas 44971 rooms
 
 -- 011c (update1)
 
@@ -26943,7 +26951,7 @@ function configureTrain()
 		end
 	end
 
-	if map:geCurrenttZone() == &quot;Ashstone&quot; then
+	if map:getCurrentZone() == &quot;Ashstone&quot; then
 		NyyLIB.smtrainstops = ashtrain
 	elseif map:getCurrentZone() == &quot;Silverymoon, Gem of the North&quot; then
 		NyyLIB.smtrainstops = smtrain
