@@ -8,24 +8,26 @@ freezing, caging, and deletion.
 
 <red>Warning! Use at own risk
 ;;10,index
-               NyyLIB Help documentation
 
-Any of the below commands will provide further information. 
+<red>               NyyLIB Help documentation
+
+<green>Any of the below commands will provide further information. 
 
 
-#help gui        - how to use buttons, window setup
-#help sound		 - enabling sound
-#help icons		 - instructions for creating icon png files
-#help autoroller - auto-roller for creation of new characters
-#help class      - class specific information
-#help set        - help with use of the 'set' command
-#help map        - information about use of the mapper
-#help database   - further information on the Katumi database
-#help alias      - various aliases included with the package
-#help bid        - the included bidding script
-#help xptrain    - sm xp train
-#help stats      - a warrior statistics package
+<red>#help gui        <green>- how to use buttons, window setup
+<red>#help sound	     <green>- enabling sound
+<red>#help icons	     <green>- instructions for creating icon png files
+<red>#help autoroller <green>- auto-roller for creation of new characters
+<red>#help class      <green>- class specific information
+<red>#help set        <green>- help with use of the 'set' command
+<red>#help map        <green>- information about use of the mapper
+<red>#help database   <green>- further information on the Katumi database
+<red>#help alias      <green>- various aliases included with the package
+<red>#help bid        <green>- the included bidding script
+<red>#help xptrain    <green>- The Adud Train
+<red>#help stats      <green>- a warrior statistics package
 ;;12,gui
+
 The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
 
 Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
@@ -47,31 +49,40 @@ There are a number of buttons present for all classes. To change the status of a
 
 Related: set, map  
 ;;13,sound
-Sound effects can be enabled/disabled by typing 'set sound  value'
 
-Possible choices for value are off, on and limited.
+<red>Sound
 
-Limited sounds are tell and petition only.
+<green>Sound effects can be enabled/disabled by typing '<red>set sound value<green>'
 
-Included sounds are sourced from https://www.freesound.org/
+<green>Possible choices for value are <red>off<green>, <red>on <green>and <red>limited<green>.
 
-People are encouraged to submit the id# and mud text pattern for additional sounds.
+<green>Limited sounds are tell and petition only.
+
+<green>Included sounds are sourced from https://www.freesound.org/
+
+<green>Players are encouraged to submit the id# and mud text pattern for additional sounds.
 ;;15,autoroller
-NyyLIB includes an auto-roller.
 
-If works by assigning a value to scores.
- mighty=1 heroic=2 perfect=3
+<red>Autoroller
 
-Rolling a character with mighty mighty heroic perfect would be 1 + 1 + 2 + 3 = 7
+<green>A character auto-roller is included with the script. While rolling, it works by
+<green>assigning a value to dice rolls.
 
-The autoroller is set to stop on any score matching or greater than.
+ <red>mighty=1 heroic=2 perfect=3
 
-To disable the autoroller, type '#roll'.
+<green>Example: Rolling a character with some stats of 
+<green>	mighty mighty heroic perfect would be 1 + 1 + 2 + 3 = 7
 
-Usage:   #roll value
+<green>The autoroller will stop on any score matching or greater than the set value.
 
-Example: #roll 7 
+<green>To disable the autoroller, type '#roll'.
+
+<green>Usage:   <red>#roll value
+
+<green>Example: <red>#roll 7 
+
 ;;20,set
+
 Type 'set' for a list of alterable settings for your class. Choices are listed.
 
 Basic settings:
@@ -103,19 +114,26 @@ Usage: set vnum false -- turns off display of vnum
    
 Related: set_bard, set_war, condensed
 ;;21,condensed
-There are a number of condensed settings available through the script.
 
-items		- Item gags
-misc 		- Assorted miscellaneous gags
-combat 		- Combat related spam
-duplicate 	- Duplicate lines will be supressed
-spells 		- Spell spam
-dragon		- Dragon gags
-arrows 		- Various archery related gags
+<red>Condensed
 
-usage: set condensed {dragon|combat|spells|items|arrows|misc|duplicate}
+<green>Many of the triggers require information that is gagged from ever arriving at the client by the mud's condensed mode.
+<green>It is recommended to disable mud condensed (<red>tog condensed <green>so it shows: <red>Disabled<green>)
 
-Example: set condensed duplicate
+<green>There are a number of condensed settings available internally through the script. These replace the mud's condensed settings.
+
+<green>Enable as many or all of these as desired to reduce spam.
+
+<red>set condensed items      <green>- Item gags
+<red>set condensed misc       <green>- Assorted miscellaneous gags
+<red>set condensed combat     <green>- Combat related spam
+<red>set condensed duplicate  <green>- Duplicate lines will be supressed
+<red>set condensed spells     <green>- Spell spam
+<red>set condensed dragon     <green>- Dragon gags
+<red>set condensed arrows     <green>- Various archery related gags
+
+<green>The individual modes are enabled when the script replies that it has been set to <red>true<green>.
+
 ;;25,class
 While this client should be workable with any class, it will work best with
 (i.e. scripting has been completed for)
@@ -280,16 +298,27 @@ Example:
  Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
 
  ;;53,fwalk
-Fastwalking with NyyLIB is done with the '#fwalk' command. fwalk is restricted to the loaded map.
+ 
+<red>#fwalk
 
-Attempting to fastwalk between two room requires that a path has been previously discovered connecting the rooms.
+<green>Fastwalking with the script is done with the '#fwalk' command. #fwalk is restricted to the 'known'
+<green>world in the map. The map will also need to be in sync.
 
-Certain rooms are blocked from allowing paths to pass through them: Example, Wallrun Road in Silverymoon.
+<green>Attempting to fastwalk between two room requires that a path has been previously discovered connecting the rooms.
 
-#fwalk roomnumber - fastwalk to specific room number
-#fwalk add name   - adds a fastwalk using 'name' to the currently occupied room
-#fwalk del name   - deletes fastwalk 'name'
-#fwalk name       - fastwalk to room indicated by previously added name
+<green>The path taken represents the shortest known path between the two rooms. Some rooms have been weighted to make
+<green>them less likely to be chosen as the path to be used.
+
+<green>Usage:
+
+<red>#fwalk            - <green>show instructions and accessible locations from the current room
+<red>#fwalk roomnumber - <green>fastwalk to specified room number
+<red>#fwalk name       - <green>fastwalk to room indicated by fwalk name
+<red>#fwalk add name   - <green>adds a fastwalk to the currently occupied room using 'name' 
+<red>#fwalk del name   - <green>deletes fastwalk 'name'
+<red>#fwalk all        - <green>list all fwalks regardless of location
+<red>#fwalk area       - <green>list all fwalks in current area
+
 ;;80,database
 The 7/28/15 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
 
@@ -408,18 +437,28 @@ adddice charname value - set charname's diceroll to value
 
 bid status - display bid/dice summary to screen
 ;;140,xptrain
-A script for a warrior to lead a XP train through Silverymoon.
+<red>                   The Adud XP Train
 
-Running this script requires a valid mapper path to exist between all train stops.
-Prior to first running it, from the Silverymoon inn type 'inittrain'. This will
-speedwalk you through Silverymoon unlocking the required rooms.
+<green>A script to move a character through a path of rooms, killing a defined mob.
 
-usage:
- inittrain - Complete a speedwalk through Silverymoon to prepare map for the train.
-             You'll need to be in Silverymoon with the map in sync for this command to work.
- starttrain - start the train running
- stoptrain - stop the train, and return to sm inn.
- ;;150,stats
+<green>Running this script requires a valid mapper path to exist between all train stops.
+<green>Prior to first running it, from the Silverymoon inn type 'inittrain'. This will
+<green>speedwalk you through Silverymoon unlocking the required rooms.
+
+<green>Sample paths are included for Silverymoon and Ashstone.
+
+<red>inittrain <green>- Completes a speedwalk through Silverymoon or Ashstone to unlock portions
+	<green>of the map for the train. Running this in Silverymoon requires the map to be in
+	<green>sync starting from the inn.
+
+<red>starttrain tank		 <green>- Start running the train as the 'engine'
+<red>starttrain tank moblist <green>- Run the train using an alternate created mob list
+<red>starttrain fol			 <green>- Start running the train as a follower
+
+<red>stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
+<red>resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
+
+;;150,stats
  Warrior defense statistics
  
  Hit/Miss/defensive skill usage is tracked. An entry is stored every 1000 attacks on you.
