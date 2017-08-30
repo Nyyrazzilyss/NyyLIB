@@ -83,9 +83,6 @@ eraseLine()</script>
                     <script>-- &lt; 416h/416H 110v/110V T: Zusuk TC: excellent E: ultrumm EC: nasty wounds EP: sit P: std &gt; 
 -- &lt; 1037h/1037H 134v/134V P: std &gt;
 
---display(matches[8])
-
-
 NyyLIB = NyyLIB or {}
 
 if matches[2] ~= &quot;&quot; then
@@ -114,6 +111,11 @@ end
 
 if matches[7] ~= &quot;&quot; then
 	prompt:set(&quot;maxmv&quot;, tonumber(matches[7]))
+end
+
+-- matches[8] is the powers prompt
+if matches[8] ~= &quot;&quot; then
+	prompt:decodePowers(matches[8])
 end
 
 prompt:set(&quot;tank&quot;, matches[9]:trim())
@@ -6474,7 +6476,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/28/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/30/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -17746,17 +17748,22 @@ mud:send(&quot;wield bane&quot;)</script>
                     </Alias>
                     <Alias isActive="yes" isFolder="no">
                         <name>assassinate</name>
-                        <script>local timeleft=timer:get(&quot;assassinatetimer&quot;)
+                        <script>if not checkMask(&quot;rog&quot;) then
+	mud:send( string.upper(matches[2]) .. &quot; &quot; .. matches[3] )
+	return
+end
+
+local timeleft=timer:get(&quot;assassinatetimer&quot;)
 
 if not timeleft then
 	timer:set(&quot;assassinatetimer&quot;, 24*60)
-	mud:send(&quot;ASSASSINATE &quot; .. matches[2])
+	mud:send(&quot;ASSASSINATE &quot; .. matches[3])
 else
 	cecho(&quot;&lt;red&gt;[Assassinate in cooldown: &lt;green&gt;&quot; .. timedisplay(timeleft) .. &quot;&lt;red&gt;]\n&quot;)
 end</script>
                         <command></command>
                         <packageName></packageName>
-                        <regex>^assa?s?s?i?n?a?t?e? (.*)</regex>
+                        <regex>^(assa?s?s?i?n?a?t?e?) (.+)</regex>
                     </Alias>
                     <Alias isActive="yes" isFolder="no">
                         <name>mpp - apply poison milky</name>
@@ -19204,7 +19211,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 8/28/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 8/30/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21523,7 +21530,7 @@ map:addMovement(&quot;enter &quot; .. matches[3])
                 <Alias isActive="yes" isFolder="no">
                     <name>recall</name>
                     <script>tempTimer(1.5, [[expandAlias(&quot;#find&quot;, false)]])
-mud:send(&quot;recall&quot;, false)</script>
+mud:send(&quot;RECALL&quot;, false)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^recall$</regex>
@@ -22564,16 +22571,16 @@ end</script>
 
 -- 011dev
 
+-- bugfixes
 -- buttons will be redrawn when you level
 -- (some) helpfile updates
 -- some rangers stuff added
--- bugfixes
 -- 'powers prompt' added to prompt regex
 -- #find will accept room numbers when searching
 -- bash will be switched to powersbash if you bounce off something
 -- fwalk buffers path, and sends in 5-10 room bursts
 -- Removed fwalk distance limit
--- Map update: full size 317 areas 44982 rooms
+-- Map updated: full size 317 areas 44990 rooms
 
 -- 011c (update1)
 
@@ -26574,15 +26581,6 @@ function twin_strike(fname, xcommand)
 	if xcommand == buttons.CLICK then
 		shiftSkillButton(&quot;twin_strike&quot;, &quot;autotstrike&quot;, xcommand)
 	end
-
-	if xcommand == 0 then
-		-- timer has expired
-		if inCombat() and not timer:get(&quot;cooldown&quot;) then
-			if charData:get(&quot;autotstrike&quot;) then
-				useMeleePower(&quot;ts&quot;)
-			end
-		end
-	end
 end
 
 function armor_splinter(fname, xcommand)
@@ -26613,15 +26611,6 @@ function bladestorm(fname, xcommand)
 	if xcommand == buttons.CLICK then
 		shiftSkillButton(fname, &quot;autobstorm&quot;, xcommand)
 	end
-
-	if xcommand == 0 and charData:get(&quot;autobstorm&quot;) then
-		-- timer has expired
-		if inCombat() and not timer:get(&quot;cooldown&quot;) then
-			if charData:get(&quot;autobstorm&quot;) then
-				useMeleePower(&quot;bs&quot;)
-			end
-		end
-	end
 end
 
 function eviscerate(fname, xcommand)
@@ -26637,18 +26626,13 @@ function eviscerate(fname, xcommand)
 	if xcommand == buttons.CLICK then
 		shiftSkillButton(fname, &quot;autoevis&quot;, xcommand)
 	end
-
-	if xcommand == 0 then
-		-- timer has expired
-		if inCombat() and not timer:get(&quot;cooldown&quot;) then
-			if charData:get(&quot;autoevis&quot;) then
-				useMeleePower(&quot;ev&quot;)
-			end
-		end
-	end
 end
 
 function procPromptRanger()
+	if not checkMask(&quot;ran&quot;) then
+		return
+	end
+		
 	if inCombat() then
 		
 		if charData:get(&quot;autobash&quot;) then
@@ -26695,9 +26679,6 @@ function cooldown()
 end
 
 function useMeleePower(xpower)
-	local meleePowers= { ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot; }
-
-
 	-- melee powers don't work on parad mobs
 	if prompt:get(&quot;tank&quot;) == &quot;&quot; then
 		return
@@ -33418,6 +33399,8 @@ end</script>
                     <packageName></packageName>
                     <script>prompt = prompt or {}
 
+meleePowers= { ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot; }
+
 function prompt:set(xkey, xvalue)
 	self[xkey]=xvalue
 end
@@ -33432,6 +33415,42 @@ function prompt:isStringPrompt(teststring)
 	end
 
 	return(false)
+end
+
+
+
+-- melee powers + spell powers
+-- overlap from yuanti?
+-- class powers with identical names ss=sandstorm, sweeping strike
+
+
+
+
+
+function prompt:decodePowers(xstring)
+	--display(xstring)
+
+	local powersTable = string.split(xstring, &quot;|&quot;)
+	
+	--display(powersTable)
+
+	for nx=1,#powersTable,1 do
+		local testItem = powersTable[nx]
+		
+		if testItem ~= &quot;&quot; then
+			local powersAlias = string.match(testItem, &quot;^([a-z]+) .*&quot;)
+			local powersName = meleePowers[powersAlias]
+			local powersCooldown = string.match(testItem, &quot;^[a-z]+ (.*)&quot;)
+			local powersRound = tonumber(powersCooldown) or 0
+			
+			--display(powersName)
+
+			-- if timer exists set it to powersRound * 4 (seconds)
+			if timer:get(powersName) then
+				timer:set(powersName, powersRound*4)
+			end
+		end
+	end
 end</script>
                     <eventHandlerList/>
                 </Script>
@@ -34115,6 +34134,44 @@ powerAliases= powerAliases or {}
 -- { &quot;banshee_wail&quot;, &quot;bw&quot;, 46, &quot;&quot;, &quot;&quot;}
 
 powerAliases = powerAliases or {}
+
+-- TODO: check on powers table should be moved to function
+
+
+-- return power name for supplied alias (if it exists), or nil
+
+function powerAliases:getName()
+	local charclass = string.gsub(whoclass(whoami()), &quot;-&quot;, &quot;_&quot;)
+
+	-- check if powers table exists for current class
+	if powerAliases[charclass] == nil then
+		echoDebug(&quot;&lt;red&gt;[Power aliases not assigned for this class]\n&quot;)
+		return(nil)
+	end
+
+
+	-- need to check by class
+end
+
+-- return power alias for supplied name (if it exists), or nil
+
+function powerAliases:getAlias()
+	local charclass = string.gsub(whoclass(whoami()), &quot;-&quot;, &quot;_&quot;)
+
+	-- check if powers table exists for current class
+	if powerAliases[charclass] == nil then
+		echoDebug(&quot;&lt;red&gt;[Power aliases not assigned for this class]\n&quot;)
+		return(nil)
+	end
+
+	-- need to check by class
+end
+
+
+
+
+
+
 
 
 -- return the charData entry associated with this spell
@@ -35626,7 +35683,9 @@ function promptEvent(event)
 
 	-- Rangers
 	
-	procPromptRanger()
+	if checkMask(&quot;ran&quot;) then
+		procPromptRanger()
+	end
 
 	-- proc equipment if needed 
 	procEquipment()
