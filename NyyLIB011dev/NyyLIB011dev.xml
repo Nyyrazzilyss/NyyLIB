@@ -2350,27 +2350,39 @@ followersSent=nil
 
 sqlinwho(whoami())
 
-if inwho(whoami()) == false then
-	for k, v in pairs(NyyLIB.fullclasslist) do
-		if v[1] == matches[4]:trim()	 then
+
+for k, v in pairs(NyyLIB.fullclasslist) do
+	if v[1] == matches[4]:trim()	 then
+		if inwho(whoami()) == false then
 			whoadd(whoami(), v[2], matches[3]:trim())
+		else
+			-- make sure database is correct class
+			if NyyLIB.WhoClass.wholist[whoami()] ~= nil then
+				NyyLIB.WhoClass.wholist[whoami()][1] = v[2]
+			end
 		end
+
+		if NyyLIB.initgui == false then
+			initFullData()
+		end
+
+		checkVoteButton()
+
+		return
 	end
 end
+
+-- TODO - What if matches[4] ~= katumi?
 
 -- Change from necro to lich in wholist
 
-if matches[4]:trim() == &quot;Lich&quot; then
-	if NyyLIB.WhoClass.wholist[whoami()] ~= nil then
-		NyyLIB.WhoClass.wholist[whoami()][1] = &quot;Lic&quot;
-	end
-end
+--if matches[4]:trim() == &quot;Lich&quot; then
+--	if NyyLIB.WhoClass.wholist[whoami()] ~= nil then
+--		NyyLIB.WhoClass.wholist[whoami()][1] = &quot;Lic&quot;
+--	end
+--end
 
-if NyyLIB.initgui == false then
-	initFullData()
-end
-
-checkVoteButton()</script>
+</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -3416,20 +3428,21 @@ if NyyLIB.escapedir ~= nil then
 	return
 end
 
-if tank == &quot;ghost&quot; then
-	sendRescue(tank)
-	return
-end
-
-if (charData:get(&quot;rescuetype&quot;) == &quot;basic&quot; or charData:get(&quot;rescuetype&quot;) == &quot;all&quot;) and
- table.contains( {&quot;awful&quot;, &quot;pretty hurt&quot;}, tankcondition ) then
-	sendRescue(tank)	
-
-	return
-end
-
 if charData:get(&quot;rescuetype&quot;) == &quot;all&quot; then
 	sendRescue(tank)
+	return
+end
+
+if (charData:get(&quot;rescuetype&quot;) == &quot;basic&quot; or charData:get(&quot;rescuetype&quot;) == &quot;all&quot;) then
+	if tank == &quot;ghost&quot; then
+		sendRescue(tank)
+		return
+	end
+
+	if table.contains( {&quot;awful&quot;, &quot;pretty hurt&quot;}, tankcondition ) then
+		sendRescue(tank)	
+		return
+	end
 end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -4343,8 +4356,8 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         <colorTriggerFgColor>#000000</colorTriggerFgColor>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
-                            <string>with both weapons and land twin precision strikes.</string>
                             <string>with both weapons, landing glancing blows.</string>
+                            <string>with both weapons, landing twin precision strikes.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
@@ -6476,7 +6489,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 8/30/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/1/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -15881,6 +15894,10 @@ end</script>
                 <script>--An (ice) golem .*, fighting
 -- removed in ice^ gf only
 
+if matches[2] == &quot;ice&quot; and map:getCurrentZone() ~= &quot;The Golem Forge&quot; then
+	return
+end
+
 if prompt:get(&quot;enemy&quot;) ~= matches[2] then
 	mud:send(&quot;kill &quot; .. matches[2] )
 end</script>
@@ -15896,8 +15913,10 @@ end</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
                     <string>The (nightwing) .* fighting .*</string>
+                    <string>An (ice) golem .*, fighting</string>
                 </regexCodeList>
                 <regexCodePropertyList>
+                    <integer>1</integer>
                     <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
@@ -19211,7 +19230,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 8/30/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 9/1/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21476,7 +21495,7 @@ end</script>
 for roomid, roomname in pairs(fullmap) do
 	if string.findPattern(roomname:lower(), &quot;unmapped&quot;) then
 		echo(&quot;Empty room already exists: &quot; .. roomid .. &quot;\n&quot;)
-		map:setRoomArea(1, map:findAreaID(&quot;The Great Unknown&quot;))
+		setRoomArea(1, map:findAreaID(&quot;The Great Unknown&quot;))
 		return
 	end
 end
@@ -21489,7 +21508,7 @@ addRoom(newroomid)
 
 echo(&quot;\nCreated room number: &quot; .. newroomid .. &quot;\n&quot;)
 
-map:setRoomArea(newroomid, map:findAreaID(&quot;The Great Unknown&quot;))
+setRoomArea(newroomid, map:findAreaID(&quot;The Great Unknown&quot;))
 
 setRoomName(newroomid, &quot;Unmapped&quot;)
 
@@ -21555,7 +21574,7 @@ toGagLook=nil
 gaglook=nil</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^(n|N|no|nor|nort|north|s|S|so|sou|sout|south|e|E|ea|eas|east|w|W|we|wes|west|u|U|up|d|D|do|dow|down)$</regex>
+                    <regex>^(n|no|nor|nort|north|s|so|sou|sout|south|e|ea|eas|east|w|we|wes|west|u|up|d|do|dow|down)$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>doorbash</name>
@@ -21853,9 +21872,12 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>test</name>
-                <script>openUserWindow(&quot;testwindow&quot;)
-cecho(&quot;testwindow&quot;, &quot;&lt;red&gt;hello &lt;blue&gt;bob!&quot;)
-resizeWindow(&quot;testwindow&quot;, 100, 100) -- name,width,height)
+                <script>display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
+
+
+--openUserWindow(&quot;testwindow&quot;)
+--cecho(&quot;testwindow&quot;, &quot;&lt;red&gt;hello &lt;blue&gt;bob!&quot;)
+--resizeWindow(&quot;testwindow&quot;, 100, 100) -- name,width,height)
 
 
 --for roomid, roomname in pairs(fullmap) do
@@ -22572,6 +22594,7 @@ end</script>
 -- 011dev
 
 -- bugfixes
+-- set movebuffer # - how many rooms should be sent to the mud before buffering
 -- buttons will be redrawn when you level
 -- (some) helpfile updates
 -- some rangers stuff added
@@ -27401,8 +27424,8 @@ function StartFight()
 			end
 		end			
 
-		-- Ranger - start with kill
-		mud:send(&quot;kill &quot; .. mobtarget)
+		-- Ranger - start with kick
+		mud:send(&quot;kick &quot; .. mobtarget)
 	else
 		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
 		NextTrainStop()
@@ -27710,9 +27733,9 @@ end
 function map:sendNextMovement()
 	--display(self.movement)
 
-	-- Don't send any movements if more then 10 have been sent/not yet recieved.
+	-- Don't send any movements if more then &quot;movebuffer&quot; have been sent/not yet recieved. TODO: make variable
 	
-	if self.movementIndex &gt; 10 then
+	if self.movementIndex &gt; tonumber( charData:get(&quot;movebuffer&quot;, true) ) then
 			return(nil)
 	end
 
@@ -28759,20 +28782,6 @@ local areatable = getAreaTable()
 
 	echo(&quot;Map locked\n&quot;)
 end
-
-function map:setRoomArea( xroomid, internalid)
-	-- add label indicating zone edges
-	if edgelabel ~= &quot;&quot; and edgelabel ~= nil then
-		cmi:roomLabel(edgelabel)
-	end
-
-	-- add label indicating password
-	local pw=getRoomUserData(xroomid, &quot;password&quot;)
-
-	if pw ~= &quot;&quot; and pw ~= nil then
-		cmi:passwordLabel(xroomid, pw)
-	end
-end
 </script>
                     <eventHandlerList/>
                 </Script>
@@ -28952,6 +28961,7 @@ charData = charData or {}
 	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto-open doors&quot; },
 	{ &quot;echodrag&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;echo when a corpse is dragged&quot; },
 	{ &quot;autoportal&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto enter rifts/portals/etc&quot; },
+	{ &quot;movebuffer&quot;, &quot;&quot;, {&quot;#&quot;}, &quot;10&quot;, &quot;maximum movements to send before buffering&quot; },
 	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;, &quot;debug2&quot;}, &quot;&quot;, &quot;&quot; },
 	{ &quot;vnum&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;display room vnum&quot; },
 	{ &quot;chatfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;12&quot;, &quot;fontsize to use for the chat window&quot; },
@@ -29404,6 +29414,10 @@ powerAliases= powerAliases or {}
 -- autoarea: circle 1-6 area
 -- autohlmissle: circle7+ single target
 -- autohlarea: circle 7+ area
+
+-- Spellcast selection priority occurs by position of the spell in the table for the class.
+-- The script starts at the end of the table, and works backwords until it hits a spell to cast.
+-- To increase the priority of a spell being cast, move it down in the table.
 
 
 powerAliases[&quot;Bar&quot;] =
@@ -29969,11 +29983,11 @@ powerAliases[&quot;Ele&quot;] =
 { &quot;coldshield&quot;, &quot;cshield&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;stoneskin&quot;, &quot;ss&quot;, 26, &quot;autostone&quot;, &quot;&quot;},
 { &quot;feeblemind&quot;, &quot;feeb&quot;, 26, &quot;&quot;, &quot;&quot;},
+{ &quot;earth_darts&quot;, &quot;ed&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;earth_stones&quot;, &quot;es&quot;, 26, &quot;automissile&quot;, &quot;&quot;},
 { &quot;cone_of_cold&quot;, &quot;cone&quot;, 26, &quot;autoarea&quot;, &quot;&quot;},
 { &quot;clairvoyance&quot;, &quot;clv&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;blizzard_sphere&quot;, &quot;bs&quot;, 26, &quot;autoarea&quot;, &quot;&quot;},
-{ &quot;earth_darts&quot;, &quot;ed&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
 { &quot;ice_tongue&quot;, &quot;it&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;ice_layer&quot;, &quot;il&quot;, 31, &quot;&quot;, &quot;&quot;},
 { &quot;haste&quot;, &quot;hs&quot;, 31, &quot;pokehaste&quot;, &quot;&quot;},
@@ -35533,6 +35547,14 @@ function roomWindow:update()
 	end
 end
 
+function roomWindow:test()
+	roomLabel:setClickCallback(&quot;testfunction&quot;, &quot;zzz&quot;, buttons.CLICK)
+end
+
+function testfunction()
+	display(&quot;click&quot;)
+end
+
 -- Create the room window
 
 function roomWindow:create()
@@ -36108,6 +36130,7 @@ function initNyyLIB()
 	expandAlias(&quot;#stats reset&quot;, false)
 
 	cecho (&quot;&lt;red&gt;[NyyLIB initialized.]\n&quot;)
+	echo(&quot;Account name: &quot;)
 end
 
 function initFullData()
@@ -36469,7 +36492,7 @@ function cmi:addRooms(con, xcmudid, xtorilid)
 						lockRoom(roomID, true) -- lock room
                 else
 						setRoomUserData(roomID, &quot;zoneid&quot;, zone)
-						map:setRoomArea( roomID, zone )
+						setRoomArea( roomID, zone )
 					end
 
                 row = recs:fetch({})
