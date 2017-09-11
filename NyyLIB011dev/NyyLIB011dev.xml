@@ -2394,7 +2394,7 @@ end
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>Level: ([0-9]+)[ ]+Race: ([A-Z a-z-]+)[ ]+Class: ([A-Za-z-]*)</string>
+                        <string>Level: ([0-9]+)[ ]+Race: ([A-Z a-z-]+)[ ]+Class: ([A-Za-z- ]*)</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -4500,6 +4500,144 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You loose a precision shot at a lithe commoner that knocks her off her feet!</name>
+                        <script>-- [knockdown_shot]
+-- You loose a precision shot at a lithe commoner that knocks her off her feet!
+-- Your precisely aimed arrow streaks into a human noble, who staggers but retains his balance.
+
+meleePowerUsed=false
+
+timer:set(&quot;knockdown_shot&quot;, 12)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You loose a precision shot at</string>
+                            <string>Your precisely aimed arrow streaks into</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You launch a barrage of arrows into the air to rain down upon your enemies!</name>
+                        <script>--[hail_of_arrows]
+
+--You launch a barrage of arrows into the air to rain down upon your enemies!
+-- A lithe commoner is pincushioned by the swarm of falling arrows!
+
+meleePowerUsed=false
+
+timer:set(&quot;hail_of_arrows&quot;, 36)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You launch a barrage of arrows into the air to rain down upon your enemies!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your arrow burrows deep into a lithe commoner's flesh and shatters, leaving her howling in pain.</name>
+                        <script>--[splintering_shot]
+--Your arrow burrows deep into a lithe commoner's flesh and shatters, leaving her howling in pain.
+
+meleePowerUsed=false
+
+timer:set(&quot;splintering_shot&quot;, 24)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your arrow burrows deep into</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You pull an arrow back as far as it will go and unleash its concussive force on</name>
+                        <script>-- [concussive_shot]
+-- You pull an arrow back as far as it will go and unleash its concussive force on a graceful commoner!
+
+meleePowerUsed=false
+
+timer:set(&quot;concussive_shot&quot;, 36)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You pull an arrow back as far as it will go and unleash its concussive force on</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You launch of volley of three arrows at a human noble, who staggers under the impact.</name>
+                        <script>--[triple_shot]
+--You launch of volley of three arrows at a human noble, who staggers under the impact.
+--A human noble is slain instantly as your deadly volley of arrows find their target.
+
+meleePowerUsed=false
+
+timer:set(&quot;triple_shot&quot;, 12)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You launch of volley of three arrows at</string>
+                            <string>is slain instantly as your deadly volley of arrows find their target.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -6489,7 +6627,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/1/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/11/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6543,7 +6681,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/1/20
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6727,7 +6865,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6815,7 +6953,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7744,12 +7882,28 @@ timer:set(&quot;DragonCult&quot;, 3*24*60)</script>
 -- You wear the wickedly sharp claws of a gelugon devil on your hands.
 
 local equipinfo = equipment:getByLongName( matches[2])
+local checkBow = sqlIsBow(matches[2])
 
 -- create button if equipment worn is proc'ing
 
 if equipinfo ~= nil then
 		enableTrigger(equipinfo[1])
 		addLeftbutton( equipinfo[1], equipinfo[3], 0)
+end
+
+-- was the item worn a longbow?
+
+if checkMask(&quot;ran&quot;) then
+	if #checkBow &gt; 0 then
+		-- bow was just wielded. switch to archery buttons
+
+		addbutton(&quot;knockdown_shot&quot;, 3, 5)
+		addbutton(&quot;triple_shot&quot;, 7, 1)
+		addbutton(&quot;concussive_shot&quot;, 13, 25)	
+		addbutton(&quot;splintering_shot&quot;, 14, 15)
+		addbutton(&quot;hail_of_arrows&quot;, 15, 30)
+
+	end
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -7795,6 +7949,7 @@ end</script>
 -- TODO - regex conflict with magi staff
 
 local equipinfo = equipment:getByLongName( matches[2])
+local checkBow = sqlIsBow(matches[2])
 
 -- remove button if present
 
@@ -7806,6 +7961,20 @@ if equipinfo ~= nil then
 	if label ~= nil then
 		label:show()
 		label:hide()
+	end
+end
+
+-- was the item removed a longbow?
+
+if checkMask(&quot;ran&quot;) then
+	if #checkBow &gt; 0 then
+		-- bow was just removed. switch to melee buttons
+
+		addbutton(&quot;sweeping_strike&quot;, 3, 5)
+		addbutton(&quot;twin_strike&quot;, 7, 1)
+		addbutton(&quot;eviscerate&quot;, 13, 25)	
+		addbutton(&quot;armor_splinter&quot;, 14, 15)
+		addbutton(&quot;bladestorm&quot;, 15, 30)
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -8451,7 +8620,7 @@ buff:del(whoami(), &quot;elemental_ward&quot;)</script>
                         <name>image of a Valkyrie appears to partially conceal and protect you.</name>
                         <script>-- valhalla blur
 buff:set(whoami(), &quot;blur&quot;, 600 )
-mud:send(&quot;gsay [[ VALHALLA UP ]]&quot; )</script>
+--mud:send(&quot;gsay [[ VALHALLA UP ]]&quot; )</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -9915,8 +10084,10 @@ end
                     <regexCodeList>
                         <string>([A-Za-z]+) tells you 'bid (.*)'</string>
                         <string>([A-Za-z]+) tells you '(abstain)'</string>
+                        <string>([A-Za-z]+) tells you '([A-Za-z]+)'</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
                     </regexCodePropertyList>
@@ -13018,6 +13189,116 @@ addStat(whoami(), &quot;planetar&quot;)</script>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>Ranger</name>
+                    <script></script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList/>
+                    <regexCodePropertyList/>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>armor splinter</name>
+                        <script>-- Lulaz strikes the weak spots in a black dragon scout's armor, leaving him vulnerable.
+-- You strike the weak spots in a black dragon scout's armor, leaving him vulnerable.
+
+-- The green dragon consort's armor resists the impact of Melenes's carefully aimed strikes. (failed)
+
+if matches[2] == &quot;You&quot; then
+	addStat(whoami(), &quot;offHitAP&quot;)
+else
+	if groupList:ingroup(matches[2]) then
+		addStat(matches[2], &quot;offHitAP&quot;)
+	end
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>(.*) strikes the weak spots in .*</string>
+                            <string>(You) strike the weak spots in .*</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>evis</name>
+                        <script>-- You swing your weapons in lethal arcs, dousing the area with an elite barbazu soldier's blood.
+-- Lulaz swings his weapons in lethal arcs, dousing the area with an elite narzugon's blood.
+
+if matches[2] == &quot;You&quot; then
+	addStat(whoami(), &quot;offHitEV&quot;)
+else
+	if groupList:ingroup(matches[2]) then
+		addStat(matches[2], &quot;offHitEV&quot;)
+	end
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>(You) swing your weapons in lethal arcs, dousing the area with .*</string>
+                            <string>(Lulaz) swings his weapons in lethal arcs, dousing the area with .*</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>blade storm</name>
+                        <script>-- Lulaz spins and leaps through the fray, unleashing a torrent of steel on his enemies!
+
+if matches[2] == &quot;You&quot; then
+	addStat(whoami(), &quot;offHitBS&quot;)
+else
+	if groupList:ingroup(matches[2]) then
+		addStat(matches[2], &quot;offHitBS&quot;)
+	end
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>(.*) spins and leaps through the fray, unleashing a torrent of steel on his enemies!</string>
+                            <string>(You) spin and leap through the fray, unleashing a torrent of steel on your enemies!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                </TriggerGroup>
             </TriggerGroup>
             <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>AutoRoller</name>
@@ -16880,37 +17161,16 @@ cecho(&quot;&lt;red&gt; [&quot; .. powername .. &quot;:&quot; .. timeleft .. &qu
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="yes" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>testtrigger</name>
-                <script>-- display(matches)
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>&lt;wielding twohanded&gt;</name>
+                <script>-- &lt;wielding twohanded&gt; the rune-covered fiery warbow of hellish fury
 
 
+local checkBow = sqlIsBow(matches[2])
 
- --  &quot;&lt; 830h/830H 138v/138V |ss +|ap +|ts +|ev +|bs +|&quot;,
- --  &quot;ss +|ap +|ts +|ev +|bs +|&quot;
-
-
--- &lt; [^|]+\|((?:[a-z]+ [0-9+]+\|)+)
-
-
--- ?:(\d+)H)? ?(?:(\d+)p)?\/?(?:(\d+)P)? ?(?:(\d+)v)?\/?(?:(\d+)V)? ?(?:[|].*[|])? ?(?:T: ([A-Za-z ]+))? ?(?:TC: ([A-Za-z ]+))? ?(?:E: ([A-Za-z ]+))? ?(?:EC: ([A-Za-z ]+))? ?(?:EP: ([A-Za-z ]+))? (?:P: (.*)) &gt;
-
---  &quot;&lt; 827h/827H 138v/138V |ss +|ap 1|ts +|ev +|bs 5| T: Kobbizil TC: small wounds E: naked EC: few scratches EP: rcl P: std &gt;&quot;,
---  &quot;827&quot;,
---  &quot;827&quot;,
---  &quot;&quot;,
---  &quot;&quot;,
---  &quot;138&quot;,
---  &quot;138&quot;,
---  &quot;Kobbizil &quot;,
---  &quot;small wounds &quot;,
---  &quot;naked &quot;,
---  &quot;few scratches &quot;,
---  &quot;rcl&quot;,
---  &quot;std&quot;
---}
-
-</script>
+if #checkBow &gt; 0 then
+	--display(&quot;wielding bow&quot;)
+end</script>
                 <triggerType>0</triggerType>
                 <conditonLineDelta>0</conditonLineDelta>
                 <mStayOpen>0</mStayOpen>
@@ -16922,7 +17182,7 @@ cecho(&quot;&lt;red&gt; [&quot; .. powername .. &quot;:&quot; .. timeleft .. &qu
                 <colorTriggerFgColor>#000000</colorTriggerFgColor>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
-                    <string>&lt; [^|]+\|((?:[a-z]+ [0-9+]+\|)+)</string>
+                    <string>&lt;wielding twohanded&gt; (.*)</string>
                 </regexCodeList>
                 <regexCodePropertyList>
                     <integer>1</integer>
@@ -19230,7 +19490,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 9/1/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 9/11/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^version$</regex>
@@ -21872,7 +22132,7 @@ cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
             </AliasGroup>
             <Alias isActive="yes" isFolder="no">
                 <name>test</name>
-                <script>display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
+                <script>--display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
 
 
 --openUserWindow(&quot;testwindow&quot;)
@@ -22594,6 +22854,7 @@ end</script>
 -- 011dev
 
 -- bugfixes
+-- rangers archery powers added
 -- set movebuffer # - how many rooms should be sent to the mud before buffering
 -- buttons will be redrawn when you level
 -- (some) helpfile updates
@@ -24428,9 +24689,12 @@ function combatmind(fname, xcommand)
 
 		for k,char in pairs(groupList:pc(&quot;hitterSinger&quot;)) do
 			if not buff:get(&quot;combatmind&quot;, char) then
-				mud:send(&quot;combatm &quot; .. char)
-				NyyLIB.psilag=&quot;combatmb&quot;
-				break
+				-- verify in room
+				if groupList:getHP(char) ~= 0 and not table.contains(NyyLIB.deadpeople, char) then
+					mud:send(&quot;combatm &quot; .. char)
+					NyyLIB.psilag=&quot;combatmb&quot;
+					break
+				end
 			end
 		end
 	end
@@ -24887,7 +25151,14 @@ function sendBash()
 
 			if checkMask(&quot;ran&quot;) then
 				if not timer:get(&quot;cooldown&quot;) then
-					useMeleePower(&quot;ss&quot;)
+					-- use powers attack depending on wielded weapon
+					if isIconActive(&quot;sweeping_strike&quot;) then
+						useMeleePower(&quot;ss&quot;)
+					end
+				
+					if isIconActive(&quot;knockdown_shot&quot;) then
+						useMeleePower(&quot;ks&quot;)
+					end
 				else
 					return
 				end
@@ -26576,6 +26847,85 @@ function RanScript(event)
 	end
 end
 
+-- archery powers
+
+function knockdown_shot(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autobash&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autobash&quot;, xcommand)
+	end
+end
+
+function triple_shot(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autotstrike&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autotstrike&quot;, xcommand)
+	end
+end
+
+function concussive_shot(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoevis&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autoevis&quot;, xcommand)
+	end
+end
+
+function splintering_shot(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autosplinter&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autosplinter&quot;, xcommand)
+	end
+end
+
+function hail_of_arrows(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autobstorm&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autobstorm&quot;, xcommand)
+	end
+end
+
+-- melee powers
+
 function sweeping_strike(fname, xcommand)
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobash&quot;) then
@@ -26657,41 +27007,83 @@ function procPromptRanger()
 	end
 		
 	if inCombat() then
-		
-		if charData:get(&quot;autobash&quot;) then
-			if timer:get(&quot;sweeping_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
-				if prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
-					useMeleePower(&quot;ss&quot;)
+		-- melee powers
+		if isIconActive(&quot;sweeping_strike&quot;) then
+			if charData:get(&quot;autobash&quot;) then
+				if timer:get(&quot;sweeping_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					if prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
+						useMeleePower(&quot;ss&quot;)
+						return
+					end
+				end
+			end
+
+			if charData:get(&quot;autobstorm&quot;) then
+				if timer:get(&quot;bladestorm&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;bs&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autosplinter&quot;) then
+				if timer:get(&quot;armor_splinter&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ap&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autoevis&quot;) then
+				if timer:get(&quot;eviscerate&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ev&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autotstrike&quot;) then
+				if timer:get(&quot;twin_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ts&quot;)
 					return
 				end
 			end
 		end
-
-		if charData:get(&quot;autobstorm&quot;) then
-			if timer:get(&quot;bladestorm&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
-				useMeleePower(&quot;bs&quot;)
-				return
+	
+		-- archery powers
+		if isIconActive(&quot;knockdown_shot&quot;) then
+			if charData:get(&quot;autobash&quot;) then
+				if timer:get(&quot;knockdown_shot&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					if prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
+						useMeleePower(&quot;ks&quot;)
+						return
+					end
+				end
 			end
-		end
 
-		if charData:get(&quot;autosplinter&quot;) then
-			if timer:get(&quot;armor_splinter&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
-				useMeleePower(&quot;ap&quot;)
-				return
+			if charData:get(&quot;autobstorm&quot;) then
+				if timer:get(&quot;hail_of_arrows&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ha&quot;)
+					return
+				end
 			end
-		end
 
-		if charData:get(&quot;autoevis&quot;) then
-			if timer:get(&quot;eviscerate&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
-				useMeleePower(&quot;ev&quot;)
-				return
+			if charData:get(&quot;autosplinter&quot;) then
+				if timer:get(&quot;splintering_shot&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;sp&quot;)
+					return
+				end
 			end
-		end
 
-		if charData:get(&quot;autotstrike&quot;) then
-			if timer:get(&quot;twin_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
-				useMeleePower(&quot;ts&quot;)
-				return
+			if charData:get(&quot;autoevis&quot;) then
+				if timer:get(&quot;concussive_shot&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;cn&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autotstrike&quot;) then
+				if timer:get(&quot;triple_shot&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;tr&quot;)
+					return
+				end
 			end
 		end
 	end
@@ -28967,7 +29359,7 @@ charData = charData or {}
 	{ &quot;chatfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;12&quot;, &quot;fontsize to use for the chat window&quot; },
 	{ &quot;grpfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;14&quot;, &quot;fontsize to use for the group window&quot; },
 	{ &quot;reconnect&quot;, &quot;*&quot;, {&quot;false&quot;, &quot;#&quot;}, &quot;false&quot;, &quot;auto login this char number&quot; },
-	{ &quot;endspell&quot;, &quot;*&quot;, {&quot;vit&quot;, &quot;dsp&quot;, &quot;pwt&quot;, &quot;fly&quot;, &quot;grp&quot;, &quot;pfu&quot;, &quot;hst&quot;, &quot;dop&quot;}, &quot;vit&quot;, &quot;&quot; },
+	{ &quot;endspell&quot;, &quot;*&quot;, {&quot;vit&quot;, &quot;dsp&quot;, &quot;pwt&quot;, &quot;fly&quot;, &quot;grp&quot;, &quot;pfu&quot;, &quot;hst&quot;, &quot;dop&quot;, &quot;cbm&quot;}, &quot;vit&quot;, &quot;&quot; },
 	{ &quot;gcmd&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use gcmd instead of gsay&quot;},
 	{ &quot;group&quot;, &quot;&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;true&quot;, &quot;updated group display&quot; },
 	{ &quot;assocchar&quot;, &quot;&quot;, { &quot;*&quot; }, &quot;false&quot;, &quot;connect to association chat, storage&quot; },
@@ -29877,7 +30269,7 @@ powerAliases[&quot;Inv&quot;] = {
 { &quot;fell_frost&quot;, &quot;frost&quot;, 41, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;sandblast&quot;, &quot;sb&quot;, 46, &quot;autohlmissile&quot;, &quot;&quot;},
 { &quot;incendiary_cloud&quot;, &quot;ic&quot;, 31, &quot;autohlarea&quot;, &quot;&quot;},
-{ &quot;meteor_swarm&quot;, &quot;ms&quot;, 41, &quot;autohlarea&quot;, &quot;&quot;},
+{ &quot;meteorswarm&quot;, &quot;ms&quot;, 41, &quot;autohlarea&quot;, &quot;&quot;},
 { &quot;relocate&quot;, &quot;relo&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;gate&quot;, &quot;gate&quot;, 41, &quot;&quot;, &quot;&quot;},
 { &quot;ball_lightning&quot;, &quot;bl&quot;, 46, &quot;autohlarea&quot;, &quot;&quot;},
@@ -30238,6 +30630,27 @@ function sqliditem(xitemname)
 	xitemname=string.gsub(xitemname, &quot;'&quot;, &quot;''&quot;)
 
 	recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items WHERE item_name LIKE '%]] .. xitemname .. [[%']]))
+
+	row = recs:fetch({})
+
+	while row do
+		retval[#retval+1] = row[2]
+		row = recs:fetch({})
+	end
+
+	recs:close()
+	
+	return(retval)
+end
+
+function sqlIsBow(xitemname)
+	local recs, row
+
+	local retval = {}
+
+	xitemname=string.gsub(xitemname, &quot;'&quot;, &quot;''&quot;)
+
+	recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items WHERE item_type = 'ranged' AND item_name LIKE '%]] .. xitemname .. [[%']]))
 
 	row = recs:fetch({})
 
@@ -32068,6 +32481,8 @@ function genline(xchar, xcls, xhp, xmaxhp)
 
 	if endspell == &quot;vit&quot; then
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;vitality&quot;, &quot;vit&quot;)
+	elseif endspell == &quot;cbm&quot; then
+		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;combatmind&quot;, &quot;cbm&quot;)
 	elseif endspell == &quot;dsp&quot; then
 		buffdisplay = buffdisplay .. createBuffDisplay(xchar, &quot;displacement&quot;, &quot;dsp&quot;)
 	elseif endspell == &quot;pwt&quot; then
@@ -33413,7 +33828,9 @@ end</script>
                     <packageName></packageName>
                     <script>prompt = prompt or {}
 
-meleePowers= { ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot; }
+meleePowers= { ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot;,
+							 ks=&quot;knockdown_shot&quot;, tr=&quot;triple_shot&quot;, cn=&quot;concussive_shot&quot;, sp=&quot;splintering_shot&quot;, ha=&quot;hail_of_arrows&quot;
+ }
 
 function prompt:set(xkey, xvalue)
 	self[xkey]=xvalue
