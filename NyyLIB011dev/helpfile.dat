@@ -14,18 +14,18 @@ freezing, caging, and deletion.
 <green>Any of the below commands will provide further information. 
 
 
-<red>#help gui        <green>- how to use buttons, window setup
-<red>#help sound	     <green>- enabling sound
-<red>#help icons	     <green>- instructions for creating icon png files
-<red>#help autoroller <green>- auto-roller for creation of new characters
-<red>#help class      <green>- class specific information
-<red>#help set        <green>- help with use of the 'set' command
-<red>#help map        <green>- information about use of the mapper
-<red>#help database   <green>- further information on the Katumi database
-<red>#help alias      <green>- various aliases included with the package
-<red>#help bid        <green>- the included bidding script
-<red>#help xptrain    <green>- The Adud Train
-<red>#help stats      <green>- a warrior statistics package
+<red>@help gui        <green>- how to use buttons, window setup
+<red>@help sound	     <green>- enabling sound
+<red>@help icons	     <green>- instructions for creating icon png files
+<red>@help autoroller <green>- auto-roller for creation of new characters
+<red>@help class      <green>- class specific information
+<red>@help @set        <green>- help with use of the 'set' command
+<red>@help @map        <green>- information about use of the mapper
+<red>@help database   <green>- further information on the Katumi database
+<red>@help alias      <green>- various aliases included with the package
+<red>@help @bid        <green>- the included bidding script
+<red>@help xptrain    <green>- The Adud Train
+<red>@help @stats      <green>- a warrior statistics package
 ;;12,gui
 
 The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
@@ -47,7 +47,7 @@ There are a number of buttons present for all classes. To change the status of a
   Auto Assist - If not fighting and a group member is, assist them
   Check Status - A status command will be sent on all group members
 
-Related: set, map  
+Related: @set, map  
 ;;13,sound
 
 <red>Sound
@@ -75,15 +75,15 @@ Related: set, map
 
 <green>The autoroller will stop on any score matching or greater than the set value.
 
-<green>To disable the autoroller, type '#roll'.
+<green>To disable the autoroller, type '@roll'.
 
-<green>Usage:   <red>#roll value
+<green>Usage:   <red>@roll value
 
-<green>Example: <red>#roll 7 
+<green>Example: <red>@roll 7 
 
-;;20,set
+;;20,@set
 
-Type 'set' for a list of alterable settings for your class. Choices are listed.
+Type '@set' for a list of alterable settings for your class. Choices are listed.
 
 Basic settings:
 
@@ -124,13 +124,13 @@ Related: set_bard, set_war, condensed
 
 <green>Enable as many or all of these as desired to reduce spam.
 
-<red>set condensed items      <green>- Item gags
-<red>set condensed misc       <green>- Assorted miscellaneous gags
-<red>set condensed combat     <green>- Combat related spam
-<red>set condensed duplicate  <green>- Duplicate lines will be supressed
-<red>set condensed spells     <green>- Spell spam
-<red>set condensed dragon     <green>- Dragon gags
-<red>set condensed arrows     <green>- Various archery related gags
+<red>@set condensed items      <green>- Item gags
+<red>@set condensed misc       <green>- Assorted miscellaneous gags
+<red>@set condensed combat     <green>- Combat related spam
+<red>@set condensed duplicate  <green>- Duplicate lines will be supressed
+<red>@set condensed spells     <green>- Spell spam
+<red>@set condensed dragon     <green>- Dragon gags
+<red>@set condensed arrows     <green>- Various archery related gags
 
 <green>The individual modes are enabled when the script replies that it has been set to <red>true<green>.
 
@@ -176,7 +176,7 @@ Bard/Battlechanter specific set commands
 
 [gigbag]-- keyword of container holding instruments
 
-Example: set gigbag sack
+Example: @set gigbag sack
 
 Instruments: 
 
@@ -253,55 +253,55 @@ set:
 [cdaura] true|false  cast aura on countdown
 
 Related: spellcast
-;;50,map
+;;50,@map
 Torilmud Mapper 
 
 The NyyLIB mapper doesn't allow for adding rooms to the existing map. It contains a large portion of the mud pre-mapped, with all rooms hidden. On entering a room, if the package is able to identify it the room will be displayed. 
 
-#map on           - turn on the mapper display
-#map off          - turn off the mapper display
-#map update       - update loaded map image with provided image, keeping previous progress
-#map reset        - reset the loaded map to the provided image - this deleted all previous progress
+@map on           - turn on the mapper display
+@map off          - turn off the mapper display
+@map update       - update loaded map image with provided image, keeping previous progress
+@map reset        - reset the loaded map to the provided image - this deleted all previous progress
 
-Related: afind, find, fwalk
-;;51,find
-#find             
+Related: @afind, @find, @fwalk
+;;51,@find
+@find             
 
 Attempt to locate the currently occupied room on the map and set map position accordingly.
 
-Example: #find
+Example: @find
 
 [Searching... Match found: Wayward House Inn : 48603]
 
-#find roomname
+@find roomname
 
 Provides a list of previously located rooms matching the roomname pattern.
 
 Example:
 
-#find inn
+@find inn
 
 [Matching rooms in discovered map]
  Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
  Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
-;;52,afind
-#afind roomname
+;;52,@afind
+@afind roomname
 
 Provides a list of previously located rooms matching the roomname pattern located in the current area.
 
 Example:
 
-#afind inn
+@afind inn
 
 [Matching discovered rooms in current area]
  Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
  Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
 
- ;;53,fwalk
+ ;;53,@fwalk
  
-<red>#fwalk
+<red>@fwalk
 
-<green>Fastwalking with the script is done with the '#fwalk' command. #fwalk is restricted to the 'known'
+<green>Fastwalking with the script is done with the '@fwalk' command. @fwalk is restricted to the 'known'
 <green>world in the map. The map will also need to be in sync.
 
 <green>Attempting to fastwalk between two room requires that a path has been previously discovered connecting the rooms.
@@ -311,44 +311,44 @@ Example:
 
 <green>Usage:
 
-<red>#fwalk            - <green>show instructions and accessible locations from the current room
-<red>#fwalk roomnumber - <green>fastwalk to specified room number
-<red>#fwalk name       - <green>fastwalk to room indicated by fwalk name
-<red>#fwalk add name   - <green>adds a fastwalk to the currently occupied room using 'name' 
-<red>#fwalk del name   - <green>deletes fastwalk 'name'
-<red>#fwalk all        - <green>list all fwalks regardless of location
-<red>#fwalk area       - <green>list all fwalks in current area
+<red>@fwalk            - <green>show instructions and accessible locations from the current room
+<red>@fwalk roomnumber - <green>fastwalk to specified room number
+<red>@fwalk name       - <green>fastwalk to room indicated by fwalk name
+<red>@fwalk add name   - <green>adds a fastwalk to the currently occupied room using 'name' 
+<red>@fwalk del name   - <green>deletes fastwalk 'name'
+<red>@fwalk all        - <green>list all fwalks regardless of location
+<red>@fwalk area       - <green>list all fwalks in current area
 
 ;;80,database
 The 7/28/15 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
 
 Some aliases are also included for access to it:
 
-#clist charname - list all characters associated with that character/profile
-#id itemname - identify all items matching 'itemname'
-#statitems - echo identify of glist items to screen
-#statitems gsay - echo identify of glist items to gsay
-;;85,id
-The #id command will identify all items matching a name pattern known to the Katumi database.
+@clist charname - list all characters associated with that character/profile
+@id itemname - identify all items matching 'itemname'
+@statitems - echo identify of glist items to screen
+@statitems gsay - echo identify of glist items to gsay
+;;85,@id
+The @id command will identify all items matching a name pattern known to the Katumi database.
 
-Usage: #id pattern
+Usage: @id pattern
 
 Example:
 
-#id breeches
+@id breeches
 [Attempting to identify breeches]
 some rough leather breeches with bronze studs (Legs) AC:10 Hp:15 Maxint:4 * Wt:5 Val:0p * Zone: SF (Q) * Last ID: 2009-01-22
 some breeches woven of shark hide (Legs) AC:9 Hp:19 Maxint:5 Acid:5% Cold:5% WB * Magic !Bard !Fighter !Priest !Thief * Wt:1 Val:0p * Zone: Ashstone (Q) * Last ID: 2008-10-25
 a pair of silken breeches (Legs) AC:0 * Wt:2 Val:0p * Zone: Citadel * Last ID: 2011-01-29
 [3 matches in database]
-;;86,clist
-The #clist command will display all of a players characters known to the Katumi database.
+;;86,@clist
+The @clist command will display all of a players characters known to the Katumi database.
 
-Usage: #clist charname
+Usage: @clist charname
 
 Example:
 
-#clist bonble
+@clist bonble
 [Matching characters for Bonble as of: 7/28/2015]
 
 [50         Warrior]                 Adud (Ogre)          (@Nyyrazzilyss)
@@ -359,34 +359,33 @@ Example:
 [46     Necromancer]                Aynep (Drow Elf)      (@Nyyrazzilyss)
 [39          Shaman]               Bombad (Ogre)          (@Nyyrazzilyss)
 ;;100,alias
-help gag  - information about gagging test / people  
+help @gag  - information about gagging text / people  
 help escape
-help countdown
+help @countdown
 g itemname - get itemname from container
 p itemname - put itemname into container
-ynnd - ask ynndchiarhlizz to create a wormhole to your character
 dep - deposit all coins held or in main container to the bank (when at one)
 seal - get a seal from your main container and recite it on yourself
 . - The . alias allows for tintin style speedwalks
 # - The # alias is tintin style repeat
-loot ## - get all coins from 1->## corpses
+loot ## - get all coins from 1->@# corpses
 chkstat - issue a status command on all group members (this updates timers)
 food - eat and drink food based on previously set names
 mcast power - use 'power' on all group members
-;;101,countdown
+;;101,@countdown
 The countdown command will gsay a countdown from 5 to 1, then move in a specific direction. If a mobname had been previously supplied, it will be attacked.
 
 Example:
 
-	#attack mobname - the name of the target
-	#cd s tiamat    - Issue countdown, then move south and attack Tiamat.
-	#cd s           - Issue countdown, then move south. If a mob was previously specified by calling
-	                  countdown with a target or with #attack, it will be attacked.
-;;105,gag
-#gag/#ungag text to gag
+	@attack mobname - the name of the target
+	@cd s tiamat    - Issue countdown, then move south and attack Tiamat.
+	@cd s           - Issue countdown, then move south. If a mob was previously specified by calling
+	                  countdown with a target or with @attack, it will be attacked.
+;;105,@gag
+@gag/@ungag text to gag
 usage:
- #gag text to gag
- #gag reset
+ @gag text to gag
+ @gag reset
 
 ;;110,escape
 Escape is a mud command available to rogue, bard, and battlechanter classes. It attempts to flee in a specific direction.
@@ -411,31 +410,31 @@ appp - get/apply blind, slow
 pick - hold pick
 weapon - remove pick, wield weapon
 
-#attack target - set target name
+@attack target - set target name
 es[nsewud][cbp] - escape [direction] [return and circle, backstab, powers backstab target]
 
-;;125,bid
-To initialize the script, type 'bid init'
+;;125,@bid
+To initialize the script, type '@bid init'
 
-To gsay item stats, type '# statitems gsay' (without the space)
+To gsay item stats, type '@statitems gsay' (without the space)
 
-Open the bidding by typing 'bid start'
+Open the bidding by typing '@bid start'
 
 After any bid results have been provided, the command to move to the next item is 'nextbid'
 
-Once all bids in a round have completed, type 'bid open' to start the next round.
+Once all bids in a round have completed, type '@bid open' to start the next round.
 
-bid init - initialize list of bidders from group
-bid addchar name, bid delchar name - add/delete to bid list
+@bid init - initialize list of bidders from group
+@bid addchar name, bid delchar name - add/delete to bid list
 
-bid start - open bidding and gsay instructions
-bid open - open bidding, no instructions
-bid stop - terminate bid script
+@bid start - open bidding and gsay instructions
+@bid open - open bidding, no instructions
+@bid stop - terminate bid script
 
-bid add charname itemname - add bid for itemname to charname
-adddice charname value - set charname's diceroll to value
+@bid add charname itemname - add bid for itemname to charname
+@adddice charname value - set charname's diceroll to value
 
-bid status - display bid/dice summary to screen
+@bid status - display bid/dice summary to screen
 ;;140,xptrain
 <red>                   The Adud XP Train
 
@@ -451,14 +450,14 @@ bid status - display bid/dice summary to screen
 	<green>of the map for the train. Running this in Silverymoon requires the map to be in
 	<green>sync starting from the inn.
 
-<red>starttrain tank		 <green>- Start running the train as the 'engine'
-<red>starttrain tank moblist <green>- Run the train using an alternate created mob list
-<red>starttrain fol			 <green>- Start running the train as a follower
+<red>@starttrain tank		 <green>- Start running the train as the 'engine'
+<red>@starttrain tank moblist <green>- Run the train using an alternate created mob list
+<red>@starttrain fol			 <green>- Start running the train as a follower
 
-<red>stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
-<red>resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
+<red>@stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
+<red>@resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
 
-;;150,stats
+;;150,@stats
  Warrior defense statistics
  
  Hit/Miss/defensive skill usage is tracked. An entry is stored every 1000 attacks on you.
@@ -467,9 +466,9 @@ bid status - display bid/dice summary to screen
  
  set statname xxxxxx - Title information for current stat set
  
- #stats - display current information
- #stats read - display historical statistics information
- #stats reset - reset statistics counters
+ @stats - display current information
+ @stats read - display historical statistics information
+ @stats reset - reset statistics counters
  
  Sample entry:
  
