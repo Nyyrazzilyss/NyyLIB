@@ -7,8 +7,7 @@ in random punishment, including aggressive mobile loads, teleportation,
 freezing, caging, and deletion.
 
 <red>Warning! Use at own risk
-;;10,index
-
+;;10,contents
 <red>               NyyLIB Help documentation
 
 <green>Any of the below commands will provide further information. 
@@ -27,7 +26,6 @@ freezing, caging, and deletion.
 <red>@help xptrain    <green>- The Adud Train
 <red>@help @stats      <green>- a warrior statistics package
 ;;12,gui
-
 The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
 
 Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
@@ -49,7 +47,6 @@ There are a number of buttons present for all classes. To change the status of a
 
 Related: @set, map  
 ;;13,sound
-
 <red>Sound
 
 <green>Sound effects can be enabled/disabled by typing '<red>set sound value<green>'
@@ -62,7 +59,6 @@ Related: @set, map
 
 <green>Players are encouraged to submit the id# and mud text pattern for additional sounds.
 ;;15,autoroller
-
 <red>Autoroller
 
 <green>A character auto-roller is included with the script. While rolling, it works by
@@ -80,9 +76,7 @@ Related: @set, map
 <green>Usage:   <red>@roll value
 
 <green>Example: <red>@roll 7 
-
 ;;20,@set
-
 Type '@set' for a list of alterable settings for your class. Choices are listed.
 
 Basic settings:
@@ -114,7 +108,6 @@ Usage: set vnum false -- turns off display of vnum
    
 Related: set_bard, set_war, condensed
 ;;21,condensed
-
 <red>Condensed
 
 <green>Many of the triggers require information that is gagged from ever arriving at the client by the mud's condensed mode.
@@ -133,7 +126,6 @@ Related: set_bard, set_war, condensed
 <red>@set condensed arrows     <green>- Various archery related gags
 
 <green>The individual modes are enabled when the script replies that it has been set to <red>true<green>.
-
 ;;25,class
 While this client should be workable with any class, it will work best with
 (i.e. scripting has been completed for)
@@ -296,9 +288,7 @@ Example:
 [Matching discovered rooms in current area]
  Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
  Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
-
  ;;53,@fwalk
- 
 <red>@fwalk
 
 <green>Fastwalking with the script is done with the '@fwalk' command. @fwalk is restricted to the 'known'
@@ -318,9 +308,8 @@ Example:
 <red>@fwalk del name   - <green>deletes fastwalk 'name'
 <red>@fwalk all        - <green>list all fwalks regardless of location
 <red>@fwalk area       - <green>list all fwalks in current area
-
 ;;80,database
-The 7/28/15 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
+The 7/11/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
 
 Some aliases are also included for access to it:
 
@@ -386,14 +375,12 @@ Example:
 usage:
  @gag text to gag
  @gag reset
-
 ;;110,escape
 Escape is a mud command available to rogue, bard, and battlechanter classes. It attempts to flee in a specific direction.
 
 The escape alias is a client command that attempts to simulate this. It will send a flee command to the mud, and if it successfully flees/but in the wrong direction, it returns you to the previous room and attempts to move you in the correct direction.
 
 Usage of the escape alias will also temporarily disable any further commands from being sent by a number of triggers/scripts, such as rescue, spellcasting, etc.
-
 ;;115,rogue
 Rogue Aliases
 
@@ -412,7 +399,6 @@ weapon - remove pick, wield weapon
 
 @attack target - set target name
 es[nsewud][cbp] - escape [direction] [return and circle, backstab, powers backstab target]
-
 ;;125,@bid
 To initialize the script, type '@bid init'
 
@@ -441,12 +427,12 @@ Once all bids in a round have completed, type '@bid open' to start the next roun
 <green>A script to move a character through a path of rooms, killing a defined mob.
 
 <green>Running this script requires a valid mapper path to exist between all train stops.
-<green>Prior to first running it, from the Silverymoon inn type 'inittrain'. This will
+<green>Prior to first running it, from the Silverymoon inn type '@inittrain'. This will
 <green>speedwalk you through Silverymoon unlocking the required rooms.
 
 <green>Sample paths are included for Silverymoon and Ashstone.
 
-<red>inittrain <green>- Completes a speedwalk through Silverymoon or Ashstone to unlock portions
+<red>@inittrain <green>- Completes a speedwalk through Silverymoon or Ashstone to unlock portions
 	<green>of the map for the train. Running this in Silverymoon requires the map to be in
 	<green>sync starting from the inn.
 
@@ -456,7 +442,6 @@ Once all bids in a round have completed, type '@bid open' to start the next roun
 
 <red>@stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
 <red>@resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
-
 ;;150,@stats
  Warrior defense statistics
  
@@ -637,8 +622,8 @@ Font: AVQest
 Text Size: 15
 Glow Colour (red) F0 05 05  (black) 00 00 00
 Image: Alignment: Centered
-Width: 92
-Height: 40
+Width: 64
+Height: 30
 Shadow: Shadow Type: Heavy Blur
 ;;450,age
 Barbarian - 35
@@ -650,10 +635,8 @@ Grey Elf - 240
 Half Elf - 60
 Halfling - 40
 Human - 34
-Illithid - 103*
+Illithid - 103 * This is the best age for fastest PSP regeneration closest to the max HP.
 Ogre - 25
 Orc - 34
 Troll - 21
 Yuan-ti - 40
-
-*This is the best age for fastest PSP regeneration closest to the max HP.
