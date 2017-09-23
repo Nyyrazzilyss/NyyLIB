@@ -22172,46 +22172,6 @@ end</script>
                     <regex>^@afind ?(.*)$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>addarea</name>
-                    <script>if matches[2] == nil then
-	local count=0
-	local line=&quot;&quot;
-
-	for areaid, areaname in pairs(NyyLIB.areaTable) do
-		line = line .. string.format(&quot;%3d %-33s &quot;, areaid, areaname)
-		count=count+1
-
-		if count == 3 then
-			echo(line .. &quot;\n&quot;)
-			line=&quot;&quot; 
-			count=0
-		end
-	end
-
-	if line ~= &quot;&quot; then
-		echo(line .. &quot;\n&quot;)
-	end
-
-	echo(&quot;\n&quot;)
-end
-
-if matches[2] ~= nil then
-	local areaid = tonumber(matches[2])
-	local internalid = map:findAreaID( NyyLIB.areaTable[areaid] )
-
-	if internalid ~= nil then
-		echo(&quot;Map for &quot; .. NyyLIB.areaTable[areaid] .. &quot; already exists.\n&quot;)
-	else
-		cecho(&quot;\n&lt;green&gt;[Added area: (&quot; .. areaid .. &quot;) &quot; .. NyyLIB.areaTable[areaid] .. &quot;]\n&quot;)
-
-		addAreaName(NyyLIB.areaTable[areaid])
-	end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^addarea( [0-9]+)?$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
                     <name>setroom</name>
                     <script>if map:getRoom() ~= nil then
 	if getRoomArea(map:getRoom()) ~= -1 then
@@ -22236,7 +22196,7 @@ for roomid, roomname in pairs(fullmap) do
 	end
 end
 
-expandAlias(&quot;addarea 6&quot;)
+map:addArea(6)
 
 local newroomid = createRoomID()
 
@@ -28081,6 +28041,44 @@ end</script>
 		  u = 9, up = 9, d = 10, down = 10, [&quot;in&quot;] = 11, out = 12, [1] = &quot;n&quot;, [4] = &quot;e&quot;, [5] = &quot;w&quot;,
 		  [6] = &quot;s&quot;,  [9] = &quot;up&quot;,  [10] = &quot;down&quot;,  [11] = &quot;in&quot;,  [12] = &quot;out&quot;}
 
+
+function map:addArea(xarea)
+	if xarea == nil then
+		local count=0
+		local line=&quot;&quot;
+
+		for areaid, areaname in pairs(NyyLIB.areaTable) do
+			line = line .. string.format(&quot;%3d %-33s &quot;, areaid, areaname)
+			count=count+1
+
+			if count == 3 then
+				echo(line .. &quot;\n&quot;)
+				line=&quot;&quot; 
+				count=0
+			end
+		end
+
+		if line ~= &quot;&quot; then
+			echo(line .. &quot;\n&quot;)
+		end
+
+		echo(&quot;\n&quot;)
+	end
+
+	if xarea ~= nil then
+		local areaid = tonumber(xarea)
+		local internalid = map:findAreaID( NyyLIB.areaTable[areaid] )
+
+		if internalid ~= nil then
+			echo(&quot;Map for &quot; .. NyyLIB.areaTable[areaid] .. &quot; already exists.\n&quot;)
+		else
+			cecho(&quot;\n&lt;green&gt;[Added area: (&quot; .. areaid .. &quot;) &quot; .. NyyLIB.areaTable[areaid] .. &quot;]\n&quot;)
+
+			addAreaName(NyyLIB.areaTable[areaid])
+		end
+	end
+end
+
 -- pop and return last movement (if there was one)
 
 function map:popMovement()
@@ -28455,13 +28453,15 @@ function unhideRoom(xroomid)
 
 	-- zone doesn't exist in arealist - add it
 	if zoneid ~= nil and internalid == nil then
-		expandAlias(&quot;addarea &quot; .. zoneid, false)
-
+		map:addArea(zoneid)
+		
 		internalid= map:findAreaID(NyyLIB.areaTable[zoneid])
 
 		if internalid == nil then
 			cecho(&quot;[internalid error in room: &quot; .. xroomid .. &quot;]\n&quot;)
 			display(zoneid)
+			display( NyyLIB.areaTable[zoneid] )
+			display( map:findAreaID(NyyLIB.areaTable[zoneid]) )
 			display(&quot;X&quot;)
 		end
 	end
@@ -29199,8 +29199,8 @@ local areatable = getAreaTable()
 	end
 
 	-- create great unknown
-	expandAlias(&quot;addarea 6&quot;, false)
-
+	map:addArea(6)
+	
 	-- need to check if already exists
 	expandAlias(&quot;emptyroom&quot;, false)
 
@@ -36836,7 +36836,7 @@ function cmi:decimalToRGB(num)
 		-- download luabit from http://files.luaforge.net/releases/bit/bit/luabitv0.4
 		-- copy bit.lua to mudlet install directory
 
-        require(&quot;bit&quot;)
+        -- require(&quot;bit&quot;)
         local r,g,b
         r = bit.band(num,0x0000ff)
         g = bit.band(num, 0x00ff00)

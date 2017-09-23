@@ -13,18 +13,19 @@ freezing, caging, and deletion.
 <green>Any of the below commands will provide further information. 
 
 
+<red>@help index      <green>- list all help entries
 <red>@help gui        <green>- how to use buttons, window setup
 <red>@help sound	     <green>- enabling sound
 <red>@help icons	     <green>- instructions for creating icon png files
-<red>@help autoroller <green>- auto-roller for creation of new characters
+<red>@help @roll      <green>- auto-roller for creation of new characters
 <red>@help class      <green>- class specific information
-<red>@help @set        <green>- help with use of the 'set' command
-<red>@help @map        <green>- information about use of the mapper
+<red>@help @set       <green>- help with use of the 'set' command
+<red>@help @map       <green>- information about use of the mapper
 <red>@help database   <green>- further information on the Katumi database
 <red>@help alias      <green>- various aliases included with the package
-<red>@help @bid        <green>- the included bidding script
+<red>@help @bid       <green>- the included bidding script
 <red>@help xptrain    <green>- The Adud Train
-<red>@help @stats      <green>- a warrior statistics package
+<red>@help @stats     <green>- a warrior statistics package
 ;;12,gui
 The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
 
@@ -58,7 +59,7 @@ Related: @set, map
 <green>Included sounds are sourced from https://www.freesound.org/
 
 <green>Players are encouraged to submit the id# and mud text pattern for additional sounds.
-;;15,autoroller
+;;15,@roll
 <red>Autoroller
 
 <green>A character auto-roller is included with the script. While rolling, it works by
@@ -246,20 +247,20 @@ set:
 
 Related: spellcast
 ;;50,@map
-Torilmud Mapper 
+<red>Torilmud Mapper 
 
-The NyyLIB mapper doesn't allow for adding rooms to the existing map. It contains a large portion of the mud pre-mapped, with all rooms hidden. On entering a room, if the package is able to identify it the room will be displayed. 
+<green>The NyyLIB mapper doesn't allow for adding rooms to the existing map. It contains a large portion of the mud pre-mapped, with all rooms hidden. On entering a room, if the package is able to identify it the room will be displayed. 
 
-@map on           - turn on the mapper display
-@map off          - turn off the mapper display
-@map update       - update loaded map image with provided image, keeping previous progress
-@map reset        - reset the loaded map to the provided image - this deleted all previous progress
+<red>@map on           <green>- turn on the mapper display
+<red>@map off          <green>- turn off the mapper display
+<red>@map update       <green>- update loaded map image with provided image, keeping previous progress
+<red>@map reset        <green>- reset the loaded map to the provided image - this deleted all previous progress
 
 Related: @afind, @find, @fwalk
 ;;51,@find
-@find             
+<red>@find             
 
-Attempt to locate the currently occupied room on the map and set map position accordingly.
+<green>Attempt to locate the currently occupied room on the map and set map position accordingly.
 
 Example: @find
 
@@ -277,7 +278,7 @@ Example:
  Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
  Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
 ;;52,@afind
-@afind roomname
+<red>@afind roomname
 
 Provides a list of previously located rooms matching the roomname pattern located in the current area.
 
@@ -350,7 +351,7 @@ Example:
 ;;100,alias
 help @gag  - information about gagging text / people  
 help escape
-help @countdown
+help @cd
 g itemname - get itemname from container
 p itemname - put itemname into container
 dep - deposit all coins held or in main container to the bank (when at one)
@@ -361,7 +362,7 @@ loot ## - get all coins from 1->@# corpses
 chkstat - issue a status command on all group members (this updates timers)
 food - eat and drink food based on previously set names
 mcast power - use 'power' on all group members
-;;101,@countdown
+;;101,@cd
 The countdown command will gsay a countdown from 5 to 1, then move in a specific direction. If a mobname had been previously supplied, it will be attacked.
 
 Example:
@@ -400,29 +401,29 @@ weapon - remove pick, wield weapon
 @attack target - set target name
 es[nsewud][cbp] - escape [direction] [return and circle, backstab, powers backstab target]
 ;;125,@bid
-To initialize the script, type '@bid init'
+<red>Bid Script
 
-To gsay item stats, type '@statitems gsay' (without the space)
+<green>To initialize the script, type '@bid init'. Open the bidding by typing '@bid start'
 
-Open the bidding by typing '@bid start'
+<green>After any bid results have been provided, the command to move to the next item is 'nextbid'
 
-After any bid results have been provided, the command to move to the next item is 'nextbid'
+<green>Once all bids in a round have completed, type '@bid open' to start the next round.
 
-Once all bids in a round have completed, type '@bid open' to start the next round.
+<red>@bid init <green>- initialize list of bidders from group
+<red>@bid addchar name, bid delchar name <green>- add/delete to bid list
 
-@bid init - initialize list of bidders from group
-@bid addchar name, bid delchar name - add/delete to bid list
+<red>@bid start <green>- open bidding and gsay instructions
+<red>@bid open <green>- open bidding, no instructions
+<red>@bid stop <green>- terminate bid script
 
-@bid start - open bidding and gsay instructions
-@bid open - open bidding, no instructions
-@bid stop - terminate bid script
+<red>@bid add charname itemname <green>- add bid for itemname to charname
+<red>@adddice charname value <green>- set charname's diceroll to value
 
-@bid add charname itemname - add bid for itemname to charname
-@adddice charname value - set charname's diceroll to value
+<red>@bid status <green>- display bid/dice summary to screen
 
-@bid status - display bid/dice summary to screen
+Related: @statitems
 ;;140,xptrain
-<red>                   The Adud XP Train
+<red>The Adud XP Train
 
 <green>A script to move a character through a path of rooms, killing a defined mob.
 
@@ -640,3 +641,57 @@ Ogre - 25
 Orc - 34
 Troll - 21
 Yuan-ti - 40
+;;450,@debug
+This command will display some information useful when debugging.
+;;460,@mtank
+<red>This is a placeholder for an unwritten help entry.
+;;470,@target
+<red>This is a placeholder for an unwritten help entry.
+;;480,@save
+<red>This is a placeholder for an unwritten help entry.
+;;490,@backup
+<red>WARNING<green>: This does not copy script changes
+
+<red>@backup set     <green>- choose backup folder
+<red>@backup copy    <green>- copy data files to folder
+<red>@backup restore <green>- overwrite profile data files with backup folder
+<red>@backup logs    <green>- copy profile logfiles into backup folder
+;;500,@at
+@at[nsewud]
+
+Move the specified direction, and attack a previously selected target.
+
+Related: @attack
+;;510,@attack
+Select a target to be attacked
+
+Related: @at
+;;520,@setroom
+<red>This is a placeholder for an unwritten help entry.
+;;530,@path
+<red>This is a placeholder for an unwritten help entry.
+;;540,@room
+This turns on/off the room display window
+;;545,@statitems
+<red>This is a placeholder for an unwritten help entry.
+;;550,@pracall
+<red>This is a placeholder for an unwritten help entry.
+;;560,@scribeall
+<red>This is a placeholder for an unwritten help entry.
+;;570,@fpet
+<green>@fpet: find pets
+<green>Type '@fpet get' to retrieve lost pets
+;;580,@guide
+This links to Todrael's website at
+http://www.grokh.com/todrael/guides/newbie.html
+;;590,@quest
+This links to the Valkurian Blades website at
+http://z15.invisionfree.com/Triterium_BBS
+;;600,@forum
+This links to the Torilmud forums at
+http://www.torilmud.com/phpBB3/
+;;610,@version
+Displays the current script version.
+;;620,@chkstat
+This command sends a gagged status request on all grouped players.
+
