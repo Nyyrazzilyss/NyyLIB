@@ -1044,9 +1044,12 @@ local spellname= powerAliases:toSpell(castspell)
 
 if spellname ~= nil then
 	if matches[2] == &quot;chanting&quot; then
-   		decSpellCount(spellname)
+   		-- Spell is being successfully cast
+			decSpellCount(spellname)
 	elseif matches[2] == &quot;memorized&quot; or matches[2] == &quot;available&quot; then
-   		echoDebug(&quot;\n&lt;red&gt;[ Setting spell count for: &quot; .. spellname .. &quot; to 0 after 'Dont have that spell memorized message'.]&quot; )
+   		-- Spell was not successfuly cast because because not memorized
+			
+			echoDebug(&quot;\n&lt;red&gt;[ Setting spell count for: &quot; .. spellname .. &quot; to 0 after 'Dont have that spell memorized message'.]&quot; )
    		setSpellCount(spellname, 0)
 
 		-- if that spell is currently queued clear it
@@ -6626,7 +6629,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/17/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/23/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9417,7 +9420,7 @@ buff:del(whoami(), &quot;blindness&quot;)
 
 group:send()
 
-mud:send(&quot;chkstat&quot;)</script>
+mud:send(&quot;@chkstat&quot;)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -15640,14 +15643,16 @@ sound(&quot;139025__rj10328__131659-bertrof-game-sound-intro-to-game-80921-justi
                     <name>Lilithelle drags corpse of Venumma along behind her.</name>
                     <script>-- Yinelinol drags corpse of Kitra along behind him.
 
--- corpse drag sound
+-- Send consent request to corpse if person dragging was not cleric,
+-- and corpse owner is grouped
+
 if charData:get(&quot;echodrag&quot;) then
-	if whoclass(matches[2]) ~= &quot;Cle&quot; then
-		--mud:send(&quot;gsay &quot; .. matches[3] .. &quot; dragged&quot;)
+	if groupList:ingroup(matches[2]) and whoclass(matches[2]) ~= &quot;Cle&quot; then
 		mud:send(&quot;t &quot; .. matches[3] .. &quot; consent&quot;)
 	end
 end
 
+-- corpse drag sound
 sound(&quot;327909__ruonvniekerk__dragging-on-floor.wav&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -17007,7 +17012,7 @@ sortpowerslist[#sortpowerslist+1] = {to_snake(powername), matches[2]:trim(), lev
                     </Trigger>
                 </TriggerGroup>
             </TriggerGroup>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>Rugrag futilely tries to rescue Lilabipple!</name>
                 <script>if groupList:ingroup(matches[2]) then
 	pet:rescue(matches[3])
@@ -18353,7 +18358,7 @@ group:send()</script>
 -- should add command @debug nhc to echo results to nhc
 
 
-expandAlias(&quot;version&quot;, false)
+expandAlias(&quot;@version&quot;, false)
 
 local WindowWidth, WindowHeight = getMainWindowSize()
 cecho(&quot;&lt;red&gt;Screen size: X: &lt;green&gt;&quot; .. WindowWidth .. &quot; &lt;red&gt;Y: &lt;green&gt;&quot; .. WindowHeight .. &quot;\n\n&quot;)
@@ -18888,29 +18893,54 @@ function showHelp(xindex)
 	local index, name
 	local found=false
 	
+	cecho(&quot;\n&quot;)
+	
 	for line in io.lines(mainpath(&quot;helpfile.dat&quot;)) do
 		if string.find(line, &quot;;;&quot;) ~= nil then
 			if found == false then
 				index,name = string.match(line, &quot;;;([0-9]+),([@0-9a-zA-Z _]+)&quot;)
 			else
+				-- end of help entry
+				cecho(&quot;\n&quot;)
 				return
 			end
 		else
-			if index == tostring(xindex) or name == xindex then
+			if index == tostring(xindex) or name == xindex or name == (&quot;@&quot; .. xindex) then
 				found=true
 				--display(line)
 				cecho(line .. &quot;\n&quot;)
 			end
 		end
 	end
-
+	
 	if found == false then
 		cecho(&quot;&lt;red&gt;[No help information found for: &quot; .. xindex .. &quot;]\n&quot;)
 	end
 end
 
+function showIndex()
+	local index, name
+	local found=false
+	local count=0
+	
+	for line in io.lines(mainpath(&quot;helpfile.dat&quot;)) do
+		if string.find(line, &quot;;;&quot;) ~= nil then
+				index,name = string.match(line, &quot;;;([0-9]+),([@0-9a-zA-Z _]+)&quot;)
+				
+				count=count+1
+				
+				cecho( string.format(&quot;&lt;green&gt;%-16s&quot;, name) )
+		end
+	end
+
+	echo(&quot;\n\n&quot;)
+end
+
 if matches[2] == &quot;&quot; then
-	showHelp(&quot;index&quot;)
+	showHelp(&quot;contents&quot;)
+elseif matches[2] == &quot;index&quot; then
+	cecho(string.format(&quot;&lt;red&gt;%65s\n\n&quot;, &quot;Help Entries&quot;) )
+	showIndex()
 else
 	showHelp(matches[2])
 end</script>
@@ -18944,8 +18974,25 @@ end</script>
                     <regex>^@attack ?([0-9.a-zA-Z]+)?</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
+                    <name>@chkstat</name>
+                    <script>cecho(&quot;&lt;red&gt;\n[Checking status on group]\n&quot;)
+
+for k,char in pairs(groupList:pc()) do
+	sendStatus(char)
+end
+
+for k,petname in pairs(pet:getTable()) do
+	sendStatus(petname)
+end
+
+</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@chkstat$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
                     <name>@setroom</name>
-                    <script>echo(&quot;\n[Searching for matching discovered rooms... ]\n&quot;)
+                    <script>cecho(&quot;\n&lt;green&gt;[Searching for matching discovered rooms... ]\n&quot;)
 
 if matches[2] == nil then
 	local matchtable = {}
@@ -19477,8 +19524,34 @@ end</script>
                     <regex>^claimall$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
+                    <name>@version</name>
+                    <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
+
+cecho (&quot;\n&lt;red&gt;Script version: 9/23/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@version$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
                     <name>test</name>
-                    <script>--display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
+                    <script>function testFunction()
+	return 1, 2
+end
+
+
+--local v1, v2 = testFunction()
+
+
+--display( v1 )
+--display( v2 )
+
+
+local v1 = testFunction()
+display(v1)
+
+
+--display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
 
 
 --openUserWindow(&quot;testwindow&quot;)
@@ -19729,6 +19802,62 @@ end</script>
                     <packageName></packageName>
                     <regex>^test$</regex>
                 </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>@guide - open todraels website</name>
+                    <script>openUrl(&quot;http://www.grokh.com/todrael/guides/newbie.html&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@guide$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>@quest - open Valkurian Blades website</name>
+                    <script>openUrl(&quot;http://z15.invisionfree.com/Triterium_BBS&quot;)
+</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@quest$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>@forum - open torilmud forums</name>
+                    <script>openUrl(&quot;http://www.torilmud.com/phpBB3/&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@forum$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>. speedwalk (tintin)</name>
+                    <script>local dirString   =   matches[2]:lower()
+
+for count, direction in string.gmatch(dirString, &quot;([0-9]*)([neswud])&quot;) do      
+	count = (count == &quot;&quot; and 1 or count)
+   for i=1, count do
+   		expandAlias(direction)
+   end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^[.]([0-9nsweudNSWEUD]+)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name># repeat (tintin)</name>
+                    <script>for nx=1, matches[2], 1 do
+	mud:send(matches[3])
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^#([0-9]+) (.+)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>#val substitute</name>
+                    <script>-- substitute @ for #
+
+cecho(&quot;&lt;red&gt;[Error: Command prefix is @ not #]\n&quot;)
+
+expandAlias(&quot;@&quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^#([a-z].*)$</regex>
+                </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
                 <name>MiscAliases</name>
@@ -19903,21 +20032,23 @@ end</script>
                     <name>gsay (gcmd)</name>
                     <script>charData:init(&quot;gcmd&quot;, false)
 
--- don't gsay if only a single groupmember
+-- don't gsay if only a single groupmember and train is active
 
-if groupList:size() &gt; 1 then
-	if charData:get(&quot;gcmd&quot;) then
-		if charData:get(&quot;swedish&quot;, true) then
-			mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
-		else
-			mud:send(&quot;GCMD &quot; .. matches[2])
-		end
+if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
+	return
+end
+
+if charData:get(&quot;gcmd&quot;) then
+	if charData:get(&quot;swedish&quot;, true) then
+		mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
 	else
-		if charData:get(&quot;swedish&quot;, true) then
-			mud:send(&quot;GSAY &quot; .. swedish(matches[2]) )
-		else
-			mud:send(&quot;GSAY &quot; .. matches[2] )
-		end
+		mud:send(&quot;GCMD &quot; .. matches[2])
+	end
+else
+	if charData:get(&quot;swedish&quot;, true) then
+		mud:send(&quot;GSAY &quot; .. swedish(matches[2]) )
+	else
+		mud:send(&quot;GSAY &quot; .. matches[2] )
 	end
 end</script>
                     <command></command>
@@ -19927,40 +20058,20 @@ end</script>
                 <Alias isActive="yes" isFolder="no">
                     <name>gcmd</name>
                     <script>
--- don't gcmd if only a single groupmember
+-- don't gcmd if only a single groupmember and train is active
 
-if groupList:size() &gt; 1 then
-	if charData:get(&quot;swedish&quot;, true) then
-		mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
-	else
-		mud:send(&quot;GCMD &quot; .. matches[2])
-	end
+if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
+	return
+end
+
+if charData:get(&quot;swedish&quot;, true) then
+	mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
+else
+	mud:send(&quot;GCMD &quot; .. matches[2])
 end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^gcmd (.*)$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>guide - open todraels website</name>
-                    <script>openUrl(&quot;http://www.grokh.com/todrael/guides/newbie.html&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^guide$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>quest - open Valkurian Blades website</name>
-                    <script>openUrl(&quot;http://z15.invisionfree.com/Triterium_BBS&quot;)
-</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^quest$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>forum - open torilmud forums</name>
-                    <script>openUrl(&quot;http://www.torilmud.com/phpBB3/&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^forum$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>consent</name>
@@ -20037,16 +20148,6 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^advert$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>version</name>
-                    <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
-
-cecho (&quot;\n&lt;red&gt;Script version: 9/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^version$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>p</name>
@@ -20839,23 +20940,6 @@ mud:send(&quot;rec ab me&quot;)</script>
                     <regex>^armor$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>chkstat</name>
-                    <script>cecho(&quot;&lt;red&gt;\n[Checking status on group]\n&quot;)
-
-for k,char in pairs(groupList:pc()) do
-	sendStatus(char)
-end
-
-for k,petname in pairs(pet:getTable()) do
-	sendStatus(petname)
-end
-
-</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^chkstat$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
                     <name>blend</name>
                     <script>mud:send(&quot;rem swirling&quot;)
 mud:send(&quot;get warder hole&quot;)
@@ -21037,29 +21121,6 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^group$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name># repeat (tintin)</name>
-                    <script>for nx=1, matches[2], 1 do
-	mud:send(matches[3])
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^#([0-9]+) (.+)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>. speedwalk (tintin)</name>
-                    <script>local dirString   =   matches[2]:lower()
-
-for count, direction in string.gmatch(dirString, &quot;([0-9]*)([neswud])&quot;) do      
-	count = (count == &quot;&quot; and 1 or count)
-   for i=1, count do
-   		expandAlias(direction)
-   end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^[.]([0-9nsweudNSWEUD]+)</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>..reverse speedwalk (zmud)</name>
@@ -21882,9 +21943,7 @@ if matches[2] == &quot;info&quot; then
 end
 
 if matches[2] == &quot;update&quot; then
-	cecho(&quot;&lt;red&gt;[Support for combing split maps has been removed]\n&quot;)
-	cecho(&quot;&lt;red&gt;[If you're still using them, install rc2 first]\n&quot;)
-	cecho(&quot;&lt;green&gt;[Running the map update on image will take 5-10 minutes.]\n&quot;)
+	cecho(&quot;&lt;green&gt;[Running the map update will take 5-10 minutes.]\n&quot;)
 	cecho(&quot;&lt;green&gt;[Mudlet will appear to be frozen while running. Don't close it.]\n&quot;)
 	cecho(&quot;\n&lt;red&gt;[Use the '&lt;green&gt;@backup&lt;red&gt;' command to make a backup of data files before updating!]\n\n&quot;)
 	cecho(&quot;&lt;green&gt;[Type '&lt;red&gt;@map updateok&lt;green&gt;' to start update]\n&quot;)
@@ -22824,6 +22883,8 @@ echo(&quot;[End import]\n&quot;)</script>
 -- 011dev
 
 -- bugfixes
+-- Many commands now have '@' at the start of the alias
+-- @help index will list all help entries
 -- mudlet notepad added to backup
 -- rangers archery powers added
 -- buttons will be redrawn when you level
@@ -22836,7 +22897,7 @@ echo(&quot;[End import]\n&quot;)</script>
 -- @fwalk buffers path, and sends in 5-10 room bursts
 -- Removed @fwalk distance limit
 -- changed # command prefix to @
--- Map updated: full size 317 areas 45002 rooms
+-- Map updated: full size 317 areas 45009 rooms
 
 -- 011c (update1)
 
@@ -25211,7 +25272,7 @@ function SpellsSha()
 			spell:cast(&quot;gh&quot;)
 		else
 			if getSpellCount(&quot;heal&quot;) &gt; 0 then
-				spell:cast(&quot;HEAL&quot;)
+				spell:cast(&quot;HL&quot;)
 			end
 		end
 
@@ -25283,8 +25344,8 @@ function SpellsSha()
 			return
 		end
 
-		if getSpellCount(&quot;heal&quot;) &gt; 0 then
-			spell:cast(&quot;heal me&quot;)
+		if getSpellCount(&quot;hl&quot;) &gt; 0 then
+			spell:cast(&quot;hl me&quot;)
 			return
 		end
 	end
@@ -25295,8 +25356,8 @@ function SpellsSha()
 		local petname=pet:getTable(&quot;spirit&quot;)[1]
 		
 		if pet:getHP(petname) &lt; .8 * pet:getMaxHP(petname) and pet:getInRoom(petname) then
-				if getSpellCount(&quot;heal&quot;) &gt; 0 then
-					spell:cast(&quot;heal &quot; .. petname)
+				if getSpellCount(&quot;hl&quot;) &gt; 0 then
+					spell:cast(&quot;hl &quot; .. petname)
 					return
 				end
 		end
@@ -25593,7 +25654,7 @@ function procClericPurify()
 				if char == whoami() then
 					if percent &lt; .9 then
 						if getSpellCount(&quot;heal&quot;) &gt; 0 then
-							spell:cast(&quot;heal&quot;)
+							spell:cast(&quot;hl&quot;)
 							return(true)
 						end
 					end
@@ -25603,8 +25664,8 @@ function procClericPurify()
 				else
 
 					if percent &lt; .9 then
-						if getSpellCount(&quot;heal&quot;) &gt; 0 then
-							spell:cast(&quot;heal &quot; .. char)
+						if getSpellCount(&quot;hl&quot;) &gt; 0 then
+							spell:cast(&quot;hl &quot; .. char)
 							return(true)
 						end
 					end
@@ -26006,7 +26067,7 @@ function chkstat(fname, xcommand)
 	if xcommand == buttons.INIT then
 		setLabelImage(fname, &quot;chkstat.png&quot;)
 	else
-		mud:send(&quot;chkstat&quot;)
+		mud:send(&quot;@chkstat&quot;)
 	end
 end
 
@@ -28423,7 +28484,7 @@ function unhideRoom(xroomid)
 		display(zoneid)
 		display(getRoomUserData(xroomid, &quot;zoneid&quot;))
 		display(NyyLIB.areaTable[zoneid])
-		display( findAreaID(NyyLIB.areaTable[zoneid]) )
+		display( map:findAreaID(NyyLIB.areaTable[zoneid]) )
 	end
 
 	setRoomArea( xroomid, internalid)
@@ -34820,6 +34881,8 @@ end
 
 -- return the (fixed) spellname associated with a power
 
+-- TODO: This should be changed to return name, target
+
 function powerAliases:toSpell(xcommand)
 --	local charclass = whoclass(whoami())
 	local charclass = string.gsub(whoclass(whoami()), &quot;-&quot;, &quot;_&quot;)
@@ -35655,9 +35718,11 @@ function sendAssist(xchar)
 		return
 	end
 
-	-- currently sitting: send stand first
+	-- currently sitting: send stand first TODO is this sending multiple times?
 
 	if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
+		display(&quot;X&quot;)
+		display(xchar)
 		mud:send(&quot;ST&quot;)
 	end
 
@@ -36378,7 +36443,7 @@ function initNyyLIB()
 
 	cecho(&quot;&lt;red&gt;[Initializing NyyLIB...]\n&quot;)
 
-	expandAlias(&quot;version&quot;, false)
+	expandAlias(&quot;@version&quot;, false)
 
 	NyyLIB.homedir = getMudletHomeDir() .. &quot;\\&quot; .. NyyLIB.version .. &quot;\\&quot;
 
