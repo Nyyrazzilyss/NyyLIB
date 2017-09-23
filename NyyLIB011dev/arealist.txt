@@ -1,12 +1,12 @@
-  0   God Rooms
-  5   Kobold Settlement
-  6   The Great Unknown
+  0   God Rooms                                         
+  5   Kobold Settlement                                 
+  6   The Great Unknown                                 
   7   Ako Village                                       
   8   The High Road                                     
   9   The Troll Hills                                   
  10   Valley of Crushk                                  
  11   RP ZONE - Annam                                   
- 13   The Conquered Village                                                      
+ 13   The Conquered Village                             
  15   the Deep Jungle                                   
  16   Southern Waterdeep Main City                      
  17   Northern Waterdeep Main City                      
@@ -76,7 +76,7 @@
  81   Earth Plane                                       
  82   The Dread Mist                                    
  83   Ashstone Keep Road                                
- 84   Ashstone                                   
+ 84   Ashstone                                          
  85   The Nightwood                                     
  86   Nightwood Border                                  
  87   Ashstone Refugee Camp                             

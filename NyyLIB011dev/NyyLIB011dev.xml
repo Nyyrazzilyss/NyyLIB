@@ -18930,6 +18930,10 @@ function showIndex()
 				count=count+1
 				
 				cecho( string.format(&quot;&lt;green&gt;%-16s&quot;, name) )
+		
+				if count % 6 == 0 then
+					echo(&quot;\n&quot;)
+				end
 		end
 	end
 
@@ -18939,7 +18943,7 @@ end
 if matches[2] == &quot;&quot; then
 	showHelp(&quot;contents&quot;)
 elseif matches[2] == &quot;index&quot; then
-	cecho(string.format(&quot;&lt;red&gt;%65s\n\n&quot;, &quot;Help Entries&quot;) )
+	cecho(string.format(&quot;&lt;red&gt;%50s\n\n&quot;, &quot;Help Entries&quot;) )
 	showIndex()
 else
 	showHelp(matches[2])
@@ -22845,7 +22849,6 @@ echo(&quot;[End import]\n&quot;)</script>
 -- bugfixes
 -- Many commands now have '@' at the start of the alias
 -- @help index will list all help entries
--- mudlet notepad added to backup
 -- rangers archery powers added
 -- buttons will be redrawn when you level
 -- (some) helpfile updates
