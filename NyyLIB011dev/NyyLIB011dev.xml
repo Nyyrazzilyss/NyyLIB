@@ -1143,6 +1143,10 @@ if spellname ~= nil then
 
 	local dpuchar = string.match(spellname, &quot;^dpu (.*)&quot;)
 
+	if dpuchar ~= nil then
+		dpuchar = string.title(dpuchar)
+	end
+
 	if groupList:ingroup(dpuchar) then
 		-- remove blind, para, poison flag on divine purify
 		buff:del(dpuchar, &quot;blind&quot;)
@@ -1152,6 +1156,10 @@ if spellname ~= nil then
 	end
 
 	local fhchar = string.match(spellname, &quot;^fh (.*)&quot;)
+
+	if fhchar ~= nil then
+		fhchar = string.title(fhchar)
+	end
 
 	if groupList:ingroup(fhchar) then
 		-- remove blind flag on fullheal
@@ -3549,7 +3557,7 @@ end</script>
                             <colorTriggerFgColor>#000000</colorTriggerFgColor>
                             <colorTriggerBgColor>#000000</colorTriggerBgColor>
                             <regexCodeList>
-                                <string>([A-Za-z]+) group-says '(Adud|adud|tanks) ([nsewud])( .*)?'</string>
+                                <string>([A-Za-z]+) group-says '(Adud|adud|tanks|tnkas) ([nsewud])( .*)?'</string>
                                 <string>([A-Za-z]+) group-says '(Adud|adud|tanks) (north|south|east|west|up|down)'</string>
                                 <string>([A-Za-z]+) group-says '(Adud|adud|tanks) (en) (.*)'</string>
                                 <string>([A-Za-z]+) group-says '(spectre) ([nsewud])( .*)?'</string>
@@ -5590,8 +5598,10 @@ mud:send(&quot;ST&quot;)</script>
                         <string>Damn!  Lost your train of thought!</string>
                         <string>With a powerful heave on the whip, an elite cornugon sends you crashing to the ground in a spray of blood!</string>
                         <string>You can't do this sitting!</string>
+                        <string>You stagger, and fall to your knees!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -6629,7 +6639,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 9/23/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/4/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -15642,6 +15652,9 @@ sound(&quot;139025__rj10328__131659-bertrof-game-sound-intro-to-game-80921-justi
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Lilithelle drags corpse of Venumma along behind her.</name>
                     <script>-- Yinelinol drags corpse of Kitra along behind him.
+-- Misi drags corpse of Kitra along behind her.
+
+display(&quot;Z&quot;)
 
 -- Send consent request to corpse if person dragging was not cleric,
 -- and corpse owner is grouped
@@ -18196,6 +18209,19 @@ mud:send(&quot;SAY my heavenly home&quot;)</script>
                     <packageName></packageName>
                     <regex>^shabay</regex>
                 </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>blend</name>
+                    <script>mud:send(&quot;rem swirling&quot;)
+mud:send(&quot;get warder hole&quot;)
+mud:send(&quot;wear warder&quot;)
+mud:send(&quot;SAY blend&quot;)
+mud:send(&quot;rem warder&quot;)
+mud:send(&quot;wear swirling&quot;)
+mud:send(&quot;put warder hole&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^blend$</regex>
+                </Alias>
                 <AliasGroup isActive="yes" isFolder="yes">
                     <name>TiaSleeves</name>
                     <script></script>
@@ -18400,6 +18426,10 @@ cecho(&quot;&lt;red&gt;Seen mem'ing (automem): &quot; .. automem .. &quot;\n&quo
 
 cecho(&quot;&lt;red&gt;spell:getMoving(): &quot; .. tostring(spell:getMoving()) .. &quot;\n&quot;)
 cecho(&quot;&lt;red&gt;spell:getMem(): &quot; .. tostring(spell:getMem()) .. &quot;\n&quot;)
+
+
+cecho(&quot;&lt;red&gt;group:get()\n&quot;)
+display( group:get() )
 
 if memsent ~= nil then
 	cecho(&quot;&lt;red&gt;memsent: &quot; .. tostring(memsent) .. &quot;\n&quot;)
@@ -19530,9 +19560,9 @@ end</script>
                 <Alias isActive="yes" isFolder="no">
                     <name>@version</name>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;7/11/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;9/27/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 9/23/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 10/4/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -19843,6 +19873,24 @@ end</script>
                     <regex>^[.]([0-9nsweudNSWEUD]+)</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
+                    <name>..reverse speedwalk (zmud)</name>
+                    <script>-- Walk reverse of path provided.
+-- ..5ne will walk w5s
+
+local reversePath = &quot;&quot;
+
+local dirString   =   matches[2]:lower()
+
+for count, direction in string.gmatch(dirString, &quot;([0-9]*)([neswud])&quot;) do      
+	reversePath = count .. NyyLIB.reversedirs[direction] .. reversePath
+end
+
+expandAlias(&quot;.&quot; .. reversePath, false)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^[.][.]([0-9nsweudNSWEUD]+)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
                     <name># repeat (tintin)</name>
                     <script>for nx=1, matches[2], 1 do
 	mud:send(matches[3])
@@ -19861,41 +19909,6 @@ expandAlias(&quot;@&quot; .. matches[2])</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^#([a-z].*)$</regex>
-                </Alias>
-            </AliasGroup>
-            <AliasGroup isActive="yes" isFolder="yes">
-                <name>MiscAliases</name>
-                <script></script>
-                <command></command>
-                <packageName></packageName>
-                <regex></regex>
-                <Alias isActive="yes" isFolder="no">
-                    <name>follow</name>
-                    <script>mud:send (&quot;FOL &quot; .. matches[2] )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^fol (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>powers</name>
-                    <script>mud:send(&quot;POWERS &quot; .. matches[2])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^powers (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>help</name>
-                    <script>mud:send(&quot;HELP &quot; .. matches[2])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^help (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>forget spellname</name>
-                    <script>mud:send(&quot;FORGET &quot; .. matches[2])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^forget (.*)</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>masks</name>
@@ -19926,42 +19939,19 @@ end</script>
                     <regex>^masks$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>eq</name>
-                    <script>mud:send(&quot;EQ&quot;)</script>
+                    <name>advert</name>
+                    <script>mud:send(&quot;NHC Toril Mud Client Script Updated: 8/3/17 011c http://www.torilmud.com/phpBB3/viewtopic.php?f=4&amp;t=25745&quot;)</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^eq$</regex>
+                    <regex>^advert$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>mem spellname</name>
-                    <script>mud:send(&quot;MEM &quot; .. matches[2])</script>
+                    <name>lf</name>
+                    <script>-- mud:send(&quot;gcc LF: phantom quill, talisman of demonic rage&quot;)
+-- mud:send(&quot;gcc FT: skull-cap of truespeed, ashen cage, loop of shale, smoke filled crystal ball, seaweed ring, pelt of demonhide, headbands a-&gt;j, more&quot;)</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^mem (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>tog</name>
-                    <script>mud:send(&quot;TOG &quot; .. matches[2])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^tog (.+)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>scan</name>
-                    <script>scanned={}
-mud:send(&quot;SCAN&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^scan$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>l (look)</name>
-                    <script>gaglook=nil
-
-mud:send(&quot;L&quot; .. (matches[3] or &quot;&quot;) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^(l|look)( .*)?$</regex>
+                    <regex>^lf$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>sound</name>
@@ -19969,189 +19959,6 @@ mud:send(&quot;L&quot; .. (matches[3] or &quot;&quot;) )</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^sound$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>nhc</name>
-                    <script>if charData:get(&quot;swedish&quot;, true) then
-	mud:send (&quot;NHC &quot; .. swedish(matches[2]) )
-else
-	mud:send (&quot;NHC &quot; .. matches[2] )
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^nhc (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>tell</name>
-                    <script>-- que tell
-
-mud:send (&quot;T &quot; .. matches[2] )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^t (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>gcc (swedish)</name>
-                    <script>if charData:get(&quot;swedish&quot;, true) then
-	mud:send (&quot;GCC &quot; .. swedish(matches[2]) )
-else
-	mud:send (&quot;GCC &quot; .. matches[2] )
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^gcc (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>say swedish</name>
-                    <script>-- swedish disabled because it doesn't proc properly
-
-mud:send (&quot;SAY &quot; .. matches[2])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^say (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>ooc swedish</name>
-                    <script>if charData:get(&quot;swedish&quot;, true) then
-	mud:send (&quot;OOC &quot; .. swedish(matches[2]), false)
-else
-	mud:send (&quot;OOC &quot; .. matches[2], false)
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^ooc (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>acc swedish</name>
-                    <script>if charData:get(&quot;swedish&quot;, true) then
-	mud:send (&quot;ACC &quot; .. swedish(matches[2]) )
-else
-	mud:send (&quot;ACC &quot; .. matches[2] )
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^acc (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>gsay (gcmd)</name>
-                    <script>charData:init(&quot;gcmd&quot;, false)
-
--- don't gsay if only a single groupmember and train is active
-
-if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
-	return
-end
-
-if charData:get(&quot;gcmd&quot;) then
-	if charData:get(&quot;swedish&quot;, true) then
-		mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
-	else
-		mud:send(&quot;GCMD &quot; .. matches[2])
-	end
-else
-	if charData:get(&quot;swedish&quot;, true) then
-		mud:send(&quot;GSAY &quot; .. swedish(matches[2]) )
-	else
-		mud:send(&quot;GSAY &quot; .. matches[2] )
-	end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^gsay (.*)$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>gcmd</name>
-                    <script>
--- don't gcmd if only a single groupmember and train is active
-
-if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
-	return
-end
-
-if charData:get(&quot;swedish&quot;, true) then
-	mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
-else
-	mud:send(&quot;GCMD &quot; .. matches[2])
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^gcmd (.*)$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>consent</name>
-                    <script>consent.chars= {}
-mud:send(&quot;CONSENT&quot;, false)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^consent$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>tiap ?(gsay|acc)?</name>
-                    <script>if matches[2] == &quot;gsay&quot; then
-	--send(&quot;gsay * Tiamat Points - This does NOT include current run&quot;)
-end
-
-for k,char in pairs(groupList:pc()) do
-	if inwho(char) then
-		local temp=string.format(&quot;[%11s] (%13s) %6d\n&quot;, char,	&quot;@&quot; .. inwho(char),getPoints(inwho(char)) )
-
-		if matches[2] == nil then
-			echo(temp)
-		end
-
-		if matches[2] == &quot;gsay&quot; then
-			mud:send(&quot;GSAY * &quot; .. temp)
-		end
-
-		if matches[2] == &quot;acc&quot; then
-			mud:send(&quot;ACC * &quot; .. temp)
-		end
-	end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^tiap ?(gsay|acc)?$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>hasteme</name>
-                    <script>mud:send(&quot;quaff haste &quot; .. charData:get(&quot;container&quot;) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^hasteme$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>escape</name>
-                    <script>if checkMask(&quot;rogue&quot;) then
-	NyyLIB.escapedir = matches[2]
-	mud:send(&quot;ESCAPE &quot; .. matches[2])
-else
-	NyyLIB.escapedir = matches[2]
-
-	if checkMask(&quot;caster&quot;) then
-		-- erase spellqueue if any spells present
-		spell:eraseQueue()
-
-		-- disable autocast
-		buttons:change(&quot;autocast&quot;, false, &quot;SpellsButton&quot;)
-
-		spell:clear()
-	end
-
-	-- set as currently moving
-	spell:setMoving(true)
-
-	mud:send(&quot;FLEE&quot;, false)
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^escape ([neswud])$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>advert</name>
-                    <script>mud:send(&quot;NHC Toril Mud Client Script Updated: 8/3/17 011c http://www.torilmud.com/phpBB3/viewtopic.php?f=4&amp;t=25745&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^advert$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>p</name>
@@ -20168,227 +19975,6 @@ end</script>
                     <regex>^g (.*)</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>scaleme</name>
-                    <script>mud:send(&quot;quaff blood hole&quot;)
---mud:send(&quot;quaff blood &quot; .. charData:get(&quot;container&quot;) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^scaleme$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>zzz</name>
-                    <script>mud:send(&quot;get mistwalker hole&quot;)
-mud:send(&quot;rec mistwalker me&quot;)
-mud:send(&quot;darkness&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^zzz$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>lf</name>
-                    <script>mud:send(&quot;gcc LF: phantom quill, talisman of demonic rage&quot;)
--- mud:send(&quot;gcc FT: skull-cap of truespeed, ashen cage, loop of shale, smoke filled crystal ball, seaweed ring, pelt of demonhide, headbands a-&gt;j, more&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^lf$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>multidrag</name>
-                    <script>display(&quot;drag &quot; .. matches[2] .. &quot; corpses &quot; .. matches[3])</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^multidrag ([0-9]+) ([nsewud])$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>mcast</name>
-                    <script>cecho(&quot;\n&lt;green&gt;[Mass Casting &quot; .. matches[2] .. &quot;]\n&quot;)
-
-for k,char in pairs(groupList:pc()) do
-	display(char)
-
-	spell:cast(matches[2] .. &quot; &quot; .. char)
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^mcast ([A-Za-z ]+)$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>mem</name>
-                    <script>-- Can't be moving if mem has been sent
-spell:setMoving(false)
-setQuake(false)
-
-automem = 2
-
-if memsent == true then
-	cecho(&quot;&lt;red&gt;[Mem previously sent: type 'prepare' to force]\n&quot;)
-	return
-end
-
-if spell:getMem() == true then
-	cecho(&quot;&lt;red&gt;\n[Already meming - If not type 'prepare']\n&quot;)
-	return
-end
-
-
-if charData:get(&quot;memcount&quot;) == nil or charData:get(&quot;memcount&quot;) == 0 and not checkMask(&quot;psi&quot;) then
-	cecho(&quot;&lt;red&gt;\n[Mem has completed. Type 'memd' or 'prayd' to list spells. Type 'prepare' to force mem]\n&quot;)
-	return
-end
-
-if inCombat() then
-	echoDebug(&quot;&lt;red&gt;[Fighting, can't memorize]\n&quot;)
-	return
-end
-
-if checkMask(&quot;singer&quot;) == false then
-	mud:send(&quot;REST&quot;)
-else
-	cecho(&quot;&lt;red&gt;[Singers can't memorize.]\n&quot;)
-	return
-end
-
-local label=findlabel(&quot;MemButton&quot;)
-
-if label ~= nil then
-	label:setStyleSheet([[border-image: url(]] .. iconpath(&quot;psiStand.png&quot;) .. [[)]])
-	echoDebug(&quot;&lt;red&gt;[Setting membutton to stand]&quot;)
-end
-
-if checkMask(&quot;psi&quot;) then
-	if charData:get(&quot;psicrystal&quot;) ~= &quot;&quot; then
-		mud:send(&quot;chargepsp &quot; .. charData:get(&quot;psicrystal&quot;) )
-	end
-
-	mud:send(&quot;MED&quot;)
-else
-	if checkMask(&quot;caster&quot;) then
-		spell:clear()
-	end
-
-	-- prepare doesn't give spell count
-	--send(&quot;prepare&quot;)
-
-	memsent=true
-
-	if checkMask(&quot;pray&quot;) then
-		mud:send(&quot;PRAY&quot;)
-	else
-		mud:send(&quot;MEM&quot;)
-	end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^(mem|pray)$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>encoff</name>
-                    <script>mud:send(&quot;rem hat&quot;)
-mud:send(&quot;get circlet hole&quot;)
-mud:send(&quot;wear circlet&quot;)
-mud:send(&quot;put hat hole&quot;)
-mud:send(&quot;rem power&quot;)
-mud:send(&quot;rem power&quot;)
-mud:send(&quot;put power hole&quot;)
-mud:send(&quot;put power hole&quot;)
-mud:send(&quot;get kinesis hole&quot;)
-mud:send(&quot;wear kinesis&quot;)
-mud:send(&quot;get kinesis hole&quot;)
-mud:send(&quot;wear kinesis&quot;)
-mud:send(&quot;rem dagger&quot;)
-mud:send(&quot;put dagger hole&quot;)
-mud:send(&quot;get staff hole&quot;)
-mud:send(&quot;hold staff&quot;)
-mud:send(&quot;rem gem&quot;)
-mud:send(&quot;put gem hole&quot;)
-mud:send(&quot;get mask hole&quot;)
-mud:send(&quot;wear mask&quot;)
-mud:send(&quot;powers info time&quot;)
-mud:send(&quot;powers info gi&quot;)
-mud:send(&quot;powers info blur&quot;)
-mud:send(&quot;powers info hs&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^encoff$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>encon</name>
-                    <script>mud:send(&quot;rem circlet&quot;)
-mud:send(&quot;get hat hole&quot;)
-mud:send(&quot;wear hat&quot;)
-mud:send(&quot;put circlet hole&quot;)
-mud:send(&quot;rem kinesis&quot;)
-mud:send(&quot;rem kinesis&quot;)
-mud:send(&quot;put kinesis hole&quot;)
-mud:send(&quot;put kinesis hole&quot;)
-mud:send(&quot;get power hole&quot;)
-mud:send(&quot;wear power&quot;)
-mud:send(&quot;get power hole&quot;)
-mud:send(&quot;wear power&quot;)
-mud:send(&quot;rem staff&quot;)
-mud:send(&quot;put staff hole&quot;)
-mud:send(&quot;get dagger hole&quot;)
-mud:send(&quot;wield dagger&quot;)
-mud:send(&quot;rem mask&quot;)
-mud:send(&quot;get gem hole&quot;)
-mud:send(&quot;wear gem&quot;)
-mud:send(&quot;put mask hole&quot;)
-mud:send(&quot;powers info time&quot;)
-mud:send(&quot;powers info gi&quot;)
-mud:send(&quot;powers info blur&quot;)
-mud:send(&quot;powers info hs&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^encon$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>food</name>
-                    <script>local container=charData:get(&quot;container&quot;)
-
-if container == &quot;&quot; then
-	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
-	return
-end
-
-mud:send(&quot;EAT &quot; .. charData:get(&quot;food&quot;) .. &quot; &quot; .. container)
-mud:send( g(charData:get(&quot;canteen&quot;)) )
-mud:send(&quot;DRINK &quot; .. charData:get(&quot;canteen&quot;) )
-mud:send( p(charData:get(&quot;canteen&quot;)) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^food$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>walk</name>
-                    <script>if charData:get(&quot;container&quot;) == nil then
-	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
-	return
-end
-
-mud:send(&quot;rem wings&quot;)
-mud:send( p(&quot;wings&quot;) )
-mud:send( g(&quot;swirling&quot;) )
-mud:send(&quot;wear swirling&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^walk$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>fly</name>
-                    <script>if charData:get(&quot;container&quot;) == nil then
-	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
-	return
-end
-
-mud:send(&quot;rem swirling&quot;)
-mud:send( p(&quot;swirling&quot;) )
-mud:send( g(&quot;wings&quot;) )
-mud:send(&quot;wear wings&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^fly$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
                     <name>loot</name>
                     <script>for nx=matches[2], 1, -1 do
 	mud:send(&quot;GET all.coins &quot; .. nx .. &quot;.corpse&quot;)
@@ -20398,176 +19984,114 @@ end</script>
                     <regex>^loot ([0-9]+)</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>seal</name>
-                    <script>mud:send( g(&quot;seal&quot;) )
-mud:send(&quot;rec seal me&quot;)</script>
+                    <name>dep</name>
+                    <script>enableTrigger(&quot;DepositTrigger&quot;)
+mud:send( p(&quot;all.coin&quot;) )
+mud:send( g(&quot;all.coin&quot;) )
+mud:send( p(&quot;all.lucky&quot;) )</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^seal$</regex>
+                    <regex>^dep$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>undresschar</name>
-                    <script>function removeAll()
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all hole&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all hole&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all hole&quot;)
-end
-
-mud:send(&quot;storage access nyyrazzilyss&quot;)
-
-mud:send(&quot;rem insignia&quot;)
-mud:send(&quot;put insignia hole&quot;)
-
-if whoami() == &quot;Innanin&quot; then
-	mud:send(&quot;rem insignia&quot;)
-	mud:send(&quot;rem circlet&quot;)
-	mud:send(&quot;put all hole&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all merchants&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all merchants&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all merchants&quot;)
-	mud:send(&quot;get portable merchants&quot;)
-	mud:send(&quot;put merchants portable&quot;)
-end
-  
-if whoami() == &quot;Rrissun&quot; or whoami() == &quot;Bombad&quot; then
-	mud:send(&quot;rem warmaul&quot;)
-	mud:send(&quot;storage store warmaul&quot;)
-	removeAll()
-end
-
-if whoami() == &quot;Ajac&quot; or whoami() == &quot;Imseh&quot; or whoami() == &quot;Aynep&quot; or whoami() == &quot;Rrassulis&quot; or whoami() == &quot;Cajeed&quot; then
-	removeAll()
-
-	if whoami() == &quot;Aynep&quot; then
-		mud:send(&quot;get tome hole&quot;)
-	elseif whoami() == &quot;Ajac&quot; then
-		mud:send(&quot;get midnight-blue hole&quot;)
-	else
-		mud:send(&quot;get planetar hole&quot;)
-	end
-
-   	mud:send(&quot;get barrel hole&quot;)
-end
-
-if whoami() == &quot;Nyyrazzilyss&quot; then
-	mud:send(&quot;rem barrier&quot;)
-	mud:send(&quot;put barrier hole&quot;)
-	mud:send(&quot;rem fires&quot;)
-	mud:send(&quot;put fires hole&quot;)
-	mud:send(&quot;rem ice&quot;)
-	mud:send(&quot;put ice hole&quot;)
-	mud:send(&quot;rem drow&quot;)
-	mud:send(&quot;rem drow&quot;)
-	mud:send(&quot;put all.drow hole&quot;)
-	mud:send(&quot;rem force&quot;)
-	mud:send(&quot;put force hole&quot;)
-	mud:send(&quot;rem swirling&quot;)
-	mud:send(&quot;put swirling hole&quot;)
-	mud:send(&quot;rem pixie&quot;)
-	mud:send(&quot;put pixie hole&quot;)
-	mud:send(&quot;rem belt&quot;)
-	mud:send(&quot;put belt hole&quot;)
-	mud:send(&quot;rem sleeves&quot;)
-	mud:send(&quot;put sleeves hole&quot;)
-	mud:send(&quot;rem bracer&quot;)
-	mud:send(&quot;rem bracer&quot;)
-	mud:send(&quot;put all.bracer hole&quot;)
-	mud:send(&quot;rem ring&quot;)
-	mud:send(&quot;rem ring&quot;)
-	mud:send(&quot;put all.ring hole&quot;)
-	mud:send(&quot;rem staff&quot;)
-	mud:send(&quot;put staff hole&quot;)
-	mud:send(&quot;rem breeches&quot;)
-	mud:send(&quot;put breeches hole&quot;)
-	mud:send(&quot;rem sandals&quot;)
-	mud:send(&quot;put sandals hole&quot;)
-end
-
-if whoami() == &quot;Samem&quot; then
-	mud:send(&quot;rem planetar&quot;)
-	mud:send(&quot;storage store planetar&quot;)
-end
-
-if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Samem&quot; or whoami() == &quot;Ihgod&quot; or whoami() == &quot;Tutenef&quot; then
-	mud:send(&quot;rem valhalla&quot;)
-	mud:send(&quot;storage store valhalla&quot;)
-	removeAll()
-end
-
-if whoami() == &quot;Bonble&quot; then
-	mud:send(&quot;rem gossamer&quot;)
-	mud:send(&quot;rem serpent&quot;)
-	mud:send(&quot;rem swirling&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;rem kinesis&quot;)
-	mud:send(&quot;rem rock&quot;)
-	mud:send(&quot;rem sharp&quot;)
-	mud:send(&quot;rem batskull&quot;)
-	mud:send(&quot;put all hole&quot;)
-	mud:send(&quot;rem sandals&quot;)
-	mud:send(&quot;put sandals hole&quot;)
-	mud:send(&quot;rem girdle&quot;)
-	mud:send(&quot;put girdle hole&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all merchants&quot;)
-	mud:send(&quot;rem all&quot;)
-	mud:send(&quot;put all merchants&quot;)
-	mud:send(&quot;get hole merchants&quot;)
-	mud:send(&quot;put merchants hole&quot;)
-end
-
-if whoami() == &quot;Vottoc&quot; then
-	mud:send(&quot;rem crown&quot;)
-	mud:send(&quot;put crown merchants&quot;)
-	mud:send(&quot;rem blood&quot;)
-	mud:send(&quot;rem blood&quot;)
-	mud:send(&quot;rem batskull&quot;)
-	mud:send(&quot;put batskull merchants&quot;)
-	mud:send(&quot;put all.blood merchants&quot;)
-	mud:send(&quot;rem cringing&quot;)
-	mud:send(&quot;put cringing merchants&quot;)
-	mud:send(&quot;rem scalemail&quot;)
-	mud:send(&quot;put scalemail merchants&quot;)
-	mud:send(&quot;rem swirling&quot;)
-	mud:send(&quot;put swirling hole&quot;)
-	mud:send(&quot;rem sleeves&quot;)
-	mud:send(&quot;put sleeves merchants&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;put all.baatorian hole&quot;)
-	mud:send(&quot;rem rock&quot;)
-	mud:send(&quot;put rock hole&quot;)
-	mud:send(&quot;rem matriarch&quot;)
-	mud:send(&quot;put matriarch merchants&quot;)
-	mud:send(&quot;rem bane&quot;)
-	mud:send(&quot;put bane merchants&quot;)
-	mud:send(&quot;rem boots&quot;)
-	mud:send(&quot;put boots merchants&quot;)
-	mud:send(&quot;rem merchants&quot;)
-	mud:send(&quot;rem studs&quot;)
-	mud:send(&quot;put studs merchants&quot;)
-	mud:send(&quot;rem gorget&quot;)
-	mud:send(&quot;put gorget hole&quot;)
-	mud:send(&quot;rem gorget&quot;)
-	mud:send(&quot;put gorget hole&quot;)
-	mud:send(&quot;put merchants hole&quot;)
-end
-
-mud:send(&quot;put sack hole&quot;)
-
-mud:send(&quot;storage store hole&quot;)
-
-mud:send(&quot;equip&quot;)</script>
+                    <name>meph</name>
+                    <script>mud:send(&quot;rescue ekahk&quot;)
+mud:send(&quot;rescue mephit&quot;)
+mud:send(&quot;rescue 2.mephit&quot;)
+mud:send(&quot;rescue 3.mephit&quot;)
+mud:send(&quot;rescue 4.mephit&quot;)
+mud:send(&quot;rescue 5.mephit&quot;)
+mud:send(&quot;rescue slaad&quot;)</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^undresschar$</regex>
+                    <regex>^meph$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>^swap ?(girdle|loop|slaad)?$</name>
+                    <script>local item=matches[2]
+
+if item == nil then
+	cecho(&quot;&lt;red&gt;[swap volance|onevolance|girdle|loop|slaad|slaads|time|oneslaad to change item]\n&quot;)
+	return
+end
+
+if item == &quot;volance&quot; then
+	mud:send(&quot;rem volance&quot;)
+	mud:send(&quot;rem volance&quot;)
+	mud:send(&quot;wear volance&quot;)
+	mud:send(&quot;wear volance&quot;)
+	timer:set(&quot;TiaVolance&quot;, 1)
+elseif item == &quot;warder&quot; then
+	mud:send(&quot;get warder hole&quot;)
+	mud:send(&quot;rem warder&quot;)
+	mud:send(&quot;put warder hole&quot;)
+	mud:send(&quot;wear warder&quot;)
+elseif item == &quot;onevolance&quot; then
+	mud:send(&quot;get volance hole&quot;)
+	mud:send(&quot;rem volance&quot;)
+	mud:send(&quot;put volance hole&quot;)
+	mud:send(&quot;wear volance&quot;)
+elseif item == &quot;sleeves&quot; then
+	timer:set(&quot;TiaSleeves&quot;, 0)
+	mud:send(&quot;get gossamer hole&quot;)
+	mud:send(&quot;rem gossamer&quot;)
+	mud:send(&quot;put gossamer hole&quot;)
+	mud:send(&quot;wear gossamer&quot;)
+elseif item == &quot;manacle&quot; then
+	mud:send(&quot;get manacle hole&quot;)
+	mud:send(&quot;rem manacle&quot;)
+	mud:send(&quot;put manacle hole&quot;)
+	mud:send(&quot;wear manacle&quot;)
+	timer:set(&quot;TiaManacle&quot;, nil)
+elseif item == &quot;manacles&quot; then
+	mud:send(&quot;rem manacle&quot;)
+	mud:send(&quot;rem manacle&quot;)
+	mud:send(&quot;wear 2.manacle&quot;)
+	mud:send(&quot;wear manacle&quot;)
+	timer:set(&quot;TiaManacle&quot;, nil)
+elseif item == &quot;time&quot; then
+	mud:send(&quot;rem time&quot;)
+	mud:send(&quot;get 3.time hole&quot;)
+	mud:send(&quot;wear time&quot;)
+	mud:send(&quot;put time hole&quot;)
+elseif item == &quot;loop&quot; then
+	mud:send(&quot;rem loop&quot;)
+	mud:send(&quot;rem loop&quot;)
+	mud:send(&quot;wear 2.loop&quot;)
+	mud:send(&quot;wear loop&quot;)
+	timer:set(&quot;TiaLoop&quot;, 1)
+elseif item == &quot;slaad&quot; then
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;wear 2.baatorian&quot;)
+	mud:send(&quot;wear baatorian&quot;)
+	timer:set(&quot;baatorian&quot;, 1)
+elseif item == &quot;slaads&quot; then
+	mud:send(&quot;get baatorian hole&quot;)
+	mud:send(&quot;get baatorian hole&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;put baatorian hole&quot;)
+	mud:send(&quot;put baatorian hole&quot;)
+	mud:send(&quot;wear baatorian&quot;)
+	mud:send(&quot;wear baatorian&quot;)
+	timer:set(&quot;baatorian&quot;, 1)
+elseif item == &quot;oneslaad&quot; then
+	mud:send(&quot;get 4.baatorian portable&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;put baatorian hole&quot;)
+	mud:send(&quot;wear baatorian&quot;)
+elseif item == &quot;girdle&quot; then
+	mud:send( g(&quot;girdle&quot;) )
+	mud:send(&quot;rem girdle&quot;)
+	mud:send( p(&quot;girdle&quot;) )
+	mud:send(&quot;wear girdle&quot;)
+	timer:set(&quot;SuppleGirdle&quot;, 1)
+end
+</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^swap ?(sleeves|girdle|loop|slaad|slaads|time|oneslaad|volance|onevolance|manacle|manacles|warder)?$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>dresschar</name>
@@ -20870,6 +20394,655 @@ mud:send(&quot;equip&quot;)</script>
                     <regex>^dresschar$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
+                    <name>undresschar</name>
+                    <script>function removeAll()
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all hole&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all hole&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all hole&quot;)
+end
+
+mud:send(&quot;storage access nyyrazzilyss&quot;)
+
+mud:send(&quot;rem insignia&quot;)
+mud:send(&quot;put insignia hole&quot;)
+
+if whoami() == &quot;Innanin&quot; then
+	mud:send(&quot;rem insignia&quot;)
+	mud:send(&quot;rem circlet&quot;)
+	mud:send(&quot;put all hole&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all merchants&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all merchants&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all merchants&quot;)
+	mud:send(&quot;get portable merchants&quot;)
+	mud:send(&quot;put merchants portable&quot;)
+end
+  
+if whoami() == &quot;Rrissun&quot; or whoami() == &quot;Bombad&quot; then
+	mud:send(&quot;rem warmaul&quot;)
+	mud:send(&quot;storage store warmaul&quot;)
+	removeAll()
+end
+
+if whoami() == &quot;Ajac&quot; or whoami() == &quot;Imseh&quot; or whoami() == &quot;Aynep&quot; or whoami() == &quot;Rrassulis&quot; or whoami() == &quot;Cajeed&quot; then
+	removeAll()
+
+	if whoami() == &quot;Aynep&quot; then
+		mud:send(&quot;get tome hole&quot;)
+	elseif whoami() == &quot;Ajac&quot; then
+		mud:send(&quot;get midnight-blue hole&quot;)
+	else
+		mud:send(&quot;get planetar hole&quot;)
+	end
+
+   	mud:send(&quot;get barrel hole&quot;)
+end
+
+if whoami() == &quot;Nyyrazzilyss&quot; then
+	mud:send(&quot;rem barrier&quot;)
+	mud:send(&quot;put barrier hole&quot;)
+	mud:send(&quot;rem fires&quot;)
+	mud:send(&quot;put fires hole&quot;)
+	mud:send(&quot;rem ice&quot;)
+	mud:send(&quot;put ice hole&quot;)
+	mud:send(&quot;rem drow&quot;)
+	mud:send(&quot;rem drow&quot;)
+	mud:send(&quot;put all.drow hole&quot;)
+	mud:send(&quot;rem force&quot;)
+	mud:send(&quot;put force hole&quot;)
+	mud:send(&quot;rem swirling&quot;)
+	mud:send(&quot;put swirling hole&quot;)
+	mud:send(&quot;rem pixie&quot;)
+	mud:send(&quot;put pixie hole&quot;)
+	mud:send(&quot;rem belt&quot;)
+	mud:send(&quot;put belt hole&quot;)
+	mud:send(&quot;rem sleeves&quot;)
+	mud:send(&quot;put sleeves hole&quot;)
+	mud:send(&quot;rem bracer&quot;)
+	mud:send(&quot;rem bracer&quot;)
+	mud:send(&quot;put all.bracer hole&quot;)
+	mud:send(&quot;rem ring&quot;)
+	mud:send(&quot;rem ring&quot;)
+	mud:send(&quot;put all.ring hole&quot;)
+	mud:send(&quot;rem staff&quot;)
+	mud:send(&quot;put staff hole&quot;)
+	mud:send(&quot;rem breeches&quot;)
+	mud:send(&quot;put breeches hole&quot;)
+	mud:send(&quot;rem sandals&quot;)
+	mud:send(&quot;put sandals hole&quot;)
+end
+
+if whoami() == &quot;Samem&quot; then
+	mud:send(&quot;rem planetar&quot;)
+	mud:send(&quot;storage store planetar&quot;)
+end
+
+if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == &quot;Samem&quot; or whoami() == &quot;Ihgod&quot; or whoami() == &quot;Tutenef&quot; then
+	mud:send(&quot;rem valhalla&quot;)
+	mud:send(&quot;storage store valhalla&quot;)
+	removeAll()
+end
+
+if whoami() == &quot;Bonble&quot; then
+	mud:send(&quot;rem gossamer&quot;)
+	mud:send(&quot;rem serpent&quot;)
+	mud:send(&quot;rem swirling&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;rem kinesis&quot;)
+	mud:send(&quot;rem rock&quot;)
+	mud:send(&quot;rem sharp&quot;)
+	mud:send(&quot;rem batskull&quot;)
+	mud:send(&quot;put all hole&quot;)
+	mud:send(&quot;rem sandals&quot;)
+	mud:send(&quot;put sandals hole&quot;)
+	mud:send(&quot;rem girdle&quot;)
+	mud:send(&quot;put girdle hole&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all merchants&quot;)
+	mud:send(&quot;rem all&quot;)
+	mud:send(&quot;put all merchants&quot;)
+	mud:send(&quot;get hole merchants&quot;)
+	mud:send(&quot;put merchants hole&quot;)
+end
+
+if whoami() == &quot;Vottoc&quot; then
+	mud:send(&quot;rem crown&quot;)
+	mud:send(&quot;put crown merchants&quot;)
+	mud:send(&quot;rem blood&quot;)
+	mud:send(&quot;rem blood&quot;)
+	mud:send(&quot;rem batskull&quot;)
+	mud:send(&quot;put batskull merchants&quot;)
+	mud:send(&quot;put all.blood merchants&quot;)
+	mud:send(&quot;rem cringing&quot;)
+	mud:send(&quot;put cringing merchants&quot;)
+	mud:send(&quot;rem scalemail&quot;)
+	mud:send(&quot;put scalemail merchants&quot;)
+	mud:send(&quot;rem swirling&quot;)
+	mud:send(&quot;put swirling hole&quot;)
+	mud:send(&quot;rem sleeves&quot;)
+	mud:send(&quot;put sleeves merchants&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;rem baatorian&quot;)
+	mud:send(&quot;put all.baatorian hole&quot;)
+	mud:send(&quot;rem rock&quot;)
+	mud:send(&quot;put rock hole&quot;)
+	mud:send(&quot;rem matriarch&quot;)
+	mud:send(&quot;put matriarch merchants&quot;)
+	mud:send(&quot;rem bane&quot;)
+	mud:send(&quot;put bane merchants&quot;)
+	mud:send(&quot;rem boots&quot;)
+	mud:send(&quot;put boots merchants&quot;)
+	mud:send(&quot;rem merchants&quot;)
+	mud:send(&quot;rem studs&quot;)
+	mud:send(&quot;put studs merchants&quot;)
+	mud:send(&quot;rem gorget&quot;)
+	mud:send(&quot;put gorget hole&quot;)
+	mud:send(&quot;rem gorget&quot;)
+	mud:send(&quot;put gorget hole&quot;)
+	mud:send(&quot;put merchants hole&quot;)
+end
+
+mud:send(&quot;put sack hole&quot;)
+
+mud:send(&quot;storage store hole&quot;)
+
+mud:send(&quot;equip&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^undresschar$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>encon</name>
+                    <script>mud:send(&quot;rem circlet&quot;)
+mud:send(&quot;get hat hole&quot;)
+mud:send(&quot;wear hat&quot;)
+mud:send(&quot;put circlet hole&quot;)
+mud:send(&quot;rem kinesis&quot;)
+mud:send(&quot;rem kinesis&quot;)
+mud:send(&quot;put kinesis hole&quot;)
+mud:send(&quot;put kinesis hole&quot;)
+mud:send(&quot;get power hole&quot;)
+mud:send(&quot;wear power&quot;)
+mud:send(&quot;get power hole&quot;)
+mud:send(&quot;wear power&quot;)
+mud:send(&quot;rem staff&quot;)
+mud:send(&quot;put staff hole&quot;)
+mud:send(&quot;get dagger hole&quot;)
+mud:send(&quot;wield dagger&quot;)
+mud:send(&quot;rem mask&quot;)
+mud:send(&quot;get gem hole&quot;)
+mud:send(&quot;wear gem&quot;)
+mud:send(&quot;put mask hole&quot;)
+mud:send(&quot;powers info time&quot;)
+mud:send(&quot;powers info gi&quot;)
+mud:send(&quot;powers info blur&quot;)
+mud:send(&quot;powers info hs&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^encon$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>encoff</name>
+                    <script>mud:send(&quot;rem hat&quot;)
+mud:send(&quot;get circlet hole&quot;)
+mud:send(&quot;wear circlet&quot;)
+mud:send(&quot;put hat hole&quot;)
+mud:send(&quot;rem power&quot;)
+mud:send(&quot;rem power&quot;)
+mud:send(&quot;put power hole&quot;)
+mud:send(&quot;put power hole&quot;)
+mud:send(&quot;get kinesis hole&quot;)
+mud:send(&quot;wear kinesis&quot;)
+mud:send(&quot;get kinesis hole&quot;)
+mud:send(&quot;wear kinesis&quot;)
+mud:send(&quot;rem dagger&quot;)
+mud:send(&quot;put dagger hole&quot;)
+mud:send(&quot;get staff hole&quot;)
+mud:send(&quot;hold staff&quot;)
+mud:send(&quot;rem gem&quot;)
+mud:send(&quot;put gem hole&quot;)
+mud:send(&quot;get mask hole&quot;)
+mud:send(&quot;wear mask&quot;)
+mud:send(&quot;powers info time&quot;)
+mud:send(&quot;powers info gi&quot;)
+mud:send(&quot;powers info blur&quot;)
+mud:send(&quot;powers info hs&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^encoff$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>fly</name>
+                    <script>if charData:get(&quot;container&quot;) == nil then
+	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
+	return
+end
+
+mud:send(&quot;rem swirling&quot;)
+mud:send( p(&quot;swirling&quot;) )
+mud:send( g(&quot;wings&quot;) )
+mud:send(&quot;wear wings&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^fly$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>walk</name>
+                    <script>if charData:get(&quot;container&quot;) == nil then
+	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
+	return
+end
+
+mud:send(&quot;rem wings&quot;)
+mud:send( p(&quot;wings&quot;) )
+mud:send( g(&quot;swirling&quot;) )
+mud:send(&quot;wear swirling&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^walk$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>food</name>
+                    <script>local container=charData:get(&quot;container&quot;)
+
+if container == &quot;&quot; then
+	cecho(&quot;&lt;red&gt;[container not set]\n&quot;)
+	return
+end
+
+mud:send(&quot;EAT &quot; .. charData:get(&quot;food&quot;) .. &quot; &quot; .. container)
+mud:send( g(charData:get(&quot;canteen&quot;)) )
+mud:send(&quot;DRINK &quot; .. charData:get(&quot;canteen&quot;) )
+mud:send( p(charData:get(&quot;canteen&quot;)) )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^food$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>seal</name>
+                    <script>mud:send( g(&quot;seal&quot;) )
+mud:send(&quot;rec seal me&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^seal$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>vitme</name>
+                    <script>mud:send(&quot;quaff cactus &quot; .. charData:get(&quot;container&quot;) )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^vitme$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>armor</name>
+                    <script>mud:send( g(&quot;ab&quot;) )
+mud:send(&quot;rec ab me&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^armor$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>scaleme</name>
+                    <script>mud:send(&quot;quaff blood hole&quot;)
+--mud:send(&quot;quaff blood &quot; .. charData:get(&quot;container&quot;) )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^scaleme$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>hasteme</name>
+                    <script>mud:send(&quot;quaff haste &quot; .. charData:get(&quot;container&quot;) )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^hasteme$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>mcast</name>
+                    <script>cecho(&quot;\n&lt;green&gt;[Mass Casting &quot; .. matches[2] .. &quot;]\n&quot;)
+
+for k,char in pairs(groupList:pc()) do
+	display(char)
+
+	spell:cast(matches[2] .. &quot; &quot; .. char)
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^mcast ([A-Za-z ]+)$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>zzz</name>
+                    <script>mud:send(&quot;get mistwalker hole&quot;)
+mud:send(&quot;rec mistwalker me&quot;)
+mud:send(&quot;darkness&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^zzz$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>multidrag</name>
+                    <script>display(&quot;drag &quot; .. matches[2] .. &quot; corpses &quot; .. matches[3])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^multidrag ([0-9]+) ([nsewud])$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>tiap ?(gsay|acc)?</name>
+                    <script>if matches[2] == &quot;gsay&quot; then
+	--send(&quot;gsay * Tiamat Points - This does NOT include current run&quot;)
+end
+
+for k,char in pairs(groupList:pc()) do
+	if inwho(char) then
+		local temp=string.format(&quot;[%11s] (%13s) %6d\n&quot;, char,	&quot;@&quot; .. inwho(char),getPoints(inwho(char)) )
+
+		if matches[2] == nil then
+			echo(temp)
+		end
+
+		if matches[2] == &quot;gsay&quot; then
+			mud:send(&quot;GSAY * &quot; .. temp)
+		end
+
+		if matches[2] == &quot;acc&quot; then
+			mud:send(&quot;ACC * &quot; .. temp)
+		end
+	end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^tiap ?(gsay|acc)?$</regex>
+                </Alias>
+            </AliasGroup>
+            <AliasGroup isActive="yes" isFolder="yes">
+                <name>MudAliases</name>
+                <script></script>
+                <command></command>
+                <packageName></packageName>
+                <regex></regex>
+                <Alias isActive="yes" isFolder="no">
+                    <name>follow</name>
+                    <script>mud:send (&quot;FOL &quot; .. matches[2] )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^fol (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>powers</name>
+                    <script>mud:send(&quot;POWERS &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^powers (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>help</name>
+                    <script>mud:send(&quot;HELP &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^help (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>forget spellname</name>
+                    <script>mud:send(&quot;FORGET &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^forget (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>eq</name>
+                    <script>mud:send(&quot;EQ&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^eq$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>mem spellname</name>
+                    <script>mud:send(&quot;MEM &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^mem (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>tog</name>
+                    <script>mud:send(&quot;TOG &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^tog (.+)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>scan</name>
+                    <script>scanned={}
+mud:send(&quot;SCAN&quot;)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^scan$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>l (look)</name>
+                    <script>gaglook=nil
+
+mud:send(&quot;L&quot; .. (matches[3] or &quot;&quot;) )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^(l|look)( .*)?$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>nhc</name>
+                    <script>if charData:get(&quot;swedish&quot;, true) then
+	mud:send (&quot;NHC &quot; .. swedish(matches[2]) )
+else
+	mud:send (&quot;NHC &quot; .. matches[2] )
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^nhc (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>tell</name>
+                    <script>-- que tell
+
+mud:send (&quot;T &quot; .. matches[2] )</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^t (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>gcc (swedish)</name>
+                    <script>if charData:get(&quot;swedish&quot;, true) then
+	mud:send (&quot;GCC &quot; .. swedish(matches[2]) )
+else
+	mud:send (&quot;GCC &quot; .. matches[2] )
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^gcc (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>say swedish</name>
+                    <script>-- swedish disabled because it doesn't proc properly
+
+mud:send (&quot;SAY &quot; .. matches[2])</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^say (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>ooc swedish</name>
+                    <script>if charData:get(&quot;swedish&quot;, true) then
+	mud:send (&quot;OOC &quot; .. swedish(matches[2]), false)
+else
+	mud:send (&quot;OOC &quot; .. matches[2], false)
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^ooc (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>acc swedish</name>
+                    <script>if charData:get(&quot;swedish&quot;, true) then
+	mud:send (&quot;ACC &quot; .. swedish(matches[2]) )
+else
+	mud:send (&quot;ACC &quot; .. matches[2] )
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^acc (.*)</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>gsay (gcmd)</name>
+                    <script>charData:init(&quot;gcmd&quot;, false)
+
+-- don't gsay if only a single groupmember and train is active
+
+if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
+	return
+end
+
+if charData:get(&quot;gcmd&quot;) then
+	if charData:get(&quot;swedish&quot;, true) then
+		mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
+	else
+		mud:send(&quot;GCMD &quot; .. matches[2])
+	end
+else
+	if charData:get(&quot;swedish&quot;, true) then
+		mud:send(&quot;GSAY &quot; .. swedish(matches[2]) )
+	else
+		mud:send(&quot;GSAY &quot; .. matches[2] )
+	end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^gsay (.*)$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>gcmd</name>
+                    <script>
+-- don't gcmd if only a single groupmember and train is active
+
+if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) ~= 0 and groupList:size() == 1 then
+	return
+end
+
+if charData:get(&quot;swedish&quot;, true) then
+	mud:send(&quot;GCMD &quot; .. swedish(matches[2]) )
+else
+	mud:send(&quot;GCMD &quot; .. matches[2])
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^gcmd (.*)$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>consent</name>
+                    <script>consent.chars= {}
+mud:send(&quot;CONSENT&quot;, false)</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^consent$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>escape</name>
+                    <script>if checkMask(&quot;rogue&quot;) then
+	NyyLIB.escapedir = matches[2]
+	mud:send(&quot;ESCAPE &quot; .. matches[2])
+else
+	NyyLIB.escapedir = matches[2]
+
+	if checkMask(&quot;caster&quot;) then
+		-- erase spellqueue if any spells present
+		spell:eraseQueue()
+
+		-- disable autocast
+		buttons:change(&quot;autocast&quot;, false, &quot;SpellsButton&quot;)
+
+		spell:clear()
+	end
+
+	-- set as currently moving
+	spell:setMoving(true)
+
+	mud:send(&quot;FLEE&quot;, false)
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^escape ([neswud])$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>mem</name>
+                    <script>-- Can't be moving if mem has been sent
+spell:setMoving(false)
+setQuake(false)
+
+automem = 2
+
+if memsent == true then
+	cecho(&quot;&lt;red&gt;[Mem previously sent: type 'prepare' to force]\n&quot;)
+	return
+end
+
+if spell:getMem() == true then
+	cecho(&quot;&lt;red&gt;\n[Already meming - If not type 'prepare']\n&quot;)
+	return
+end
+
+
+if charData:get(&quot;memcount&quot;) == nil or charData:get(&quot;memcount&quot;) == 0 and not checkMask(&quot;psi&quot;) then
+	cecho(&quot;&lt;red&gt;\n[Mem has completed. Type 'memd' or 'prayd' to list spells. Type 'prepare' to force mem]\n&quot;)
+	return
+end
+
+if inCombat() then
+	echoDebug(&quot;&lt;red&gt;[Fighting, can't memorize]\n&quot;)
+	return
+end
+
+if checkMask(&quot;singer&quot;) == false then
+	mud:send(&quot;REST&quot;)
+else
+	cecho(&quot;&lt;red&gt;[Singers can't memorize.]\n&quot;)
+	return
+end
+
+local label=findlabel(&quot;MemButton&quot;)
+
+if label ~= nil then
+	label:setStyleSheet([[border-image: url(]] .. iconpath(&quot;psiStand.png&quot;) .. [[)]])
+	echoDebug(&quot;&lt;red&gt;[Setting membutton to stand]&quot;)
+end
+
+if checkMask(&quot;psi&quot;) then
+	if charData:get(&quot;psicrystal&quot;) ~= &quot;&quot; then
+		mud:send(&quot;chargepsp &quot; .. charData:get(&quot;psicrystal&quot;) )
+	end
+
+	mud:send(&quot;MED&quot;)
+else
+	if checkMask(&quot;caster&quot;) then
+		spell:clear()
+	end
+
+	-- prepare doesn't give spell count
+	--send(&quot;prepare&quot;)
+
+	memsent=true
+
+	if checkMask(&quot;pray&quot;) then
+		mud:send(&quot;PRAY&quot;)
+	else
+		mud:send(&quot;MEM&quot;)
+	end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^(mem|pray)$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
                     <name>checkbucket</name>
                     <script>function getbuckets()
 	disableTrigger(&quot;Zurg&quot;)
@@ -20934,131 +21107,6 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^checkbucket$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>armor</name>
-                    <script>mud:send( g(&quot;ab&quot;) )
-mud:send(&quot;rec ab me&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^armor$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>blend</name>
-                    <script>mud:send(&quot;rem swirling&quot;)
-mud:send(&quot;get warder hole&quot;)
-mud:send(&quot;wear warder&quot;)
-mud:send(&quot;SAY blend&quot;)
-mud:send(&quot;rem warder&quot;)
-mud:send(&quot;wear swirling&quot;)
-mud:send(&quot;put warder hole&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^blend$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>vitme</name>
-                    <script>mud:send(&quot;quaff cactus &quot; .. charData:get(&quot;container&quot;) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^vitme$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>dep</name>
-                    <script>enableTrigger(&quot;DepositTrigger&quot;)
-mud:send( p(&quot;all.coin&quot;) )
-mud:send( g(&quot;all.coin&quot;) )
-mud:send( p(&quot;all.lucky&quot;) )</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^dep$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>^swap ?(girdle|loop|slaad)?$</name>
-                    <script>local item=matches[2]
-
-if item == nil then
-	cecho(&quot;&lt;red&gt;[swap volance|onevolance|girdle|loop|slaad|slaads|time|oneslaad to change item]\n&quot;)
-	return
-end
-
-if item == &quot;volance&quot; then
-	mud:send(&quot;rem volance&quot;)
-	mud:send(&quot;rem volance&quot;)
-	mud:send(&quot;wear volance&quot;)
-	mud:send(&quot;wear volance&quot;)
-	timer:set(&quot;TiaVolance&quot;, 1)
-elseif item == &quot;warder&quot; then
-	mud:send(&quot;get warder hole&quot;)
-	mud:send(&quot;rem warder&quot;)
-	mud:send(&quot;put warder hole&quot;)
-	mud:send(&quot;wear warder&quot;)
-elseif item == &quot;onevolance&quot; then
-	mud:send(&quot;get volance hole&quot;)
-	mud:send(&quot;rem volance&quot;)
-	mud:send(&quot;put volance hole&quot;)
-	mud:send(&quot;wear volance&quot;)
-elseif item == &quot;sleeves&quot; then
-	timer:set(&quot;TiaSleeves&quot;, 0)
-	mud:send(&quot;get gossamer hole&quot;)
-	mud:send(&quot;rem gossamer&quot;)
-	mud:send(&quot;put gossamer hole&quot;)
-	mud:send(&quot;wear gossamer&quot;)
-elseif item == &quot;manacle&quot; then
-	mud:send(&quot;get manacle hole&quot;)
-	mud:send(&quot;rem manacle&quot;)
-	mud:send(&quot;put manacle hole&quot;)
-	mud:send(&quot;wear manacle&quot;)
-	timer:set(&quot;TiaManacle&quot;, nil)
-elseif item == &quot;manacles&quot; then
-	mud:send(&quot;rem manacle&quot;)
-	mud:send(&quot;rem manacle&quot;)
-	mud:send(&quot;wear 2.manacle&quot;)
-	mud:send(&quot;wear manacle&quot;)
-	timer:set(&quot;TiaManacle&quot;, nil)
-elseif item == &quot;time&quot; then
-	mud:send(&quot;rem time&quot;)
-	mud:send(&quot;get 3.time hole&quot;)
-	mud:send(&quot;wear time&quot;)
-	mud:send(&quot;put time hole&quot;)
-elseif item == &quot;loop&quot; then
-	mud:send(&quot;rem loop&quot;)
-	mud:send(&quot;rem loop&quot;)
-	mud:send(&quot;wear 2.loop&quot;)
-	mud:send(&quot;wear loop&quot;)
-	timer:set(&quot;TiaLoop&quot;, 1)
-elseif item == &quot;slaad&quot; then
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;wear 2.baatorian&quot;)
-	mud:send(&quot;wear baatorian&quot;)
-	timer:set(&quot;baatorian&quot;, 1)
-elseif item == &quot;slaads&quot; then
-	mud:send(&quot;get baatorian hole&quot;)
-	mud:send(&quot;get baatorian hole&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;put baatorian hole&quot;)
-	mud:send(&quot;put baatorian hole&quot;)
-	mud:send(&quot;wear baatorian&quot;)
-	mud:send(&quot;wear baatorian&quot;)
-	timer:set(&quot;baatorian&quot;, 1)
-elseif item == &quot;oneslaad&quot; then
-	mud:send(&quot;get 4.baatorian portable&quot;)
-	mud:send(&quot;rem baatorian&quot;)
-	mud:send(&quot;put baatorian hole&quot;)
-	mud:send(&quot;wear baatorian&quot;)
-elseif item == &quot;girdle&quot; then
-	mud:send( g(&quot;girdle&quot;) )
-	mud:send(&quot;rem girdle&quot;)
-	mud:send( p(&quot;girdle&quot;) )
-	mud:send(&quot;wear girdle&quot;)
-	timer:set(&quot;SuppleGirdle&quot;, 1)
-end
-</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^swap ?(sleeves|girdle|loop|slaad|slaads|time|oneslaad|volance|onevolance|manacle|manacles|warder)?$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>who</name>
@@ -21127,42 +21175,11 @@ end</script>
                     <regex>^group$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>..reverse speedwalk (zmud)</name>
-                    <script>-- Walk reverse of path provided.
--- ..5ne will walk w5s
-
-local reversePath = &quot;&quot;
-
-local dirString   =   matches[2]:lower()
-
-for count, direction in string.gmatch(dirString, &quot;([0-9]*)([neswud])&quot;) do      
-	reversePath = count .. NyyLIB.reversedirs[direction] .. reversePath
-end
-
-expandAlias(&quot;.&quot; .. reversePath, false)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^[.][.]([0-9nsweudNSWEUD]+)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
                     <name>order</name>
                     <script>mud:send(&quot;ORDER &quot; .. matches[2])</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^o (.*)</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>meph</name>
-                    <script>mud:send(&quot;rescue ekahk&quot;)
-mud:send(&quot;rescue mephit&quot;)
-mud:send(&quot;rescue 2.mephit&quot;)
-mud:send(&quot;rescue 3.mephit&quot;)
-mud:send(&quot;rescue 4.mephit&quot;)
-mud:send(&quot;rescue 5.mephit&quot;)
-mud:send(&quot;rescue slaad&quot;)</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^meph$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -22847,6 +22864,7 @@ echo(&quot;[End import]\n&quot;)</script>
 -- 011dev
 
 -- bugfixes
+-- katumi database update - 9/27/17
 -- Many commands now have '@' at the start of the alias
 -- @help index will list all help entries
 -- rangers archery powers added
@@ -25582,9 +25600,11 @@ function procClericRealm()
 	if charData:get(&quot;autorealm&quot;) then
 		for k,char in pairs(groupList:pc()) do
 			if getSpellCount(&quot;greater_realm_of_protection&quot;) &gt; 0 then
-				if not buff:get(&quot;greater_realm_of_protecti&quot;, char) and groupList:getHP(char) ~= 0 then
-					spell:cast(&quot;realm &quot; .. char)
-					return(true)
+				if char ~= &quot;wolf&quot; then
+					if not buff:get(&quot;greater_realm_of_protecti&quot;, char) and groupList:getHP(char) ~= 0 then
+						spell:cast(&quot;realm &quot; .. char)
+						return(true)
+					end
 				end
 			end
 		end
@@ -26295,14 +26315,15 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 function initNec()
-	powerAliases:addButtons()
-
 	addbutton(&quot;protection_from_undead&quot;, 7, 6)
+	--addbutton(&quot;death_pact&quot;, 9, 46)
 	addbutton(&quot;globe_of_invulnerability&quot;,10, 41)
-	addbutton(&quot;banshee_wail&quot;, 11, 46)
+	addbutton(&quot;haste&quot;,11, 31)
+
+	addbutton(&quot;banshee_wail&quot;, 13, 46)
 	addbutton(&quot;SoulShackleButton&quot;, 14, 36)
 
-	--addbutton(&quot;haste&quot;,11, 31)
+	powerAliases:addButtons()
 end
 
 function SpellsNec()
@@ -27812,7 +27833,7 @@ function StartFight()
 		end			
 
 		-- Ranger - start with kick
-		mud:send(&quot;kick &quot; .. mobtarget)
+		mud:send(&quot;kc &quot; .. mobtarget)
 	else
 		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
 		NextTrainStop()
@@ -30847,7 +30868,7 @@ end
 function opendb()
 	NyyLIB.env = assert (luasql.sqlite3())
 	
-	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-07-11&quot;)))
+	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-09-27&quot;)))
 
 	display(NyyLIB.conn)
 end
@@ -32053,6 +32074,10 @@ function groupList:ingroup(xchar)
 
 	if xchar == &quot;&quot; then
 		return(false)
+	end
+
+	if xchar ~= nil then
+		xchar = string.title(xchar)
 	end
 
 	for nx=1, groupList:size(), 1 do
