@@ -82,6 +82,8 @@ eraseLine()</script>
                     <name>Capture Prompt</name>
                     <script>-- &lt; 416h/416H 110v/110V T: Zusuk TC: excellent E: ultrumm EC: nasty wounds EP: sit P: std &gt; 
 -- &lt; 1037h/1037H 134v/134V P: std &gt;
+-- &lt; 824h/824H 547p/911P 111v/111V P: std &gt;
+
 
 NyyLIB = NyyLIB or {}
 
@@ -118,17 +120,25 @@ if matches[8] ~= &quot;&quot; then
 	prompt:decodePowers(matches[8])
 end
 
-prompt:set(&quot;tank&quot;, matches[9]:trim())
-prompt:set(&quot;tankcondition&quot;, matches[10]:trim())
-prompt:set(&quot;enemy&quot;, matches[11]:trim())
+-- matches[9] - spell slots
+
+if matches[9] ~= &quot;&quot; then
+	prompt:decodeSpellSlots(matches[9])
+end
+
+
+
+prompt:set(&quot;tank&quot;, matches[10]:trim())
+prompt:set(&quot;tankcondition&quot;, matches[11]:trim())
+prompt:set(&quot;enemy&quot;, matches[12]:trim())
 
 if prompt:get(&quot;enemy&quot;) ~= &quot;&quot; then
 	setEnemy( prompt:get(&quot;enemy&quot;) )
 end
 
-prompt:set(&quot;enemycondition&quot;, matches[12]:trim())
-prompt:set(&quot;enemyposition&quot;, matches[13]:trim())
-prompt:set(&quot;position&quot;, matches[14]:trim())
+prompt:set(&quot;enemycondition&quot;, matches[13]:trim())
+prompt:set(&quot;enemyposition&quot;, matches[14]:trim())
+prompt:set(&quot;position&quot;, matches[15]:trim())
 
 groupList:setHP(whoami(), prompt:get(&quot;hp&quot;), prompt:get(&quot;maxhp&quot;) )
 
@@ -153,7 +163,7 @@ end
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>&lt; (?:(\d+)h)?\/?(?:(\d+)H)? ?(?:(\d+)p)?\/?(?:(\d+)P)? ?(?:(\d+)v)?\/?(?:(\d+)V)? ?[\|]?((?:[a-z]+ [0-9+]+\|)+)? ?(?:T: ([A-Za-z ]+))? ?(?:TC: ([A-Za-z ]+))? ?(?:E: ([A-Za-z ]+))? ?(?:EC: ([A-Za-z ]+))? ?(?:EP: ([A-Za-z ]+))? (?:P: (.*)) &gt;</string>
+                        <string>&lt; (?:(\d+)h)?\/?(?:(\d+)H)? ?(?:(\d+)p)?\/?(?:(\d+)P)? ?(?:(\d+)v)?\/?(?:(\d+)V)? ?[\|]?((?:[a-z]+ [0-9+]+\|)+)? ?[\|]?((?:[0-9 ]\|)+)? ?(?:T: ([A-Za-z ]+))? ?(?:TC: ([A-Za-z ]+))? ?(?:E: ([A-Za-z ]+))? ?(?:EC: ([A-Za-z ]+))? ?(?:EP: ([A-Za-z ]+))? (?:P: (.*)) &gt;</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -1208,6 +1218,9 @@ end
                     <name>failed spellcast</name>
                     <script>-- You abort your prayer before it's done! if moving gsay
 
+-- You are already affected by Greenfire!
+
+
 if matches[2] == &quot;are already affected by&quot; then
 	if spell:getCurrent() == nil then
 		echoDebug(&quot;&lt;red&gt;[Failed spellcast, but current is nil]&quot;)
@@ -1247,11 +1260,10 @@ end</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>They (are already affected by)</string>
-                        <string>You (are already affected by) that spell!</string>
+                        <string>You (are already affected by)</string>
                         <string>You don't have that spell memorized.</string>
                         <string>You don't see them here!</string>
                         <string>You have to be standing up to do that!</string>
-                        <string>You (are already affected by) Stoneskin!</string>
                         <string>You abort your prayer before it's done!</string>
                         <string>That power hasn't recharged yet!</string>
                         <string>That spell cannot be cast for another</string>
@@ -1289,7 +1301,6 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
-                        <integer>1</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -1640,7 +1651,7 @@ look:send()</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>You are already affected by that spell!</string>
+                        <string>You are already affected by</string>
                         <string>Your form begins to</string>
                     </regexCodeList>
                     <regexCodePropertyList>
@@ -4466,7 +4477,8 @@ end</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You're not ready to perform another action!</name>
-                        <script>timer:set(&quot;cooldown&quot;, 2)</script>
+                        <script>meleePowerUsed=nil
+timer:set(&quot;cooldown&quot;, 2)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -6639,7 +6651,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/4/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/6/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6715,7 +6727,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/4/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6899,7 +6911,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6987,7 +6999,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -15654,8 +15666,6 @@ sound(&quot;139025__rj10328__131659-bertrof-game-sound-intro-to-game-80921-justi
                     <script>-- Yinelinol drags corpse of Kitra along behind him.
 -- Misi drags corpse of Kitra along behind her.
 
-display(&quot;Z&quot;)
-
 -- Send consent request to corpse if person dragging was not cleric,
 -- and corpse owner is grouped
 
@@ -17208,6 +17218,26 @@ end</script>
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList>
                     <string>The door is opened from the other side.</string>
+                </regexCodeList>
+                <regexCodePropertyList>
+                    <integer>0</integer>
+                </regexCodePropertyList>
+            </Trigger>
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>You can't see who is fighting</name>
+                <script>-- need di</script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList>
+                    <string>You can't see who is fighting</string>
                 </regexCodeList>
                 <regexCodePropertyList>
                     <integer>0</integer>
@@ -19562,7 +19592,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;9/27/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/4/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 10/6/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -22863,6 +22893,7 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
+-- started adding new ranger spells
 -- bugfixes
 -- katumi database update - 9/27/17
 -- Many commands now have '@' at the start of the alias
@@ -26830,18 +26861,50 @@ end</script>
 function initRan()
 	powerAliases:addButtons()
 
+	-- ranger melee/bow buttons
+	
 	addbutton(&quot;twin_strike&quot;, 7, 1)
 	addbutton(&quot;eviscerate&quot;, 13, 25)	
 	addbutton(&quot;armor_splinter&quot;, 14, 15)
 	addbutton(&quot;bladestorm&quot;, 15, 30)
 
-	addbutton(&quot;natures_blessing&quot;, 9, 31)
+	-- ranger spell buttons
+	
+	addbutton(&quot;hunters_mark&quot;, 1, 1)
+	addbutton(&quot;cloak_of_the_winds&quot;, 6, 10)
+	addbutton(&quot;blades_of_fire&quot;, 8, 20)
+	addbutton(&quot;greenfire&quot;, 9, 40)
+	addbutton(&quot;electric_discharge&quot;, 10, 30)
 end
 
 function SpellsRan()
 	-- if fighting and no other spells cast damage spells
-	if powerAliases:castDamage() then
-		return
+
+	if inCombat() then
+		if charData:get(&quot;autoelec&quot;) then
+			if not buff:get(&quot;electric_discharge&quot;) and spell:getSlot(4) &gt; 1 then
+				spell:cast(&quot;ELD&quot;)
+			end
+		end
+
+		if charData:get(&quot;autogreen&quot;) then
+			if not buff:get(&quot;greenfire&quot;) and not buff:get(&quot;blades_of_fire&quot;) and spell:getSlot(5) &gt; 1 then
+				spell:cast(&quot;GRF&quot;)
+			end
+		end
+
+
+		if charData:get(&quot;autoblades&quot;) then
+			if not buff:get(&quot;blades_of_fire&quot;) and not buff:get(&quot;greenfire&quot;) and spell:getSlot(3) &gt; 1 then
+				spell:cast(&quot;BOF&quot;)
+			end
+		end
+
+		if charData:get(&quot;autowinds&quot;) then
+			if not buff:get(&quot;cloak_of_the_winds&quot;) and spell:getSlot(2) &gt; 1 then
+				spell:cast(&quot;CLW&quot;)
+			end
+		end
 	end
 end
 
@@ -26851,15 +26914,84 @@ function RanScript(event)
 		return
 	end
 
-	-- cast natures blessing if down and not moving
-	if charData:get(&quot;autobless&quot;) then
-		if not buff:get(&quot;natures_blessing&quot;) then
-			if getSpellCount(&quot;natures_blessing&quot;) &gt; 0 then
-				if not spell:getMoving() then
-					spell:cast(&quot;nb&quot;)
-				end
-			end
+	return
+end
+
+-- spell powers
+
+function hunters_mark(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;automark&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
 		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;automark&quot;, xcommand)
+	end
+end
+
+function cloak_of_the_winds(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autowinds&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autowinds&quot;, xcommand)
+	end
+end
+
+function blades_of_fire(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoblades&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autoblades&quot;, xcommand)
+	end
+end
+
+function greenfire(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autogreen&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autogreen&quot;, xcommand)
+	end
+end
+
+
+function electric_discharge(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoelec&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autoelec&quot;, xcommand)
 	end
 end
 
@@ -27021,11 +27153,12 @@ function procPromptRanger()
 	if not checkMask(&quot;ran&quot;) then
 		return
 	end
-		
+	
 	if inCombat() then
 		-- melee powers
 		if isIconActive(&quot;sweeping_strike&quot;) then
 			if charData:get(&quot;autobash&quot;) then
+				
 				if timer:get(&quot;sweeping_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
 					if prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
 						useMeleePower(&quot;ss&quot;)
@@ -27105,7 +27238,11 @@ function procPromptRanger()
 	end
 end
 
-function cooldown()
+function cooldown(fname, xcommand)
+	if xcommand &gt;= buttons.TIMEREXPIRE then
+		return
+	end
+	
 	procPromptRanger()
 end
 
@@ -27833,7 +27970,14 @@ function StartFight()
 		end			
 
 		-- Ranger - start with kick
-		mud:send(&quot;kc &quot; .. mobtarget)
+		
+		if charData:get(&quot;automark&quot;) and spell:getSlot(1) &gt; 0 then
+			spell:setMoving(false)
+			spell:cast(&quot;HM &quot; .. mobtarget)
+			timer:set(&quot;cooldown&quot;, 5)
+		else
+			mud:send(&quot;kc &quot; .. mobtarget)
+		end
 	else
 		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
 		NextTrainStop()
@@ -29326,7 +29470,7 @@ end
 		hitter = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;A-P&quot;, &quot;Pal&quot; },
 		hitterToRescue = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
 		singer = {&quot;Bar&quot;, &quot;Ctr&quot;},
-		autobless = {&quot;Bar&quot;, &quot;Ctr&quot;, &quot;Ran&quot;},
+		autobless = {&quot;Bar&quot;, &quot;Ctr&quot;},
 		autohide = {&quot;Psi&quot;, &quot;Rog&quot;},
 		hitterSinger = { &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		displace = { &quot;Cle&quot;, &quot;Dru&quot;, &quot;Sha&quot;, &quot;Ctr&quot;, &quot;Bar&quot;, &quot;Enc&quot;, &quot;Psi&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Nec&quot;, &quot;Rog&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
@@ -29339,8 +29483,8 @@ end
 		casterPsiSinger = {&quot;Psi&quot;, &quot;Dru&quot;, &quot;Enc&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Nec&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Cle&quot;, &quot;Sha&quot;, &quot;Bar&quot;, &quot;Ctr&quot; },
 		statHitter = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Ran&quot;, &quot;Dir&quot;, &quot;Bar&quot;, &quot;Ctr&quot;, &quot;Rog&quot; },
 		priest = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Ctr&quot;, &quot;Cle&quot; },
-		pray = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Cle&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
-		nonPriestCaster = { &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot;, &quot;Ran&quot; },
+		pray = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Cle&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot; },
+		nonPriestCaster = { &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot; },
 		rogue = {&quot;Rog&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		petRescue = { &quot;Psi&quot;, &quot;Cle&quot;, &quot;Enc&quot;, &quot;Dru&quot;, &quot;Lic&quot;, &quot;Sha&quot;, &quot;Inv&quot;, &quot;Ill&quot;, &quot;Ele&quot;,	 &quot;Nec&quot;, &quot;Bar&quot;, &quot;Ctr&quot;, &quot;Rog&quot;, &quot;Ran&quot; },
 		haster = { &quot;Enc&quot;, &quot;Nec&quot;, &quot;Ele&quot;, &quot;Lic&quot; },
@@ -29677,7 +29821,29 @@ charData = charData or {}
 	{ &quot;autohowl&quot;, &quot;dire&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;howl during combat&quot;,
 			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
 			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;automark&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;mark enemy during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;autowinds&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use winds during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;autoblades&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use blades of fire during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;autoelec&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use electric discharge during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
+		},
+	{ &quot;autogreen&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;use greenfire during combat&quot;,
+			&quot;\n&lt;green&gt;[@ will be used during combat.]\n&quot;,
+			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
 		}
+
+
 
  }
 
@@ -29978,39 +30144,23 @@ powerAliases[&quot;Dir&quot;] =
 						}
 powerAliases[&quot;Ran&quot;] = 
 						{	
-{ &quot;vigorize_light&quot;, &quot;vl&quot;, 1, &quot;&quot;, &quot;&quot;},
-{ &quot;shillelagh&quot;, &quot;shl&quot;, 1, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;detect_magic&quot;, &quot;dm&quot;, 1, &quot;&quot;, &quot;&quot;},
-{ &quot;sense_life&quot;, &quot;sen&quot;, 6, &quot;&quot;, &quot;&quot;},
-{ &quot;goodberry&quot;, &quot;gdb&quot;, 6, &quot;&quot;, &quot;&quot;},
-{ &quot;detect_good&quot;, &quot;dg&quot;, 6, &quot;&quot;, &quot;&quot;},
-{ &quot;detect_evil&quot;, &quot;de&quot;, 6, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_light&quot;, &quot;curel&quot;, 6, &quot;autoheal&quot;, &quot;&quot;},
-{ &quot;vigorize_serious&quot;, &quot;vs&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;faerie_fire&quot;, &quot;ff&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;detect_invisibility&quot;, &quot;di&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;create_water&quot;, &quot;cwater&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;bless&quot;, &quot;bls&quot;, 11, &quot;&quot;, &quot;&quot;},
-{ &quot;summon_insects&quot;, &quot;si&quot;, 16, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;invisibility&quot;, &quot;invis&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;faerie_fog&quot;, &quot;ffog&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_serious&quot;, &quot;cs&quot;, 16, &quot;&quot;, &quot;&quot;},
-{ &quot;vigorize_critic&quot;, &quot;vc&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;protection_from_animals&quot;, &quot;pfan&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;create_spring&quot;, &quot;cspring&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;sleep&quot;, &quot;slp&quot;, 26, &quot;&quot;, &quot;&quot;},
-{ &quot;dust_devil&quot;, &quot;dd&quot;, 26, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;barkskin&quot;, &quot;bark&quot;, 26, &quot;&quot;, &quot;&quot;},
-{ &quot;sticks_to_snakes&quot;, &quot;sts&quot;, 11, &quot;automissile&quot;, &quot;&quot;},
-{ &quot;strength&quot;, &quot;str&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;natures_blessing&quot;, &quot;nb&quot;, 31, &quot;autobless&quot;, &quot;&quot;},
-{ &quot;dispel_magic&quot;, &quot;dism&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;minor_paralysis&quot;, &quot;minp&quot;, 36, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_critic&quot;, &quot;ccr&quot;, 36, &quot;autoheal&quot;, &quot;&quot;},
-{ &quot;transport_via_plants&quot;, &quot;tvp&quot;, 41, &quot;&quot;, &quot;&quot;},
-{ &quot;call_lightning&quot;, &quot;call&quot;, 41, &quot;autohlarea&quot;, &quot;&quot;},
-{ &quot;pass_without_trace&quot;, &quot;pwt&quot;, 46, &quot;&quot;, &quot;&quot;},
-{ &quot;control_weather&quot;, &quot;conweather&quot;, 46, &quot;&quot;, &quot;&quot;},
+{ &quot;longstrider&quot;, &quot;lst&quot;, 1, &quot;&quot;, &quot;&quot;},
+{ &quot;hunters_mark&quot;, &quot;hm&quot;, 1, &quot;&quot;, &quot;&quot;},
+{ &quot;cloak_of_vigor&quot;, &quot;clv&quot;, 1, &quot;&quot;, &quot;&quot;},
+{ &quot;dawns_renewal&quot;, &quot;dr&quot;, 10, &quot;&quot;, &quot;&quot;},
+{ &quot;cloak_of_the_winds&quot;, &quot;clw&quot;, 10, &quot;&quot;, &quot;&quot;},
+{ &quot;beast_sense&quot;, &quot;bse&quot;, 10, &quot;&quot;, &quot;&quot;},
+{ &quot;lightning_arrow&quot;, &quot;lita&quot;, 20, &quot;&quot;, &quot;&quot;},
+{ &quot;cloak_of_protection&quot;, &quot;clp&quot;, 20, &quot;&quot;, &quot;&quot;},
+{ &quot;blades_of_fire&quot;, &quot;bof&quot;, 20, &quot;&quot;, &quot;&quot;},
+{ &quot;tree_stride&quot;, &quot;trs&quot;, 30, &quot;&quot;, &quot;&quot;},
+{ &quot;hail_of_thorns&quot;, &quot;hot&quot;, 30, &quot;&quot;, &quot;&quot;},
+{ &quot;electric_discharge&quot;, &quot;eld&quot;, 30, &quot;&quot;, &quot;&quot;},
+{ &quot;cloak_of_resilience&quot;, &quot;clr&quot;, 30, &quot;&quot;, &quot;&quot;},
+{ &quot;misty_path&quot;, &quot;msp&quot;, 40, &quot;&quot;, &quot;&quot;},
+{ &quot;greenfire&quot;, &quot;grf&quot;, 40, &quot;&quot;, &quot;&quot;},
+{ &quot;cloak_of_life&quot;, &quot;cll&quot;, 40, &quot;&quot;, &quot;&quot;},
+{ &quot;arctic_barrage&quot;, &quot;ab&quot;, 40, &quot;&quot;, &quot;&quot;}
 						}
 
 powerAliases[&quot;Dru&quot;] = 
@@ -32962,7 +33112,7 @@ function findlabel(xname)
 	end
 
 	if string.find(xname, &quot;^button[0-9][0-9]$&quot;) == nil then
-		echoDebug(&quot;&lt;red&gt;[label not found &quot; .. xname .. &quot;]&quot;)
+		-- echoDebug(&quot;&lt;red&gt;[label not found &quot; .. xname .. &quot;]&quot;)
 	end
 
 	return(nil)
@@ -33942,7 +34092,16 @@ function prompt:decodePowers(xstring)
 			end
 		end
 	end
-end</script>
+end
+
+function prompt:decodeSpellSlots(xstring)
+	local powersTable = string.split(xstring, &quot;|&quot;)
+
+	for nx=1,#powersTable-1,1 do
+		spell:setSlot(nx, tonumber(powersTable[nx]) )
+	end
+end
+</script>
                     <eventHandlerList/>
                 </Script>
                 <Script isActive="yes" isFolder="no">
@@ -36082,6 +36241,28 @@ function roomWindow:exists()
 end</script>
                     <eventHandlerList/>
                 </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>SpellSlots</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+spell = spell or {}
+
+spell.slots = spell.slots or {}
+
+
+function spell:setSlot(xslot, xvalue)
+	spell.slots[xslot] = xvalue
+end
+
+function spell:getSlot(xslot)
+	return ( spell.slots[xslot] )
+end</script>
+                    <eventHandlerList/>
+                </Script>
             </ScriptGroup>
             <ScriptGroup isActive="yes" isFolder="yes">
                 <name>Events</name>
@@ -36194,6 +36375,11 @@ function promptEvent(event)
 	-- proc equipment if needed 
 	procEquipment()
 
+	-- ranger self heal
+	if checkMask(&quot;ran&quot;) then
+		procRangerHeal()
+	end
+
 	-- send furious assault
 	if whorace( whoami() ) == &quot;Half-Orc&quot; then
 		if inCombat() then
@@ -36254,6 +36440,35 @@ function promptEvent(event)
 					end
 				end
 			end
+		end
+	end
+end
+
+function procRangerHeal()
+	local hp=prompt:get(&quot;hp&quot;)
+	local maxhp=prompt:get(&quot;maxhp&quot;)
+	local percent=hp/maxhp
+
+	-- exit if not in combat (no tank in prompt), or map has current room as fugue
+	-- this should prevent (some) proc commands from being issued in fugue
+
+	if prompt:get(&quot;tank&quot;) == &quot;&quot; or map:getRoom() == 93848 then
+		return
+	end
+
+	-- cast cloak of life (cll) on &lt; 50% hp if not already
+
+	if not buff:get(&quot;cloak_of_life&quot;) and spell:getSlot(5) &gt; 0 then
+		if percent &lt; .50 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
+			spell:cast(&quot;CLL&quot;)
+		end
+	end
+
+	-- cast dawns renewl (dr) on &lt; 70% hp
+
+	if spell:getSlot(2) &gt; 0 then
+		if percent &lt; .70 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
+			spell:cast(&quot;DR&quot;)
 		end
 	end
 end
