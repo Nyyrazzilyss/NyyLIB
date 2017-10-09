@@ -1294,10 +1294,12 @@ end</script>
                         <string>No target for your power could be found!</string>
                         <string>Pardon?</string>
                         <string>You may not cast offensive spells on other players.</string>
+                        <string>You need to wield a bow to do that.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -3358,6 +3360,18 @@ if charData:get(&quot;rescuetype&quot;) ~= &quot;off&quot; then
 			return
 		end
 
+		-- if ranger don't rescue rangers
+		
+		if checkMask(&quot;ran&quot;) and checkMask(&quot;ran&quot;, torescue) then
+			return
+		end
+		
+		-- 25% chance of rescuing rangers
+		
+		if checkMask(&quot;ran&quot;, torescue) and ((math.random() * 100) &gt; 25) then
+			return
+		end
+		
 		sendRescue(torescue)
 	end
 end</script>
@@ -6651,7 +6665,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/6/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/9/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7949,6 +7963,9 @@ if checkMask(&quot;ran&quot;) then
 		addbutton(&quot;splintering_shot&quot;, 14, 15)
 		addbutton(&quot;hail_of_arrows&quot;, 15, 30)
 
+		addbutton(&quot;lightning_arrow&quot;, 8, 20)
+		addbutton(&quot;arctic_barrage&quot;, 9, 40)
+		addbutton(&quot;hail_of_thorns&quot;, 10, 30)
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -8021,6 +8038,10 @@ if checkMask(&quot;ran&quot;) then
 		addbutton(&quot;eviscerate&quot;, 13, 25)	
 		addbutton(&quot;armor_splinter&quot;, 14, 15)
 		addbutton(&quot;bladestorm&quot;, 15, 30)
+	
+		addbutton(&quot;blades_of_fire&quot;, 8, 20)
+		addbutton(&quot;greenfire&quot;, 9, 40)
+		addbutton(&quot;electric_discharge&quot;, 10, 30)
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -17225,7 +17246,13 @@ end</script>
             </Trigger>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>You can't see who is fighting</name>
-                <script>-- need di</script>
+                <script>-- need di
+
+if checkMask(&quot;ran&quot;) then
+	if spell:getSlot(2) &gt; 0 then
+		spell:cast(&quot;BSE&quot;)
+	end
+end</script>
                 <triggerType>0</triggerType>
                 <conditonLineDelta>0</conditonLineDelta>
                 <mStayOpen>0</mStayOpen>
@@ -19592,7 +19619,7 @@ end</script>
                     <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;9/27/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/6/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 10/9/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -22515,6 +22542,10 @@ end</script>
 	NyyLIB.smtrainposition=nil
 	disableTrigger(&quot;trainstation&quot;)
 	expandAlias(&quot;@set statname unset&quot;, false)
+
+	if checkMask(&quot;fighter&quot;) then
+		buttons:change(&quot;rescuetype&quot;, &quot;basic&quot;, &quot;rescue&quot;)
+	end
 else
 	cecho(&quot;&lt;red&gt;[Stopping: Train car triggers]\n&quot;)
 	disableTrigger(&quot;SMTrainCaster&quot;)
@@ -22893,7 +22924,8 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
--- started adding new ranger spells
+-- rangers won't rescue rangers, and warriors will rescue rangers 25% of the time
+-- added new ranger spells
 -- bugfixes
 -- katumi database update - 9/27/17
 -- Many commands now have '@' at the start of the alias
@@ -26870,39 +26902,86 @@ function initRan()
 
 	-- ranger spell buttons
 	
+	addbutton(&quot;auto_heal&quot;, 2, 10)
+	
 	addbutton(&quot;hunters_mark&quot;, 1, 1)
 	addbutton(&quot;cloak_of_the_winds&quot;, 6, 10)
 	addbutton(&quot;blades_of_fire&quot;, 8, 20)
 	addbutton(&quot;greenfire&quot;, 9, 40)
 	addbutton(&quot;electric_discharge&quot;, 10, 30)
+
+	-- Spells button doesn't exist for ranger, but autocast needs to be enabled
+	
+	buttons:change(&quot;autocast&quot;, true, &quot;SpellsButton&quot;)
+end
+
+function auto_heal(fname, xcommand)
+	shiftSkillButton(&quot;auto_heal&quot;, &quot;auto_heal&quot;, xcommand)
 end
 
 function SpellsRan()
+	local healSlot = 0
+	
+	if charData:get(&quot;auto_heal&quot;) then
+		healSlot=1
+	end
+
 	-- if fighting and no other spells cast damage spells
 
 	if inCombat() then
-		if charData:get(&quot;autoelec&quot;) then
-			if not buff:get(&quot;electric_discharge&quot;) and spell:getSlot(4) &gt; 1 then
-				spell:cast(&quot;ELD&quot;)
+		if charData:get(&quot;automark&quot;) then
+			if not (spell:getCast())[&quot;hm&quot;] and spell:getSlot(1) &gt; 0 then
+				spell:setCast(&quot;hm&quot;)
+				spell:cast(&quot;HM&quot;)
 			end
 		end
-
-		if charData:get(&quot;autogreen&quot;) then
-			if not buff:get(&quot;greenfire&quot;) and not buff:get(&quot;blades_of_fire&quot;) and spell:getSlot(5) &gt; 1 then
-				spell:cast(&quot;GRF&quot;)
-			end
-		end
-
-
-		if charData:get(&quot;autoblades&quot;) then
-			if not buff:get(&quot;blades_of_fire&quot;) and not buff:get(&quot;greenfire&quot;) and spell:getSlot(3) &gt; 1 then
-				spell:cast(&quot;BOF&quot;)
-			end
-		end
-
+		
 		if charData:get(&quot;autowinds&quot;) then
-			if not buff:get(&quot;cloak_of_the_winds&quot;) and spell:getSlot(2) &gt; 1 then
+			if not buff:get(&quot;cloak_of_the_winds&quot;) and spell:getSlot(2) &gt; healSlot then
 				spell:cast(&quot;CLW&quot;)
+			end
+		end
+
+		-- melee spell powers
+		if isIconActive(&quot;sweeping_strike&quot;) then
+			if charData:get(&quot;autoelec&quot;) then
+				if not buff:get(&quot;electric_discharge&quot;) and spell:getSlot(4) &gt; healSlot then
+					spell:cast(&quot;ELD&quot;)
+				end
+			end
+
+			if charData:get(&quot;autogreen&quot;) then
+				if not buff:get(&quot;greenfire&quot;) and not buff:get(&quot;blades_of_fire&quot;) and spell:getSlot(5) &gt; healSlot then
+					spell:cast(&quot;GRF&quot;)
+				end
+			end
+
+			if charData:get(&quot;autoblades&quot;) then
+				if not buff:get(&quot;blades_of_fire&quot;) and not buff:get(&quot;greenfire&quot;) and spell:getSlot(3) &gt; healSlot then
+					spell:cast(&quot;BOF&quot;)
+				end
+			end
+		end
+		
+		-- bow spell powers
+	
+		if isIconActive(&quot;triple_shot&quot;) then
+	if charData:get(&quot;autoelec&quot;) then
+				if not buff:get(&quot;hail_of_thorns&quot;) and spell:getSlot(4) &gt; healSlot then
+					spell:cast(&quot;HOT&quot;)
+				end
+			end
+
+			if charData:get(&quot;autogreen&quot;) then
+				if not buff:get(&quot;arctic_barrage&quot;) and spell:getSlot(5) &gt; healSlot then
+					spell:cast(&quot;AB&quot;)
+				end
+			end
+
+			if charData:get(&quot;autoblades&quot;) then
+				if not buff:get(&quot;lightning_arrow&quot;) and spell:getSlot(3) &gt; healSlot then
+					spell:cast(&quot;LITA&quot;)
+				end
 			end
 		end
 	end
@@ -26964,6 +27043,21 @@ function blades_of_fire(fname, xcommand)
 	end
 end
 
+function lightning_arrow(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoblades&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autoblades&quot;, xcommand)
+	end
+end
+
 function greenfire(fname, xcommand)
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autogreen&quot;) then
@@ -26979,8 +27073,37 @@ function greenfire(fname, xcommand)
 	end
 end
 
+function arctic_barrage(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autogreen&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autogreen&quot;, xcommand)
+	end
+end
 
 function electric_discharge(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoelec&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+	
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autoelec&quot;, xcommand)
+	end
+end
+
+function hail_of_thorns(fname, xcommand)
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autoelec&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -27931,6 +28054,12 @@ function NextTrainStop()
 end
 
 function StartFight()
+	
+	-- train was just stopped
+	if NyyLIB.smtrainposition == nil then
+		return
+	end
+		
 	local mobtarget = string.split(NyyLIB.smtrainstops[NyyLIB.smtrainposition][2], &quot; &quot;)[1]
 
 	if NyyLIB.traintarget then
@@ -27969,15 +28098,8 @@ function StartFight()
 			end
 		end			
 
-		-- Ranger - start with kick
-		
-		if charData:get(&quot;automark&quot;) and spell:getSlot(1) &gt; 0 then
-			spell:setMoving(false)
-			spell:cast(&quot;HM &quot; .. mobtarget)
-			timer:set(&quot;cooldown&quot;, 5)
-		else
-			mud:send(&quot;kc &quot; .. mobtarget)
-		end
+		--spell:setMoving(false)
+		mud:send(&quot;kill &quot; .. mobtarget)
 	else
 		cecho(&quot;\n&lt;red&gt;[Target is damaged or already dead - Moving to next target]\n&quot;)
 		NextTrainStop()
@@ -28127,9 +28249,18 @@ function trainEngine()
 
 		charData:set(&quot;powersbash&quot;, false)
 
-		if checkMask(&quot;kicker&quot;) then
+		if checkMask(&quot;kicker&quot;) and not checkMask(&quot;ran&quot;) then
 			buttons:change(&quot;autokick&quot;, true, &quot;KickButton&quot; )
 		end
+
+		if checkMask(&quot;ran&quot;) then
+			buttons:change(&quot;automark&quot;, true, &quot;automark&quot; )
+			buttons:change(&quot;auto_heal&quot;, true, &quot;auto_heal&quot;)
+		end
+
+
+
+
 
 		-- dismount if currently mounted
 		if mount:getMounted() then
@@ -29648,6 +29779,7 @@ charData = charData or {}
 			&quot;\n&lt;red&gt;[Ancestral Shield turned off.]\n&quot;
 		},
 	{ &quot;autoheal&quot;, &quot;cle&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;cast fh/ha automatically&quot;},
+	{ &quot;auto_heal&quot;, &quot;ran&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;cast heal spells automatically&quot;},
 	{ &quot;turnundead&quot;, &quot;dmgundead&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;damage undead automatically&quot;,
 			&quot;\n&lt;green&gt;[@ will be cast during combat.]\n&quot;,
 			&quot;\n&lt;red&gt;[@ will not be used.]\n&quot;
@@ -36456,19 +36588,22 @@ function procRangerHeal()
 		return
 	end
 
-	-- cast cloak of life (cll) on &lt; 50% hp if not already
+	-- ranger heal procs are used if auto_heal is enabled
+	if charData:get(&quot;auto_heal&quot;) then
+		-- cast cloak of life (cll) on &lt; 50% hp if not already
 
-	if not buff:get(&quot;cloak_of_life&quot;) and spell:getSlot(5) &gt; 0 then
-		if percent &lt; .50 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
-			spell:cast(&quot;CLL&quot;)
+		if not buff:get(&quot;cloak_of_life&quot;) and spell:getSlot(5) &gt; 0 then
+			if percent &lt; .50 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
+				spell:cast(&quot;CLL&quot;)
+			end
 		end
-	end
 
-	-- cast dawns renewl (dr) on &lt; 70% hp
+		-- cast dawns renewl (dr) on &lt; 70% hp
 
-	if spell:getSlot(2) &gt; 0 then
-		if percent &lt; .70 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
-			spell:cast(&quot;DR&quot;)
+		if spell:getSlot(2) &gt; 0 then
+			if percent &lt; .70 and prompt:get(&quot;position&quot;) == &quot;std&quot; then
+				spell:cast(&quot;DR&quot;)
+			end
 		end
 	end
 end
