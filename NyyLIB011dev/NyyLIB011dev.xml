@@ -150,8 +150,7 @@ raiseEvent(&quot;promptEvent&quot;)
 if groupList:whoTanking() == false and prompt:get(&quot;tank&quot;) ~= &quot;&quot; then
 	groupList:incTanking(prompt:get(&quot;tank&quot;))
 	look:send()
-end
-</script>
+end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -191,6 +190,7 @@ sendFollowers(false)
 mud:send(&quot;display enemypos&quot;, false)
 mud:send(&quot;display position&quot;, false)
 mud:send(&quot;display twoline&quot;, false)
+mud:send(&quot;display slots&quot;, false)
 mud:send(&quot;ATT&quot;, false)
 mud:send(&quot;SC&quot;, false)
 mud:send(&quot;EQUIP&quot;, false)
@@ -368,6 +368,26 @@ checkVoteButton()</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>Position display turned OFF.</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>Spell slots display turned OFF.</name>
+                    <script>mud:send(&quot;display slots&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>Spell slots display turned OFF.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -4479,8 +4499,10 @@ end</script>
                             <string>They don't have have any legs for that!</string>
                             <string>You have to be dual wielding to do that.</string>
                             <string>You have to be standing up to do that!</string>
+                            <string>They are too large for you to do that!</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
@@ -4513,6 +4535,7 @@ timer:set(&quot;cooldown&quot;, 2)</script>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You sweep attack a devout priest with unbound fury, knocking him off balance!</name>
                         <script>-- You sweep attack a devout priest with unbound fury, knocking him off balance!
+-- You sweep attack Ersenas with a fury of blows, but he retains his balance.
 
 -- sweeping strike
 meleePowerUsed=false
@@ -6665,7 +6688,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/9/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/14/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6741,7 +6764,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/9/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6925,7 +6948,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7013,7 +7036,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -17270,6 +17293,29 @@ end</script>
                     <integer>0</integer>
                 </regexCodePropertyList>
             </Trigger>
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>clickable url</name>
+                <script>for i,v in ipairs(matches) do
+	selectString(matches[i], 1)
+	setLink([[openUrl(&quot;]]..matches[i]..[[&quot;)]], matches[i])
+end</script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList>
+                    <string>\b(?:(?:(?:https?|ftp|telnet)://[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+|www|ftp)(?:\.[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+)+|[\w\d._%+\-]+@[\w\d.\-]+\.[\w]{2,4})\b</string>
+                </regexCodeList>
+                <regexCodePropertyList>
+                    <integer>1</integer>
+                </regexCodePropertyList>
+            </Trigger>
         </TriggerGroup>
     </TriggerPackage>
     <TimerPackage/>
@@ -19616,10 +19662,12 @@ end</script>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>@version</name>
-                    <script>NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;9/27/2017&quot;
+                    <script>-- http://www.grokh.com/toril.db
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/9/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/11/2017&quot;
+
+cecho (&quot;\n&lt;red&gt;Script version: 10/14/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -20270,6 +20318,8 @@ if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == 
 		mud:send(&quot;get berserker hole&quot;)
 	else
 		mud:send(&quot;get electricity hole&quot;)
+		mud:send(&quot;get graven hole&quot;)
+		mud:send(&quot;wield graven&quot;)
 	end
 	
 	mud:send(&quot;get serpent hole&quot;)
@@ -20294,7 +20344,6 @@ if whoami() == &quot;Adud&quot; or whoami() == &quot;Wopur&quot; or whoami() == 
 	mud:send(&quot;get mesh hole&quot;)
 	mud:send(&quot;get darkwood hole&quot;)
 	mud:send(&quot;wear all&quot;)
-	mud:send(&quot;get graven hole&quot;)
 	mud:send(&quot;get seal hole&quot;)
 end
 
@@ -22477,7 +22526,7 @@ cecho(&quot;&lt;red&gt;[Attempting to identify &quot; .. matches[2] .. &quot;]\n
 data = sqliditem(matches[2])
 
 for k,v in pairs(data) do
-	cecho(&quot;&lt;green&gt;&quot; .. v .. &quot;\n&quot;)
+	cecho(&quot;\n&lt;green&gt;&quot; .. v .. &quot;\n&quot;)
 end
 
 cecho (&quot;&lt;red&gt;[&quot; .. #data .. &quot; matches in database]\n&quot;)</script>
@@ -22924,10 +22973,11 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
+-- urls in the main window are now clickable
 -- rangers won't rescue rangers, and warriors will rescue rangers 25% of the time
 -- added new ranger spells
 -- bugfixes
--- katumi database update - 9/27/17
+-- katumi database update - 10/11/17
 -- Many commands now have '@' at the start of the alias
 -- @help index will list all help entries
 -- rangers archery powers added
@@ -31150,7 +31200,7 @@ end
 function opendb()
 	NyyLIB.env = assert (luasql.sqlite3())
 	
-	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-09-27&quot;)))
+	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-10-11&quot;)))
 
 	display(NyyLIB.conn)
 end
@@ -31505,13 +31555,13 @@ function printDeaths()
 		--echo( string.format(&quot;%15s %d\n&quot;, k, getStat(k, &quot;death&quot;) ) )
 	end
 
-	echo (&quot;gcc * ... DEATH Top 20 ...\n&quot;)
+	cecho (&quot;&lt;blue&gt;gcc * &lt;red&gt;... DEATH Top 20 ...\n&quot;)
 
 	for k,v in spairs(deathcount, function(t, a, b) return (t[a]&gt;t[b]) end) do
 		nx=nx+1
 
 		if nx &lt; 21 then
-			echo( string.format(&quot;gcc * %-12s %d\n&quot;, k, getStat(k, &quot;death&quot;) ) )
+			cecho( string.format(&quot;&lt;blue&gt;gcc * &lt;green&gt;%-14s %d\n&quot;, k, getStat(k, &quot;death&quot;) ) )
 		end
 	end
 
@@ -31521,6 +31571,8 @@ function printHeals(xmode)
 	local gheals={}
 	local gotfullheal={}
 	local gothealingaura={}
+
+	local prefix = &quot;&lt;blue&gt;gcc &quot;
 
 	for k,v in pairs(NyyLIB.stats) do
 		if getStat(k, &quot;GroupHeal&quot;) ~= 0 then
@@ -31538,37 +31590,37 @@ function printHeals(xmode)
 		--end
 	end
 
-	echo(&quot;gsay * ............... Heal F-Heal G-Heal Aura Vit\n&quot;)
+	cecho(prefix .. &quot;* &lt;red&gt;............... Heal F-Heal G-Heal Aura Vit\n&quot;)
 
 	if xmode == &quot;3&quot; then
-		echo( &quot;gsay * ............... Heal F-Heal G-Heal Aura Vit&quot;)
+		cecho( &quot;&lt;blue&gt;gsay * &lt;red&gt;............... Heal F-Heal G-Heal Aura Vit&quot;)
 	end
 
 	if gheals ~= {} then
 		for k,v in spairs(gheals, function(t, a, b) return (t[a][1]&gt;t[b][1]) end) do
-			echo ( string.format(&quot;gsay * %-15s              %3d        %2d\n&quot;, k, v[1], v[2]) )
+			cecho ( string.format(prefix .. &quot;* &lt;green&gt;%-15s              %3d        %2d\n&quot;, k, v[1], v[2]) )
 
 			if xmode == &quot;3&quot; then
-				echo( string.format(&quot;gsay * %-15s  %3d        %3d\n&quot;, k, v[1], v[2]) )
+				cecho( string.format(prefix .. &quot;* &lt;green&gt;%-15s  %3d        %3d\n&quot;, k, v[1], v[2]) )
 			end	
 		end
 	end
 
 	for k,v in pairs(NyyLIB.stats) do
 		if whoclass(k) == &quot;Cle&quot; then
-			echo( string.format(&quot;gsay * %-15s        %2d           %2d  %2d\n&quot;, k, getStat(k, &quot;castFullHeal&quot;), getStat(k, &quot;castHealingAura&quot;), getStat(k, &quot;Vitality&quot;) ) )
+			cecho( string.format(prefix .. &quot;* &lt;green&gt;%-15s        %2d           %2d  %2d\n&quot;, k, getStat(k, &quot;castFullHeal&quot;), getStat(k, &quot;castHealingAura&quot;), getStat(k, &quot;Vitality&quot;) ) )
 		end
 	end
 
-	echo(&quot;gsay * ...............\n&quot;)
+	cecho(prefix .. &quot;* &lt;red&gt;...............\n&quot;)
 
 	if xmode == &quot;3&quot; then
-		echo( &quot;gsay * ...............&quot;)
+		cecho( prefix .. &quot;* &lt;red&gt;...............&quot;)
 	end
 
 	for k,v in spairs(gotfullheal, function(t, a, b) return (t[a]&gt;t[b]) end) do
 		if checkMask(&quot;warrior&quot;, k) then
-			echo( string.format(&quot;gsay * %-15s        %2d           %2d \n&quot;, k, v, getStat(k, &quot;gotHealingAura&quot;) ) )
+			cecho( string.format(prefix .. &quot;* &lt;green&gt;%-15s        %2d           %2d \n&quot;, k, v, getStat(k, &quot;gotHealingAura&quot;) ) )
 		end
 	end
 
@@ -31614,6 +31666,9 @@ function printStats(xmode)
 												c_glances*100/c_hit, c_glances,
 												c_pdeflect*100/c_hit, c_pdeflect   ) 
 
+	local prefix = &quot;&lt;blue&gt;gcc &quot;
+	
+	
 	for k,v in pairs(NyyLIB.stats) do
 		if k ~= whoami() then
 			if checkMask(&quot;statHitter&quot;, k) then
@@ -31626,20 +31681,18 @@ function printStats(xmode)
 		end
 	end 
 
-	--display(NyyLIB.stats)
-
-	echo(&quot;\npeople groupList:ingroup only - () echo (1) gsay hitters (2) gsay hitters+me (3) gsay all\n&quot;)
+	--echo(&quot;\npeople groupList:ingroup only - () echo (1) gsay hitters (2) gsay hitters+me (3) gsay all\n&quot;)
 
 
 	if hitters then
 		if xmode == nil then
-			echo(&quot;* ................... Hit (Total)   Rescues\n&quot;)
+			cecho(prefix .. &quot;* &lt;red&gt;................... Hit (Total)   Rescues\n&quot;)
 		else
 			if xmode == 3 then
-				send(&quot;gsay * [gsay stats reset] [gsay stats display]&quot;)
+				send(prefix .. &quot;* [gsay stats reset] [gsay stats display]&quot;)
 			end
 			--send(&quot;gsay * ......................   Hit (Total) Spells&quot;)
-			mud:send(&quot;gsay * ......................   Hit (Total)&quot;)
+			mud:send(prefix .. &quot;* ......................   Hit (Total)&quot;)
 		end
 	end
 
@@ -31661,7 +31714,7 @@ function printStats(xmode)
 
 		if whoclass(k) ~= nil then 
 
-			varstring =  string.format(&quot;[%3s] %-16s:%5.1f%% (%4d)&quot;,
+			varstring =  string.format(&quot;&lt;green&gt;[%3s] %-16s:%5.1f%% (%4d)&quot;,
 							whoclass(k), k, 
 							getHits(k)*100/(getHits(k)+getStat(k, &quot;offMiss&quot;)), 
 							getHits(k) + getStat(k, &quot;offMiss&quot;) )
@@ -31684,32 +31737,32 @@ function printStats(xmode)
 				end
 			end
 
-			varstring = &quot;* &quot; .. varstring .. &quot;\n&quot;
+			varstring = prefix .. &quot;* &quot; .. varstring .. &quot;\n&quot;
 
 			if checkMask(&quot;statHitter&quot;, k) then
 				if k ~= whoami() then
 					if xmode == 1 or xmode == 2 or xmode == 3 then
 						if groupList:ingroup(k) then
-							mud:send(&quot;gsay &quot; .. varstring)
+							mud:send(prefix .. varstring)
 						end
 					end
 				else
 					if xmode == 2 or xmode == 3 then
 						if groupList:ingroup(k) then
-							mud:send(&quot;gsay &quot; .. varstring)
+							mud:send(prefix .. varstring)
 						end
 					end
 				end
 			else
 				if xmode == 3 then
 					if groupList:ingroup(k) then
-						mud:send(&quot;gsay &quot; .. varstring)
+						mud:send(prefix .. varstring)
 					end
 				end
 			end
 
 			if xmode == nil then
-				echo(varstring)
+				cecho(varstring)
 	--			send(&quot;acc &quot; .. varstring)
 			end
 		end
@@ -31727,6 +31780,8 @@ function printStats(xmode)
 	echo(&quot;\n&quot;)
 
 	printHeals()
+
+	printDeaths()
 end
 
 function spairs(t, order)
