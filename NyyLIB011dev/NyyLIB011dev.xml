@@ -6689,7 +6689,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/17/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/20/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -19668,7 +19668,7 @@ end</script>
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/11/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 10/20/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -22974,6 +22974,7 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
+-- rangers: misty path, cloak of protection, cloak of resilience
 -- added autohide to ranger, removed kick, mount
 -- urls in the main window are now clickable
 -- rangers won't rescue rangers, and warriors will rescue rangers 25% of the time
@@ -26997,32 +26998,37 @@ function SpellsRan()
 			if not (spell:getCast())[&quot;hm&quot;] and spell:getSlot(1) &gt; 0 then
 				spell:setCast(&quot;hm&quot;)
 				spell:cast(&quot;HM&quot;)
+				return
 			end
 		end
 		
 		if charData:get(&quot;autowinds&quot;) then
 			if not buff:get(&quot;cloak_of_the_winds&quot;) and spell:getSlot(2) &gt; healSlot then
 				spell:cast(&quot;CLW&quot;)
+				return
 			end
 		end
 
 		-- melee spell powers
 		if isIconActive(&quot;sweeping_strike&quot;) then
-			if charData:get(&quot;autoelec&quot;) then
+			if charData:get(&quot;autoelec&quot;) and not charData:get(&quot;autoresil&quot;) then
 				if not buff:get(&quot;electric_discharge&quot;) and spell:getSlot(4) &gt; healSlot then
 					spell:cast(&quot;ELD&quot;)
+					return
 				end
 			end
 
 			if charData:get(&quot;autogreen&quot;) then
 				if not buff:get(&quot;greenfire&quot;) and not buff:get(&quot;blades_of_fire&quot;) and spell:getSlot(5) &gt; healSlot then
 					spell:cast(&quot;GRF&quot;)
+					return
 				end
 			end
 
-			if charData:get(&quot;autoblades&quot;) then
+			if charData:get(&quot;autoblades&quot;) and not charData:get(&quot;autoprotect&quot;) then
 				if not buff:get(&quot;blades_of_fire&quot;) and not buff:get(&quot;greenfire&quot;) and spell:getSlot(3) &gt; healSlot then
 					spell:cast(&quot;BOF&quot;)
+					return
 				end
 			end
 		end
@@ -27030,23 +27036,47 @@ function SpellsRan()
 		-- bow spell powers
 	
 		if isIconActive(&quot;triple_shot&quot;) then
-	if charData:get(&quot;autoelec&quot;) then
+	if charData:get(&quot;autoelec&quot;) and not charData:get(&quot;autoresil&quot;) then
 				if not buff:get(&quot;hail_of_thorns&quot;) and spell:getSlot(4) &gt; healSlot then
 					spell:cast(&quot;HOT&quot;)
+					return
 				end
 			end
 
 			if charData:get(&quot;autogreen&quot;) then
 				if not buff:get(&quot;arctic_barrage&quot;) and spell:getSlot(5) &gt; healSlot then
 					spell:cast(&quot;AB&quot;)
+					return
 				end
 			end
 
-			if charData:get(&quot;autoblades&quot;) then
+			if charData:get(&quot;autoblades&quot;) and not charData:get(&quot;autoprotect&quot;) then
 				if not buff:get(&quot;lightning_arrow&quot;) and spell:getSlot(3) &gt; healSlot then
 					spell:cast(&quot;LITA&quot;)
+					return
 				end
 			end
+		end
+	end
+
+	if charData:get(&quot;automisty&quot;) then
+		if not buff:get(&quot;misty_path&quot;) and spell:getSlot(5) &gt; 0 then
+			spell:cast(&quot;MSP&quot;)
+			return
+		end
+	end
+
+	if charData:get(&quot;autoresil&quot;) then
+		if not buff:get(&quot;cloak_of_resilience&quot;) and spell:getSlot(4) &gt; 0 then
+			spell:cast(&quot;CLR&quot;)
+			return
+		end
+	end
+
+	if charData:get(&quot;autoprotect&quot;) then
+		if not buff:get(&quot;cloak_of_protection&quot;) and spell:getSlot(3) &gt; 0 then
+			spell:cast(&quot;CLP&quot;)
+			return
 		end
 	end
 end
