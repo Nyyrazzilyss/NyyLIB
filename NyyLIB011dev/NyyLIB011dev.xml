@@ -3645,7 +3645,7 @@ end</script>
                         <script>-- if autokick enabled send kick
 --TODO: should change to recognize group leader bashing (trains). Can't kick if mounted
 
-if charData:get(&quot;autokick&quot;) then
+if charData:get(&quot;autokick&quot;) and not checkMask(&quot;ran&quot;) then
 	if groupList:ingroup(matches[2]) or matches[2] == &quot;Your&quot; then
 		mud:send(&quot;kc&quot;)
 	end
@@ -6689,7 +6689,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/20/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/22/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -10665,7 +10665,7 @@ end</script>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TM_Mochanokul</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -19666,9 +19666,9 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/11/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/22/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/20/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 10/22/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -26937,6 +26937,12 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 function initRan()
+
+	-- bash/kick has been removed from ranger. settings shouldn't be present
+	charData:set(&quot;powersbash&quot;, nil)
+	charData:set(&quot;autobash&quot;, nil)
+	charData:set(&quot;autokick&quot;, nil)
+
 	powerAliases:addButtons()
 
 	addbutton(&quot;autohide&quot;, 2, 1)
@@ -26989,6 +26995,27 @@ function SpellsRan()
 	
 	if charData:get(&quot;auto_heal&quot;) then
 		healSlot=1
+	end
+
+	if charData:get(&quot;automisty&quot;) then
+		if not buff:get(&quot;misty_path&quot;) and spell:getSlot(5) &gt; 0 then
+			spell:cast(&quot;MSP&quot;)
+			return
+		end
+	end
+
+	if charData:get(&quot;autoresil&quot;) then
+		if not buff:get(&quot;cloak_of_resilience&quot;) and spell:getSlot(4) &gt; 0 then
+			spell:cast(&quot;CLR&quot;)
+			return
+		end
+	end
+
+	if charData:get(&quot;autoprotect&quot;) then
+		if not buff:get(&quot;cloak_of_protection&quot;) and spell:getSlot(3) &gt; 0 then
+			spell:cast(&quot;CLP&quot;)
+			return
+		end
 	end
 
 	-- if fighting and no other spells cast damage spells
@@ -27056,27 +27083,6 @@ function SpellsRan()
 					return
 				end
 			end
-		end
-	end
-
-	if charData:get(&quot;automisty&quot;) then
-		if not buff:get(&quot;misty_path&quot;) and spell:getSlot(5) &gt; 0 then
-			spell:cast(&quot;MSP&quot;)
-			return
-		end
-	end
-
-	if charData:get(&quot;autoresil&quot;) then
-		if not buff:get(&quot;cloak_of_resilience&quot;) and spell:getSlot(4) &gt; 0 then
-			spell:cast(&quot;CLR&quot;)
-			return
-		end
-	end
-
-	if charData:get(&quot;autoprotect&quot;) then
-		if not buff:get(&quot;cloak_of_protection&quot;) and spell:getSlot(3) &gt; 0 then
-			spell:cast(&quot;CLP&quot;)
-			return
 		end
 	end
 end
@@ -31261,7 +31267,7 @@ end
 function opendb()
 	NyyLIB.env = assert (luasql.sqlite3())
 	
-	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db.2017-10-11&quot;)))
+	NyyLIB.conn = assert (NyyLIB.env:connect(mainpath(&quot;toril.db&quot;)))
 
 	display(NyyLIB.conn)
 end
