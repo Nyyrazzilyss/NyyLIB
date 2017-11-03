@@ -676,7 +676,10 @@ end</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>Gruumsh responds to your petition with</name>
-                        <script>-- Beshaba responds to your petition with
+                        <script>-- [Shevarash] Rebooting....
+
+
+-- Beshaba responds to your petition with
 if not chatCapture then
 	chatCapture=true
 	demonnic.chat:append(&quot;TELLS&quot;)
@@ -697,11 +700,13 @@ end</script>
                             <string>([A-Za-z]+) responds to your petition with</string>
                             <string>You petition</string>
                             <string>responds to your group with</string>
+                            <string>^\[[A-Z][a-z]+\]:? .*</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
                             <integer>0</integer>
                             <integer>0</integer>
+                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -6689,7 +6694,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/22/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/3/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6765,7 +6770,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 10/22/
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6949,7 +6954,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7037,7 +7042,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -10665,7 +10670,7 @@ end</script>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TM_Mochanokul</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -13505,7 +13510,7 @@ end</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>Enter 'y' to reroll, 'n' to accept these stats, '?' to view help, or two attributes to swap: </string>
+                        <string>You may choose to reroll your character at this time. If you elect</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -17198,7 +17203,7 @@ end
 
 timer:set(powername, timeleft)
 
-cecho(&quot;&lt;red&gt; [&quot; .. powername .. &quot;:&quot; .. timeleft .. &quot;]\n&quot;)</script>
+-- cecho(&quot;&lt;red&gt; [&quot; .. powername .. &quot;:&quot; .. timeleft .. &quot;]\n&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -17993,7 +17998,13 @@ end
                     </Alias>
                     <Alias isActive="yes" isFolder="no">
                         <name>sp (silence person)</name>
-                        <script>spell:setNext(&quot;SP &quot; .. matches[2])</script>
+                        <script>-- sp is shieldpunch, silence
+
+if checkMask(&quot;cle&quot;) or checkMask(&quot;sha&quot;) then
+	spell:setNext(&quot;SP &quot; .. matches[2])
+else
+	mud:send(&quot;SP &quot; .. matches[2])
+end</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^sp (.+)$</regex>
@@ -19666,18 +19677,25 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;10/22/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/3/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 10/22/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/3/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>test</name>
-                    <script>function testFunction()
-	return 1, 2
-end
+                    <script>	display( rex.match( &quot;http://www.yahoo.com&quot;,
+						&quot;\b(?:(?:(?:https?|ftp|telnet)://[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+|www|ftp)(?:\.[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+)+|[\w\d._%+\-]+@[\w\d.\-]+\.[\w]{2,4})\b&quot;
+					) )
+
+
+
+
+--function testFunction()
+--	return 1, 2
+--nd
 
 
 --local v1, v2 = testFunction()
@@ -19687,8 +19705,8 @@ end
 --display( v2 )
 
 
-local v1 = testFunction()
-display(v1)
+--local v1 = testFunction()
+--display(v1)
 
 
 --display( tonumber( charData:get(&quot;movebuffer&quot;) ) )
@@ -22596,6 +22614,10 @@ end</script>
 	if checkMask(&quot;fighter&quot;) then
 		buttons:change(&quot;rescuetype&quot;, &quot;basic&quot;, &quot;rescue&quot;)
 	end
+
+	if checkMask(&quot;ran&quot;) then
+		buttons:change(&quot;rescuetype&quot;, &quot;off&quot;, &quot;rescue&quot;)
+	end
 else
 	cecho(&quot;&lt;red&gt;[Stopping: Train car triggers]\n&quot;)
 	disableTrigger(&quot;SMTrainCaster&quot;)
@@ -22974,13 +22996,17 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
+-- Katumi database update - 11/3/17
+-- Map updated: full size 317 areas 45050 rooms
+-- autoroller accelerated
+-- buttons were added for autoportal, autoopen
+-- imm echoes of format [immname] message now captured
 -- rangers: misty path, cloak of protection, cloak of resilience
 -- added autohide to ranger, removed kick, mount
 -- urls in the main window are now clickable
 -- rangers won't rescue rangers, and warriors will rescue rangers 25% of the time
 -- added new ranger spells
 -- bugfixes
--- katumi database update - 10/11/17
 -- Many commands now have '@' at the start of the alias
 -- @help index will list all help entries
 -- rangers archery powers added
@@ -22994,7 +23020,6 @@ echo(&quot;[End import]\n&quot;)</script>
 -- @fwalk buffers path, and sends in 5-10 room bursts
 -- Removed @fwalk distance limit
 -- changed # command prefix to @
--- Map updated: full size 317 areas 45011 rooms
 
 -- 011c (update1)
 
@@ -24465,6 +24490,20 @@ end
 
 function Geyser.MiniConsole:append()
   appendBuffer(self.name)
+
+	-- TODO: should make clickable url here
+
+	-- get last line in self.name, then check against regex.
+	-- make clickable if needed
+	
+	-- selectCurrentLine(self.name)
+
+	--display( string.match( getCurrentLine(),
+	--					&quot;\b(?:(?:(?:https?|ftp|telnet)://[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+|www|ftp)(?:\.[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+)+|[\w\d._%+\-]+@[\w\d.\-]+\.[\w]{2,4})\b&quot;
+	--				) )
+
+	-- getCurrentLine()
+
 end
 
 function Geyser.MiniConsole:setStyleSheet(style)
@@ -25908,10 +25947,12 @@ function baseButtons()
 
 	-- non-class specific buttons at far right
 
-	addbutton(&quot;chkstat&quot;, 16, 0)
-	addbutton(&quot;flee&quot;, 17, 0)
-	addbutton(&quot;autoassist&quot;, 18, 0)
-	addbutton(&quot;autoloot&quot;, 19, 1)	
+	addbutton(&quot;chkstat&quot;, 16, 0, &quot;2.4%&quot;)
+	addbutton(&quot;flee&quot;, 16.66, 0, &quot;2.4%&quot;)
+	addbutton(&quot;autoassist&quot;, 17.33, 0, &quot;2.4%&quot;)
+	addbutton(&quot;autoloot&quot;, 18, 0, &quot;2.4%&quot;)	
+	addbutton(&quot;autoopen&quot;, 18.66, 0, &quot;2.4%&quot;)	
+	addbutton(&quot;autoportal&quot;, 19.33, 0, &quot;2.4%&quot;)	
 	
 	if checkMask(&quot;petrescue&quot;) then
 		addbutton(&quot;pet_rescue&quot;, 15, 1)
@@ -26147,6 +26188,14 @@ function mysizeDisplay(fname, xcommand)
 	elseif tmpvar == &quot;H&quot; then
 		setLabelImage(fname, &quot;sizeh.png&quot;)
 	end
+end
+
+function autoportal(fname, xcommand)
+	shiftSkillButton(&quot;autoportal&quot;, &quot;autoportal&quot;, xcommand)
+end
+
+function autoopen(fname, xcommand)
+	shiftSkillButton(&quot;autoopen&quot;, &quot;autoopen&quot;, xcommand)
 end
 
 function autoassist(fname, xcommand)
@@ -26972,6 +27021,10 @@ function initRan()
 	-- Spells button doesn't exist for ranger, but autocast needs to be enabled
 	
 	buttons:change(&quot;autocast&quot;, true, &quot;SpellsButton&quot;)
+
+	-- disable rescue if it's enabled
+	
+	buttons:change(&quot;rescuetype&quot;, &quot;off&quot;, &quot;rescue&quot;)
 end
 
 function misty_path(fname, xcommand)
@@ -27708,6 +27761,8 @@ function equipment:getByLongName(xname)
 
 	return(nil)
 end
+
+-- This function returns the entire table entry that passed value matches shortname ( &quot;TiaScale&quot; )
 
 function equipment:getByShortName(xname)
 	for nx=1, #equipment, 1 do
@@ -29786,9 +29841,15 @@ charData = charData or {}
 	{ &quot;border&quot;, &quot;&quot;, {&quot;default&quot;, &quot;file&quot;, &quot;none&quot;}, &quot;default&quot;, &quot;&quot;},
 	{ &quot;numcolor&quot;, &quot;&quot;, {&quot;*&quot;}, &quot;orange&quot;, &quot;color of numbers on buttons&quot;},
 	{ &quot;statname&quot;, &quot;*&quot;, {&quot;*&quot;}, &quot;unset&quot;, &quot;&quot;},
-	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto-open doors&quot; },
+	{ &quot;autoopen&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto-open doors&quot;,
+				&quot;\n&lt;green&gt;[Doors will be opened while moving and pathing.]\n&quot;,
+				&quot;\n&lt;red&gt;[Doors will not be opened.]\n&quot;,
+		},
 	{ &quot;echodrag&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;echo when a corpse is dragged&quot; },
-	{ &quot;autoportal&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto enter rifts/portals/etc&quot; },
+	{ &quot;autoportal&quot;, &quot;*&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;false&quot;, &quot;auto enter rifts/portals/etc&quot;,
+				&quot;\n&lt;green&gt;[Special exits will be entered if warrior+1 group members use it.]\n&quot;,
+				&quot;\n&lt;red&gt;[Special exits will not be used automatically.]\n&quot;,
+		},
 	{ &quot;movebuffer&quot;, &quot;&quot;, {&quot;#&quot;}, &quot;10&quot;, &quot;maximum movements to send before buffering&quot; },
 	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;, &quot;debug2&quot;}, &quot;&quot;, &quot;&quot; },
 	{ &quot;vnum&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;display room vnum&quot; },
@@ -32139,7 +32200,7 @@ function shiftSkillButton(xfname, xchardata, xcommand)
 		return
 	end
 
-	--display( charData:get(xchardata) )
+	-- display( charData:get(xchardata) )
 
 	if xcommand ~= buttons.INIT then
 		shiftSetting(xfname, xchardata)
@@ -33248,7 +33309,7 @@ buttons.CLICK = -2
 buttons.UPDATE = -3
 buttons.ENTER = -4
 buttons.NESTCLICK = -5
-
+buttons.HOVER = -6
 
 function updateButton(xname, nest)
 	local label
@@ -33320,7 +33381,14 @@ function isIconActive(xname)
 end
 
 
-function closeNests()
+-- The closeNests() function is called on entry of any icon
+
+function closeNests(xname,xid)
+	
+	currentIcon = {xname,xid}
+
+	-- display(currentIcon)
+
 	-- close all open nests
 	local nx
 	local label
@@ -33420,7 +33488,10 @@ function addLeftbutton(xname, xid, xlevel, xwidth, xheight)
 
 		--newbutton:setClickCallback(xname, xname)
 		newbutton:setClickCallback(xname, xname, buttons.CLICK)
-		newbutton:setOnEnter( &quot;closeNests&quot; )
+		
+		-- no tooltips on left equip bar
+		--newbutton:setOnEnter( &quot;closeNests&quot;, xname, xid )
+		--newbutton:setOnLeave( &quot;buttonLeave&quot; ) -- use this to clear tooltips
 
 		newbutton:show()
 
@@ -33430,6 +33501,54 @@ function addLeftbutton(xname, xid, xlevel, xwidth, xheight)
 	end
 
 	return(newbutton)
+end
+
+function buttonLeave()
+	currentIcon=nil
+	hideToolTip()
+end
+
+function hideToolTip()
+	-- display(&quot;hide&quot;)
+	
+	if toolTip ~= nil then
+		toolTip:hide()
+	end
+
+	toolTipActive = false
+end
+
+function showToolTip()
+	if currentIcon == nil or currentIcon[2] == nil then
+		--display(&quot;error: currentIcon is nil&quot;)
+		return
+	end
+	
+	if currentIcon[2] &lt; 16 then
+		toolTip:move( iconxp(currentIcon[2]+1), 10)
+	else
+		toolTip:move( iconxp(currentIcon[2]-2), 10)
+	end
+
+	toolTip:resize( string.len(currentIcon[1]) .. &quot;c&quot;, nil)
+		
+	toolTip:cecho( &quot; &quot; .. currentIcon[1] )
+		
+	toolTip:show()
+	raiseWindow(toolTip.name)
+	toolTipActive = true
+end
+
+function dummy()
+	return
+end
+
+function createButtons()
+	local nx=0
+	
+	for nx=1, 15, 1 do
+		addbutton(&quot;dummy&quot;, nx, 0)
+	end
 end
 
 -- button name, position (1-20), minimum level to create, width (or nil), height (or nil)
@@ -33467,12 +33586,15 @@ function addbutton(xname, xid, xlevel, xwidth, xheight)
 			newbutton = NyyLIB.buttonarray[xid][2]
 		else
 			newbutton = Geyser.Label:new({name=createname, x=iconxp(xid), y=iconyp(xid), width=xwidth, height=xheight}, window)
+
+			if xname == &quot;dummy&quot; then
+				NyyLIB.buttonarray[xid] = {xname, newbutton}
+				return
+			end
 		end
 
 		newbutton:setFontSize(window.fontSize)
-
 		newbutton:echo([[&lt;p style=&quot;font-size:12px&quot;&gt;&lt;b&gt;&lt;center&gt;     &lt;br&gt;     &lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])
-
 
 		-- if no existing function use the generic spell button function
 		if _G[xname] == nil then
@@ -33483,7 +33605,9 @@ function addbutton(xname, xid, xlevel, xwidth, xheight)
 			newbutton:setClickCallback(xname, xname, buttons.CLICK)
 		end
 
-		newbutton:setOnEnter( &quot;closeNests&quot; )
+		newbutton:setOnEnter( &quot;closeNests&quot;, xname, xid )
+
+		newbutton:setOnLeave( &quot;buttonLeave&quot; ) -- use this to clear tooltips
 
 		newbutton:show()
 
@@ -33512,8 +33636,8 @@ function findbutton(xid)
 end
 
 function iconxp(xnum)
-	if xnum &gt; 19 then
-		xnum = 19
+	if xnum &gt; 20 then
+		xnum = 20
 	end
 
 	return( xnum/20*100 .. &quot;%&quot; )
@@ -33644,6 +33768,80 @@ function createRightsideContainers()
 	local label = Geyser.Label:new({name=&quot;RightLabel&quot;, x=&quot;66%&quot;, y=&quot;0%&quot;, width=&quot;34%&quot;, height=&quot;100%&quot;,})
 	Geyser.Container:new({name=&quot;RightPanel&quot;, x=&quot;1%&quot;, y=&quot;2%&quot;, width=&quot;98%&quot;, height=&quot;90%&quot;,}, label)
 end
+
+function createToolTip()
+	local iconBar=Geyser.Label:getWindow(&quot;gIconBarWindow&quot;)
+	
+	if toolTip == nil then
+		toolTip = Geyser.Label:new({name=&quot;toolTip&quot;, x=80, y=80, width=&quot;30c&quot;, height=&quot;1c&quot;,fgColor = &quot;black&quot;,color = &quot;white&quot;,}, iconBar)
+		toolTip:setFontSize(14)
+	
+		toolTip:setOnEnter( &quot;hideToolTip&quot; )
+	end
+end
+
+
+function settoolstyle()
+
+local button=NyyLIB.buttonarray[3][2]
+
+
+button:setStyleSheet([[
+&lt;style&gt;
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+&lt;/style&gt;
+
+&lt;div class=&quot;tooltip&quot;&gt;Hover over me
+  &lt;span class=&quot;tooltiptext&quot;&gt;Tooltip text&lt;/span&gt;
+&lt;/div&gt;
+]])
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function setBorder()
@@ -33803,6 +34001,12 @@ function initgui()
 
 		window:show()
 		window:hide()
+	
+		-- create all possible buttons
+		createButtons()
+	
+		-- createtooltip
+		createToolTip()
 	end
 
 	window:setFontSize(8)
@@ -34208,6 +34412,29 @@ end
 function timer:custom()
 	NyyLIB.ticktimer= NyyLIB.ticktimer-1
 
+	local x, y = getMousePosition()
+	local movement=false
+	
+	if x ~= mousex or y ~= mousey then
+		-- mouse movement has occured
+		movement=true
+		
+		mousex=x
+		mousey=y
+	end
+	
+	-- a tooltip is visible and mouse movement has occured
+	if toolTipActive and movement then
+			toolTip:hide()
+	end
+
+	-- if no mouse movement, inside icon, and no tooltip currently displayed: display tooltip
+	
+	-- call button function with value passed: buttons.HOVER
+	if not movement and currentIcon and not toolTipActive then
+		showToolTip()
+	end
+	
 	if NyyLIB == nil or Geyser.Label:getWindow(&quot;gIconBarWindow&quot;) == nil then
 		return
 	end
@@ -37201,6 +37428,22 @@ function saveNyyLIB()
 end</script>
                     <eventHandlerList>
                         <string>sysExitEvent</string>
+                    </eventHandlerList>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>sysWindowMouseMoveEvent</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+
+function sysWindowMouseMoveEvent(var)
+	display(var)
+end</script>
+                    <eventHandlerList>
+                        <string>sysWindowMouseMoveEvent</string>
                     </eventHandlerList>
                 </Script>
             </ScriptGroup>

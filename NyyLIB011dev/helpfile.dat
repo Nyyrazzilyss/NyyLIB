@@ -641,6 +641,16 @@ Ogre - 25
 Orc - 34
 Troll - 21
 Yuan-ti - 40
+;;425,update
+<red>In-place updating of an existing profile: 
+
+<green>1) Prior to updating, use the #backup command to make a backup of your datafiles into another folder. 
+<green>    ** NOTE ** <red>This doesn't backup any changes you might have made to the script itself.
+<green>2) Select the package manager icon inside mudlet, and uninstall the previous package installed. 
+<green>    ** NOTE ** <red>The previous package will be prefixed with NyyLIB - Don't remove anything else!
+<green>3) Import the new NyyLIB zip file you downloaded.
+<green>4) Exit and restart mudlet.
+<green>5) After logging in, type '#map update' to update older maps with the map included with the newer version.
 ;;450,@debug
 This command will display some information useful when debugging.
 ;;460,@mtank
@@ -694,4 +704,24 @@ http://www.torilmud.com/phpBB3/
 Displays the current script version.
 ;;620,@chkstat
 This command sends a gagged status request on all grouped players.
+;;650,autoloot
+<red>Autoloot
+
+<green>“Autoloot” refers to automatically getting (or “looting”) items from the corpse of a monster (also called
+<green>a “mob” or “mobile”), after you’ve killed it.
+
+<green>There are two ways to set your autoloot options.
+
+<green>Click the icon on the bottom button bar, furthest to the right, which cycles between looting coins only,
+<green>looting all items (including coins), or turning autoloot off completely.
+
+<green>Using the ‘@set autoloot’ command.
+
+<green>Usage:
+
+<green>@set autoloot coins - loots coins only.
+<green>@set autoloot all   - loots all items (including coins).
+<green>@set autoloot off   - turns off autoloot.
+
+<green>See also: @help @set, @set, @help index
 
