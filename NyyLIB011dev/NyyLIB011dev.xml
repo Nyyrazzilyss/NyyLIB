@@ -1483,9 +1483,9 @@ automem = 0
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>[A-Za-z]+ group-says '(mov|mv|omv|dmov|mvo).*</string>
-                        <string>([A-Za-z]+) group-says '(Adud|adud|tanks) ([nsewud]).*'</string>
-                        <string>.* group-says '\[Moving to: .*</string>
+                        <string>[A-Za-z]+ group-says? '(mov|mv|omv|dmov|mvo).*</string>
+                        <string>([A-Za-z]+) group-says? '(Adud|adud|tanks) ([nsewud]).*'</string>
+                        <string>.* group-says? '\[Moving to: .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -6694,7 +6694,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/3/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/4/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7042,7 +7042,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -11784,7 +11784,7 @@ local portalname = matches[3]
 enteredPortal = enteredPortal or {}
 
 
-if groupList:ingroup(charname) and charData:get(&quot;autoportal&quot;, false) then
+if groupList:ingroup(charname) and charData:get(&quot;autoportal&quot;) then
 	enteredPortal[charname] = &quot;entered&quot;
 
 	-- return if &lt; 6 people in group, or no warriors
@@ -15529,8 +15529,10 @@ end</script>
                         <string>screams in exquisite pain as a lightning bolt unleashed by</string>
                         <string>Bits of flesh fall to the floor as</string>
                         <string>exposed skin shrivels and cracks in the extreme heat.</string>
+                        <string>his body, and a loud sizzling sound can be heard as his body dissolves</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -19679,7 +19681,7 @@ end</script>
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/3/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/3/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/4/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -22998,6 +23000,7 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- Katumi database update - 11/3/17
 -- Map updated: full size 317 areas 45050 rooms
+-- added tooltips to lower icons
 -- autoroller accelerated
 -- buttons were added for autoportal, autoopen
 -- imm echoes of format [immname] message now captured
@@ -33523,17 +33526,27 @@ function showToolTip()
 		--display(&quot;error: currentIcon is nil&quot;)
 		return
 	end
-	
+
+	local WindowWidth, WindowHeight = getMainWindowSize()
+	local wwidth,wheight = calcFontSize(14)
+
+	--display(wwidth)
+	--display(currentIcon[1])
+	--display(string.len(currentIcon[1]))
+
+	local xs = string.len(currentIcon[1]) * wwidth
+		
+	toolTip:resize( xs, nil)
+		
+	toolTip:echo( &quot; &quot; .. currentIcon[1] )
+		
+	-- move icon to left or right of active icon
 	if currentIcon[2] &lt; 16 then
 		toolTip:move( iconxp(currentIcon[2]+1), 10)
 	else
-		toolTip:move( iconxp(currentIcon[2]-2), 10)
+		toolTip:move( currentIcon[2]*WindowWidth/20-xs-10, 10)
 	end
 
-	toolTip:resize( string.len(currentIcon[1]) .. &quot;c&quot;, nil)
-		
-	toolTip:cecho( &quot; &quot; .. currentIcon[1] )
-		
 	toolTip:show()
 	raiseWindow(toolTip.name)
 	toolTipActive = true
@@ -33773,7 +33786,7 @@ function createToolTip()
 	local iconBar=Geyser.Label:getWindow(&quot;gIconBarWindow&quot;)
 	
 	if toolTip == nil then
-		toolTip = Geyser.Label:new({name=&quot;toolTip&quot;, x=80, y=80, width=&quot;30c&quot;, height=&quot;1c&quot;,fgColor = &quot;black&quot;,color = &quot;white&quot;,}, iconBar)
+		toolTip = Geyser.Label:new({name=&quot;toolTip&quot;, x=80, y=80, width=&quot;30c&quot;, height=25,fgColor = &quot;black&quot;,color = &quot;white&quot;,}, iconBar)
 		toolTip:setFontSize(14)
 	
 		toolTip:setOnEnter( &quot;hideToolTip&quot; )
@@ -34761,7 +34774,13 @@ end
 function spell:setMoving(xstatus)
 
 	if self.moving ~= xstatus then
-		echoDebug(&quot;&lt;green&gt;\n[spell:setMoving(xstatus) : &quot; .. tostring(xstatus) .. &quot;]\n&quot;)
+		if xstatus then
+			cecho(&quot;&lt;red&gt;\n[Currently moving - spellcast is temporarily disabled]\n&quot;)
+		else
+			cecho(&quot;&lt;red&gt;\n[No longer moving - spellcast has been re-enabled]\n&quot;)
+		end
+		
+		--cecho(&quot;&lt;red&gt;\n[spell:setMoving(xstatus) : &quot; .. tostring(xstatus) .. &quot;]\n&quot;)
 	end
 
 	if xstatus then
