@@ -1361,7 +1361,7 @@ end</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>You're busy spellcasting! </name>
+                    <name>You're busy spellcasting!</name>
                     <script>if spell:getCurrent() ~= nil then
 	echoDebug(&quot;&lt;red&gt;[Busy casting: &quot; .. spell:getCurrent() .. &quot;]&quot;)
 else
@@ -3624,7 +3624,7 @@ end</script>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A wall of rotting flesh and carrion plows through the corridor.</name>
                         <script>if whoami() == &quot;Adud&quot; then
-	mud:send(&quot;bh wall&quot;)
+	sendBash(&quot;wall&quot;)
 end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -6156,7 +6156,7 @@ if whoami() == &quot;Adud&quot; then
 	mud:send(&quot;say aid of mage&quot;)
 	mud:send(&quot;say strength of stone&quot;)
 	mud:send(&quot;vitme&quot;)
-	mud:send(&quot;bh spellguard&quot;)
+	sendBash(&quot;spellguard&quot;)
 end
 
 if whoami() == &quot;Rrissun&quot; then
@@ -6694,7 +6694,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/4/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/7/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6770,7 +6770,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/4/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6954,7 +6954,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -11222,7 +11222,7 @@ end</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A mage in the Spellguard clambers to her feet.</name>
-                        <script>mud:send(&quot;bh spellguard&quot;)</script>
+                        <script>sendBash(&quot;spellguard&quot;)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -11733,7 +11733,7 @@ end</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>A Calimport noble stands here arrogantly.</name>
-                        <script>mud:send(&quot;bh noble&quot;)</script>
+                        <script>sendBash(&quot;noble&quot;)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -12013,7 +12013,10 @@ mud:send(matches[3])</script>
                 <regexCodePropertyList/>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Autoassist - barely wounds</name>
-                    <script>-- The spectre of a human noble barely wounds a human noble with its average drain.
+                    <script>-- ^(.+) attacks .*
+-- .* attacks (.+), landing .*
+
+-- The spectre of a human noble barely wounds a human noble with its average drain.
 -- The spectre of a human noble misses a human noble with its drain.
 -- The spectre of a human noble barely wounds a human noble with its average drain.
 
@@ -12072,8 +12075,10 @@ end
                         <string>^(.+) does an acrobatic maneuver in battle, and trips up .*</string>
                         <string>^(.+) dodges .*</string>
                         <string>^(.+) misses .* with .*</string>
+                        <string>^(.+) attacks .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
                         <integer>1</integer>
@@ -13811,6 +13816,8 @@ end
 
 local lastMovement = map:popMovement()
 
+echoDebug(&quot;[lastMovement: &quot; .. tostring(lastMovement) .. &quot;]\n&quot;)
+
 
 -- if lastMovement was to open a door, pop again
 
@@ -13940,8 +13947,10 @@ tempTimer(1.5, [[expandAlias(&quot;@find&quot;, false)]])</script>
                         <string>The world goes dark.  When you can see again, you are in your guild.</string>
                         <string>You disembark this ship.</string>
                         <string>OH NO!  Something has gone wrong!  You feel lost!</string>
+                        <string>forceful crunch of the landing.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -13998,6 +14007,8 @@ map:update(matches[2])</script>
                     <name>Failed movement</name>
                     <script>-- failed room movement
 
+-- Alas, you cannot go that way. . . .
+
 
 -- You're busy spellcasting! - follow has already processed
 -- need to record last room/direction
@@ -14011,15 +14022,21 @@ map:update(matches[2])</script>
 
 --&lt; 104h/104H 118v/126V P: std &gt; 
 
-
-
 -- Changed to erase entire queue
 
-map:clearQueue()
+--map:clearQueue() -- &lt;-- already sent movements still need to be processeed
 
--- Erase movement queue
 
-map:trimMovement()</script>
+
+-- need to pop last sent movement from queue
+
+map:removeMovement()
+
+-- Erase unsent movements from queue
+
+map:trimMovement()
+
+-- error above: What about movements already sent/not yet processed?</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -14032,7 +14049,7 @@ map:trimMovement()</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>That isn't the direction to your guild, type look room to view</string>
-                        <string>Alas, you cannot go that way. . . .</string>
+                        <string>Alas, you cannot go that way</string>
                         <string>Nah... You feel too relaxed to do that...</string>
                         <string>Perhaps you should get on your feet first?</string>
                         <string>Oof!  It seems that .* is in your way.</string>
@@ -14064,6 +14081,8 @@ map:trimMovement()</script>
                         <string>You crawl past</string>
                         <string>The flesh golem roughly grabs you and tosses you backwards!</string>
                         <string>Something strikes out at you from the shadows!</string>
+                        <string>You're busy spellcasting!</string>
+                        <string>Sorry, you aren't allowed to do that in combat.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -14087,6 +14106,8 @@ map:trimMovement()</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -16154,8 +16175,8 @@ toScribe[spellname] = true</script>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>You finish scribing spell Shadow Burst to a large spellbook of flayed planetar skin.</name>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>scribenext</name>
                     <script>-- scribe next
 for k,v in pairs(toScribe) do
 	mud:send(&quot;prac &quot; .. k)
@@ -17324,6 +17345,93 @@ end</script>
                     <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
+            <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>BagTriggers</name>
+                <script></script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList/>
+                <regexCodePropertyList/>
+                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>Bags</name>
+                    <script>local itemname=matches[2]
+
+
+itemname = string.gsub(itemname, &quot;%(magic%)&quot;, &quot;&quot;)
+itemname = string.gsub(itemname, &quot;%(illuminating%)&quot;, &quot;&quot;)
+itemname = string.gsub(itemname, &quot;%(glowing%)&quot;, &quot;&quot;)
+itemname = itemname:trim()
+
+table.insert(NyyLIB.statbags, 1, itemname)
+enableTrigger(&quot;Bagend&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>[ ]+(.+)</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>BAGID</name>
+                    <script>NyyLIB.statbags = {}
+enableTrigger(&quot;Bags&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>(.*) \(carried\) \:</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>bagend</name>
+                    <script>disableTrigger(&quot;Bags&quot;)
+disableTrigger(&quot;Bagend&quot;)</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^$</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+            </TriggerGroup>
         </TriggerGroup>
     </TriggerPackage>
     <TimerPackage/>
@@ -18276,7 +18384,7 @@ spell:setNext(&quot;EE&quot; .. (matches[2] or &quot;&quot;) )</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
-            <Alias isActive="yes" isFolder="no">
+            <Alias isActive="no" isFolder="no">
                 <name>restart</name>
                 <script>local ver=getMudletVersion()
 
@@ -19508,6 +19616,8 @@ end</script>
 end
 
 if matches[2] == &quot;start&quot; then
+	enableTrigger(&quot;scribenext&quot;)
+
 	for k,v in pairs(toScribe) do
 		mud:send(&quot;prac &quot; .. k)
 		--mud:send(&quot;scribe &quot; .. k)
@@ -19679,9 +19789,9 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/3/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/7/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/4/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/7/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -22415,6 +22525,9 @@ mud:send(&quot;DOORBASH &quot; .. dir, false)</script>
                     <name>drag</name>
                     <script>-- drag corpse in direction
 
+-- set as currently moving
+spell:setMoving(true)
+
 if checkMask(&quot;caster&quot;) then
 	-- erase spellqueue if any spells present
 	spell:eraseQueue()
@@ -22423,10 +22536,15 @@ if checkMask(&quot;caster&quot;) then
 	buttons:change(&quot;autocast&quot;, false, &quot;SpellsButton&quot;)
 end
 
--- set as currently moving
-spell:setMoving(true)
+-- erase scanned table
+scanned={}
 
 local dir=matches[2]:sub(1,1):lower()
+
+echoDebug(&quot;Calling queuemovement .. &quot; .. dir .. &quot;\n&quot;)
+
+toGagLook=nil
+gaglook=nil
 
 queueMovement(dir)
 send(matches[1], false)
@@ -22437,7 +22555,7 @@ if checkMask(&quot;psi&quot;) then
 	setHide(false)
 end
 
-</script>
+display(map:getFutureRoom())</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^drag .*([ewnsud])$</regex>
@@ -22597,6 +22715,49 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@statitems ?(gsay)?$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>@statbag</name>
+                    <script>local stats
+
+local togsay = matches[2]
+
+if NyyLIB.statbags == nil then
+   cecho(&quot;&lt;red&gt;[statbags is nil]\n\n&quot;)
+   return
+end
+
+for k,v in pairs(NyyLIB.statbags) do
+   stats = sqliditem(v)
+
+   -- need to distinguish between multiple return values
+
+   if #stats &gt; 1 then
+      for nx=1,#stats,1 do
+         if string.find(stats[nx], v .. &quot; 1&quot;) then
+            stats[1] = stats[nx]
+         end      
+      end
+      echo(&quot;[multiple return values]\n\n&quot;)
+   end
+
+   if togsay == &quot;gsay&quot; then
+      if stats[1] ~= nil then
+         mud:send(&quot;gsay * &quot; .. stats[1])
+      else
+         mud:send(&quot;gsay * &quot; .. v .. &quot; : not found in database. identify and mmail to katumi&quot;)
+      end
+   else
+      if stats[1] ~= nil then
+         echo(stats[1] .. &quot;\n\n&quot;)
+      else
+         echo(v .. &quot; : not found in database. identify and mmail to katumi\n\n&quot;)
+      end
+   end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^@statbag ?(gsay)?$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -22998,8 +23159,10 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
--- Katumi database update - 11/3/17
--- Map updated: full size 317 areas 45050 rooms
+-- Katumi database update - 11/7/17
+-- Map updated: full size 317 areas 45051 rooms
+-- added @statbag
+-- mapper bugfixes
 -- added tooltips to lower icons
 -- autoroller accelerated
 -- buttons were added for autoportal, autoopen
@@ -25253,7 +25416,7 @@ end</script>
 -- Note that you can also use external Scripts --
 -------------------------------------------------
 function initWar()
-	addbutton(&quot;shieldpunch&quot;, 1, 5)
+	-- addbutton(&quot;shieldpunch&quot;, 1, 5)
 	addbutton(&quot;HeadbuttButton&quot;, 2, 40)
 end
 
@@ -25301,7 +25464,14 @@ function getBashing()
 	return(vbashing)
 end
 
-function sendBash()
+function sendBash(xtarget)
+	
+	if xtarget == nil then
+		xtarget = &quot;&quot;
+	else
+		xtarget = &quot; &quot; .. xtarget
+	end
+		
 	-- can't bash if stunned
 
 	if buff:get(&quot;stun&quot;) then
@@ -25324,20 +25494,20 @@ function sendBash()
 				if not timer:get(&quot;cooldown&quot;) then
 					-- use powers attack depending on wielded weapon
 					if isIconActive(&quot;sweeping_strike&quot;) then
-						useMeleePower(&quot;ss&quot;)
+						useMeleePower(&quot;SS&quot; .. xtarget)
 					end
 				
 					if isIconActive(&quot;knockdown_shot&quot;) then
-						useMeleePower(&quot;ks&quot;)
+						useMeleePower(&quot;KS&quot; .. xtarget)
 					end
 				else
 					return
 				end
 			else
 				if charData:get(&quot;powersbash&quot;) then
-					mud:send(&quot;bh&quot;)
+					mud:send(&quot;BH&quot; .. xtarget)
 				else
-					mud:send(&quot;bash&quot;)
+					mud:send(&quot;BASH&quot; .. xtarget)
 				end
 			end
 		end
@@ -28657,7 +28827,15 @@ function map:trimMovement()
 	end
 end
 
+-- erase entire movement queue
+
 function map:clearQueue()
+	--display(self.movement)
+	--display(self.movementIndex)
+	--display(map:getFutureRoom())
+	
+	
+	
 	self.movement = {}
 
 	self.movementIndex = 0
@@ -28718,7 +28896,7 @@ function sendBufferedMovements()
 end
 
 function queueMovement(xmove)
-	--display(map:countMovement())
+	-- display(map:countMovement())
 	
 	if map:getFutureRoom() == nil or map:countMovement() == 0 then
 		map:setFutureRoom( map:getRoom() )
@@ -28757,6 +28935,8 @@ function queueMovement(xmove)
 		end
 
 
+		-- display(xmove)
+
 
 		if xmove == &quot;n&quot; then
 			map:setFutureRoom( exits[&quot;north&quot;] )
@@ -28771,6 +28951,8 @@ function queueMovement(xmove)
 		elseif xmove == &quot;d&quot; then
 			map:setFutureRoom( exits[&quot;down&quot;] )
 		end
+	
+		-- display(map:getFutureRoom())
 	
 		-- a command to open a door was inserted
 		if retval then
@@ -29013,6 +29195,12 @@ function map:update(xdir)
 			elseif xdir == &quot;d&quot; then
 				roomid	= exits[&quot;down&quot;]
 			else
+				roomid=map:getRoom()
+			end
+		
+			-- attempt to move a direction with no know exit
+		
+			if roomid == nil then
 				roomid=map:getRoom()
 			end
 		end
@@ -33507,6 +33695,10 @@ function addLeftbutton(xname, xid, xlevel, xwidth, xheight)
 end
 
 function buttonLeave()
+	--echoDebug(&quot;&lt;red&gt;[buttonLeave]\n&quot;)
+	
+	closeNests( currentIcon[1], currentIcon[2])
+		
 	currentIcon=nil
 	hideToolTip()
 end
@@ -37350,6 +37542,8 @@ end
 function initFullData()
 	echoDebug(&quot;&lt;red&gt;[initFullData called]\n&quot;)
 
+	disableTrigger(&quot;scribenext&quot;)
+	
 	charData:init(whoami(), {}, true)
 
 	charData:init(&quot;memcount&quot;, 0)
