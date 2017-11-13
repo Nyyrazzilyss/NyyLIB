@@ -3949,6 +3949,7 @@ setQuake(true)</script>
                             <string>^A .*(witch|mage|warlock|druid|shaman|cleric|priest|priestess|invoker|oracle|seer|hierophant|wizard) .*, fighting .*</string>
                             <string>A member of the Smoking Beard battalion flies in from</string>
                             <string>A galeb duhr stands, inches above the surface here, fighting</string>
+                            <string>The djinn vizier stands in mid-air here, fighting</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
@@ -3974,6 +3975,7 @@ setQuake(true)</script>
                             <integer>0</integer>
                             <integer>0</integer>
                             <integer>1</integer>
+                            <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
                         </regexCodePropertyList>
@@ -6694,7 +6696,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/7/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/13/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6770,7 +6772,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/7/2
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -6954,7 +6956,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7042,7 +7044,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -11094,7 +11096,9 @@ end</script>
 	if matches[2] == NyyLIB.smtrainstops[NyyLIB.smtrainposition][2] then
 		if inCombat() then
 			if checkMask(&quot;rog&quot;) then
-				sendTrip()
+				if charData:get(&quot;autotrip&quot;) then
+					sendTrip()
+				end
 			else
 				if charData:get(&quot;autobash&quot;) then
 					sendBash()
@@ -11566,11 +11570,12 @@ if NyyLIB.castertrain ~= nil then
 	mud:send(&quot;ST&quot;)
 
 	if NyyLIB.reversedirs[NyyLIB.castertrain] == nil then
-		display(&quot;error&quot;)
+		cecho(&quot;\n&lt;red&gt;[Error: unknown direction to return to fight]\n&quot;)
 		display(NyyLIB.castertrain)
+		mud:send(&quot;ST&quot;)
+		NyyLIB.casterttrain=nil
+		return
 	end
-
-	--display(NyyLIB.reversedirs[NyyLIB.castertrain])
 
 	expandAlias(NyyLIB.reversedirs[NyyLIB.castertrain], false)
 	NyyLIB.castertrain=nil
@@ -14083,6 +14088,9 @@ map:trimMovement()
                         <string>Something strikes out at you from the shadows!</string>
                         <string>You're busy spellcasting!</string>
                         <string>Sorry, you aren't allowed to do that in combat.</string>
+                        <string>a gate guard whispers 'We don't want your type here, get lost.'</string>
+                        <string>The unstable tunnel to the west has collapsed on itself. There is absolutely</string>
+                        <string>A shady old man whispers 'This area is far below you, unless you wish to fight me.'</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -14106,6 +14114,9 @@ map:trimMovement()
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -18384,7 +18395,7 @@ spell:setNext(&quot;EE&quot; .. (matches[2] or &quot;&quot;) )</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
-            <Alias isActive="no" isFolder="no">
+            <Alias isActive="yes" isFolder="no">
                 <name>restart</name>
                 <script>local ver=getMudletVersion()
 
@@ -19789,18 +19800,42 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/7/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/13/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/7/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/13/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>test</name>
-                    <script>	display( rex.match( &quot;http://www.yahoo.com&quot;,
-						&quot;\b(?:(?:(?:https?|ftp|telnet)://[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+|www|ftp)(?:\.[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+)+|[\w\d._%+\-]+@[\w\d.\-]+\.[\w]{2,4})\b&quot;
-					) )
+                    <script>--cmi:checkConnection()
+--cmi:labelCmudZones(cmi.con)
+
+NyyLIB.broken = {}
+
+for line in io.lines(homepath(&quot;roomfix.txt&quot;)) do
+	NyyLIB.broken[tonumber(line)]=true
+end
+
+for k,v in pairs(NyyLIB.broken) do
+	local roomnumber=k
+	local zone=map:getZone(roomnumber)
+	local roomname = getRoomName(k)
+
+	if zone ~= nil then
+		echo( string.format(&quot;%s %d %s\n&quot;, zone, roomnumber, roomname) )
+	else
+		display(roomnumber)
+	end
+	--display(k)
+	--display(getRoomName(k))
+end
+
+
+--	display( rex.match( &quot;http://www.yahoo.com&quot;,
+--						&quot;\b(?:(?:(?:https?|ftp|telnet)://[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+|www|ftp)(?:\.[\w\d:#@%/;$()~_?\+\-=&amp;amp;]+)+|[\w\d._%+\-]+@[\w\d.\-]+\.[\w]{2,4})\b&quot;
+--					) )
 
 
 
@@ -20994,6 +21029,37 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^tiap ?(gsay|acc)?$</regex>
+                </Alias>
+                <Alias isActive="yes" isFolder="no">
+                    <name>testportal</name>
+                    <script>enteredPortal={}
+
+alreadyEnteredPortal=true
+
+spell:clear()
+
+mud:send(&quot;ST&quot;)
+
+display( map:getRoom())
+
+if map:getRoom() ~= nil then
+		local specialexit = getSpecialExitsSwap( map:getRoom() )
+
+		display(specialexit)
+
+		if table.size(specialexit) == 1 then
+			for k,v in pairs(specialexit) do
+					local exitcmd=string.split(k, &quot;|&quot;)[1]
+
+					display(exitcmd)
+
+					mud:send (exitcmd)
+			end
+		end
+end</script>
+                    <command></command>
+                    <packageName></packageName>
+                    <regex>^testportal$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -22862,6 +22928,11 @@ if checkMask(&quot;fighter&quot;) and not checkMask(&quot;ran&quot;) then
 	buttons:change(&quot;autobash&quot;, false, &quot;autobash&quot;)
 end
 
+
+if checkMask(&quot;ran&quot;) then
+	buttons:change(&quot;rescuetype&quot;, &quot;off&quot;, &quot;rescue&quot;)
+end
+
 cecho(&quot;&lt;red&gt;[All train triggers disabled]\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
@@ -23024,6 +23095,7 @@ cmi:labelCmudZones(cmi.con)</script>
                     <Alias isActive="yes" isFolder="no">
                         <name>import</name>
                         <script>NyyLIB.passwords = {
+[2371] = &quot;ugracht&quot;,
 [5678] = &quot;auril&quot;,
 [16418] = &quot;netheril&quot;,
 [71573] = &quot;silverwing&quot;,
@@ -23160,7 +23232,7 @@ echo(&quot;[End import]\n&quot;)</script>
 -- 011dev
 
 -- Katumi database update - 11/7/17
--- Map updated: full size 317 areas 45051 rooms
+-- Map updated: full size 317 areas 45246 rooms
 -- added @statbag
 -- mapper bugfixes
 -- added tooltips to lower icons
@@ -27696,6 +27768,10 @@ function cooldown(fname, xcommand)
 end
 
 function useMeleePower(xpower)
+	
+	xpower = string.lower(xpower)
+	
+	
 	-- melee powers don't work on parad mobs
 	if prompt:get(&quot;tank&quot;) == &quot;&quot; then
 		return
@@ -34965,7 +35041,7 @@ end
 
 function spell:setMoving(xstatus)
 
-	if self.moving ~= xstatus then
+	if self.moving ~= xstatus and charData:get(&quot;autocast&quot;) then
 		if xstatus then
 			cecho(&quot;&lt;red&gt;\n[Currently moving - spellcast is temporarily disabled]\n&quot;)
 		else
@@ -36259,6 +36335,10 @@ function idMob(xname)
 
 	if string.find(xname, &quot;elderly priest of Mielikki&quot;) then
 		return(&quot;priest&quot;)
+	end
+
+	if string.find(xname, &quot;Rhangaun, Leader of the Rune Council&quot;) then
+		return(&quot;rhangaun&quot;)
 	end
 
 	if string.find(xname, &quot;doppelganger&quot;) then
@@ -38048,9 +38128,17 @@ function cmi:labelCmudZones(con)
 		toID = exitrecs:fetch({})
 	
 		while toID do
+			toZone=nil
+			
 			zonerecs = assert(con:execute([[SELECT ZoneID FROM ObjectTbl WHERE ObjId = ]]..tonumber(toID[1])))
-			toZone = tonumber(zonerecs:fetch({})[1])
-			if toZone ~= fromZone then
+			
+			local zonerecord = zonerecs:fetch({})
+			
+			if zonerecord ~= nil then
+				toZone = tonumber(zonerecord[1])
+			end
+			
+			if toZone ~= fromZone and toZone ~= nil then
 				zonerec = assert(con:execute([[SELECT ZoneId, Name FROM ZoneTbl WHERE ZoneId = ]]..toZone))
 				zoneFetch = zonerec:fetch({})
 				zoneName = zoneFetch[2]
