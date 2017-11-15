@@ -87,6 +87,9 @@ eraseLine()</script>
 
 NyyLIB = NyyLIB or {}
 
+-- not in paging mode if a prompt has arrived
+pagingmode=nil
+
 if matches[2] ~= &quot;&quot; then
 	prompt:set(&quot;hp&quot;, tonumber(matches[2]))
 end
@@ -1449,7 +1452,7 @@ spell:setMoving(true)
 
 if checkMask(&quot;psi&quot;) then
 	if getHide() then
-		echo(&quot;\n[Not standing, currently hidden.]\n&quot;)
+		cecho(&quot;\n&lt;red&gt;[Not standing, currently hidden.]\n&quot;)
 	else
 		mud:send(&quot;ST&quot;)
 	end
@@ -6696,7 +6699,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/13/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/14/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -9664,7 +9667,12 @@ spell:clear()</script>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You are no longer attractive to pigeons.</name>
                         <script>-- remove para
-sendStatus()</script>
+buff:set(whoami(), &quot;major_paralysis&quot;, nil)
+buff:set(whoami(), &quot;minor_paralysis&quot;, nil)
+
+sendStatus()
+
+</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -17443,6 +17451,26 @@ disableTrigger(&quot;Bagend&quot;)</script>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <name>paging</name>
+                <script>pagingmode = true</script>
+                <triggerType>0</triggerType>
+                <conditonLineDelta>0</conditonLineDelta>
+                <mStayOpen>0</mStayOpen>
+                <mCommand></mCommand>
+                <packageName></packageName>
+                <mFgColor>#ff0000</mFgColor>
+                <mBgColor>#ffff00</mBgColor>
+                <mSoundFile></mSoundFile>
+                <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                <regexCodeList>
+                    <string>^\[RETURN for more, q to quit\]$</string>
+                </regexCodeList>
+                <regexCodePropertyList>
+                    <integer>1</integer>
+                </regexCodePropertyList>
+            </Trigger>
         </TriggerGroup>
     </TriggerPackage>
     <TimerPackage/>
@@ -19802,7 +19830,7 @@ end</script>
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/13/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/13/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/14/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -20131,7 +20159,12 @@ end
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>. speedwalk (tintin)</name>
-                    <script>local dirString   =   matches[2]:lower()
+                    <script>if pagingmode then
+	mud:send(&quot;&quot;)
+	return
+end
+
+local dirString   =   matches[2]:lower()
 
 for count, direction in string.gmatch(dirString, &quot;([0-9]*)([neswud])&quot;) do      
 	count = (count == &quot;&quot; and 1 or count)
@@ -22556,7 +22589,12 @@ mud:send(&quot;RECALL&quot;, false)</script>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>movement commands</name>
-                    <script>-- currently moving
+                    <script>if pagingmode then
+	mud:send(&quot;&quot;)
+	return
+end
+
+-- currently moving
 spell:setMoving(true)
 
 -- erase spellqueue if any spells present
@@ -23211,6 +23249,258 @@ echo(&quot;[End import]\n&quot;)</script>
                     </Alias>
                 </AliasGroup>
             </AliasGroup>
+            <Alias isActive="yes" isFolder="no">
+                <name>spamcmd</name>
+                <script>send(&quot;ack &quot; .. matches[2])
+send(&quot;afk &quot; .. matches[2])
+send(&quot;agree &quot; .. matches[2])
+send(&quot;amaze &quot; .. matches[2])
+send(&quot;apologize &quot; .. matches[2])
+send(&quot;applaud &quot; .. matches[2])
+send(&quot;arch &quot; .. matches[2])
+send(&quot;ayt &quot; .. matches[2])
+send(&quot;bang &quot; .. matches[2])
+send(&quot;bark &quot; .. matches[2])
+send(&quot;bathe &quot; .. matches[2])
+send(&quot;bbl &quot; .. matches[2])
+send(&quot;beer &quot; .. matches[2])
+send(&quot;beg &quot; .. matches[2])
+send(&quot;bird &quot; .. matches[2])
+send(&quot;bite &quot; .. matches[2])
+send(&quot;bleed &quot; .. matches[2])
+send(&quot;blink &quot; .. matches[2])
+send(&quot;blow &quot; .. matches[2])
+send(&quot;blush &quot; .. matches[2])
+send(&quot;boggle &quot; .. matches[2])
+send(&quot;bonk &quot; .. matches[2])
+send(&quot;bored &quot; .. matches[2])
+send(&quot;bounce &quot; .. matches[2])
+send(&quot;bow &quot; .. matches[2])
+send(&quot;brb &quot; .. matches[2])
+send(&quot;burp &quot; .. matches[2])
+send(&quot;bye &quot; .. matches[2])
+send(&quot;cackle &quot; .. matches[2])
+send(&quot;calm &quot; .. matches[2])
+send(&quot;caress &quot; .. matches[2])
+send(&quot;censor &quot; .. matches[2])
+send(&quot;cheek &quot; .. matches[2])
+send(&quot;cheer &quot; .. matches[2])
+send(&quot;choke &quot; .. matches[2])
+send(&quot;chuckle &quot; .. matches[2])
+send(&quot;clap &quot; .. matches[2])
+send(&quot;comb &quot; .. matches[2])
+send(&quot;comfort &quot; .. matches[2])
+send(&quot;congratulate &quot; .. matches[2])
+send(&quot;cough &quot; .. matches[2])
+send(&quot;cringe &quot; .. matches[2])
+send(&quot;cry &quot; .. matches[2])
+send(&quot;cuddle &quot; .. matches[2])
+send(&quot;curious &quot; .. matches[2])
+send(&quot;curse &quot; .. matches[2])
+send(&quot;curtsey &quot; .. matches[2])
+send(&quot;dance &quot; .. matches[2])
+send(&quot;doh &quot; .. matches[2])
+send(&quot;dream &quot; .. matches[2])
+send(&quot;drool &quot; .. matches[2])
+send(&quot;dropkick &quot; .. matches[2])
+send(&quot;duck &quot; .. matches[2])
+send(&quot;embrace &quot; .. matches[2])
+send(&quot;envy &quot; .. matches[2])
+send(&quot;eyebrow &quot; .. matches[2])
+send(&quot;fart &quot; .. matches[2])
+send(&quot;fidget &quot; .. matches[2])
+send(&quot;flame &quot; .. matches[2])
+send(&quot;flash &quot; .. matches[2])
+send(&quot;flex &quot; .. matches[2])
+send(&quot;flip &quot; .. matches[2])
+send(&quot;flirt &quot; .. matches[2])
+send(&quot;flutter &quot; .. matches[2])
+send(&quot;fondle &quot; .. matches[2])
+send(&quot;fool &quot; .. matches[2])
+send(&quot;french &quot; .. matches[2])
+send(&quot;frown &quot; .. matches[2])
+send(&quot;full &quot; .. matches[2])
+send(&quot;fume &quot; .. matches[2])
+send(&quot;fuzzy &quot; .. matches[2])
+send(&quot;gag &quot; .. matches[2])
+send(&quot;gape &quot; .. matches[2])
+send(&quot;gasp &quot; .. matches[2])
+send(&quot;giggle &quot; .. matches[2])
+send(&quot;glare &quot; .. matches[2])
+send(&quot;grin &quot; .. matches[2])
+send(&quot;groan &quot; .. matches[2])
+send(&quot;grope &quot; .. matches[2])
+send(&quot;grovel &quot; .. matches[2])
+send(&quot;growl &quot; .. matches[2])
+send(&quot;grumble &quot; .. matches[2])
+send(&quot;grunt &quot; .. matches[2])
+send(&quot;hand &quot; .. matches[2])
+send(&quot;happy &quot; .. matches[2])
+send(&quot;hero &quot; .. matches[2])
+send(&quot;hiccup &quot; .. matches[2])
+send(&quot;hiss &quot; .. matches[2])
+send(&quot;hi5 &quot; .. matches[2])
+send(&quot;holdon &quot; .. matches[2])
+send(&quot;hop &quot; .. matches[2])
+send(&quot;hug &quot; .. matches[2])
+send(&quot;hum &quot; .. matches[2])
+send(&quot;hunger &quot; .. matches[2])
+send(&quot;imitate &quot; .. matches[2])
+send(&quot;impale &quot; .. matches[2])
+send(&quot;insult &quot; .. matches[2])
+send(&quot;introduce &quot; .. matches[2])
+send(&quot;jam &quot; .. matches[2])
+send(&quot;jk &quot; .. matches[2])
+send(&quot;jump &quot; .. matches[2])
+send(&quot;kiss &quot; .. matches[2])
+send(&quot;kneel &quot; .. matches[2])
+send(&quot;stand&quot;)
+send(&quot;laugh &quot; .. matches[2])
+send(&quot;lag &quot; .. matches[2])
+send(&quot;lean &quot; .. matches[2])
+send(&quot;lick &quot; .. matches[2])
+send(&quot;love &quot; .. matches[2])
+send(&quot;lost &quot; .. matches[2])
+send(&quot;lucky &quot; .. matches[2])
+send(&quot;massage &quot; .. matches[2])
+send(&quot;melt &quot; .. matches[2])
+send(&quot;moan &quot; .. matches[2])
+send(&quot;moon &quot; .. matches[2])
+send(&quot;mosh &quot; .. matches[2])
+send(&quot;mourn &quot; .. matches[2])
+send(&quot;mutter &quot; .. matches[2])
+send(&quot;nap &quot; .. matches[2])
+send(&quot;nibble &quot; .. matches[2])
+send(&quot;nod &quot; .. matches[2])
+send(&quot;nog &quot; .. matches[2])
+send(&quot;noogie &quot; .. matches[2])
+send(&quot;nose &quot; .. matches[2])
+send(&quot;nudge &quot; .. matches[2])
+send(&quot;nuzzle &quot; .. matches[2])
+send(&quot;ogle &quot; .. matches[2])
+send(&quot;panic &quot; .. matches[2])
+send(&quot;pant &quot; .. matches[2])
+send(&quot;pat &quot; .. matches[2])
+send(&quot;peer &quot; .. matches[2])
+send(&quot;pet &quot; .. matches[2])
+send(&quot;pillow &quot; .. matches[2])
+send(&quot;pinch &quot; .. matches[2])
+send(&quot;plonk &quot; .. matches[2])
+send(&quot;point &quot; .. matches[2])
+send(&quot;poke &quot; .. matches[2])
+send(&quot;ponder &quot; .. matches[2])
+send(&quot;pose &quot; .. matches[2])
+send(&quot;pounce &quot; .. matches[2])
+send(&quot;pout &quot; .. matches[2])
+send(&quot;protect &quot; .. matches[2])
+send(&quot;pucker &quot; .. matches[2])
+send(&quot;puke &quot; .. matches[2])
+send(&quot;pull &quot; .. matches[2])
+send(&quot;punch &quot; .. matches[2])
+send(&quot;purr &quot; .. matches[2])
+send(&quot;push &quot; .. matches[2])
+send(&quot;puzzle &quot; .. matches[2])
+send(&quot;raise &quot; .. matches[2])
+send(&quot;ready &quot; .. matches[2])
+send(&quot;roar &quot; .. matches[2])
+send(&quot;rofl &quot; .. matches[2])
+send(&quot;roll &quot; .. matches[2])
+send(&quot;rose &quot; .. matches[2])
+send(&quot;rub &quot; .. matches[2])
+send(&quot;ruffle &quot; .. matches[2])
+send(&quot;salute &quot; .. matches[2])
+send(&quot;scare &quot; .. matches[2])
+send(&quot;scold &quot; .. matches[2])
+send(&quot;scratch &quot; .. matches[2])
+send(&quot;scream &quot; .. matches[2])
+send(&quot;seduce &quot; .. matches[2])
+send(&quot;shake &quot; .. matches[2])
+send(&quot;shiver &quot; .. matches[2])
+send(&quot;shove &quot; .. matches[2])
+send(&quot;shrug &quot; .. matches[2])
+send(&quot;shudder &quot; .. matches[2])
+send(&quot;shush &quot; .. matches[2])
+send(&quot;sigh &quot; .. matches[2])
+send(&quot;sing &quot; .. matches[2])
+send(&quot;skip &quot; .. matches[2])
+send(&quot;slap &quot; .. matches[2])
+send(&quot;slobber &quot; .. matches[2])
+send(&quot;smell &quot; .. matches[2])
+send(&quot;smile &quot; .. matches[2])
+send(&quot;smirk &quot; .. matches[2])
+send(&quot;smoke &quot; .. matches[2])
+send(&quot;snap &quot; .. matches[2])
+send(&quot;snarl &quot; .. matches[2])
+send(&quot;sneer &quot; .. matches[2])
+send(&quot;sneeze &quot; .. matches[2])
+send(&quot;snicker &quot; .. matches[2])
+send(&quot;sniff &quot; .. matches[2])
+send(&quot;snoogie &quot; .. matches[2])
+send(&quot;snore &quot; .. matches[2])
+send(&quot;snort &quot; .. matches[2])
+send(&quot;snuggle &quot; .. matches[2])
+send(&quot;spam &quot; .. matches[2])
+send(&quot;spank &quot; .. matches[2])
+send(&quot;spin &quot; .. matches[2])
+send(&quot;spit &quot; .. matches[2])
+send(&quot;squeeze &quot; .. matches[2])
+send(&quot;squirm &quot; .. matches[2])
+send(&quot;stare &quot; .. matches[2])
+send(&quot;steam &quot; .. matches[2])
+send(&quot;stomp &quot; .. matches[2])
+send(&quot;strangle &quot; .. matches[2])
+send(&quot;stretch &quot; .. matches[2])
+send(&quot;strut &quot; .. matches[2])
+send(&quot;sulk &quot; .. matches[2])
+send(&quot;swat &quot; .. matches[2])
+send(&quot;sweat &quot; .. matches[2])
+send(&quot;sweep &quot; .. matches[2])
+send(&quot;tackle &quot; .. matches[2])
+send(&quot;tango &quot; .. matches[2])
+send(&quot;tap &quot; .. matches[2])
+send(&quot;tarzan &quot; .. matches[2])
+send(&quot;taunt &quot; .. matches[2])
+send(&quot;tease &quot; .. matches[2])
+send(&quot;thank &quot; .. matches[2])
+send(&quot;think &quot; .. matches[2])
+send(&quot;thirst &quot; .. matches[2])
+send(&quot;throw &quot; .. matches[2])
+send(&quot;tickle &quot; .. matches[2])
+send(&quot;tip &quot; .. matches[2])
+send(&quot;tiptoe &quot; .. matches[2])
+send(&quot;tongue &quot; .. matches[2])
+send(&quot;toss &quot; .. matches[2])
+send(&quot;touch &quot; .. matches[2])
+send(&quot;trip &quot; .. matches[2])
+send(&quot;tug &quot; .. matches[2])
+send(&quot;tweak &quot; .. matches[2])
+send(&quot;twibble &quot; .. matches[2])
+send(&quot;twiddle &quot; .. matches[2])
+send(&quot;twirl &quot; .. matches[2])
+send(&quot;undress &quot; .. matches[2])
+send(&quot;veto &quot; .. matches[2])
+send(&quot;wait &quot; .. matches[2])
+send(&quot;wave &quot; .. matches[2])
+send(&quot;welcome &quot; .. matches[2])
+send(&quot;wet &quot; .. matches[2])
+send(&quot;whap &quot; .. matches[2])
+send(&quot;whatever &quot; .. matches[2])
+send(&quot;wheeze &quot; .. matches[2])
+send(&quot;whimper &quot; .. matches[2])
+send(&quot;whine &quot; .. matches[2])
+send(&quot;whistle &quot; .. matches[2])
+send(&quot;wiggle &quot; .. matches[2])
+send(&quot;wince &quot; .. matches[2])
+send(&quot;wink &quot; .. matches[2])
+send(&quot;woops &quot; .. matches[2])
+send(&quot;worship &quot; .. matches[2])
+send(&quot;yawn &quot; .. matches[2])
+send(&quot;yodel &quot; .. matches[2])
+send(&quot;zone &quot; .. matches[2])</script>
+                <command></command>
+                <packageName></packageName>
+                <regex>^spamcmd (.*)</regex>
+            </Alias>
         </AliasGroup>
     </AliasPackage>
     <ActionPackage/>
@@ -23231,8 +23521,8 @@ echo(&quot;[End import]\n&quot;)</script>
 
 -- 011dev
 
--- Katumi database update - 11/7/17
--- Map updated: full size 317 areas 45246 rooms
+-- Katumi database update - 11/13/17
+-- Map updated: full size 317 areas 45269 rooms
 -- added @statbag
 -- mapper bugfixes
 -- added tooltips to lower icons
