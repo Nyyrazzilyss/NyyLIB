@@ -4491,7 +4491,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         <script>meleePowerUsed=false
 
 if checkMask(&quot;ran&quot;) then
-	procPromptRanger()
+	procPromptRan()
 end</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -4525,6 +4525,7 @@ end</script>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You're not ready to perform another action!</name>
                         <script>meleePowerUsed=nil
+setBashing(false)
 timer:set(&quot;cooldown&quot;, 2)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
@@ -4705,6 +4706,354 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                </TriggerGroup>
+                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>Pal</name>
+                    <script></script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList/>
+                    <regexCodePropertyList/>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>A translucent golden shield forms in front of you as strike out at a lithe commoner.</name>
+                        <script>-- A translucent golden shield forms in front of you as strike out at a lithe commoner.
+
+-- Shielding smite
+
+meleePowerUsed=false
+
+timer:set(&quot;shielding_smite&quot;, 12*4)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>A translucent golden shield forms in front of you as</string>
+                            <string>, and your golden shield fails to appear.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You strike a lithe commoner, and your accuracy is rewarded with a divine gift of health.</name>
+                        <script>-- Bolstering Strike
+
+meleePowerUsed=false
+
+timer:set(&quot;bolstering_strike&quot;, 12*4)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>and your accuracy is rewarded with a divine gift of health.</string>
+                            <string>You strike out at .*, landing a glancing blow!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Brilliant rays of light stream from your shield as you charge into a graceful commoner and knock him to the ground!</name>
+                        <script>-- Brilliant rays of light stream from your shield as you charge into Aratha Sul and knock her to the ground!
+
+-- Radiant Charge
+
+meleePowerUsed=false
+
+setBashing(false)
+
+timer:set(&quot;radiant_charge&quot;, 12*4)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Brilliant rays of light stream from your shield as you charge into</string>
+                            <string>sidesteps your charge!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You land a mighty blow upon a lithe commoner that leaves her staggering in pain.</name>
+                        <script>-- Enervating Strike
+
+meleePowerUsed=false
+
+timer:set(&quot;enervating_strike&quot;, 36*4)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You land a mighty blow upon .* that leaves .* staggering in pain.</string>
+                            <string>Using your shield as cover, you land a glancing blow upon</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>A halo of divine light emanates from you, filling you with holy wrath.</name>
+                        <script>-- Wrathful Smite
+
+meleePowerUsed=false
+
+timer:set(&quot;wrathful_smite&quot;, 36*4)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>A halo of divine light emanates from you, filling you with holy wrath.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You lay your blessed hands upon yourself.</name>
+                        <script>-- lay on hands
+
+meleePowerUsed=false
+
+timer:set(&quot;lay_on_hands&quot;, 6*60)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You lay your blessed hands upon</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your weapon flares with a burst of divine radiance as you strike Elaith Waterstill!</name>
+                        <script>-- Divine Smite
+
+-- Your weapon flares with a burst of divine radiance as you strike Willa O'Greensleeves!
+-- You land a glancing blow upon NN with your radiant weapon.
+
+meleePowerUsed=false
+
+timer:set(&quot;divine_smite&quot;, 5*60)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your weapon flares with a burst of divine radiance as you strike</string>
+                            <string>You land a glancing blow upon .* with your radiant weapon.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your weapon explodes in a peal of roaring thunder as you strike Willa O'Greensleeves!</name>
+                        <script>-- Thunderous smite
+
+meleePowerUsed=false
+
+setBashing(false)
+
+timer:set(&quot;thunderous_smite&quot;, 12)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your weapon explodes in a peal of roaring thunder as you strike</string>
+                            <string>balance as your weapon explodes in a peal of roaring thunder!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your weapon ignites with a blazing holy light!</name>
+                        <script>-- valiant strike
+
+--Your weapon ignites with a blazing holy light!
+--Your powerful strike glances off of Willa O'Greensleeves's armor!
+
+meleePowerUsed=false
+
+timer:set(&quot;valiant_strike&quot;, 12)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>in searing ribbons of divine radiance.</string>
+                            <string>Your weapon ignites with a blazing holy light!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your weapon detonates in a flash of pure light as you strike Willa O'Greensleeves!</name>
+                        <script>-- Brilliant smite
+
+-- Your weapon detonates in a flash of pure light as you strike Willa O'Greensleeves!
+
+meleePowerUsed=false
+
+timer:set(&quot;brilliant_smite&quot;, 24)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your weapon detonates in a flash of pure light as you strike</string>
+                            <string>Your weapon's brilliant flash is dampened as it glances off of</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Your eyes glow with a terrifying radiance as waves of divine dread wash over your enemies.</name>
+                        <script>-- Terrifying Smite
+
+meleePowerUsed=false
+
+timer:set(&quot;terrifying_smite&quot;, 24)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Your eyes glow with a terrifying radiance as waves of divine dread wash over your enemies.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>Brilliant holy light explodes around you as you swing your weapon in a full circle!</name>
+                        <script>-- Whirlwind Smite
+
+meleePowerUsed=false
+
+timer:set(&quot;whirlwind_smite&quot;, 36)
+timer:set(&quot;cooldown&quot;, 5)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>Brilliant holy light explodes around you as you swing your weapon in a full circle!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -6438,8 +6787,10 @@ meleePowerUsed=false</script>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
                         <string>That power hasn't recharged yet!</string>
+                        <string>You are too stunned to do that!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
+                        <integer>0</integer>
                         <integer>0</integer>
                     </regexCodePropertyList>
                 </Trigger>
@@ -6699,7 +7050,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/14/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/17/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7978,6 +8329,8 @@ timer:set(&quot;DragonCult&quot;, 3*24*60)</script>
 local equipinfo = equipment:getByLongName( matches[2])
 local checkBow = sqlIsBow(matches[2])
 
+local check2H = sqlIs2H(matches[2])
+
 -- create button if equipment worn is proc'ing
 
 if equipinfo ~= nil then
@@ -8001,7 +8354,20 @@ if checkMask(&quot;ran&quot;) then
 		addbutton(&quot;arctic_barrage&quot;, 10, 40)
 		addbutton(&quot;lightning_arrow&quot;, 11, 20)
 	end
-end</script>
+end
+
+-- TODO: paladin - 2h sword wielded
+
+if checkMask(&quot;pal&quot;) then
+	if #check2H &gt; 0 then
+		addbutton(&quot;valiant_strike&quot;,5, 1)
+		addbutton(&quot;thunderous_smite&quot;,6, 5)
+		addbutton(&quot;brilliant_smite&quot;,7, 30)
+		addbutton(&quot;terrifying_smite&quot;,8, 25)
+		addbutton(&quot;whirlwind_smite&quot;,9, 25)
+	end
+end
+</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -8047,6 +8413,7 @@ end</script>
 
 local equipinfo = equipment:getByLongName( matches[2])
 local checkBow = sqlIsBow(matches[2])
+local check2H = sqlIs2H(matches[2])
 
 -- remove button if present
 
@@ -8076,6 +8443,20 @@ if checkMask(&quot;ran&quot;) then
 		addbutton(&quot;blades_of_fire&quot;, 9, 20)
 		addbutton(&quot;greenfire&quot;, 10, 40)
 		addbutton(&quot;electric_discharge&quot;, 11, 30)
+	end
+end
+
+-- TODO paladin: was the item removed a 2h sword
+
+if checkMask(&quot;pal&quot;) then
+	if #check2H &gt; 0 then
+
+	addbutton(&quot;bolstering_strike&quot;,5, 1)
+	addbutton(&quot;radiant_charge&quot;,6, 5)
+	addbutton(&quot;wrathful_smite&quot;,7, 30)
+	addbutton(&quot;shielding_smite&quot;,8, 1)
+	addbutton(&quot;enervating_smite&quot;,9, 25)
+
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -15381,7 +15762,12 @@ end</script>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>ItemProcGags (3)</name>
-                    <script>--A moonblade with a golden hilt blurs into motion, striking
+                    <script>--cone from your massive quadribladed axe. The space between you and
+--penetrate her body. Still, she shudders pitifully, trying to cling to
+--consciousness as the incredible power finally begins to subside.
+
+
+--A moonblade with a golden hilt blurs into motion, striking
 --flurry of attacks slices open cross-cuts across
 --slides a moonblade with a golden hilt across the wound
 --to inflict even greater damage.
@@ -15498,6 +15884,9 @@ end</script>
                         <string>it's giant max.  The head of Ilxarzzinazzium chews through</string>
                         <string>spits the lifeless, partially eatten body on the ground.  As suddenly as the head appeared,</string>
                         <string>is scorched by the storm of fire.</string>
+                        <string>cone from your massive quadribladed axe. The space between you and</string>
+                        <string>shudders pitifully, trying to cling to</string>
+                        <string>consciousness as the incredible power finally begins to subside.</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
@@ -15532,6 +15921,9 @@ end</script>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -17272,11 +17664,33 @@ timer:set(powername, timeleft)
                 <name>&lt;wielding twohanded&gt;</name>
                 <script>-- &lt;wielding twohanded&gt; the rune-covered fiery warbow of hellish fury
 
+local itemname=matches[2]
 
-local checkBow = sqlIsBow(matches[2])
+itemname = string.gsub(itemname, &quot;%(magic%)&quot;, &quot;&quot;)
+itemname = string.gsub(itemname, &quot;%(illuminating%)&quot;, &quot;&quot;)
+itemname = itemname:trim()
+
+
+--display(itemname)
+
+
+local checkBow = sqlIsBow(itemname)
+
+local check2H = sqlIs2H(itemname)
 
 if #checkBow &gt; 0 then
-	--display(&quot;wielding bow&quot;)
+	-- display(&quot;wielding bow&quot;)
+end
+
+if #check2H &gt; 0 then
+	-- display(&quot;wielding 2h weapon&quot;)
+	
+	addbutton(&quot;valiant_strike&quot;,5, 1)
+	addbutton(&quot;thunderous_smite&quot;,6, 5)
+	addbutton(&quot;brilliant_smite&quot;,7, 30)
+	addbutton(&quot;terrifying_smite&quot;,8, 25)
+	addbutton(&quot;whirlwind_smite&quot;,9, 25)
+
 end</script>
                 <triggerType>0</triggerType>
                 <conditonLineDelta>0</conditonLineDelta>
@@ -19828,9 +20242,9 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/13/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/17/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/14/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -23521,8 +23935,10 @@ send(&quot;zone &quot; .. matches[2])</script>
 
 -- 011dev
 
--- Katumi database update - 11/13/17
+-- Katumi database update - 11/17/17
 -- Map updated: full size 317 areas 45269 rooms
+-- Paladins: old-code spells removed
+-- Paladins: 1h, 2h powers added
 -- added @statbag
 -- mapper bugfixes
 -- added tooltips to lower icons
@@ -25852,6 +26268,26 @@ function sendBash(xtarget)
 				return
 			end
 
+			if checkMask(&quot;pal&quot;) then
+				if charData:get(&quot;autorcharge&quot;) then
+					if timer:get(&quot;radiant_charge&quot;) == nil and not timer:get(&quot;cooldown&quot;) and isIconActive(&quot;bolstering_strike&quot;) then
+						useMeleePower(&quot;rc&quot;)
+						setBashing(true)
+						return
+					end
+				end
+								
+				if isIconActive(&quot;valiant_strike&quot;) then
+					if charData:get(&quot;autothsmite&quot;) then
+						if timer:get(&quot;thunderous_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+							useMeleePower(&quot;ts&quot;)
+							setBashing(true)
+							return
+						end
+					end
+				end
+			end
+
 			if checkMask(&quot;ran&quot;) then
 				if not timer:get(&quot;cooldown&quot;) then
 					-- use powers attack depending on wielded weapon
@@ -26497,7 +26933,7 @@ function baseButtons()
 
 	if checkMask(&quot;fighter&quot;) and not checkMask(&quot;ran&quot;) then
 		addbutton(&quot;rescue&quot;, 4, 1)
-		addbutton(&quot;autotank&quot;, 14, 1)
+		addbutton(&quot;autotank&quot;, 15, 1)
 	end
  
 	if checkMask(&quot;caster&quot;) or checkMask(&quot;nonPriestCaster&quot;) then 
@@ -27675,15 +28111,6 @@ function SpellsRan()
 	end
 end
 
--- this function will be called on all mud prompts
-function RanScript(event)
-	if not checkMask(&quot;ran&quot;) then
-		return
-	end
-
-	return
-end
-
 -- spell powers
 
 function hunters_mark(fname, xcommand)
@@ -27960,7 +28387,7 @@ function eviscerate(fname, xcommand)
 	end
 end
 
-function procPromptRanger()
+function procPromptRan()
 	if not checkMask(&quot;ran&quot;) then
 		return
 	end
@@ -28054,7 +28481,7 @@ function cooldown(fname, xcommand)
 		return
 	end
 	
-	procPromptRanger()
+	procPromptRan()
 end
 
 function useMeleePower(xpower)
@@ -28081,17 +28508,15 @@ function useMeleePower(xpower)
 	timer:set(&quot;cooldown&quot;, 5)
 	
 
-	local fullName = meleePowers[xpower]
+	local fullName = meleePowers[string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)][xpower]
 
-	cecho(&quot;&lt;red&gt;\n[&quot; .. fullName .. &quot;]\n&quot;)
+	cecho(&quot;&lt;red&gt;\n[&quot; .. to_english(fullName) .. &quot;]\n&quot;)
 
 	timer:set(fullName, 8)
 
-	mud:send(xpower)
+	mud:send( xpower:upper() )
 end</script>
-                    <eventHandlerList>
-                        <string>promptEvent</string>
-                    </eventHandlerList>
+                    <eventHandlerList/>
                 </Script>
                 <Script isActive="yes" isFolder="no">
                     <name>PalScript</name>
@@ -28103,23 +28528,330 @@ end</script>
 -------------------------------------------------
 function initPal()
 	powerAliases:addButtons()
+
+	addbutton(&quot;lay_on_hands&quot;,1, 1)
+	addbutton(&quot;divine_smite&quot;,2, 1)
+	
+	-- paladin 1h/2h buttons
+		
+	addbutton(&quot;bolstering_strike&quot;,5, 1)
+	addbutton(&quot;radiant_charge&quot;,6, 5)
+	addbutton(&quot;wrathful_smite&quot;,7, 30)
+	addbutton(&quot;shielding_smite&quot;,8, 1)
+	addbutton(&quot;enervating_smite&quot;,9, 25)
+end
+
+function procPromptPal()
+	local hp=prompt:get(&quot;hp&quot;)
+	local maxhp=prompt:get(&quot;maxhp&quot;)
+	local percent=hp/maxhp
+	
+	if not checkMask(&quot;pal&quot;) then
+		return
+	end
+	
+	if inCombat() then
+		-- melee powers
+		
+		if charData:get(&quot;autohands&quot;) then
+			if percent &lt; .5 then
+				if timer:get(&quot;lay_on_hands&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;lh&quot;)
+					return
+				end
+			end
+		end
+
+		-- abort if stunned
+
+		if buff:get(&quot;stun&quot;) then
+			return
+		end
+
+		if charData:get(&quot;autodivsmite&quot;) then
+			if timer:get(&quot;divine_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+				useMeleePower(&quot;ds&quot;)
+				return
+			end
+		end
+
+		-- 1h/shield melee powers
+		if isIconActive(&quot;bolstering_strike&quot;) then
+			if charData:get(&quot;autorcharge&quot;) then
+					if timer:get(&quot;radiant_charge&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+						if prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
+							useMeleePower(&quot;rc&quot;)
+							return
+						end
+					end
+			end
+
+			if charData:get(&quot;autossmite&quot;) then
+				if timer:get(&quot;shielding_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ss&quot;)
+					return
+				end
+			end
+
+			if maxhp-hp &gt; 50 then
+				if charData:get(&quot;autobstrike&quot;) then
+					if timer:get(&quot;bolstering_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+						useMeleePower(&quot;bs&quot;)
+						return
+					end
+				end
+			end
+
+			if charData:get(&quot;autowsmite&quot;) then
+				if timer:get(&quot;wrathful_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ws&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autoesmite&quot;) then
+				if timer:get(&quot;enervating_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;es&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autobstrike&quot;) then
+				if timer:get(&quot;bolstering_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;bs&quot;)
+					return
+				end
+			end
+		end
+	
+		-- 2h powers
+		if isIconActive(&quot;valiant_strike&quot;) then
+
+			if charData:get(&quot;autothsmite&quot;) and prompt:get(&quot;enemyposition&quot;) == &quot;std&quot; then
+				if timer:get(&quot;thunderous_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;ts&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autovstrike&quot;) then
+				if timer:get(&quot;valiant_strike&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;vs&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autobsmite&quot;) then
+				if timer:get(&quot;brilliant_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;brs&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autotesmite&quot;) then
+				if timer:get(&quot;terrifying_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;trs&quot;)
+					return
+				end
+			end
+
+			if charData:get(&quot;autowsmite&quot;) then
+				if timer:get(&quot;whirlwind_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+					useMeleePower(&quot;wws&quot;)
+					return
+				end
+			end
+		end
+	end
 end
 
 function SpellsPal()
-	-- cure blind self if needed
-	if buff:get(&quot;blind&quot;) or buff:get(&quot;blindness&quot;) then
-		if getSpellCount(&quot;cure_blind&quot;) &gt; 0 then
-			spell:cast(&quot;cb&quot;)
-			return
-		end
-	end
+	return
+end
 
-	-- if fighting and no other spells cast damage spells
-	if powerAliases:castDamage() then
+
+function divine_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autodivsmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
 		return
 	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autodivsmite&quot;, xcommand)
+	end
 end
-</script>
+
+function lay_on_hands(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autohands&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autohands&quot;, xcommand)
+	end
+end
+
+
+function bolstering_strike(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autobstrike&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(&quot;bolstering_strike&quot;, &quot;autobstrike&quot;, xcommand)
+	end
+end
+
+function radiant_charge(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autorcharge&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(&quot;radiant_charge&quot;, &quot;autorcharge&quot;, xcommand)
+	end
+end
+
+function shielding_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autossmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(&quot;shielding_smite&quot;, &quot;autossmite&quot;, xcommand)
+	end
+end
+
+function enervating_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autoesmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(&quot;enervating_smite&quot;, &quot;autoesmite&quot;, xcommand)
+	end
+end
+
+function wrathful_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autowsmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(&quot;wrathful_smite&quot;, &quot;autowsmite&quot;, xcommand)
+	end
+end
+
+-- 2h melee powers
+
+function valiant_strike(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autovstrike&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autovstrike&quot;, xcommand)
+	end
+end
+
+function thunderous_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autothsmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autothsmite&quot;, xcommand)
+	end
+end
+
+function brilliant_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autobsmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autobsmite&quot;, xcommand)
+	end
+end
+
+function terrifying_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autotesmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autotesmite&quot;, xcommand)
+	end
+end
+
+function whirlwind_smite(fname, xcommand)
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autowsmite&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autowhsmite&quot;, xcommand)
+	end
+end</script>
                     <eventHandlerList/>
                 </Script>
                 <Script isActive="yes" isFolder="no">
@@ -28176,7 +28908,7 @@ function outflank(fname, xcommand)
 	shiftSkillButton(&quot;outflank&quot;, &quot;outflank&quot;, xcommand)
 end
 
-function procPromptDire()
+function procPromptDir()
 	-- dire: howl - howl if in combat and enabled
 	if mount:getMounted() then
 		if charData:get(&quot;autohowl&quot;) and inCombat() then
@@ -30331,13 +31063,13 @@ end
 		casterPsiSinger = {&quot;Psi&quot;, &quot;Dru&quot;, &quot;Enc&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Nec&quot;, &quot;Ill&quot;, &quot;Ele&quot;, &quot;Cle&quot;, &quot;Sha&quot;, &quot;Bar&quot;, &quot;Ctr&quot; },
 		statHitter = {&quot;War&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Ran&quot;, &quot;Dir&quot;, &quot;Bar&quot;, &quot;Ctr&quot;, &quot;Rog&quot; },
 		priest = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Ctr&quot;, &quot;Cle&quot; },
-		pray = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Cle&quot;, &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot; },
-		nonPriestCaster = { &quot;Pal&quot;, &quot;A-P&quot;, &quot;Dir&quot; },
+		pray = {&quot;Sha&quot;, &quot;Dru&quot;, &quot;Cle&quot;, &quot;A-P&quot;, &quot;Dir&quot; },
+		nonPriestCaster = { &quot;A-P&quot;, &quot;Dir&quot; },
 		rogue = {&quot;Rog&quot;, &quot;Bar&quot;, &quot;Ctr&quot;},
 		petRescue = { &quot;Psi&quot;, &quot;Cle&quot;, &quot;Enc&quot;, &quot;Dru&quot;, &quot;Lic&quot;, &quot;Sha&quot;, &quot;Inv&quot;, &quot;Ill&quot;, &quot;Ele&quot;,	 &quot;Nec&quot;, &quot;Bar&quot;, &quot;Ctr&quot;, &quot;Rog&quot;, &quot;Ran&quot; },
 		haster = { &quot;Enc&quot;, &quot;Nec&quot;, &quot;Ele&quot;, &quot;Lic&quot; },
-		summonmount = { &quot;A-P&quot;, &quot;Pal&quot;, &quot;Dir&quot;},
-		mountedCombat = { &quot;A-P&quot;, &quot;Pal&quot;, &quot;Dir&quot;},
+		summonmount = { &quot;A-P&quot;, &quot;Dir&quot;},
+		mountedCombat = { &quot;A-P&quot;, &quot;Dir&quot;},
 		tiavit = { &quot;Sha&quot;, &quot;Enc&quot;, &quot;Ill&quot;, &quot;Bar&quot;, &quot;Ele&quot;, &quot;Rog&quot;, &quot;Nec&quot;, &quot;Psi&quot;},
 		missile = { &quot;Sha&quot;, &quot;Ele&quot;, &quot;Dir&quot;, &quot;Enc&quot;, &quot;Nec&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Dru&quot;, &quot;Ran&quot; },
 		hlarea = { &quot;Cle&quot;, &quot;A-P&quot;, &quot;Pal&quot;, &quot;Sha&quot;, &quot;Ele&quot;, &quot;Dir&quot;, &quot;Enc&quot;, &quot;Nec&quot;, &quot;Inv&quot;, &quot;Lic&quot;, &quot;Ill&quot;, &quot;Dru&quot;, &quot;Ran&quot; },
@@ -30565,6 +31297,67 @@ charData = charData or {}
 				&quot;\n&lt;green&gt;[Auto-splinter is turned on.]\n&quot;,
 				&quot;\n&lt;red&gt;[Auto-splinter is turned off.]\n&quot;
 		 },
+
+	{ &quot;autobstrike&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Bolstering Strike is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Bolstering Strike is turned off.]\n&quot;
+		 },
+	{ &quot;autorcharge&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Radiant Charge is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Radiant Charge is turned off.]\n&quot;
+		 },
+	{ &quot;autossmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Shielding Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Shielding Smite is turned off.]\n&quot;
+		 },
+	{ &quot;autoesmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Enervating Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Enervating Smite is turned off.]\n&quot;
+		 },
+	{ &quot;autowsmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Wrathful Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Wrathful Smite is turned off.]\n&quot;
+		 },
+
+
+
+	{ &quot;autovstrike&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Valiant Strike is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Valiant Strike is turned off.]\n&quot;
+		 },
+
+	{ &quot;autothsmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Thunderous Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Thunderous Smite is turned off.]\n&quot;
+		 },
+
+	{ &quot;autobsmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Brilliant Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Brilliant Smite is turned off.]\n&quot;
+		 },
+
+	{ &quot;autotesmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Terrifying Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Terrifying Smite is turned off.]\n&quot;
+		 },
+
+	{ &quot;autowhsmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Whirlwind Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Whirlwind Smite is turned off.]\n&quot;
+		 },
+
+
+	{ &quot;autodivsmite&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Divine Smite is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Divine Smite is turned off.]\n&quot;
+		 },
+	{ &quot;autohands&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Lay on Hands is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Lay on Hands is turned off.]\n&quot;
+		 },
+
+
+
 	{ &quot;autoshieldpunch&quot;, &quot;fighter&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
 				&quot;\n&lt;red&gt;[incomplete: Auto-shieldpunch is turned on.]\n&quot;,
 				&quot;\n&lt;red&gt;[incomplete: Auto-shieldpunch is turned off.]\n&quot;
@@ -30954,10 +31747,10 @@ powerAliases[&quot;Pal&quot;] =
 { &quot;detect_magic&quot;, &quot;dm&quot;, 1, &quot;&quot;, &quot;&quot;},
 { &quot;detect_good&quot;, &quot;dg&quot;, 1, &quot;&quot;, &quot;&quot;},
 { &quot;detect_evil&quot;, &quot;de&quot;, 1, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_light&quot;, &quot;curel&quot;, 1, &quot;autoheal&quot;, &quot;&quot;},
+{ &quot;cure_light&quot;, &quot;curel&quot;, 1, &quot;&quot;, &quot;&quot;},
 { &quot;bless&quot;, &quot;bls&quot;, 1, &quot;&quot;, &quot;&quot;},
 { &quot;armor&quot;, &quot;am&quot;, 6, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_serious&quot;, &quot;cs&quot;, 11, &quot;autoheal&quot;, &quot;&quot;},
+{ &quot;cure_serious&quot;, &quot;cs&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;create_water&quot;, &quot;cwater&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;create_food&quot;, &quot;cfood&quot;, 11, &quot;&quot;, &quot;&quot;},
 { &quot;remove_curse&quot;, &quot;remc&quot;, 16, &quot;&quot;, &quot;&quot;},
@@ -30965,15 +31758,15 @@ powerAliases[&quot;Pal&quot;] =
 { &quot;remove_poison&quot;, &quot;rp&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;heal_mount&quot;, &quot;hm&quot;, 21, &quot;&quot;, &quot;&quot;},
 { &quot;dispel_evil&quot;, &quot;dev&quot;, 21, &quot;&quot;, &quot;&quot;},
-{ &quot;cure_critic&quot;, &quot;ccr&quot;, 21, &quot;autoheal&quot;, &quot;&quot;},
-{ &quot;ward_undead&quot;, &quot;wu&quot;, 26, &quot;turnundead&quot;, &quot;&quot;},
+{ &quot;cure_critic&quot;, &quot;ccr&quot;, 21, &quot;&quot;, &quot;&quot;},
+{ &quot;ward_undead&quot;, &quot;wu&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;cure_blind&quot;, &quot;cb&quot;, 26, &quot;&quot;, &quot;&quot;},
 { &quot;dispel_magic&quot;, &quot;dism&quot;, 31, &quot;&quot;, &quot;&quot;},
-{ &quot;destroy_undead&quot;, &quot;dun&quot;, 36, &quot;turnundead&quot;, &quot;&quot;},
+{ &quot;destroy_undead&quot;, &quot;dun&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;continual_light&quot;, &quot;cnl&quot;, 36, &quot;&quot;, &quot;&quot;},
 { &quot;holy_shroud&quot;, &quot;hs&quot;, 41, &quot;&quot;, &quot;&quot;},
-{ &quot;heal&quot;, &quot;hl&quot;, 41, &quot;&quot;, &quot;autoheal&quot;},
-{ &quot;holy_word&quot;, &quot;hw&quot;, 46, &quot;autohlarea&quot;, &quot;&quot;}
+{ &quot;heal&quot;, &quot;hl&quot;, 41, &quot;&quot;, &quot;&quot;},
+{ &quot;holy_word&quot;, &quot;hw&quot;, 46, &quot;&quot;, &quot;&quot;}
 						} 
 
 powerAliases[&quot;Dir&quot;] =
@@ -31737,6 +32530,33 @@ function sqlIsBow(xitemname)
 	return(retval)
 end
 
+function sqlIs2H(xitemname)
+	-- return list of matching 2h weapons
+
+	local recs, row
+
+	local retval = {}
+
+	xitemname=string.gsub(xitemname, &quot;'&quot;, &quot;''&quot;)
+
+	recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items, item_flags WHERE item_type = 'weapon' AND
+																							 item_name LIKE '%]] .. xitemname .. [[%']] ..
+																							 [[ AND item_flags.item_id = items.item_id AND item_flags.flag_abbr = 'two_hand']] 
+																							 			 ))
+
+	row = recs:fetch({})
+
+	while row do
+		retval[#retval+1] = row[2]
+		row = recs:fetch({})
+	end
+
+	recs:close()
+	
+	return(retval)
+end
+
+
 function sqlindexitem(xitemname)
 	local recs, row
 
@@ -32351,7 +33171,7 @@ function printStats(xmode)
 												c_glances*100/c_hit, c_glances,
 												c_pdeflect*100/c_hit, c_pdeflect   ) 
 
-	local prefix = &quot;&lt;blue&gt;gcc &quot;
+	local prefix = &quot;&lt;blue&gt;gcc &lt;green&gt;&quot;
 	
 	
 	for k,v in pairs(NyyLIB.stats) do
@@ -32399,7 +33219,7 @@ function printStats(xmode)
 
 		if whoclass(k) ~= nil then 
 
-			varstring =  string.format(&quot;&lt;green&gt;[%3s] %-16s:%5.1f%% (%4d)&quot;,
+			varstring =  string.format(&quot;[%3s] %-16s:%5.1f%% (%4d)&quot;,
 							whoclass(k), k, 
 							getHits(k)*100/(getHits(k)+getStat(k, &quot;offMiss&quot;)), 
 							getHits(k) + getStat(k, &quot;offMiss&quot;) )
@@ -34943,6 +35763,10 @@ function timer:init()
 end
 
 function timer:set(xname, xduration)
+	if xname == nil then
+		cecho(&quot;&lt;red&gt;[Error: timer:set xname is nil]\n&quot;)
+	end
+	
 	self.values[xname] = xduration
 end
 
@@ -35036,6 +35860,11 @@ function timer:custom()
 		if value ~= nil then
 			label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;white&quot;&gt;]] .. value .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])	
 		end
+	
+		-- TODO: display psilag, global cooldown
+	
+	
+	
 	end
 
 	if NyyLIB.songtimer ~= nil and NyyLIB.songtimer ~= &quot;&quot; then
@@ -35104,9 +35933,22 @@ end</script>
                     <packageName></packageName>
                     <script>prompt = prompt or {}
 
-meleePowers= { ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot;,
-							 ks=&quot;knockdown_shot&quot;, tr=&quot;triple_shot&quot;, cn=&quot;concussive_shot&quot;, sp=&quot;splintering_shot&quot;, ha=&quot;hail_of_arrows&quot;
- }
+-- need to be class seperated
+
+meleePowers = meleePowers or {}
+
+meleePowers[&quot;Ran&quot;] = 
+			{ ev=&quot;eviscerate&quot;, ss=&quot;sweeping_strike&quot;, ts=&quot;twin_strike&quot;, ap=&quot;armor_splinter&quot;, bs=&quot;bladestorm&quot;,
+	 			ks=&quot;knockdown_shot&quot;, tr=&quot;triple_shot&quot;, cn=&quot;concussive_shot&quot;, sp=&quot;splintering_shot&quot;, ha=&quot;hail_of_arrows&quot;
+			}
+			
+meleePowers[&quot;Pal&quot;] = 						 
+			{ bs=&quot;bolstering_strike&quot;, rc=&quot;radiant_charge&quot;, ss=&quot;shielding_smite&quot;,
+				es=&quot;enervating_smite&quot;, ws=&quot;wrathful_smite&quot;,
+				lh=&quot;lay_on_hands&quot;, ds=&quot;divine_smite&quot;,
+				vs=&quot;valiant_strike&quot;, brs=&quot;brilliant_smite&quot;, ts=&quot;thunderous_smite&quot;,
+				trs=&quot;terrifying_smite&quot;, wws=&quot;whirlwind_smite&quot;				
+			}
 
 function prompt:set(xkey, xvalue)
 	self[xkey]=xvalue
@@ -35124,17 +35966,16 @@ function prompt:isStringPrompt(teststring)
 	return(false)
 end
 
-
-
 -- melee powers + spell powers
 -- overlap from yuanti?
 -- class powers with identical names ss=sandstorm, sweeping strike
 
-
-
-
-
 function prompt:decodePowers(xstring)
+	-- initial prompt on login
+	if whoclass() == nil then
+		return
+	end
+	
 	--display(xstring)
 
 	local powersTable = string.split(xstring, &quot;|&quot;)
@@ -35146,7 +35987,13 @@ function prompt:decodePowers(xstring)
 		
 		if testItem ~= &quot;&quot; then
 			local powersAlias = string.match(testItem, &quot;^([a-z]+) .*&quot;)
-			local powersName = meleePowers[powersAlias]
+			
+			local powersName=false
+			
+			if meleePowers[string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)] ~= nil then
+				powersName = meleePowers[string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)][powersAlias]
+			end
+			
 			local powersCooldown = string.match(testItem, &quot;^[a-z]+ (.*)&quot;)
 			local powersRound = tonumber(powersCooldown) or 0
 			
@@ -37439,13 +38286,16 @@ function promptEvent(event)
 		return
 	end
 
-	-- Dire raiders - furious assault, howl, outflank
-	procPromptDire()
+	-- call class specific prompt script if one exists
 
-	-- Rangers
-	
-	if checkMask(&quot;ran&quot;) then
-		procPromptRanger()
+	if whoclass() ~= nil then
+		local cname=&quot;procPrompt&quot; .. string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)
+
+		-- display(cname)
+
+		if _G[cname] ~= nil then
+			_G[cname]()
+		end
 	end
 
 	-- proc equipment if needed 
@@ -37597,15 +38447,6 @@ function procEquipment()
 		if isIconActive(&quot;SuppleGirdle&quot;) and not mount:getMounted() and timer:get(&quot;SuppleGirdle&quot;) == nil then
 			SuppleGirdle(&quot;SuppleGirdle&quot;, buttons.CLICK)
 			return
-		end
-
-		-- proc skill: layhands if paladin
-
-		if checkMask(&quot;pal&quot;) then
-			if not timer:get(&quot;layhand&quot;) then
-				mud:send(&quot;layhand me&quot;)
-				timer:set(&quot;layhand&quot;, 24*60)
-			end
 		end
 
 		if checkMask(&quot;anti&quot;) then
