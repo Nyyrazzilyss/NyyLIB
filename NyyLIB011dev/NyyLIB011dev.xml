@@ -4895,6 +4895,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 
 -- Your weapon flares with a burst of divine radiance as you strike Willa O'Greensleeves!
 -- You land a glancing blow upon NN with your radiant weapon.
+-- Your righteous blow shatters an opulent merchant in a blast of divine power!
 
 meleePowerUsed=false
 
@@ -4913,10 +4914,12 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         <regexCodeList>
                             <string>Your weapon flares with a burst of divine radiance as you strike</string>
                             <string>You land a glancing blow upon .* with your radiant weapon.</string>
+                            <string>Your righteous blow shatters</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
                             <integer>1</integer>
+                            <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -7050,7 +7053,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/17/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/22/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7126,7 +7129,7 @@ mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/17/
                 <colorTriggerBgColor>#000000</colorTriggerBgColor>
                 <regexCodeList/>
                 <regexCodePropertyList/>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaSleeves</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7292,7 +7295,30 @@ end
 
 if string.ends(capture, &quot;&gt; &quot;) then
 	disableTrigger(&quot;CaptureWorn&quot;)
-end</script>
+	return
+end
+
+-- TODO weapon should be set here
+
+capture = string.gsub(capture, &quot;%(magic%)&quot;, &quot;&quot;)
+capture = string.gsub(capture, &quot;%(illuminating%)&quot;, &quot;&quot;)
+capture = string.gsub(capture, &quot;%(glowing%)&quot;, &quot;&quot;)
+capture = capture:trim()
+
+local teststring = string.match(capture, &quot;&lt;primary weapon&gt;     (.*)&quot;)
+
+if teststring then
+	equip:setWeapon(teststring)
+end
+
+local teststring = string.match(capture, &quot;&lt;wielding twohanded&gt; (.*)&quot;)
+if teststring then
+	equip:setWeapon(teststring)
+end
+
+
+
+</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -7310,7 +7336,7 @@ end</script>
                         <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaStaff</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -7398,7 +7424,7 @@ charData:set(&quot;TiaStaff&quot;, &quot;&quot;)
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
-                <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>TiaMask</name>
                     <script></script>
                     <triggerType>0</triggerType>
@@ -8327,47 +8353,13 @@ timer:set(&quot;DragonCult&quot;, 3*24*60)</script>
 -- You wear the wickedly sharp claws of a gelugon devil on your hands.
 
 local equipinfo = equipment:getByLongName( matches[2])
-local checkBow = sqlIsBow(matches[2])
-
-local check2H = sqlIs2H(matches[2])
 
 -- create button if equipment worn is proc'ing
 
 if equipinfo ~= nil then
 		enableTrigger(equipinfo[1])
 		addLeftbutton( equipinfo[1], equipinfo[3], 0)
-end
-
--- was the item worn a longbow?
-
-if checkMask(&quot;ran&quot;) then
-	if #checkBow &gt; 0 then
-		-- bow was just wielded. switch to archery buttons
-
-		addbutton(&quot;knockdown_shot&quot;, 3, 5)
-		addbutton(&quot;triple_shot&quot;, 12, 1)
-		addbutton(&quot;concussive_shot&quot;, 13, 25)	
-		addbutton(&quot;splintering_shot&quot;, 14, 15)
-		addbutton(&quot;hail_of_arrows&quot;, 15, 30)
-		
-		addbutton(&quot;hail_of_thorns&quot;, 9, 30)
-		addbutton(&quot;arctic_barrage&quot;, 10, 40)
-		addbutton(&quot;lightning_arrow&quot;, 11, 20)
-	end
-end
-
--- TODO: paladin - 2h sword wielded
-
-if checkMask(&quot;pal&quot;) then
-	if #check2H &gt; 0 then
-		addbutton(&quot;valiant_strike&quot;,5, 1)
-		addbutton(&quot;thunderous_smite&quot;,6, 5)
-		addbutton(&quot;brilliant_smite&quot;,7, 30)
-		addbutton(&quot;terrifying_smite&quot;,8, 25)
-		addbutton(&quot;whirlwind_smite&quot;,9, 25)
-	end
-end
-</script>
+end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -8431,8 +8423,11 @@ end
 -- was the item removed a longbow?
 
 if checkMask(&quot;ran&quot;) then
+	
 	if #checkBow &gt; 0 then
 		-- bow was just removed. switch to melee buttons
+
+		equip:setWeapon(matches[2])
 
 		addbutton(&quot;sweeping_strike&quot;, 3, 5)
 		addbutton(&quot;twin_strike&quot;, 12, 1)
@@ -8451,6 +8446,8 @@ end
 if checkMask(&quot;pal&quot;) then
 	if #check2H &gt; 0 then
 
+	equip:setWeapon(matches[2])
+	
 	addbutton(&quot;bolstering_strike&quot;,5, 1)
 	addbutton(&quot;radiant_charge&quot;,6, 5)
 	addbutton(&quot;wrathful_smite&quot;,7, 30)
@@ -8477,7 +8474,7 @@ end</script>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>You hold your ancient staff high in the air, and with a deathly </name>
+                    <name>You hold your ancient staff high in the air, and with a deathly</name>
                     <script>-- ashen staff
 
 setLabelImage(&quot;AshenStaff&quot;, &quot;AshenStaff-off.png&quot;)
@@ -8499,6 +8496,39 @@ timer:set(&quot;AshenStaff&quot;, 24*60)</script>
                     <regexCodePropertyList>
                         <integer>0</integer>
                         <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>You wield (.*)[.]</name>
+                    <script>-- Set wielded weapon, change skill buttons if needed
+
+equip:setWeapon(matches[2])
+
+-- Switch buttons if ranger or paladin
+
+if checkMask(&quot;ran&quot;) then
+	initRan()
+end
+
+if checkMask(&quot;pal&quot;) then
+	initPal()
+end
+</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>You wield (.*)[.]</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -14131,8 +14161,11 @@ if map:getRoom() ~= nil then
 		local specialExit = string.split(k, &quot; &quot;)
 		
 		for k2,v2 in pairs(string.split(specialExit[2], &quot;|&quot;)) do
-			if string.lower(command) == string.lower(specialExit[1] .. &quot; &quot; .. v2) then
-				--	or string.lower(command2) == string.lower(specialExit[1] .. &quot; &quot; .. v2)then
+			local testCommand = string.split(string.lower(command), &quot; &quot;)
+			local testExit = string.lower(specialExit[1])
+			
+			-- Check for special command/partial command, exit
+			if string.find(testExit, testCommand[1]) == 1 and testCommand[2] == string.lower(v2) then
 				-- TODO - command2 causes problems with fwalk paths
 				cecho(&quot;\n&lt;green&gt;[Using special exit '&quot; .. k .. &quot;' to room &quot; .. v .. &quot; : &quot; .. getRoomName(v) .. &quot;]\n&quot;)
 				map:setRoom(v)
@@ -14645,6 +14678,59 @@ end</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>A portal of swirling clouds hovers here.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>A violent maelstrom swirls here, drawing in the unwary.</name>
+                        <script>-- plane of air 93607: A violent maelstrom swirls here, drawing in the unwary.
+
+map:setRoom(93607)
+centerview( map:getRoom() )
+
+if command == &quot;SCAN&quot; then
+	-- You scan north...
+	local lineindex=1
+
+	while string.match(getLines(getLineNumber()-lineindex, getLineNumber())[1], &quot;^You scan ([a-z]+).*&quot;) == nil do
+		lineindex=lineindex+1
+
+		if lineindex &gt; 150 then
+			echoDebug(&quot;&lt;red&gt;[Unable to locate scan message]\n&quot;)
+			return
+		end
+	end
+
+	local scandir = string.match(getLines(getLineNumber()-lineindex, getLineNumber())[1], &quot;^You scan ([a-z]+).*&quot;) 
+
+	local setroom = getRoomExits(93607)[NyyLIB.reversedirs[scandir]]
+
+	--display(setroom)
+
+	map:setRoom(setroom)
+	centerview( map:getRoom() )
+
+	--display(&quot;Found on scan in dir &quot; .. scandir)
+end
+
+if string.match(command, &quot;^[nsewud]$&quot;) then
+	map:setRoom(93607)
+	centerview( map:getRoom() )
+end</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>A violent maelstrom swirls here, drawing in the unwary.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
@@ -17660,55 +17746,6 @@ timer:set(powername, timeleft)
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
-            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>&lt;wielding twohanded&gt;</name>
-                <script>-- &lt;wielding twohanded&gt; the rune-covered fiery warbow of hellish fury
-
-local itemname=matches[2]
-
-itemname = string.gsub(itemname, &quot;%(magic%)&quot;, &quot;&quot;)
-itemname = string.gsub(itemname, &quot;%(illuminating%)&quot;, &quot;&quot;)
-itemname = itemname:trim()
-
-
---display(itemname)
-
-
-local checkBow = sqlIsBow(itemname)
-
-local check2H = sqlIs2H(itemname)
-
-if #checkBow &gt; 0 then
-	-- display(&quot;wielding bow&quot;)
-end
-
-if #check2H &gt; 0 then
-	-- display(&quot;wielding 2h weapon&quot;)
-	
-	addbutton(&quot;valiant_strike&quot;,5, 1)
-	addbutton(&quot;thunderous_smite&quot;,6, 5)
-	addbutton(&quot;brilliant_smite&quot;,7, 30)
-	addbutton(&quot;terrifying_smite&quot;,8, 25)
-	addbutton(&quot;whirlwind_smite&quot;,9, 25)
-
-end</script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList>
-                    <string>&lt;wielding twohanded&gt; (.*)</string>
-                </regexCodeList>
-                <regexCodePropertyList>
-                    <integer>1</integer>
-                </regexCodePropertyList>
-            </Trigger>
             <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>autoclose</name>
                 <script>mud:send(&quot;close door&quot;)</script>
@@ -18346,9 +18383,13 @@ end</script>
                     </Alias>
                     <Alias isActive="yes" isFolder="no">
                         <name>ds</name>
-                        <script>spell:setMoving(false)
+                        <script>if checkMask(&quot;pal&quot;) then
+	mud:send(&quot;DS&quot; .. (matches[2] or &quot;&quot;) )
+else
+	spell:setMoving(false)
 
-spell:setNext(&quot;DS&quot; .. (matches[2] or &quot;&quot;) )</script>
+	spell:setNext(&quot;DS&quot; .. (matches[2] or &quot;&quot;) )
+end</script>
                         <command></command>
                         <packageName></packageName>
                         <regex>^ds( .+)?$</regex>
@@ -20242,9 +20283,9 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/17/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/22/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/17/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 11/22/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -23562,6 +23603,7 @@ cmi:labelCmudZones(cmi.con)</script>
 [17103] = &quot;wind&quot;,
 [70373] = &quot;kossuth&quot;,
 [74115] = &quot;annam&quot;,
+[74325] = &quot;Athzaganaroul&quot;,
 [75603] = &quot;sunbat&quot;,
 [78269] = &quot;jess&quot;,
 [78562] = &quot;trahern&quot;,
@@ -23935,8 +23977,10 @@ send(&quot;zone &quot; .. matches[2])</script>
 
 -- 011dev
 
--- Katumi database update - 11/17/17
--- Map updated: full size 317 areas 45269 rooms
+-- Katumi database update - 11/22/17
+-- Map updated: full size 317 areas 45273 rooms
+-- bugfix: special exits recognized if an abbreviated command typed
+-- Paladin: bugfixes
 -- Paladins: old-code spells removed
 -- Paladins: 1h, 2h powers added
 -- added @statbag
@@ -27967,12 +28011,28 @@ function initRan()
 
 	addbutton(&quot;autohide&quot;, 2, 1)
 
-	-- ranger melee/bow buttons
+	-- ranger buttons for weapon vs bow
 	
-	addbutton(&quot;twin_strike&quot;,12, 1)
-	addbutton(&quot;eviscerate&quot;, 13, 25)	
-	addbutton(&quot;armor_splinter&quot;, 14, 15)
-	addbutton(&quot;bladestorm&quot;, 15, 30)
+	if equip:getWeapon() == &quot;bow&quot; then
+		addbutton(&quot;knockdown_shot&quot;, 3, 5)
+		addbutton(&quot;triple_shot&quot;, 12, 1)
+		addbutton(&quot;concussive_shot&quot;, 13, 25)	
+		addbutton(&quot;splintering_shot&quot;, 14, 15)
+		addbutton(&quot;hail_of_arrows&quot;, 15, 30)
+		
+		addbutton(&quot;hail_of_thorns&quot;, 9, 30)
+		addbutton(&quot;arctic_barrage&quot;, 10, 40)
+		addbutton(&quot;lightning_arrow&quot;, 11, 20)
+	else
+		addbutton(&quot;twin_strike&quot;,12, 1)
+		addbutton(&quot;eviscerate&quot;, 13, 25)	
+		addbutton(&quot;armor_splinter&quot;, 14, 15)
+		addbutton(&quot;bladestorm&quot;, 15, 30)
+
+		addbutton(&quot;blades_of_fire&quot;, 9, 20)
+		addbutton(&quot;greenfire&quot;, 10, 40)
+		addbutton(&quot;electric_discharge&quot;, 11, 30)
+	end
 
 	-- ranger spell buttons
 	
@@ -27980,10 +28040,7 @@ function initRan()
 	
 	addbutton(&quot;hunters_mark&quot;, 5, 1)
 	addbutton(&quot;cloak_of_the_winds&quot;, 7, 10)
-	addbutton(&quot;blades_of_fire&quot;, 9, 20)
-	addbutton(&quot;greenfire&quot;, 10, 40)
-	addbutton(&quot;electric_discharge&quot;, 11, 30)
-
+	
 	
 	addbutton(&quot;misty_path&quot;, 4, 1)
 	addbutton(&quot;cloak_of_protection&quot;, 6, 1)
@@ -28533,12 +28590,20 @@ function initPal()
 	addbutton(&quot;divine_smite&quot;,2, 1)
 	
 	-- paladin 1h/2h buttons
-		
-	addbutton(&quot;bolstering_strike&quot;,5, 1)
-	addbutton(&quot;radiant_charge&quot;,6, 5)
-	addbutton(&quot;wrathful_smite&quot;,7, 30)
-	addbutton(&quot;shielding_smite&quot;,8, 1)
-	addbutton(&quot;enervating_smite&quot;,9, 25)
+	
+	if equip:getWeapon() == &quot;two_hand&quot; then
+		addbutton(&quot;valiant_strike&quot;,5, 1)
+		addbutton(&quot;thunderous_smite&quot;,6, 5)
+		addbutton(&quot;brilliant_smite&quot;,7, 15)
+		addbutton(&quot;terrifying_smite&quot;,8, 25)
+		addbutton(&quot;whirlwind_smite&quot;,9, 25)
+	else
+		addbutton(&quot;bolstering_strike&quot;,5, 1)
+		addbutton(&quot;radiant_charge&quot;,6, 5)
+		addbutton(&quot;wrathful_smite&quot;,7, 30)
+		addbutton(&quot;shielding_smite&quot;,8, 1)
+		addbutton(&quot;enervating_smite&quot;,9, 25)
+	end
 end
 
 function procPromptPal()
@@ -32508,6 +32573,28 @@ function sqliditem(xitemname)
 	
 	return(retval)
 end
+
+function sqlIsWeapon(xitemname)
+	local recs, row
+
+	local retval = {}
+
+	xitemname=string.gsub(xitemname, &quot;'&quot;, &quot;''&quot;)
+
+	recs = assert(NyyLIB.conn:execute([[SELECT item_name, short_stats FROM items WHERE (item_type = 'weapon' or item_type = &quot;ranged&quot;) AND item_name LIKE '%]] .. xitemname .. [[%']]))
+
+	row = recs:fetch({})
+
+	while row do
+		retval[#retval+1] = row[2]
+		row = recs:fetch({})
+	end
+
+	recs:close()
+	
+	return(retval)
+end
+
 
 function sqlIsBow(xitemname)
 	local recs, row
@@ -38183,6 +38270,52 @@ end
 
 function spell:getSlot(xslot)
 	return ( spell.slots[xslot] )
+end</script>
+                    <eventHandlerList/>
+                </Script>
+                <Script isActive="yes" isFolder="no">
+                    <name>EquipScripts</name>
+                    <packageName></packageName>
+                    <script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+
+equip = equip or {}
+
+equip.weapontype = equip.weapontype or &quot;none&quot;
+
+function equip:setWeapon(xweapon)
+
+	local checkBow = sqlIsBow(xweapon)
+	local check2H = sqlIs2H(xweapon)
+	local checkWeapon = sqlIsWeapon(xweapon)
+
+	if checkMask(&quot;ran&quot;) then
+		if #checkBow &gt; 0 then
+			self.weapontype = &quot;bow&quot;
+			return
+		end
+	end
+
+	if checkMask(&quot;pal&quot;) then
+		if #check2H &gt; 0 then
+			self.weapontype = &quot;two_hand&quot;
+			return
+		end
+	end
+	
+	if #checkWeapon &gt; 0 then
+		self.weapontype = &quot;weapon&quot;
+		return
+	end
+	
+	self.weapontype = &quot;none&quot;
+end
+
+function equip:getWeapon()
+	return ( self.weapontype )
 end</script>
                     <eventHandlerList/>
                 </Script>
