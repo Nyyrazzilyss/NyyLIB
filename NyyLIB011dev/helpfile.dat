@@ -310,7 +310,7 @@ Example:
 <red>@fwalk all        - <green>list all fwalks regardless of location
 <red>@fwalk area       - <green>list all fwalks in current area
 ;;80,database
-The 11/22/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
+The 12/6/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
 
 Some aliases are also included for access to it:
 
