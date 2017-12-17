@@ -18,7 +18,6 @@ freezing, caging, and deletion.
 <red>@help sound	     <green>- enabling sound
 <red>@help icons	     <green>- instructions for creating icon png files
 <red>@help @roll      <green>- auto-roller for creation of new characters
-<red>@help class      <green>- class specific information
 <red>@help @set       <green>- help with use of the 'set' command
 <red>@help @map       <green>- information about use of the mapper
 <red>@help database   <green>- further information on the Katumi database
@@ -27,26 +26,29 @@ freezing, caging, and deletion.
 <red>@help xptrain    <green>- The Adud Train
 <red>@help @stats     <green>- a warrior statistics package
 ;;12,gui
-The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
+<red>GUI information
 
-Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
+<green>The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
 
-The left side of the screen has a vertical showing equipment related buttons.
+<green>Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
 
-The group window is either all at the bottom, all at the right hand side, or split with casters at the bottom, hitters/warriors at the right hand side. 
+<green>The left side of the screen has a vertical window showing equipment related buttons.
 
-In the bottom left corner a countdown timer will display when stunned. To the right of it is a display that shows the current size of the character logged in. At levels less then 50, level/experience shows at the top of the screen. The map window shows above or to the left of the chat window.
+<green>The group window is either all at the bottom, all at the right hand side, or split with casters at the bottom, hitters/warriors at the right hand side. 
 
-There are a number of buttons present for all classes. To change the status of a button, move the mouse pointer overtop of it and click with the left mouse button.
-  Loot - Off, loot coins only, or loot everything
-  Flee - Off - All flee related triggers are disabled
-         On - If you attemp to flee and fail, flee will be sent again
-         Dragon - If you flee, return to the same room you fled from
-         Lich - If touched by a lich, flee is triggered
-  Auto Assist - If not fighting and a group member is, assist them
-  Check Status - A status command will be sent on all group members
+<green>In the bottom left corner a countdown timer will display when stunned. To the right of it is a display that shows the current size of the character logged in. At levels less then 50, level/experience shows at the top of the screen. The map window shows above or to the left of the chat window.
 
-Related: @set, map  
+<green>There are a number of buttons located in the bottom right present for all classes. To change the status of a button, move the mouse pointer overtop of it and click with the left mouse button.
+<green>  Check Status - A status command will be sent on all group members
+<green>  Flee - Off - All flee related triggers are disabled
+<green>         On - If you attemp to flee and fail, flee will be sent again
+<green>         Dragon - If you flee, return to the same room you fled from
+<green>         Lich - If touched by a lich, flee is triggered
+<green>  Auto Assist - If not fighting and a group member is, assist them
+<green>  Loot - Off, loot coins only, or loot everything
+<green>  Autodoor - Open doors prior to attempting to move past them
+<green>  Autoportal - Use special exits/portals if the number of warriors+1 group members enter it  
+<green>Related: @set, map  
 ;;13,sound
 <red>Sound
 
@@ -125,16 +127,9 @@ Related: set_bard, set_war, condensed
 <red>@set condensed spells     <green>- Spell spam
 <red>@set condensed dragon     <green>- Dragon gags
 <red>@set condensed arrows     <green>- Various archery related gags
+<red>@set condensed spellout   <green>= Locally show self/group spellout messages
 
-<green>The individual modes are enabled when the script replies that it has been set to <red>true<green>.
-;;25,class
-While this client should be workable with any class, it will work best with
-(i.e. scripting has been completed for)
-
-  Warrior, Cleric, Enchanter
-  Psionicist, Bard, Battlechanter, and Shaman
-
-Related: cleric, bard, warrior
+<green>The individual modes are enabled (will not be seen) when the script replies that it has been set to <red>true<green>.
 ;;27,spellcast
 	Spellcast Information
 
@@ -310,27 +305,31 @@ Example:
 <red>@fwalk all        - <green>list all fwalks regardless of location
 <red>@fwalk area       - <green>list all fwalks in current area
 ;;80,database
-The 12/6/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
+<red>Katumi Database
 
-Some aliases are also included for access to it:
+<green>The 12/16/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
 
-@clist charname - list all characters associated with that character/profile
-@id itemname - identify all items matching 'itemname'
-@statitems - echo identify of glist items to screen
-@statitems gsay - echo identify of glist items to gsay
+<green>Some aliases are also included for access to it:
+
+<green>@clist charname - list all characters associated with that character/profile
+<green>@id itemname - identify all items matching 'itemname'
+<green>@statitems - echo identify of glist items to screen
+<green>@statitems gsay - echo identify of glist items to gsay
 ;;85,@id
-The @id command will identify all items matching a name pattern known to the Katumi database.
+<red>@id
 
-Usage: @id pattern
+<green>The @id command will identify all items matching a name pattern known to the Katumi database.
 
-Example:
+<green>Usage: @id pattern
 
-@id breeches
-[Attempting to identify breeches]
-some rough leather breeches with bronze studs (Legs) AC:10 Hp:15 Maxint:4 * Wt:5 Val:0p * Zone: SF (Q) * Last ID: 2009-01-22
-some breeches woven of shark hide (Legs) AC:9 Hp:19 Maxint:5 Acid:5% Cold:5% WB * Magic !Bard !Fighter !Priest !Thief * Wt:1 Val:0p * Zone: Ashstone (Q) * Last ID: 2008-10-25
-a pair of silken breeches (Legs) AC:0 * Wt:2 Val:0p * Zone: Citadel * Last ID: 2011-01-29
-[3 matches in database]
+<green>Example:
+
+<green>@id breeches
+<green>[Attempting to identify breeches]
+<green>some rough leather breeches with bronze studs (Legs) AC:10 Hp:15 Maxint:4 * Wt:5 Val:0p * Zone: SF (Q) * Last ID: 2009-01-22
+<green>some breeches woven of shark hide (Legs) AC:9 Hp:19 Maxint:5 Acid:5% Cold:5% WB * Magic !Bard !Fighter !Priest !Thief * Wt:1 Val:0p * Zone: Ashstone (Q) * Last ID: 2008-10-25
+<green>a pair of silken breeches (Legs) AC:0 * Wt:2 Val:0p * Zone: Citadel * Last ID: 2011-01-29
+<green>[3 matches in database]
 ;;86,@clist
 The @clist command will display all of a players characters known to the Katumi database.
 
@@ -444,27 +443,29 @@ Related: @statitems
 <red>@stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
 <red>@resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
 ;;150,@stats
- Warrior defense statistics
+ <red>Statistic Package
  
- Hit/Miss/defensive skill usage is tracked. An entry is stored every 1000 attacks on you.
- While usable at any level of skills, the generated statistics are much more usable at
- level 50 / maximum skills.
+ <green>Warrior defense statistics
  
- set statname xxxxxx - Title information for current stat set
+ <green>Hit/Miss/defensive skill usage is tracked. An entry is stored every 1000 attacks on you.
+ <green>While usable at any level of skills, the generated statistics are much more usable at
+ <green>level 50 / maximum skills.
  
- @stats - display current information
- @stats read - display historical statistics information
- @stats reset - reset statistics counters
+ <green>set statname xxxxxx - Title information for current stat set
  
- Sample entry:
+ <green>@stats - display current information
+ <green>@stats read - display historical statistics information
+ <green>@stats reset - reset statistics counters
  
- [ hasted : Ogre : STR: (100) AGI Bonus: (-19) SUMMARY:   79 17.7% 41.8% 40.5% 56.3% 31.3% 12.5%]
-[Over  79 attacks on me, 17.7% (14) hit, 41.8% (33) missed, 40.5% (32) skillblocked]
-[0.0% of attacks that hit (0) were critical hits.]
-[The 32 skillblocks are 56.3% weapon (18), 31.3% shield (10), and 12.5% dodge (4)]
-[33.3% (6) of the successful weapon skillblocks were ripostes.]
-[15.2% (12) attacks were partially blocked, 16.7% weapon (2), 33.3% shield (4), and 50.0% dodge (6)]
-[On 21.4% (3) of all shieldblocks, vamp has occured.]
+ <green>Sample entry:
+ 
+ <green>[ hasted : Ogre : STR: (100) AGI Bonus: (-19) SUMMARY:   79 17.7% 41.8% 40.5% 56.3% 31.3% 12.5%]
+<green>[Over  79 attacks on me, 17.7% (14) hit, 41.8% (33) missed, 40.5% (32) skillblocked]
+<green>[0.0% of attacks that hit (0) were critical hits.]
+<green>[The 32 skillblocks are 56.3% weapon (18), 31.3% shield (10), and 12.5% dodge (4)]
+<green>[33.3% (6) of the successful weapon skillblocks were ripostes.]
+<green>[15.2% (12) attacks were partially blocked, 16.7% weapon (2), 33.3% shield (4), and 50.0% dodge (6)]
+<green>[On 21.4% (3) of all shieldblocks, vamp has occured.]
  ;;250,astral
 Sphere of Fire - To - Ruby Pool (Ribcage): s 
 Sphere of Fire - To - Yggdrasil Tree (Jot/Muspel): 2eu 
@@ -616,16 +617,16 @@ TC 2 a thick black leather belt with an onyx clasp
 TS 3 a wickedly curved blade with a twisted leather hilt
 TG 4 an enveloping cloak of twisted black leather
 ;;400,icons
-The icon .png files are created at http://cooltext.com/
+<green>The icon .png files are created at http://cooltext.com/
 
-Logo Style: White
-Font: AVQest
-Text Size: 15
-Glow Colour (red) F0 05 05  (black) 00 00 00
-Image: Alignment: Centered
-Width: 64
-Height: 30
-Shadow: Shadow Type: Heavy Blur
+<green>Logo Style: White
+<green>Font: AVQest
+<green>Text Size: 15
+<green>Glow Colour (red) F0 05 05  (black) 00 00 00
+<green>Image: Alignment: Centered
+<green>Width: 64
+<green>Height: 30
+<green>Shadow: Shadow Type: Heavy Blur
 ;;450,age
 Barbarian - 35
 Drow Elf - 220

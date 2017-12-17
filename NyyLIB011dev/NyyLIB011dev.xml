@@ -410,6 +410,13 @@ checkVoteButton()</script>
 -- error, same
 
 
+-- The spirit wolf barely wounds an elite barbazu soldier with its mighty drain.
+
+if matches[2] == &quot;Someone&quot; or matches[3] == &quot;someone&quot; then
+	return
+end
+
+
 local enemy
 
 if groupList:ingroup(matches[2]) then
@@ -1074,7 +1081,7 @@ castspell=castspell:lower()
 
 local displayname = to_english(powerAliases:toSpell(castspell))
 
-cecho(&quot;&lt;red&gt; [Casting: &lt;green&gt;&quot; .. castspell .. &quot; (&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
+cecho(&quot;&lt;red&gt; [Casting: &lt;yellow&gt;&quot; .. castspell:upper() .. &quot; &lt;green&gt;(&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
 
 -- Update local spellcount
 
@@ -1131,7 +1138,7 @@ if spellname ~= nil then
 
 	local displayname = to_english(powerAliases:toSpell(spellname))
 
-	cecho(&quot;&lt;red&gt;[&lt;green&gt;Completed spell: &quot; .. spellname .. &quot; (&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
+	cecho(&quot;&lt;red&gt; [&lt;cyan&gt;Completed spell: &quot; .. spellname:upper() .. &quot; (&quot; .. displayname .. &quot;)&lt;red&gt;]&quot;)
 
 	-- [Completed spell: dopple Bombum (Doppleganger) ]
 
@@ -1157,7 +1164,6 @@ if spellname ~= nil then
 		end
 
 		-- is this sending abort?
-		spell:setCurrent(nil)
 		spell:clear(&quot;gh&quot;)
 	end
 
@@ -1169,6 +1175,14 @@ if spellname ~= nil then
 
 	if groupList:ingroup(realmchar) then
 		buff:set(realmchar, &quot;greater_realm_of_protecti&quot;, 45*60)
+	end
+
+	local cbchar = string.match(spellname, &quot;^cb$&quot;)
+
+	if cbchar then
+		-- remove blind
+		buff:del(whoami(), &quot;blind&quot;)
+		buff:del(whoami(), &quot;blindness&quot;)
 	end
 
 	local cbchar = string.match(spellname, &quot;^cb (.*)&quot;)
@@ -1224,7 +1238,8 @@ if spellname ~= nil then
 else
 	cecho(&quot; &lt;red&gt;[&lt;green&gt;Completed spell: &lt;red&gt;unknown]&quot; )
 end
-</script>
+
+spell:setCurrent(nil)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -1498,7 +1513,7 @@ automem = 0
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>gsay memorize trigger</name>
-                    <script>if matches[2] == NyyLIB.leader then
+                    <script>if matches[2] == NyyLIB.leader or matches[2] == whoami() then
 	sendFollowers()
 
 	if checkMask(&quot;casterPsi&quot;) or checkMask(&quot;nonPriestCaster&quot;) then
@@ -1523,7 +1538,7 @@ end</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>([A-Za-z]+) group-says 'mem.*</string>
+                        <string>([A-Za-z]+) group-says? 'mem.*</string>
                         <string>([A-Za-z]+) group-says 'quick mem'</string>
                         <string>([A-Za-z]+) group-says 'dmem.*</string>
                     </regexCodeList>
@@ -2407,7 +2422,7 @@ for k, v in pairs(NyyLIB.fullclasslist) do
 		if inwho(whoami()) == false then
 			whoadd(whoami(), v[2], matches[3]:trim())
 		else
-			-- make sure database is correct class
+			-- make sure katumi database is correct class
 			if NyyLIB.WhoClass.wholist[whoami()] ~= nil then
 				NyyLIB.WhoClass.wholist[whoami()][1] = v[2]
 			end
@@ -2421,19 +2436,7 @@ for k, v in pairs(NyyLIB.fullclasslist) do
 
 		return
 	end
-end
-
--- TODO - What if matches[4] ~= katumi?
-
--- Change from necro to lich in wholist
-
---if matches[4]:trim() == &quot;Lich&quot; then
---	if NyyLIB.WhoClass.wholist[whoami()] ~= nil then
---		NyyLIB.WhoClass.wholist[whoami()][1] = &quot;Lic&quot;
---	end
---end
-
-</script>
+end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -2470,7 +2473,8 @@ end
                         <name>^([A-Za-z]+) tells you '(worm|well|hole) ([A-Za-z]+)'</name>
                         <script>if charData:get(&quot;disableworm&quot;) then
 	if checkMask(&quot;psi&quot;) then
-		mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, lack of voting on TMC (http://www.mudconnect.com/cgi-bin/vote_rank.cgi?mud=TorilMud,+the+Sojourner%27s+Home) has disabled this trigger. 30+ people are online free daily, but not willing to vote.&quot;)
+		-- mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, lack of voting on TMC (http://www.mudconnect.com/cgi-bin/vote_rank.cgi?mud=TorilMud,+the+Sojourner%27s+Home) has disabled this trigger. 30+ people are online free daily, but not willing to vote.&quot;)
+		mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, enabling this trigger requires contributing new or re-written helpfiles.&quot;)
 		return
 	end
 end
@@ -2507,8 +2511,10 @@ end</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>^([A-Za-z]+) tells you '(worm|well|hole|wormhole|hol) ([A-Za-z]+)( .*)?'</string>
+                            <string>^([A-Za-z]+) ASSOC::? '(worm|well|hole|wormhole|hol) ([A-Za-z]+)( .*)?'</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>1</integer>
                             <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -2516,7 +2522,8 @@ end</script>
                         <name>^([A-Za-z]+) tells you '(rift|gate) ([A-Za-z]+)'</name>
                         <script>if charData:get(&quot;disableworm&quot;) then
 	if checkMask(&quot;psi&quot;) then
-		mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, lack of voting on TMC (http://www.mudconnect.com/cgi-bin/vote_rank.cgi?mud=TorilMud,+the+Sojourner%27s+Home) has disabled this trigger. 30+ people are online free daily, but not willing to vote.&quot;)
+		--mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, lack of voting on TMC (http://www.mudconnect.com/cgi-bin/vote_rank.cgi?mud=TorilMud,+the+Sojourner%27s+Home) has disabled this trigger. 30+ people are online free daily, but not willing to vote.&quot;)
+		mud:send(&quot;t &quot; .. matches[2] .. &quot; &quot; .. string.title(matches[2]) .. &quot;, enabling this trigger requires contributing new or re-written helpfiles.&quot;)
 		return
 	end
 end
@@ -2546,8 +2553,10 @@ end</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>^([A-Za-z]+) tells you '(rift|gate) ([A-Za-z]+)( .*)?'</string>
+                            <string>^([A-Za-z]+) ASSOC::? '(rift|gate) ([A-Za-z]+)( .*)?'</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>1</integer>
                             <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -3149,8 +3158,10 @@ end</script>
                             <regexCodeList>
                                 <string>^(.*) clambers to .*</string>
                                 <string>^(.*) rises to (his|her|its) feet.$</string>
+                                <string>(.*) staggers about, but manages to get to (his|her) feet.</string>
                             </regexCodeList>
                             <regexCodePropertyList>
+                                <integer>1</integer>
                                 <integer>1</integer>
                                 <integer>1</integer>
                             </regexCodePropertyList>
@@ -3342,6 +3353,13 @@ local torescue=matches[3]
 if NyyLIB == nil then
 	return
 end
+
+-- If last command entered was &quot;l &quot; or scan, return
+
+if string.find(command, &quot;L &quot;) == 1 or command == &quot;SCAN&quot; then
+	return
+end
+
 
 if charData:get(whoami(), true) == nil then
 	return
@@ -4382,7 +4400,7 @@ timer:set(&quot;notrip&quot;, 60)</script>
 meleePowerUsed=false
 
 timer:set(&quot;eviscerate&quot;, 36)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4410,7 +4428,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;twin_strike&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4438,7 +4456,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;armor_splinter&quot;, 24)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4468,7 +4486,7 @@ meleePowerUsed=false
 
 
 timer:set(&quot;bladestorm&quot;, 36)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4524,9 +4542,14 @@ end</script>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You're not ready to perform another action!</name>
-                        <script>meleePowerUsed=nil
+                        <script>--display(command)
+
+meleePowerUsed=nil
 setBashing(false)
-timer:set(&quot;cooldown&quot;, 2)</script>
+
+--timer:set(&quot;cooldown&quot;, 2)
+
+timer:set(&quot;cooldown&quot;, .5)</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4553,7 +4576,7 @@ timer:set(&quot;cooldown&quot;, 2)</script>
 meleePowerUsed=false
 
 timer:set(&quot;sweeping_strike&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4580,7 +4603,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;knockdown_shot&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4610,7 +4633,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;hail_of_arrows&quot;, 36)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4636,7 +4659,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;splintering_shot&quot;, 24)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4662,7 +4685,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;concussive_shot&quot;, 36)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4689,7 +4712,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;triple_shot&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4733,8 +4756,8 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 
 meleePowerUsed=false
 
-timer:set(&quot;shielding_smite&quot;, 12*4)
-timer:set(&quot;cooldown&quot;, 5)</script>
+timer:set(&quot;shielding_smite&quot;, 12)
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4760,8 +4783,8 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 
 meleePowerUsed=false
 
-timer:set(&quot;bolstering_strike&quot;, 12*4)
-timer:set(&quot;cooldown&quot;, 5)</script>
+timer:set(&quot;bolstering_strike&quot;, 12)
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4775,9 +4798,11 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         <regexCodeList>
                             <string>and your accuracy is rewarded with a divine gift of health.</string>
                             <string>You strike out at .*, landing a glancing blow!</string>
+                            <string>You strike .* without reprieve, and .* falls before your overwhelming assault.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                            <integer>1</integer>
                             <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
@@ -4791,8 +4816,8 @@ meleePowerUsed=false
 
 setBashing(false)
 
-timer:set(&quot;radiant_charge&quot;, 12*4)
-timer:set(&quot;cooldown&quot;, 5)</script>
+timer:set(&quot;radiant_charge&quot;, 12)
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4818,8 +4843,8 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 
 meleePowerUsed=false
 
-timer:set(&quot;enervating_strike&quot;, 36*4)
-timer:set(&quot;cooldown&quot;, 5)</script>
+timer:set(&quot;enervating_strike&quot;, 36)
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4845,8 +4870,8 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 
 meleePowerUsed=false
 
-timer:set(&quot;wrathful_smite&quot;, 36*4)
-timer:set(&quot;cooldown&quot;, 5)</script>
+timer:set(&quot;wrathful_smite&quot;, 36)
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4871,7 +4896,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;lay_on_hands&quot;, 6*60)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4900,7 +4925,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;divine_smite&quot;, 5*60)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4926,12 +4951,17 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         <name>Your weapon explodes in a peal of roaring thunder as you strike Willa O'Greensleeves!</name>
                         <script>-- Thunderous smite
 
+-- Your weapon explodes in a peal of roaring thunder as you strike Lavis Ryl!
+-- Lavis Ryl is thrown to the ground by the shockwave!
+
+-- Aratha Sul staggers but maintains her balance as your weapon explodes in a peal of roaring thunder!
+
 meleePowerUsed=false
 
 setBashing(false)
 
 timer:set(&quot;thunderous_smite&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4961,7 +4991,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;valiant_strike&quot;, 12)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -4990,7 +5020,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;brilliant_smite&quot;, 24)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -5017,7 +5047,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;terrifying_smite&quot;, 24)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -5042,7 +5072,7 @@ timer:set(&quot;cooldown&quot;, 5)</script>
 meleePowerUsed=false
 
 timer:set(&quot;whirlwind_smite&quot;, 36)
-timer:set(&quot;cooldown&quot;, 5)</script>
+setMeleeCooldown()</script>
                         <triggerType>0</triggerType>
                         <conditonLineDelta>0</conditonLineDelta>
                         <mStayOpen>0</mStayOpen>
@@ -5058,6 +5088,58 @@ timer:set(&quot;cooldown&quot;, 5)</script>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>A searing, divine light radiates from you as you confront an elite fortress guard.</name>
+                        <script>-- A searing, divine light radiates from you as you confront an elite fortress guard.
+
+timer:set(&quot;divine_challenge&quot;, 180)
+
+meleePowerUsed=false
+
+setMeleeCooldown()</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>A searing, divine light radiates from you as you confront</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You extend your holy symbol towards an elemental lord, singling it out for your divine retribution.</name>
+                        <script>-- You extend your holy symbol towards an elemental lord, singling it out for your divine retribution.
+
+timer:set(&quot;true_nemesis&quot;, 60)
+
+meleePowerUsed=false
+
+setMeleeCooldown()</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string> ?You extend your holy symbol towards .*, singling it out for your divine retribution.</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
@@ -5410,7 +5492,7 @@ groupList:reset()
 if gagGroup then
 	group:send(false)
 	eraseLine()
-	echoDebug(&quot;\n&lt;red&gt;[empty group received]&quot;)
+	echoDebug(&quot; &lt;red&gt;[empty group received]&quot;)
 end
 
 groupList:add(whoami(), whoclass(), prompt:get(&quot;hp&quot;), prompt:get(&quot;maxhp&quot;) )
@@ -5772,7 +5854,7 @@ groupList:checkMaxHP()
 
 disableTrigger(&quot;endprompt&quot;)
 rescuelist:generate()
-echoDebug(&quot;&lt;red&gt;\n[Group received]\n&quot;)
+echoDebug(&quot;&lt;red&gt; [Group received]\n&quot;)
 group:send(false)
 groupRedraw = nil
 raiseEvent(&quot;promptEvent&quot;)</script>
@@ -5822,6 +5904,12 @@ end</script>
 --The ghoul of an opulent merchant stands here, fighting an opulent merchant.
 --An opulent merchant stands here, fighting the ghoul of an opulent merchant.
 
+-- If last command entered was &quot;l &quot; or scan, return
+
+if string.find(command, &quot;L &quot;) == 1 or command == &quot;SCAN&quot; then
+	return
+end
+
 if matches[2] == &quot;YOU&quot; then
 	groupList:incTanking(whoami())
 end
@@ -5851,6 +5939,12 @@ end</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Reset tanking list</name>
                     <script>-- Since a room is being looked at, the table of players tanking mobs is reset
+
+-- If last command entered was &quot;l &quot; or scan, return
+
+if string.find(command, &quot;L &quot;) == 1 or command == &quot;SCAN&quot; then
+	return
+end
 
 groupList:resetTanking()</script>
                     <triggerType>0</triggerType>
@@ -5920,7 +6014,7 @@ fleeAttempt = fleeAttempt or 0
 if charData:get(&quot;flee&quot;) ~= &quot;off&quot; and charData:get(&quot;flee&quot;) ~= &quot;dragon&quot;  or NyyLIB.escapedir ~= nil then
 	fleeAttempt = fleeAttempt + 1
 
-	if fleeAttempt &lt; 4 then
+	if fleeAttempt &lt; 15 then
 		-- abort spell if casting
 
 		spell:clear()
@@ -5939,12 +6033,14 @@ end</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>PANIC!  You couldn't escape!</string>
-                        <string>You scramble madly to your feet!</string>
+                        <string>^PANIC!  You couldn't escape!</string>
+                        <string>^You scramble madly to your feet!</string>
+                        <string>^You're too busy trying to gain the initiative to flee!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
-                        <integer>0</integer>
-                        <integer>0</integer>
+                        <integer>1</integer>
+                        <integer>1</integer>
+                        <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -6398,7 +6494,9 @@ end</script>
 setTripping(false)
 NyyLIB.failedtrip=0
 
-sound(&quot;241280__sonictechtonic__gooeybashes.wav&quot;)</script>
+sound(&quot;241280__sonictechtonic__gooeybashes.wav&quot;)
+
+timer:set(&quot;cooldown&quot;, 1.5)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -6420,12 +6518,18 @@ sound(&quot;241280__sonictechtonic__gooeybashes.wav&quot;)</script>
                         <string> is too huge for you to trip! You go crashing to the ground.</string>
                         <string>You're not ready to perform another action!</string>
                         <string>You sweep attack</string>
+                        <string>That power hasn't recharged yet!</string>
+                        <string>You would pass right through them!</string>
+                        <string>No target for your power could be found!</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>1</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
+                        <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
                         <integer>0</integer>
@@ -6632,7 +6736,7 @@ mud:send(&quot;consent &quot; .. matches[2])</script>
                     <regexCodeList>
                         <string>^(Thamos) tells you 'I will now RESURRECT you, make sure I have your CONSENT'</string>
                         <string>^(Osheara) tells you 'Get ready for the BLUEST resurrection ever!'</string>
-                        <string>^([A-Za-z]+) tells you 'consent'$</string>
+                        <string>^([A-Za-z]+) tells you 'consent$</string>
                         <string>^([A-Za-z]+) tells you 'ressing, consent .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
@@ -6776,7 +6880,7 @@ end</script>
                     <name>That power hasn't recharged yet!</name>
                     <script>mud:send(&quot;recharge&quot;)
 
-timer:set(&quot;cooldown&quot;, 1)
+timer:set(&quot;cooldown&quot;, .5)
 meleePowerUsed=false</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -7053,7 +7157,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 11/22/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 12/16/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -8426,18 +8530,8 @@ if checkMask(&quot;ran&quot;) then
 	
 	if #checkBow &gt; 0 then
 		-- bow was just removed. switch to melee buttons
-
 		equip:setWeapon(matches[2])
-
-		addbutton(&quot;sweeping_strike&quot;, 3, 5)
-		addbutton(&quot;twin_strike&quot;, 12, 1)
-		addbutton(&quot;eviscerate&quot;, 13, 25)	
-		addbutton(&quot;armor_splinter&quot;, 14, 15)
-		addbutton(&quot;bladestorm&quot;, 15, 30)
-	
-		addbutton(&quot;blades_of_fire&quot;, 9, 20)
-		addbutton(&quot;greenfire&quot;, 10, 40)
-		addbutton(&quot;electric_discharge&quot;, 11, 30)
+		initRan()
 	end
 end
 
@@ -8445,15 +8539,8 @@ end
 
 if checkMask(&quot;pal&quot;) then
 	if #check2H &gt; 0 then
-
-	equip:setWeapon(matches[2])
-	
-	addbutton(&quot;bolstering_strike&quot;,5, 1)
-	addbutton(&quot;radiant_charge&quot;,6, 5)
-	addbutton(&quot;wrathful_smite&quot;,7, 30)
-	addbutton(&quot;shielding_smite&quot;,8, 1)
-	addbutton(&quot;enervating_smite&quot;,9, 25)
-
+		equip:setWeapon(matches[2])
+		initPal()
 	end
 end</script>
                     <triggerType>0</triggerType>
@@ -9847,7 +9934,7 @@ end</script>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
-                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>You have been blinded!</name>
                         <script>mud:send(&quot;gsay &lt;&lt; BLIND! &gt;&gt;&quot; )
 
@@ -9867,12 +9954,12 @@ sendStatus()</script>
                         <regexCodeList>
                             <string>^.*You have been blinded!$</string>
                             <string>^You are blinded!$</string>
-                            <string>You are blinded by the burning sands!</string>
+                            <string>You are blinded.*</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
                             <integer>1</integer>
-                            <integer>0</integer>
+                            <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -9897,8 +9984,7 @@ buff:del(matches[2], &quot;blindness&quot;)</script>
                         </regexCodePropertyList>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                        <name>Your vision returns!
-</name>
+                        <name>Your vision returns!</name>
                         <script>-- chkstat
 
 
@@ -10065,8 +10151,10 @@ spell:clear()</script>
                             <string>Your body becomes rigid as the paralyzation takes effect.</string>
                             <string>You remain paralyzed and can't do a thing to defend yourself...</string>
                             <string>tail radiates freezing cold, causing your bones to lock up.</string>
+                            <string>leaving you near to death, numb, and barely concious.</string>
                         </regexCodeList>
                         <regexCodePropertyList>
+                            <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
                             <integer>0</integer>
@@ -10130,6 +10218,26 @@ end</script>
                             <integer>1</integer>
                             <integer>1</integer>
                             <integer>1</integer>
+                        </regexCodePropertyList>
+                    </Trigger>
+                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>You can't see a thing, you're blinded!</name>
+                        <script>buff:set(whoami(), &quot;blind&quot;, 600)</script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList>
+                            <string>You can't see a thing, you're blinded!</string>
+                        </regexCodeList>
+                        <regexCodePropertyList>
+                            <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
                 </TriggerGroup>
@@ -11363,8 +11471,13 @@ if currentroom == NyyLIB.nextstop then
 			_G[stopname]()
 			tempTimer(2, [[NextTrainStop()]])
 		else
-			mud:send(&quot;glance &quot; .. string.split(stopname, &quot; &quot;)[1] )
-			tempTimer(2, [[StartFight()]])
+			if not pcharsInRoom then
+				mud:send(&quot;glance &quot; .. string.split(stopname, &quot; &quot;)[1] )
+				tempTimer(2, [[StartFight()]])
+			else
+				cecho(&quot;&lt;red&gt;[Players in room - Moving to next station]\n&quot;)
+				NextTrainStop()
+			end
 		end
 	end
 end</script>
@@ -11435,9 +11548,9 @@ else
 		-- current room isn't expected room
 		NyyLIB.traintarget=false
 
-		cecho(&quot;&lt;red&gt;[Current room not expected]\n&quot;)
-		display( map:getRoom() )
-		display( NyyLIB.nextstop )
+		cecho(&quot;\n&lt;red&gt;[Current room isn't expected room]\n&quot;)
+		cecho(&quot;&lt;red&gt;[map:getRoom() &quot; .. map:getRoom() .. &quot;]\n&quot;)
+		cecho(&quot;&lt;red&gt;[NyyLIB.nextstop &quot; .. NyyLIB.nextstop .. &quot;]\n&quot;)
 
 		tempTimer(5, [[expandAlias(&quot;@fwalk &quot; .. NyyLIB.nextstop)]])
 	else
@@ -11445,7 +11558,8 @@ else
 
 		if callNextTrain == nil then
 			callNextTrain=true
-			cecho(&quot;&lt;red&gt;\n[Calling function: NextTrainStop()]\n&quot;)
+			look:send()
+			cecho(&quot;&lt;red&gt;\n\n[Calling function: NextTrainStop()]\n&quot;)
 			tempTimer(6, [[NextTrainStop()]])
 		end
 	end
@@ -11462,9 +11576,11 @@ end</script>
                         <colorTriggerBgColor>#000000</colorTriggerBgColor>
                         <regexCodeList>
                             <string>^Your blood freezes as you hear the rattling death cry of (.*)[.]</string>
+                            <string>No target for your power could be found!</string>
                         </regexCodeList>
                         <regexCodePropertyList>
                             <integer>1</integer>
+                            <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
                     <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -11509,7 +11625,7 @@ end</script>
                             <integer>1</integer>
                         </regexCodePropertyList>
                     </Trigger>
-                    <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                         <name>Lavis Ryl clambers to his feet.</name>
                         <script>if NyyLIB.smtrainposition ~= nil then
 	if matches[2] == NyyLIB.smtrainstops[NyyLIB.smtrainposition][2] then
@@ -11727,6 +11843,96 @@ end</script>
                             <integer>0</integer>
                         </regexCodePropertyList>
                     </Trigger>
+                    <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                        <name>newroom</name>
+                        <script></script>
+                        <triggerType>0</triggerType>
+                        <conditonLineDelta>0</conditonLineDelta>
+                        <mStayOpen>0</mStayOpen>
+                        <mCommand></mCommand>
+                        <packageName></packageName>
+                        <mFgColor>#ff0000</mFgColor>
+                        <mBgColor>#ffff00</mBgColor>
+                        <mSoundFile></mSoundFile>
+                        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                        <regexCodeList/>
+                        <regexCodePropertyList/>
+                        <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                            <name>botRoomCapture</name>
+                            <script>-- location matters on this trigger to prevent double firing
+
+-- terminate capture on blank line
+if matches[1] == &quot;&quot; then
+	disableTrigger(&quot;botRoomCapture&quot;)
+	return
+end</script>
+                            <triggerType>0</triggerType>
+                            <conditonLineDelta>0</conditonLineDelta>
+                            <mStayOpen>0</mStayOpen>
+                            <mCommand></mCommand>
+                            <packageName></packageName>
+                            <mFgColor>#ff0000</mFgColor>
+                            <mBgColor>#ffff00</mBgColor>
+                            <mSoundFile></mSoundFile>
+                            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                            <regexCodeList>
+                                <string>^.*$</string>
+                            </regexCodeList>
+                            <regexCodePropertyList>
+                                <integer>1</integer>
+                            </regexCodePropertyList>
+                        </Trigger>
+                        <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                            <name>^Exits: .*</name>
+                            <script>-- new room entered
+
+enableTrigger(&quot;botRoomCapture&quot;)
+
+pcharsInRoom = false</script>
+                            <triggerType>0</triggerType>
+                            <conditonLineDelta>0</conditonLineDelta>
+                            <mStayOpen>0</mStayOpen>
+                            <mCommand></mCommand>
+                            <packageName></packageName>
+                            <mFgColor>#ff0000</mFgColor>
+                            <mBgColor>#ffff00</mBgColor>
+                            <mSoundFile></mSoundFile>
+                            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                            <regexCodeList>
+                                <string>^Exits: .*</string>
+                            </regexCodeList>
+                            <regexCodePropertyList>
+                                <integer>1</integer>
+                            </regexCodePropertyList>
+                        </Trigger>
+                        <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                            <name>Waf  (RP) (Barbarian) stands in mid-air here, fighting A burly bouncer.</name>
+                            <script>-- Waf  (RP) (Barbarian) stands in mid-air here, fighting A burly bouncer.
+
+if inwho(matches[2]) then
+	pcharsInRoom=true
+end</script>
+                            <triggerType>0</triggerType>
+                            <conditonLineDelta>0</conditonLineDelta>
+                            <mStayOpen>0</mStayOpen>
+                            <mCommand></mCommand>
+                            <packageName></packageName>
+                            <mFgColor>#ff0000</mFgColor>
+                            <mBgColor>#ffff00</mBgColor>
+                            <mSoundFile></mSoundFile>
+                            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                            <regexCodeList>
+                                <string>^([A-Z][a-z]+)  .* stands .*[.]</string>
+                            </regexCodeList>
+                            <regexCodePropertyList>
+                                <integer>1</integer>
+                            </regexCodePropertyList>
+                        </Trigger>
+                    </TriggerGroup>
                 </TriggerGroup>
                 <TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>PsiBomb</name>
@@ -12243,7 +12449,8 @@ if groupList:ingroup(charname) and charData:get(&quot;autoportal&quot;) then
 							mud:send(&quot;ORDER followers &quot; .. exitcmd)
 						end
 
-						mud:send (exitcmd)
+						map:processMovement(exitcmd)
+						--mud:send (exitcmd)
 					end
 				end
 			end
@@ -12255,7 +12462,7 @@ if groupList:ingroup(charname) and charData:get(&quot;autoportal&quot;) then
 			if pet:status() or mount:get() ~= nil then
 				mud:send(&quot;ORDER followers enter &quot; .. portalname)
 			end
-
+			
 			mud:send(&quot;enter &quot; .. portalname)
 		end
 
@@ -13999,6 +14206,8 @@ local itemname=matches[2]
 
 itemname = string.gsub(itemname, &quot;%(magic%)&quot;, &quot;&quot;)
 itemname = string.gsub(itemname, &quot;%(illuminated%)&quot;, &quot;&quot;)
+itemname = string.gsub(itemname, &quot;%(glowing%)&quot;, &quot;&quot;)
+itemname = string.gsub(itemname, &quot;%(invis%)&quot;, &quot;&quot;)
 itemname = itemname:trim()
 
 if string.find(itemname, &quot;] &quot;) ~= nil then
@@ -14155,6 +14364,9 @@ if map:getRoom() ~= nil then
 
 	local exitlist={}
 
+	--display(specialexit)
+	--display(command)
+
 	-- build list of special exits
 	for k,v in pairs(specialexit) do
 		-- key will be each special exit from this room example: &quot;enter wave|dancer&quot;
@@ -14243,7 +14455,12 @@ end
 
 local lastMovement = map:popMovement()
 
-echoDebug(&quot;[lastMovement: &quot; .. tostring(lastMovement) .. &quot;]\n&quot;)
+local testMovement = string.match( tostring(lastMovement), &quot;^DRAG .* ([nsewud]).*&quot;)
+
+if testMovement then
+	echoDebug(&quot;&lt;green&gt;[testMovement: &quot; .. tostring(testMovement) .. &quot;]\n&quot;)
+	lastMovement=testMovement
+end
 
 
 -- if lastMovement was to open a door, pop again
@@ -14286,7 +14503,7 @@ if charData:get(&quot;vnum&quot;, true) then
 		if map:getRoom() ~= nil then
 			cecho(&quot;&lt;forest_green&gt;&quot; .. string.format(&quot;%&quot; .. (15-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, map:getRoom() ))
 		else
-			cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (20-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, &quot;Unmapped&quot;))
+			cecho(&quot;&lt;red&gt;&quot; .. string.format(&quot;%&quot; .. (20-string.len(xexits)) .. &quot;s [%s] &quot;, &quot; &quot;, &quot;Map not in sync, type &lt;green&gt;@find &lt;red&gt;or &lt;green&gt;scan&lt;red&gt; to attempt resync&quot;))
 		end
 	else
 		local clairedroomid = map:findRoomID( roomName, getExitTable(xexits), true)
@@ -14433,6 +14650,8 @@ map:update(matches[2])</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>Failed movement</name>
                     <script>-- failed room movement
+
+-- Animated plants secure your feet and prevent your exit!
 
 -- Alas, you cannot go that way. . . .
 
@@ -14772,6 +14991,34 @@ end</script>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>0</integer>
+                    </regexCodePropertyList>
+                </Trigger>
+                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+                    <name>tells you @room</name>
+                    <script>local roomid = map:getRoom()
+
+if roomid ~= nil then
+	local zoneid=tonumber(getRoomUserData(roomid, &quot;zoneid&quot;) )
+
+	mud:send(&quot;T &quot; .. matches[2] .. &quot; &quot; .. roomid .. &quot;, &quot; .. getRoomName(roomid) .. &quot; : &quot; .. NyyLIB.areaTable[zoneid] .. &quot;\n&quot;)
+else
+	mud:send(&quot;T &quot; .. matches[2] .. &quot; Map not currently in sync&quot;)
+end</script>
+                    <triggerType>0</triggerType>
+                    <conditonLineDelta>0</conditonLineDelta>
+                    <mStayOpen>0</mStayOpen>
+                    <mCommand></mCommand>
+                    <packageName></packageName>
+                    <mFgColor>#ff0000</mFgColor>
+                    <mBgColor>#ffff00</mBgColor>
+                    <mSoundFile></mSoundFile>
+                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
+                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
+                    <regexCodeList>
+                        <string>^([A-Za-z]+) tells you '@room'</string>
+                    </regexCodeList>
+                    <regexCodePropertyList>
+                        <integer>1</integer>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
@@ -16132,8 +16379,8 @@ if groupList:ingroup( charname ) then
 			return
 		end
 
-		-- last command entered was look direction or scan - return
-		if string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;SCAN&quot; then
+		-- last command entered was look direction or scan - return  TODO: clair also
+		if string.find(command, &quot;L &quot;) == 1 or string.find(command, &quot;l &quot;) == 1 or string.find(command, &quot;look &quot;) == 1 or command == &quot;SCAN&quot; then
 			return
 		end
 
@@ -16239,8 +16486,10 @@ sound(&quot;139025__rj10328__131659-bertrof-game-sound-intro-to-game-80921-justi
 -- Send consent request to corpse if person dragging was not cleric,
 -- and corpse owner is grouped
 
+-- Lilabipple drags corpse of General Edmund Blitz along behind her.
+
 if charData:get(&quot;echodrag&quot;) then
-	if groupList:ingroup(matches[2]) and whoclass(matches[2]) ~= &quot;Cle&quot; then
+	if groupList:ingroup(matches[2]) and whoclass(matches[2]) ~= &quot;Cle&quot; and groupList:ingroup(matches[3]) then
 		mud:send(&quot;t &quot; .. matches[3] .. &quot; consent&quot;)
 	end
 end
@@ -16258,7 +16507,7 @@ sound(&quot;327909__ruonvniekerk__dragging-on-floor.wav&quot;)</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>(.*) drags corpse of (.*) along behind .*</string>
+                        <string>^(.*) drags corpse of (.*) along behind .*</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
@@ -17815,93 +18064,6 @@ end</script>
                     <integer>1</integer>
                 </regexCodePropertyList>
             </Trigger>
-            <TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                <name>BagTriggers</name>
-                <script></script>
-                <triggerType>0</triggerType>
-                <conditonLineDelta>0</conditonLineDelta>
-                <mStayOpen>0</mStayOpen>
-                <mCommand></mCommand>
-                <packageName></packageName>
-                <mFgColor>#ff0000</mFgColor>
-                <mBgColor>#ffff00</mBgColor>
-                <mSoundFile></mSoundFile>
-                <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                <regexCodeList/>
-                <regexCodePropertyList/>
-                <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>Bags</name>
-                    <script>local itemname=matches[2]
-
-
-itemname = string.gsub(itemname, &quot;%(magic%)&quot;, &quot;&quot;)
-itemname = string.gsub(itemname, &quot;%(illuminating%)&quot;, &quot;&quot;)
-itemname = string.gsub(itemname, &quot;%(glowing%)&quot;, &quot;&quot;)
-itemname = itemname:trim()
-
-table.insert(NyyLIB.statbags, 1, itemname)
-enableTrigger(&quot;Bagend&quot;)</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>[ ]+(.+)</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>BAGID</name>
-                    <script>NyyLIB.statbags = {}
-enableTrigger(&quot;Bags&quot;)</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>(.*) \(carried\) \:</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-                <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-                    <name>bagend</name>
-                    <script>disableTrigger(&quot;Bags&quot;)
-disableTrigger(&quot;Bagend&quot;)</script>
-                    <triggerType>0</triggerType>
-                    <conditonLineDelta>0</conditonLineDelta>
-                    <mStayOpen>0</mStayOpen>
-                    <mCommand></mCommand>
-                    <packageName></packageName>
-                    <mFgColor>#ff0000</mFgColor>
-                    <mBgColor>#ffff00</mBgColor>
-                    <mSoundFile></mSoundFile>
-                    <colorTriggerFgColor>#000000</colorTriggerFgColor>
-                    <colorTriggerBgColor>#000000</colorTriggerBgColor>
-                    <regexCodeList>
-                        <string>^$</string>
-                    </regexCodeList>
-                    <regexCodePropertyList>
-                        <integer>1</integer>
-                    </regexCodePropertyList>
-                </Trigger>
-            </TriggerGroup>
             <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>paging</name>
                 <script>pagingmode = true</script>
@@ -20058,7 +20220,7 @@ function showfastwalk(xroomid)
 		cecho(&quot;&lt;green&gt;Speedwalk: .&quot; .. compressSpeedwalk() .. &quot;\n\n&quot;)
 
 	else
-		cecho(&quot;&lt;red&gt;[Unable to find path to room#&quot; .. xroomid .. &quot;]\n&quot;)
+		cecho(&quot;&lt;red&gt;[Unable to find path to room vnum &quot; .. xroomid .. &quot;]\n&quot;)
 	end
 end
 
@@ -20283,37 +20445,46 @@ end</script>
                     <script>-- http://www.grokh.com/toril.db
 
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
-NyyLIB.dbversion = NyyLIB.dbversion or &quot;11/22/2017&quot;
+NyyLIB.dbversion = NyyLIB.dbversion or &quot;12/16/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 11/22/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 12/16/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>test</name>
-                    <script>--cmi:checkConnection()
+                    <script>local roomid = map:getRoom()
+
+if roomid ~= nil then
+	local zoneid=tonumber(getRoomUserData(roomid, &quot;zoneid&quot;) )
+
+	echo(roomid .. &quot;, &quot; .. getRoomName(roomid) .. &quot; : &quot; .. NyyLIB.areaTable[zoneid] .. &quot;\n&quot;)
+end
+
+
+--cmi:checkConnection()
 --cmi:labelCmudZones(cmi.con)
 
-NyyLIB.broken = {}
+--NyyLIB.broken = {}
 
-for line in io.lines(homepath(&quot;roomfix.txt&quot;)) do
-	NyyLIB.broken[tonumber(line)]=true
-end
+--for line in io.lines(homepath(&quot;roomfix.txt&quot;)) do
+--	NyyLIB.broken[tonumber(line)]=true
+--end
 
-for k,v in pairs(NyyLIB.broken) do
-	local roomnumber=k
-	local zone=map:getZone(roomnumber)
-	local roomname = getRoomName(k)
+--for k,v in pairs(NyyLIB.broken) do
+--	local roomnumber=k
+--	local zone=map:getZone(roomnumber)
+--	local roomname = getRoomName(k)
 
-	if zone ~= nil then
-		echo( string.format(&quot;%s %d %s\n&quot;, zone, roomnumber, roomname) )
-	else
-		display(roomnumber)
-	end
+--	if zone ~= nil then
+--		echo( string.format(&quot;%s %d %s\n&quot;, zone, roomnumber, roomname) )
+--	else
+--		display(roomnumber)
+--	end
 	--display(k)
 	--display(getRoomName(k))
-end
+--end
 
 
 --	display( rex.match( &quot;http://www.yahoo.com&quot;,
@@ -21541,7 +21712,9 @@ if map:getRoom() ~= nil then
 
 					display(exitcmd)
 
-					mud:send (exitcmd)
+					
+					map:processMovement(exitcmd)
+					--mud:send (exitcmd)
 			end
 		end
 end</script>
@@ -23098,26 +23271,32 @@ end
 -- erase scanned table
 scanned={}
 
-local dir=matches[2]:sub(1,1):lower()
+local dir=matches[3]:sub(1,1):lower()
 
-echoDebug(&quot;Calling queuemovement .. &quot; .. dir .. &quot;\n&quot;)
+--echoDebug(&quot;Calling queuemovement .. &quot; .. dir .. &quot;\n&quot;)
+
+echoDebug(&quot;Drag: &quot; .. matches[1] .. &quot;\n&quot;)
 
 toGagLook=nil
 gaglook=nil
 
-queueMovement(dir)
-send(matches[1], false)
+map:processMovement(&quot;DRAG &quot; .. matches[2] .. &quot; &quot; .. matches[3])
+
+--queueMovement(dir)
+
+--map:addMovement(dir)
+--send(matches[1], false)
 
 -- if illithid - break hide
 
-if checkMask(&quot;psi&quot;) then
-	setHide(false)
-end
+--if checkMask(&quot;psi&quot;) then
+--	setHide(false)
+--end
 
-display(map:getFutureRoom())</script>
+-- display(map:getFutureRoom())</script>
                     <command></command>
                     <packageName></packageName>
-                    <regex>^drag .*([ewnsud])$</regex>
+                    <regex>^drag (.*) ([ewnsud].*)$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
                     <name>@zone</name>
@@ -23216,7 +23395,7 @@ end</script>
                     <regex>^@gall ?([A-za-z]+)?$</regex>
                 </Alias>
                 <Alias isActive="yes" isFolder="no">
-                    <name>@id </name>
+                    <name>@id</name>
                     <script>local data
 
 cecho(&quot;&lt;red&gt;[Attempting to identify &quot; .. matches[2] .. &quot;]\n&quot;)
@@ -23274,49 +23453,6 @@ end</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@statitems ?(gsay)?$</regex>
-                </Alias>
-                <Alias isActive="yes" isFolder="no">
-                    <name>@statbag</name>
-                    <script>local stats
-
-local togsay = matches[2]
-
-if NyyLIB.statbags == nil then
-   cecho(&quot;&lt;red&gt;[statbags is nil]\n\n&quot;)
-   return
-end
-
-for k,v in pairs(NyyLIB.statbags) do
-   stats = sqliditem(v)
-
-   -- need to distinguish between multiple return values
-
-   if #stats &gt; 1 then
-      for nx=1,#stats,1 do
-         if string.find(stats[nx], v .. &quot; 1&quot;) then
-            stats[1] = stats[nx]
-         end      
-      end
-      echo(&quot;[multiple return values]\n\n&quot;)
-   end
-
-   if togsay == &quot;gsay&quot; then
-      if stats[1] ~= nil then
-         mud:send(&quot;gsay * &quot; .. stats[1])
-      else
-         mud:send(&quot;gsay * &quot; .. v .. &quot; : not found in database. identify and mmail to katumi&quot;)
-      end
-   else
-      if stats[1] ~= nil then
-         echo(stats[1] .. &quot;\n\n&quot;)
-      else
-         echo(v .. &quot; : not found in database. identify and mmail to katumi\n\n&quot;)
-      end
-   end
-end</script>
-                    <command></command>
-                    <packageName></packageName>
-                    <regex>^@statbag ?(gsay)?$</regex>
                 </Alias>
             </AliasGroup>
             <AliasGroup isActive="yes" isFolder="yes">
@@ -23977,13 +24113,18 @@ send(&quot;zone &quot; .. matches[2])</script>
 
 -- 011dev
 
--- Katumi database update - 11/22/17
--- Map updated: full size 317 areas 45273 rooms
+-- Katumi database update - 12/16/17
+-- Map updated: full size 317 areas 45344 rooms
+-- Any players present at a train station will skip the room
+-- telling someone '@room' will return location information
+-- @set condensed spellout true - supresses local spellout messages
+-- Taunts added to paladin
+-- Ranger, Paladin: bugfixes
+-- cooldown counters added to powers skills (ranger/paladin)
+-- spells button replaced with an icon, added to rangers
 -- bugfix: special exits recognized if an abbreviated command typed
--- Paladin: bugfixes
 -- Paladins: old-code spells removed
 -- Paladins: 1h, 2h powers added
--- added @statbag
 -- mapper bugfixes
 -- added tooltips to lower icons
 -- autoroller accelerated
@@ -26335,8 +26476,13 @@ function sendBash(xtarget)
 			if checkMask(&quot;ran&quot;) then
 				if not timer:get(&quot;cooldown&quot;) then
 					-- use powers attack depending on wielded weapon
+
 					if isIconActive(&quot;sweeping_strike&quot;) then
-						useMeleePower(&quot;SS&quot; .. xtarget)
+						if not timer:get(&quot;sweeping_strike&quot;) then
+							useMeleePower(&quot;SS&quot; .. xtarget)
+						else
+							return
+						end
 					end
 				
 					if isIconActive(&quot;knockdown_shot&quot;) then
@@ -26599,21 +26745,28 @@ end
 function SpellsCle()
 	-- this script will only be called if autocast enabled
 
+	--display(&quot;spellsCle&quot;)
+	--display(buff:get(&quot;blind&quot;))
+
 	if buff:get(&quot;blind&quot;) or buff:get(&quot;blindness&quot;) then
+		display(&quot;i'm blind&quot;)
 		if prompt:get(&quot;hp&quot;) &lt; .9 * prompt:get(&quot;maxhp&quot;) then
 			if getSpellCount(&quot;full_heal&quot;) &gt; 0 then
+				display(&quot;fh&quot;)
 				spell:cast(&quot;fh&quot;)
 				return
 			end
 		end
 
 		if getSpellCount(&quot;cure_blind&quot;) &gt; 0 then
+			display(&quot;cb&quot;)
 			spell:cast(&quot;cb&quot;)
 			return
 		end
 
-		if getSpellCount(&quot;healing_aura&quot;) &gt; 0 then
-			spell:cast(&quot;ha&quot;)
+		if getSpellCount(&quot;full_heal&quot;) &gt; 0 then
+			display(&quot;fh2&quot;)
+			spell:cast(&quot;fh&quot;)
 			return
 		end
 	end
@@ -26850,12 +27003,15 @@ function scr_vitality()
 		--echoDebug(&quot;&lt;red&gt;[Queuing vitality for: &quot; .. vit .. &quot;]\n&quot;)
 
 		for k,char in pairs(groupList:pc(vit)) do
-			if groupList:getHP(char) ~= 0 then
-				var=buff:get(&quot;vitality&quot;, char) or 0
+			-- don't vit dead people
+			if table.contains(NyyLIB.deadpeople, char) == false then
+				if groupList:getHP(char) ~= 0 then
+					var=buff:get(&quot;vitality&quot;, char) or 0
 
-				if var == 0 then
-					spell:cast(&quot;vt &quot; .. char)
-					return(true)
+					if var == 0 then
+						spell:cast(&quot;vt &quot; .. char)
+						return(true)
+					end
 				end
 			end
 		end
@@ -26962,12 +27118,12 @@ function baseButtons()
 
 	-- non-class specific buttons at far right
 
-	addbutton(&quot;chkstat&quot;, 16, 0, &quot;2.4%&quot;)
-	addbutton(&quot;flee&quot;, 16.66, 0, &quot;2.4%&quot;)
-	addbutton(&quot;autoassist&quot;, 17.33, 0, &quot;2.4%&quot;)
-	addbutton(&quot;autoloot&quot;, 18, 0, &quot;2.4%&quot;)	
-	addbutton(&quot;autoopen&quot;, 18.66, 0, &quot;2.4%&quot;)	
-	addbutton(&quot;autoportal&quot;, 19.33, 0, &quot;2.4%&quot;)	
+	addbutton(&quot;chkstat&quot;, 16.57, 0, &quot;2.4%&quot;)
+	addbutton(&quot;flee&quot;, 17.14, 0, &quot;2.4%&quot;)
+	addbutton(&quot;autoassist&quot;, 17.71, 0, &quot;2.4%&quot;)
+	addbutton(&quot;autoloot&quot;, 18.28, 0, &quot;2.4%&quot;)	
+	addbutton(&quot;autoopen&quot;, 18.85, 0, &quot;2.4%&quot;)	
+	addbutton(&quot;autoportal&quot;, 19.42, 0, &quot;2.4%&quot;)	
 	
 	if checkMask(&quot;petrescue&quot;) then
 		addbutton(&quot;pet_rescue&quot;, 15, 1)
@@ -26980,9 +27136,13 @@ function baseButtons()
 		addbutton(&quot;autotank&quot;, 15, 1)
 	end
  
+	if checkMask(&quot;ran&quot;) or checkMask(&quot;pal&quot;) then
+		addbutton(&quot;SpellsButton&quot;, 16, 0, &quot;2.4%&quot;)
+	end
+	
 	if checkMask(&quot;caster&quot;) or checkMask(&quot;nonPriestCaster&quot;) then 
-		addbutton(&quot;SpellsButton&quot;, 1, 0)
-		addbutton(&quot;MemButton&quot;, 2, 0)
+		addbutton(&quot;SpellsButton&quot;, 16, 0, &quot;2.4%&quot;)
+		addbutton(&quot;MemButton&quot;, 1, 0)
 	end
 
 	if whoclass() == &quot;Rog&quot; then
@@ -27164,9 +27324,9 @@ function SpellsButton(fname, xcommand)
 	end
 
 	if charData:get(&quot;autocast&quot;) then
-		setLabelImage(fname, &quot;encSpells-on.png&quot;)
+		setLabelImage(fname, &quot;SpellsButton-on.png&quot;)
 	else
-		setLabelImage(fname, &quot;encSpells-off.png&quot;)
+		setLabelImage(fname, &quot;SpellsButton-off.png&quot;)
 	end
 end
 
@@ -28073,6 +28233,12 @@ end
 
 function SpellsRan()
 	local healSlot = 0
+
+	-- can't cast if stunned, parad, in fugue, etc
+	if not spell:castOK() then
+		return
+	end
+
 	
 	if charData:get(&quot;auto_heal&quot;) then
 		healSlot=1
@@ -28085,17 +28251,21 @@ function SpellsRan()
 		end
 	end
 
-	if charData:get(&quot;autoresil&quot;) then
-		if not buff:get(&quot;cloak_of_resilience&quot;) and spell:getSlot(4) &gt; 0 then
-			spell:cast(&quot;CLR&quot;)
-			return
+	-- Only use cloaks if in combat
+	
+	if inCombat() then
+		if charData:get(&quot;autoresil&quot;) then
+			if not buff:get(&quot;cloak_of_resilience&quot;) and spell:getSlot(4) &gt; 0 then
+				spell:cast(&quot;CLR&quot;)
+				return
+			end
 		end
-	end
 
-	if charData:get(&quot;autoprotect&quot;) then
-		if not buff:get(&quot;cloak_of_protection&quot;) and spell:getSlot(3) &gt; 0 then
-			spell:cast(&quot;CLP&quot;)
-			return
+		if charData:get(&quot;autoprotect&quot;) then
+			if not buff:get(&quot;cloak_of_protection&quot;) and spell:getSlot(3) &gt; 0 then
+				spell:cast(&quot;CLP&quot;)
+				return
+			end
 		end
 	end
 
@@ -28293,6 +28463,10 @@ end
 -- archery powers
 
 function knockdown_shot(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobash&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28308,6 +28482,10 @@ function knockdown_shot(fname, xcommand)
 end
 
 function triple_shot(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autotstrike&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28323,6 +28501,10 @@ function triple_shot(fname, xcommand)
 end
 
 function concussive_shot(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autoevis&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28338,6 +28520,10 @@ function concussive_shot(fname, xcommand)
 end
 
 function splintering_shot(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autosplinter&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28353,6 +28539,10 @@ function splintering_shot(fname, xcommand)
 end
 
 function hail_of_arrows(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobstorm&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28370,6 +28560,10 @@ end
 -- melee powers
 
 function sweeping_strike(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobash&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28385,6 +28579,10 @@ function sweeping_strike(fname, xcommand)
 end
 
 function twin_strike(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autotstrike&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28400,6 +28598,10 @@ function twin_strike(fname, xcommand)
 end
 
 function armor_splinter(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autosplinter&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28415,6 +28617,10 @@ function armor_splinter(fname, xcommand)
 end
 
 function bladestorm(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobstorm&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28430,6 +28636,10 @@ function bladestorm(fname, xcommand)
 end
 
 function eviscerate(fname, xcommand)
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autoevis&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28446,6 +28656,11 @@ end
 
 function procPromptRan()
 	if not checkMask(&quot;ran&quot;) then
+		return
+	end
+	
+	-- can't use powers if stunned, parad, in fugue, etc
+	if not spell:castOK() then
 		return
 	end
 	
@@ -28534,6 +28749,7 @@ function procPromptRan()
 end
 
 function cooldown(fname, xcommand)
+	
 	if xcommand &gt;= buttons.TIMEREXPIRE then
 		return
 	end
@@ -28541,15 +28757,18 @@ function cooldown(fname, xcommand)
 	procPromptRan()
 end
 
+function setMeleeCooldown()
+	timer:set(&quot;cooldown&quot;, 4)
+end
+
 function useMeleePower(xpower)
 	
 	xpower = string.lower(xpower)
 	
-	
 	-- melee powers don't work on parad mobs
-	if prompt:get(&quot;tank&quot;) == &quot;&quot; then
-		return
-	end
+	--if prompt:get(&quot;tank&quot;) == &quot;&quot; then
+	--	return
+	--end
 
 	if meleePowerUsed then
 		return
@@ -28562,12 +28781,13 @@ function useMeleePower(xpower)
 		return
 	end
 
-	timer:set(&quot;cooldown&quot;, 5)
-	
+	setMeleeCooldown()
 
-	local fullName = meleePowers[string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)][xpower]
+	local powername = string.split( string.lower(xpower), &quot; &quot;)[1]
 
-	cecho(&quot;&lt;red&gt;\n[&quot; .. to_english(fullName) .. &quot;]\n&quot;)
+	local fullName = meleePowers[string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)][powername]
+
+	cecho(&quot;&lt;red&gt;\n\n[&quot; .. to_english(fullName) .. &quot;] &quot; .. &quot;&lt;yellow&gt;&quot; .. xpower:upper() .. &quot;\n&quot;)
 
 	timer:set(fullName, 8)
 
@@ -28588,6 +28808,9 @@ function initPal()
 
 	addbutton(&quot;lay_on_hands&quot;,1, 1)
 	addbutton(&quot;divine_smite&quot;,2, 1)
+	
+	addbutton(&quot;divine_challenge&quot;,12, 1)
+	addbutton(&quot;true_nemesis&quot;,13, 1)
 	
 	-- paladin 1h/2h buttons
 	
@@ -28632,6 +28855,26 @@ function procPromptPal()
 		if buff:get(&quot;stun&quot;) then
 			return
 		end
+
+		-- taunts : need to change usage
+
+		if charData:get(&quot;autodivchal&quot;) then
+			if timer:get(&quot;divine_challenge&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+				useMeleePower(&quot;dc&quot;)
+				return
+			end
+		end
+
+		if charData:get(&quot;autonemesis&quot;) then
+			if timer:get(&quot;true_nemesis&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
+				if prompt:get(&quot;tank&quot;) ~= &quot;&quot; and prompt:get(&quot;tank&quot;) ~= whoami() then
+					useMeleePower(&quot;tn&quot;)
+					return
+				end
+			end
+		end
+
+		-- divine smite
 
 		if charData:get(&quot;autodivsmite&quot;) then
 			if timer:get(&quot;divine_smite&quot;) == nil and not timer:get(&quot;cooldown&quot;) then
@@ -28735,7 +28978,55 @@ function SpellsPal()
 end
 
 
+function divine_challenge(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+	
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autodivchal&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autodivchal&quot;, xcommand)
+	end
+end
+
+function true_nemesis(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+	
+	if xcommand == buttons.INIT then
+		if charData:get(&quot;autonemesis&quot;) then
+			setLabelImage(fname, fname .. &quot;-on.png&quot;)
+		else
+			setLabelImage(fname, fname .. &quot;-off.png&quot;)
+		end
+		return
+	end
+
+	if xcommand == buttons.CLICK then
+		shiftSkillButton(fname, &quot;autonemesis&quot;, xcommand)
+	end
+end
+
 function divine_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+	
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autodivsmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28750,7 +29041,27 @@ function divine_smite(fname, xcommand)
 	end
 end
 
+function PopulateButtonCooldown(fname, xvalue)
+	local label=findlabel(fname)
+
+	-- Make sure button is still active
+	if label ~= nil then
+		if xvalue  &gt; 0 then
+			-- label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;]] .. charData:get(&quot;numcolor&quot;, true) .. [[&quot;&gt;]] .. timedisplay(xvalue) .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])		
+			label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;]] .. charData:get(&quot;numcolor&quot;, true) .. [[&quot;&gt;]] .. xvalue .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])		
+		else
+			label:echo([[&lt;p style=&quot;font-size:14px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;white&quot;&gt;   &lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])
+		end
+	end
+end
+
 function lay_on_hands(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+	
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autohands&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28767,6 +29078,12 @@ end
 
 
 function bolstering_strike(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobstrike&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28782,6 +29099,12 @@ function bolstering_strike(fname, xcommand)
 end
 
 function radiant_charge(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autorcharge&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28797,6 +29120,12 @@ function radiant_charge(fname, xcommand)
 end
 
 function shielding_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autossmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28812,6 +29141,12 @@ function shielding_smite(fname, xcommand)
 end
 
 function enervating_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autoesmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28827,6 +29162,12 @@ function enervating_smite(fname, xcommand)
 end
 
 function wrathful_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autowsmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28844,6 +29185,12 @@ end
 -- 2h melee powers
 
 function valiant_strike(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autovstrike&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28859,6 +29206,12 @@ function valiant_strike(fname, xcommand)
 end
 
 function thunderous_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autothsmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28874,6 +29227,12 @@ function thunderous_smite(fname, xcommand)
 end
 
 function brilliant_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autobsmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28889,6 +29248,12 @@ function brilliant_smite(fname, xcommand)
 end
 
 function terrifying_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autotesmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -28904,6 +29269,12 @@ function terrifying_smite(fname, xcommand)
 end
 
 function whirlwind_smite(fname, xcommand)
+	-- if xcommand &gt; 0, function being called re: timer
+	
+	if xcommand &gt;= 0 then
+		PopulateButtonCooldown(fname, xcommand)
+	end
+
 	if xcommand == buttons.INIT then
 		if charData:get(&quot;autowsmite&quot;) then
 			setLabelImage(fname, fname .. &quot;-on.png&quot;)
@@ -29545,6 +29916,9 @@ function NextTrainStop()
 end
 
 function StartFight()
+	if prompt:get(&quot;tank&quot;) ~= &quot;&quot; then
+		return
+	end
 	
 	-- train was just stopped
 	if NyyLIB.smtrainposition == nil then
@@ -29588,8 +29962,9 @@ function StartFight()
 				return
 			end
 		
-			if checkMask(&quot;ran&quot;) then
-				mud:send(&quot;SS &quot; .. mobtarget)
+			if checkMask(&quot;ran&quot;) and not timer:get(&quot;sweeping_strike&quot;) then
+				useMeleePower(&quot;SS &quot; .. mobtarget)
+				tempTimer(2, [[StartFight()]])
 				return
 			end
 		end			
@@ -30023,7 +30398,7 @@ function map:processMovement(xdir)
 
 	-- send movement  mud:send eats duplicate commands
 	
-	-- if queueMovement returns true a special exit was inserted
+ 	-- queueMovement returns true a special exit was inserted
 	if queueMovement(xdir) then
 		map:sendNextMovement()
 	end
@@ -31152,7 +31527,7 @@ function checkMask(xmask, xname)
 		xname = whoami()
 	end
 
-	classname = whoclass(xname) or &quot;UNK&quot; -- TODO or &quot;UNK&quot;
+	classname = whoclass(xname) or &quot;UNK&quot;
 
 	if masks[xmask] == nil then
 		echoDebug(&quot;&lt;red&gt;[Error: mask &quot; .. xmask .. &quot; does not exist]\n&quot;)
@@ -31205,7 +31580,7 @@ charData = charData or {}
 				&quot;\n&lt;red&gt;[Special exits will not be used automatically.]\n&quot;,
 		},
 	{ &quot;movebuffer&quot;, &quot;&quot;, {&quot;#&quot;}, &quot;10&quot;, &quot;maximum movements to send before buffering&quot; },
-	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;, &quot;debug2&quot;}, &quot;&quot;, &quot;&quot; },
+	{ &quot;condensed&quot;, &quot;&quot;, {&quot;dragon&quot;, &quot;combat&quot;, &quot;spells&quot;, &quot;items&quot;, &quot;arrows&quot;, &quot;misc&quot;, &quot;duplicate&quot;, &quot;debug&quot;, &quot;spellout&quot;, &quot;debug2&quot;}, &quot;&quot;, &quot;&quot; },
 	{ &quot;vnum&quot;, &quot;&quot;, {&quot;true&quot;, &quot;false&quot;}, &quot;true&quot;, &quot;display room vnum&quot; },
 	{ &quot;chatfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;12&quot;, &quot;fontsize to use for the chat window&quot; },
 	{ &quot;grpfontsize&quot;, &quot;&quot;, {&quot;auto&quot;, &quot;#&quot;}, &quot;14&quot;, &quot;fontsize to use for the group window&quot; },
@@ -31420,7 +31795,14 @@ charData = charData or {}
 				&quot;\n&lt;green&gt;[Lay on Hands is turned on.]\n&quot;,
 				&quot;\n&lt;red&gt;[Lay on Hands is turned off.]\n&quot;
 		 },
-
+	{ &quot;autodivchal&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[Divine Challenge is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[Divine Challenge is turned off.]\n&quot;
+		 },
+	{ &quot;autonemesis&quot;, &quot;pal&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
+				&quot;\n&lt;green&gt;[True Nemesis is turned on.]\n&quot;,
+				&quot;\n&lt;red&gt;[True Nemesis is turned off.]\n&quot;
+		 },
 
 
 	{ &quot;autoshieldpunch&quot;, &quot;fighter&quot;, { &quot;true&quot;, &quot;false&quot; }, &quot;false&quot;, &quot;&quot;,
@@ -32557,6 +32939,10 @@ function sqliditem(xitemname)
 	local recs, row
 
 	local retval = {}
+
+	-- remove trailing (poisoned) from name	
+	xitemname=string.gsub(xitemname, &quot;%(poisoned%)&quot;, &quot;&quot;)
+	xitemname= xitemname:trim()
 
 	xitemname=string.gsub(xitemname, &quot;'&quot;, &quot;''&quot;)
 
@@ -34262,6 +34648,9 @@ function power:set(xname, xdur)
 end
 
 function buff:set(xname, xbuff, xdur)
+	-- name is set to a titled string
+	xname=string.title(xname)
+	
 	self[xname] = self[xname] or {}
 
 	if xdur == -1 then
@@ -34281,9 +34670,14 @@ end
 -- function decreasebuffs() 				   	: internal - decrement all buffs by 1 second
 
 function buff:get(xbuff, xname)
+	
+	
 	if xname == nil then
 		xname=whoami()
 	end
+
+	-- change string to title
+	xname = string.title(xname)
 
 	if self[xname] ~= nil then
 		if self[xname][xbuff] ~= nil then
@@ -34365,7 +34759,9 @@ end
 
 function buffexpired(xname, xbuff)
 	if groupList:ingroup(xname) then
-		cecho(&quot;\n&lt;red&gt;[&quot; .. to_english(xbuff) .. &quot; has expired on &lt;green&gt;&quot; .. xname .. &quot;&lt;red&gt;.]\n&quot;)
+		if not charData:get(&quot;condensed&quot;, true)[&quot;spellout&quot;] then
+			cecho(&quot;\n&lt;red&gt;[&quot; .. to_english(xbuff) .. &quot; has expired on &lt;green&gt;&quot; .. xname .. &quot;&lt;red&gt;.]\n&quot;)
+		end
 	end
 
 	if xbuff == &quot;combatmind&quot; and checkMask(&quot;psi&quot;) then
@@ -35941,17 +36337,20 @@ function timer:custom()
 			label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;white&quot;&gt;]] .. bufftimedisplay(value) .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])	
 		end
 
+		-- TODO: global cooldown
+	
+		--local value=timer:get(&quot;cooldown&quot;)
+
+		--if value ~= nil then
+		--	label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;white&quot;&gt;]] .. value .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])	
+		--end
+
 		-- display stun count
 		local value=buff:get(&quot;stun&quot;)
 
 		if value ~= nil then
 			label:echo([[&lt;p style=&quot;font-size:20px&quot;&gt;&lt;b&gt;&lt;center&gt;&lt;font color=&quot;white&quot;&gt;]] .. value .. [[&lt;/font&gt;&lt;/center&gt;&lt;/b&gt;&lt;/p&gt;]])	
 		end
-	
-		-- TODO: display psilag, global cooldown
-	
-	
-	
 	end
 
 	if NyyLIB.songtimer ~= nil and NyyLIB.songtimer ~= &quot;&quot; then
@@ -36034,7 +36433,8 @@ meleePowers[&quot;Pal&quot;] =
 				es=&quot;enervating_smite&quot;, ws=&quot;wrathful_smite&quot;,
 				lh=&quot;lay_on_hands&quot;, ds=&quot;divine_smite&quot;,
 				vs=&quot;valiant_strike&quot;, brs=&quot;brilliant_smite&quot;, ts=&quot;thunderous_smite&quot;,
-				trs=&quot;terrifying_smite&quot;, wws=&quot;whirlwind_smite&quot;				
+				trs=&quot;terrifying_smite&quot;, wws=&quot;whirlwind_smite&quot;,
+				dc=&quot;divine_challenge&quot;, tn=&quot;true_nemesis&quot;
 			}
 
 function prompt:set(xkey, xvalue)
@@ -36085,13 +36485,17 @@ function prompt:decodePowers(xstring)
 			local powersRound = tonumber(powersCooldown) or 0
 			
 			--display(powersName)
+			--display(timer:get(powersName))
 
 			-- if timer exists set it to powersRound * 4 (seconds)
 			if timer:get(powersName) then
+				--echo(&quot;Setting &quot; .. powersName .. &quot; to &quot; .. powersRound .. &quot;*4\n&quot;)
 				timer:set(powersName, powersRound*4)
 			end
 		end
 	end
+
+	--display(timer)
 end
 
 function prompt:decodeSpellSlots(xstring)
@@ -36267,9 +36671,9 @@ function spell:setMoving(xstatus)
 
 	if self.moving ~= xstatus and charData:get(&quot;autocast&quot;) then
 		if xstatus then
-			cecho(&quot;&lt;red&gt;\n[Currently moving - spellcast is temporarily disabled]\n&quot;)
+			cecho(&quot;&lt;red&gt;\n\n[Currently moving. Spellcasting is temporarily paused.]\n\n&quot;)
 		else
-			cecho(&quot;&lt;red&gt;\n[No longer moving - spellcast has been re-enabled]\n&quot;)
+			cecho(&quot;&lt;red&gt;\n\n[No longer moving. Spellcasting has resumed]\n\n&quot;)
 		end
 		
 		--cecho(&quot;&lt;red&gt;\n[spell:setMoving(xstatus) : &quot; .. tostring(xstatus) .. &quot;]\n&quot;)
@@ -36398,10 +36802,48 @@ function spell:clear(xspell)
 	end
 end
 
-function spell:cast(xspell)
-	-- if escapedir set don't cast
 
+-- will char be able to cast or use power?
+
+function spell:castOK()
+	-- if escapedir set don't cast
 	if NyyLIB.escapedir ~= nil then
+		return(false)
+	end
+
+	-- can't cast if bashed/sitting
+	if prompt:get(&quot;position&quot;) ~= &quot;std&quot; then
+		return(false)
+	end
+
+	-- can't cast in fugue
+
+	if map:getRoom() == 93848 then
+		return(false)
+	end
+
+	-- stunned, can't cast
+
+	if buff:get(&quot;stun&quot;) then
+		return(false)
+	end
+
+	-- paralyzed, can't cast
+
+	if buff:get(&quot;minor_paralysis&quot;) or buff:get(&quot;major_paralysis&quot;) then
+		return(false)
+	end
+
+	return(true)
+end
+
+function spell:cast(xspell)
+
+	if xspell ~= nil then
+		echoDebug(&quot;&lt;red&gt;[spell:cast : &quot; .. tostring(xspell) .. &quot;]\n&quot;)
+	end
+
+	if not spell:castOK() then
 		return
 	end
 
@@ -36422,12 +36864,6 @@ function spell:cast(xspell)
 	-- don't cast spells when mem'ing or moving
 
 	if spell:getMem() or memsent or spell:getMoving() then
-		return
-	end
-
-	-- can't cast if bashed/sitting
-
-	if prompt:get(&quot;position&quot;) ~= &quot;std&quot; then
 		return
 	end
 
@@ -36468,26 +36904,8 @@ function spell:cast(xspell)
 	if spell:getCurrent() == nil then
 		mud:sendCommands()
 
-		-- if inside fugue return
-
-		if map:getRoom() == 93848 then
-			return
-		end
-
 		if spell:count() &gt; 0 then
 			local tocast = self.spellcastqueue[1]
-
-			-- stunned, can't cast
-
-			if buff:get(&quot;stun&quot;) then
-				return
-			end
-
-			-- paralyzed, can't cast
-
-			if buff:get(&quot;minor_paralysis&quot;) or buff:get(&quot;major_paralysis&quot;) then
-				return
-			end
 
 			-- if fh spell and &gt; 80% hp, remove from queue
 
@@ -37915,17 +38333,13 @@ function sendAssist(xchar)
 		return
 	end
 
-	-- currently sitting: send stand first TODO is this sending multiple times?
-
-	if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
-		display(&quot;X&quot;)
-		display(xchar)
-		mud:send(&quot;ST&quot;)
-	end
-
 	-- sm caster train is active : flee to mem?
 	if isActive(&quot;SMTrainCaster&quot;, &quot;trigger&quot;) ~= 0 then
 		if not fightreturn then
+			if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
+				mud:send(&quot;ST&quot;)
+			end
+
 			-- send flee
 			fleeMem()
 			return
@@ -37957,6 +38371,12 @@ function sendAssist(xchar)
 
 	if assistSent == nil then
 		assistSent = true
+
+		-- currently sitting: send stand first TODO is this sending multiple times?
+
+		if prompt:get(&quot;position&quot;) == &quot;sit&quot; then
+			mud:send(&quot;ST&quot;)
+		end
 
 		sendPoison()
 
@@ -38419,9 +38839,9 @@ function promptEvent(event)
 		return
 	end
 
-	-- call class specific prompt script if one exists
+	-- call class specific prompt script if one exists and not currently casting
 
-	if whoclass() ~= nil then
+	if whoclass() ~= nil and not spell:getCurrent() then
 		local cname=&quot;procPrompt&quot; .. string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)
 
 		-- display(cname)
@@ -38471,6 +38891,7 @@ function promptEvent(event)
 	end
 
 	-- call class specific spell script if autocast enabled and no spell currently being cast, standing, not stunned
+	-- display ( spell:getCurrent() )
 	if charData:get(&quot;autocast&quot;) and not spell:getCurrent() and not buff:get(&quot;stun&quot;) then
 		if prompt:get(&quot;position&quot;) == &quot;std&quot; then
 			local cname=&quot;Spells&quot; .. string.gsub(whoclass(), &quot;-&quot;, &quot;_&quot;)
