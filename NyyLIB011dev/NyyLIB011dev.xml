@@ -944,7 +944,10 @@ MemButton(&quot;MemButton&quot;, buttons.UPDATE)</script>
 spell:setMem(false)
 
 charData:set(&quot;memcount&quot;, 0)
-MemButton(&quot;MemButton&quot;, buttons.UPDATE)</script>
+MemButton(&quot;MemButton&quot;, buttons.UPDATE)
+
+-- reset groupsend
+--group:set(false)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -1239,7 +1242,14 @@ else
 	cecho(&quot; &lt;red&gt;[&lt;green&gt;Completed spell: &lt;red&gt;unknown]&quot; )
 end
 
-spell:setCurrent(nil)</script>
+spell:setCurrent(nil)
+
+-- reset groupsend
+if group:get() == &quot;GROUPSENT&quot; then
+	group:set(false)
+end
+
+</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -1386,7 +1396,10 @@ else
 	echoDebug(&quot;&lt;red&gt;[Unknown spell being cast]&quot;)
 end
 
-cecho(&quot;&lt;red&gt; [command: &quot; .. command .. &quot;]\n&quot;)</script>
+cecho(&quot;&lt;red&gt; [command: &quot; .. command .. &quot;]\n&quot;)
+
+-- reset groupsend
+group:set(false)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -3338,7 +3351,7 @@ charData:set(&quot;powersbash&quot;, true)</script>
 -- A burly bouncer deflects Aliha's blow, and strikes back at Aliha!
 -- A burly bouncer severely wounds Aliha with his massive bludgeon.
 
--- if prior line = deflect, return
+-- TODO if prior line = deflect, return
 
 --A disgusting slithering vine badly wounds the ghost of a shambling mound with its powerful bite.
 --A disgusting slithering vine shivers from the cold, as it hits the ghost of a shambling mound.
@@ -3923,6 +3936,8 @@ end</script>
 -- The ghost of Talrinim stands in mid-air here, fighting Brammithizzar.&quot;set quake&quot;
 -- true
 
+-- A Cult of the Dragon sorcerer is lying here, fighting Afu.
+
 
 if not checkMask(&quot;priest&quot;) or not charData:get(&quot;autoquake&quot;) then
 	return
@@ -3967,7 +3982,7 @@ setQuake(true)</script>
                             <string>A Spellguard apprentice stands in mid-air here, fighting</string>
                             <string>An ancient guardian stands in mid-air here, fighting</string>
                             <string>A toad demon stands in mid-air here, fighting</string>
-                            <string>^A .*(witch|mage|warlock|druid|shaman|cleric|priest|priestess|invoker|oracle|seer|hierophant|wizard) .*, fighting .*</string>
+                            <string>^A .*(witch|mage|warlock|druid|shaman|cleric|priest|priestess|invoker|oracle|seer|hierophant|wizard|sorcerer|necromancer) .*, fighting .*</string>
                             <string>A member of the Smoking Beard battalion flies in from</string>
                             <string>A galeb duhr stands, inches above the surface here, fighting</string>
                             <string>The djinn vizier stands in mid-air here, fighting</string>
@@ -5968,9 +5983,12 @@ groupList:resetTanking()</script>
                     <name>disable looting when grouped</name>
                     <script>-- You form a new group.
 
-if previousLine() ~= &quot;You form a new group.&quot; then
-	echo(&quot;\n&quot;)
-	buttons:change(&quot;autoloot&quot;, &quot;off&quot;, &quot;autoloot&quot;)
+-- don't disable if leading smtrain
+if isActive(&quot;SMTrain&quot;, &quot;trigger&quot;) == 0 then
+	if previousLine() ~= &quot;You form a new group.&quot; then
+		echo(&quot;\n&quot;)
+		buttons:change(&quot;autoloot&quot;, &quot;off&quot;, &quot;autoloot&quot;)
+	end
 end</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -7157,7 +7175,7 @@ mud:send(&quot;who &quot; .. charname)</script>
                 <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                     <name>^([A-Za-z]+) tells you 'version'</name>
                     <script>-- send version
-mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 12/16/2017&quot;)</script>
+mud:send(&quot;TELL &quot; .. matches[2] .. &quot; Script version: 011dev 12/20/2017&quot;)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
                     <mStayOpen>0</mStayOpen>
@@ -16703,7 +16721,7 @@ sound(&quot;85568__joelaudio__dragon-roar.wav&quot;)</script>
                     </regexCodePropertyList>
                 </Trigger>
             </TriggerGroup>
-            <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
                 <name>An ice weird utters the words, 'iuophwabraz'.</name>
                 <script>-- should be cleric only
 spell:setNext(&quot;sp weird&quot;)</script>
@@ -19309,8 +19327,9 @@ cecho(&quot;&lt;red&gt;spell:getMoving(): &quot; .. tostring(spell:getMoving()) 
 cecho(&quot;&lt;red&gt;spell:getMem(): &quot; .. tostring(spell:getMem()) .. &quot;\n&quot;)
 
 
-cecho(&quot;&lt;red&gt;group:get()\n&quot;)
-display( group:get() )
+cecho(&quot;&lt;red&gt;group:get() &quot; .. tostring(group:get()) .. &quot;\n&quot;)
+
+echo(&quot;\n&quot;)
 
 if memsent ~= nil then
 	cecho(&quot;&lt;red&gt;memsent: &quot; .. tostring(memsent) .. &quot;\n&quot;)
@@ -20447,7 +20466,7 @@ end</script>
 NyyLIB.version = NyyLIB.version or &quot;NyyLIB011dev&quot;
 NyyLIB.dbversion = NyyLIB.dbversion or &quot;12/16/2017&quot;
 
-cecho (&quot;\n&lt;red&gt;Script version: 12/16/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
+cecho (&quot;\n&lt;red&gt;Script version: 12/20/2017 &quot; .. NyyLIB.version .. &quot; https://github.com/Nyyrazzilyss/NyyLIB\n&quot;)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^@version$</regex>
@@ -23273,27 +23292,12 @@ scanned={}
 
 local dir=matches[3]:sub(1,1):lower()
 
---echoDebug(&quot;Calling queuemovement .. &quot; .. dir .. &quot;\n&quot;)
-
 echoDebug(&quot;Drag: &quot; .. matches[1] .. &quot;\n&quot;)
 
 toGagLook=nil
 gaglook=nil
 
-map:processMovement(&quot;DRAG &quot; .. matches[2] .. &quot; &quot; .. matches[3])
-
---queueMovement(dir)
-
---map:addMovement(dir)
---send(matches[1], false)
-
--- if illithid - break hide
-
---if checkMask(&quot;psi&quot;) then
---	setHide(false)
---end
-
--- display(map:getFutureRoom())</script>
+map:processMovement(&quot;DRAG &quot; .. matches[2] .. &quot; &quot; .. matches[3])</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^drag (.*) ([ewnsud].*)$</regex>
@@ -23325,7 +23329,10 @@ scanned={}
 
 local dir=matches[2]:sub(1,1):lower()
 
-map:processMovement(dir)</script>
+toGagLook=nil
+gaglook=nil
+
+map:processMovement(&quot;MOVEA &quot; .. dir)</script>
                     <command></command>
                     <packageName></packageName>
                     <regex>^movea (n|e|s|w|u|d)</regex>
@@ -26380,7 +26387,7 @@ end</script>
 -------------------------------------------------
 function initWar()
 	-- addbutton(&quot;shieldpunch&quot;, 1, 5)
-	addbutton(&quot;HeadbuttButton&quot;, 2, 40)
+	addbutton(&quot;HeadbuttButton&quot;, 1, 40)
 end
 
 function DisarmButton(fname, xcommand)
@@ -27160,7 +27167,7 @@ function baseButtons()
 	end
 
 	if checkMask(&quot;kicker&quot;) then
-		addbutton(&quot;KickButton&quot;, 12, 1)	
+		addbutton(&quot;KickButton&quot;, 2, 1)	
 	end
 
 	if checkMask(&quot;summonmount&quot;) then
@@ -29963,6 +29970,7 @@ function StartFight()
 			end
 		
 			if checkMask(&quot;ran&quot;) and not timer:get(&quot;sweeping_strike&quot;) then
+				meleePowerUsed=false
 				useMeleePower(&quot;SS &quot; .. mobtarget)
 				tempTimer(2, [[StartFight()]])
 				return
@@ -29991,8 +29999,7 @@ function botWarning()
 	mud:send(&quot;gsay * permitted if at or near keys, but not for&quot;)
 	mud:send(&quot;gsay * long periods of time. This may result in&quot;)
 	mud:send(&quot;gsay * arbitrary punishment, including aggressive&quot;)
-	mud:send(&quot;gsay * mob loads, teleportation, caging, freezing&quot;)
-	mud:send(&quot;gsay * and deletion.&quot;)
+	mud:send(&quot;gsay * mob loads, caging, freezing or deletion.&quot;)
 	mud:send(&quot;gsay * [       Warning! Use at own risk!       ]&quot;)
 end</script>
                     <eventHandlerList/>
@@ -30690,6 +30697,11 @@ function map:update(xdir)
 
 	if xdir ~= nil then
 		echoDebug(&quot;\n&lt;green&gt;[map:update : &quot; .. xdir .. &quot;]\n&quot;)
+	
+		-- command was movealone
+		if string.match(xdir, &quot;^MOVEA ([neswud]).*&quot;) then
+			xdir=string.match(xdir, &quot;^MOVEA ([neswud]).*&quot;)
+		end
 	else
 		echoDebug(&quot;\n&lt;green&gt;[map:update : nil\n&quot;)
 	end
@@ -38252,6 +38264,7 @@ function group:send(xval)
 end
 
 function group:set(xstatus)
+	-- cecho(&quot;&lt;cyan&gt;[group:set &quot; .. tostring(xstatus) .. &quot;]\n&quot;)
 	self.status=xstatus
 end
 
