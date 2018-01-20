@@ -114,22 +114,21 @@ Related: set_bard, set_war, condensed
 <red>Condensed
 
 <green>Many of the triggers require information that is gagged from ever arriving at the client by the mud's condensed mode.
-<green>It is recommended to disable mud condensed (<red>tog condensed <green>so it shows: <red>Disabled<green>)
+<green>It is recommended to disable mud condensed (tog condensed so it shows: <red>Disabled<green>)
 
 <green>There are a number of condensed settings available internally through the script. These replace the mud's condensed settings.
 
 <green>Enable as many or all of these as desired to reduce spam.
 
-<red>@set condensed items      <green>- Item gags
-<red>@set condensed misc       <green>- Assorted miscellaneous gags
-<red>@set condensed combat     <green>- Combat related spam
-<red>@set condensed duplicate  <green>- Duplicate lines will be supressed
-<red>@set condensed spells     <green>- Spell spam
-<red>@set condensed dragon     <green>- Dragon gags
-<red>@set condensed arrows     <green>- Various archery related gags
-<red>@set condensed spellout   <green>= Locally show self/group spellout messages
+<red>@set condensed items     <green>- This filters out many multiline item procs
+<red>@set condensed misc      <green>- Assorted miscellaneous gags
+<red>@set condensed combat    <green>- Combat related spam such as misses by targets and players
+<red>@set condensed duplicate <green>- Duplicate lines will be supressed including spells/attacks/items worn
+<red>@set condensed spells    <green>- This filters out many spell messages
+<red>@set condensed dragon    <green>- Dragon gags
+<red>@set condensed spellout  <green>- Locally shown self/group spellout messages
 
-<green>The individual modes are enabled (will not be seen) when the script replies that it has been set to <red>true<green>.
+<green>The individual modes are enabled (will not be seen) when the script replies that it has been set to true.
 ;;27,spellcast
 	Spellcast Information
 
@@ -362,14 +361,24 @@ chkstat - issue a status command on all group members (this updates timers)
 food - eat and drink food based on previously set names
 mcast power - use 'power' on all group members
 ;;101,@cd
-The countdown command will gsay a countdown from 5 to 1, then move in a specific direction. If a mobname had been previously supplied, it will be attacked.
+<green>The countdown alias is a timer used for notifying party members of the impending start
+<green>of an engagement and will gsay a countdown from 5 to 1, then move in a specified direction
+<green>and engaging target(s) there. If a target name had been previously specified then that
+<green>target will be attacked.
 
-Example:
+<red>@attack mobname - <green>sets the name of the desired target to be used for the @cd alias
 
-	@attack mobname - the name of the target
-	@cd s tiamat    - Issue countdown, then move south and attack Tiamat.
-	@cd s           - Issue countdown, then move south. If a mob was previously specified by calling
-	                  countdown with a target or with @attack, it will be attacked.
+<green>Example: 
+
+<green>"<red>@attack reaver<green>" will set your target for your "<red>@cd<green>" alias. So now when you type "<red>@cd s<green>"
+<green>it will move south and attack reaver automatically. To clear the current target simply type
+"<red>@attack<green>" and it will clear current target.
+
+<red>@cd s <green>- Issue a 5 second countdown, then move south.
+
+<red>NOTE: <green> Using the alias "@cd" without a pre-selected alias "@attack" target will result in the
+<green>coundown going in the specified directions and using the hitall ability rather than attacking a
+<green>specific target. It will also disable your rescue triggers, so be mindful to turn them back on after the fight
 ;;105,@gag
 @gag/@ungag text to gag
 usage:
