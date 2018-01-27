@@ -359,7 +359,6 @@ seal - get a seal from your main container and recite it on yourself
 loot ## - get all coins from 1->@# corpses
 chkstat - issue a status command on all group members (this updates timers)
 food - eat and drink food based on previously set names
-mcast power - use 'power' on all group members
 ;;101,@cd
 <green>The countdown alias is a timer used for notifying party members of the impending start
 <green>of an engagement and will gsay a countdown from 5 to 1, then move in a specified direction
