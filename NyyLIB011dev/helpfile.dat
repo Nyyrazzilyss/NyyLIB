@@ -87,7 +87,6 @@ Basic settings:
         [vnum]  true,false -- display room vnum
   [roomwindow]  true,false -- display contents of current room
  [groupwindow]  off,bottom,right,split -- display format of group window
-         [gag]  true, false -- activate included gags
 [chatfontsize]  auto, ## -- fontsize to use for the chat window
    [reconnect]  false, char# -- auto login this char number
     [endspell]  vit, dsp, pwt, fly
