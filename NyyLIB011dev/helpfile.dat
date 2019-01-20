@@ -108,7 +108,7 @@ Basic settings:
    
 Usage: set vnum false -- turns off display of vnum   
    
-Related: set_bard, set_war, condensed
+<green>Related: set_bard, set_war, condensed
 ;;21,condensed
 <red>Condensed
 
@@ -156,7 +156,7 @@ stopmusic  - Stop singing
 
 If instruments have been assigned with the set command, using the above commands to start singing a specific song will also switch the instrument you're using if it's the wrong one for the new song.
 
-Related: set_bard
+<green>Related: set_bard
 ;;31,set_bard
 Bard/Battlechanter specific set commands
 
@@ -184,7 +184,7 @@ The below four buttons all send the named command.
 		 
 Disarm - Kick - Shieldpunch - Headbutt
 
-Related: set_war
+<green>Related: set_war
 ;;33,set_war
 Warrior (and derivative classes) rescue/bash related settings
 
@@ -222,7 +222,7 @@ Bard:			Include bards when casting spells
 Self:			Cast blur/scale on self
 Resize:			Reduce/enlarge as needed
 
-Related: spellcast
+<green>Related: spellcast
 ;;40,cleric
 Aliases
 
@@ -238,18 +238,18 @@ set:
 [autoheal] true|false  cast fh/ha automatically
 [cdaura] true|false  cast aura on countdown
 
-Related: spellcast
+<green>Related: spellcast
 ;;50,@map
 <red>Torilmud Mapper 
 
 <green>The NyyLIB mapper doesn't allow for adding rooms to the existing map. It contains a large portion of the mud pre-mapped, with all rooms hidden. On entering a room, if the package is able to identify it the room will be displayed. 
 
-<red>@map on           <green>- turn on the mapper display
-<red>@map off          <green>- turn off the mapper display
+<red>@map              <green>- turn the mapper display on/off
+<red>@minimap          <green>- turn the mud minimap on/of
 <red>@map update       <green>- update loaded map image with provided image, keeping previous progress
-<red>@map reset        <green>- reset the loaded map to the provided image - this deleted all previous progress
+<red>@map reset        <green>- reset the loaded map to the provided image - this deletes all previous progress
 
-Related: @afind, @find, @fwalk
+<green>Related: @afind, @find, @fwalk, @path, speedwalk, astral, fire
 ;;51,@find
 <red>@find             
 
@@ -302,6 +302,15 @@ Example:
 <red>@fwalk del name   - <green>deletes fastwalk 'name'
 <red>@fwalk all        - <green>list all fwalks regardless of location
 <red>@fwalk area       - <green>list all fwalks in current area
+;;53,speedwalk
+<red>Speedwalk Commands
+
+<red>.<directions>  - <green>executes a fastwalk for directions given behind the single period,
+                 <green>format of .n2eu will go north, 2 east, and up
+<red>..<directions> - <green>executes a reverse fastwalk for directions given behind the double period,
+                 <green>format of ..n2eu will go down, 2 west, and south
+
+<green>Related: @fwalk, @path
 ;;80,database
 <red>Katumi Database
 
@@ -427,7 +436,7 @@ es[nsewud][cbp] - escape [direction] [return and circle, backstab, powers backst
 
 <red>@bid status <green>- display bid/dice summary to screen
 
-Related: @statitems
+<green>Related: @statitems
 ;;140,xptrain
 <red>The Adud XP Train
 
@@ -679,15 +688,20 @@ This command will display some information useful when debugging.
 
 Move the specified direction, and attack a previously selected target.
 
-Related: @attack
+<green>Related: @attack
 ;;510,@attack
 Select a target to be attacked
 
-Related: @at
+<green>Related: @at
 ;;520,@setroom
 <red>This is a placeholder for an unwritten help entry.
 ;;530,@path
-<red>This is a placeholder for an unwritten help entry.
+<red>@Path
+
+<green>The @path command will display a shortest known path speedwalk to and from the provided 
+<green>room number or @fwalk label starting from the current room.
+
+<green>Usage: @path roomnumber|label
 ;;540,@room
 This turns on/off the room display window
 ;;545,@statitems
