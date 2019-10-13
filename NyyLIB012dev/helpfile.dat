@@ -1,0 +1,749 @@
+;;5,botwarning
+<red>Warning! Use at own risk
+
+Toril disallows use of robots. They may be permitted to run if near
+or at keys, but not for long periods of time. Use of such might result
+in random punishment, including aggressive mobile loads, teleportation,
+freezing, caging, and deletion.
+
+<red>Warning! Use at own risk
+;;10,contents
+<red>               NyyLIB Help documentation
+
+<green>Any of the below commands will provide further information. 
+
+
+<red>@help index      <green>- list all help entries
+<red>@help gui        <green>- how to use buttons, window setup
+<red>@help sound	     <green>- enabling sound
+<red>@help icons	     <green>- instructions for creating icon png files
+<red>@help @roll      <green>- auto-roller for creation of new characters
+<red>@help @set       <green>- help with use of the 'set' command
+<red>@help @map       <green>- information about use of the mapper
+<red>@help database   <green>- further information on the Katumi database
+<red>@help alias      <green>- various aliases included with the package
+<red>@help @bid       <green>- the included bidding script
+<red>@help xptrain    <green>- The Adud Train
+<red>@help @stats     <green>- a warrior statistics package
+;;12,gui
+<red>GUI information
+
+<green>The GUI for NyyLIB includes a sorted chat window in the top right corner, and a display of group members across the bottom, on the right hand side, or both.
+
+<green>Depending on class/level, you should have various buttons available to you across the bottom of the screen. Most should provide a message when selected.
+
+<green>The left side of the screen has a vertical window showing equipment related buttons.
+
+<green>The group window is either all at the bottom, all at the right hand side, or split with casters at the bottom, hitters/warriors at the right hand side. 
+
+<green>In the bottom left corner a countdown timer will display when stunned. To the right of it is a display that shows the current size of the character logged in. At levels less then 50, level/experience shows at the top of the screen. The map window shows above or to the left of the chat window.
+
+<green>There are a number of buttons located in the bottom right present for all classes. To change the status of a button, move the mouse pointer overtop of it and click with the left mouse button.
+<green>  Check Status - A status command will be sent on all group members
+<green>  Flee - Off - All flee related triggers are disabled
+<green>         On - If you attemp to flee and fail, flee will be sent again
+<green>         Dragon - If you flee, return to the same room you fled from
+<green>         Lich - If touched by a lich, flee is triggered
+<green>  Auto Assist - If not fighting and a group member is, assist them
+<green>  Loot - Off, loot coins only, or loot everything
+<green>  Autodoor - Open doors prior to attempting to move past them
+<green>  Autoportal - Use special exits/portals if the number of warriors+1 group members enter it  
+<green>Related: @set, map  
+;;13,sound
+<red>Sound
+
+<green>Sound effects can be enabled/disabled by typing '<red>set sound value<green>'
+
+<green>Possible choices for value are <red>off<green>, <red>on <green>and <red>limited<green>.
+
+<green>Limited sounds are tell and petition only.
+
+<green>Included sounds are sourced from https://www.freesound.org/
+
+<green>Players are encouraged to submit the id# and mud text pattern for additional sounds.
+;;15,@roll
+<red>Autoroller
+
+<green>A character auto-roller is included with the script. While rolling, it works by
+<green>assigning a value to dice rolls.
+
+ <red>mighty=1 heroic=2 perfect=3
+
+<green>Example: Rolling a character with some stats of 
+<green>	mighty mighty heroic perfect would be 1 + 1 + 2 + 3 = 7
+
+<green>The autoroller will stop on any score matching or greater than the set value.
+
+<green>To disable the autoroller, type '@roll'.
+
+<green>Usage:   <red>@roll value
+
+<green>Example: <red>@roll 7 
+;;20,@set
+Type '@set' for a list of alterable settings for your class. Choices are listed.
+
+Basic settings:
+
+        [vnum]  true,false -- display room vnum
+  [roomwindow]  true,false -- display contents of current room
+ [groupwindow]  off,bottom,right,split -- display format of group window
+[chatfontsize]  auto, ## -- fontsize to use for the chat window
+   [reconnect]  false, char# -- auto login this char number
+    [endspell]  vit, dsp, pwt, fly
+   [assocchar]  name -- connect to association chat, storage
+       [group]  true,false -- use new group format
+	   
+        [food]  food name to eat
+     [canteen]  drink container
+	    [loot]  Type of looting: none, coins only, or everything
+	[fleemode]  Flee triggers on/off, return to room on flee, and flee on lich touch
+   
+     [blurout]  [[ BLUR OUT ]] -- the message to echo to gsay on spellout
+    [globeout]  [[ GLOBE OUT ]]
+    [hasteout]  [[ HASTE OUT ]]
+    [scaleout]  [[ SCALE OUT ]]
+    [stoneout]  [[ STONE OUT ]]
+      [vitout]  [[ VIT OUT ]]
+   
+   
+Usage: set vnum false -- turns off display of vnum   
+   
+<green>Related: set_bard, set_war, condensed
+;;21,condensed
+<red>Condensed
+
+<green>Many of the triggers require information that is gagged from ever arriving at the client by the mud's condensed mode.
+<green>It is recommended to disable mud condensed (tog condensed so it shows: <red>Disabled<green>)
+
+<green>There are a number of condensed settings available internally through the script. These replace the mud's condensed settings.
+
+<green>Enable as many or all of these as desired to reduce spam.
+
+<red>@set condensed items     <green>- This filters out many multiline item procs
+<red>@set condensed misc      <green>- Assorted miscellaneous gags
+<red>@set condensed combat    <green>- Combat related spam such as misses by targets and players
+<red>@set condensed duplicate <green>- Duplicate lines will be supressed including spells/attacks/items worn
+<red>@set condensed spells    <green>- This filters out many spell messages
+<red>@set condensed dragon    <green>- Dragon gags
+<red>@set condensed spellout  <green>- Locally shown self/group spellout messages
+
+<green>The individual modes are enabled (will not be seen) when the script replies that it has been set to true.
+;;27,spellcast
+	Spellcast Information
+
+All classes with spellcast capabilities have a number of specialized buttons available to them.
+
+Memorize/Pray:	This button will send a memorize/pray command, or a stand command
+
+Spells:		Enabling this button will enable automem and autocasting
+
+There are various spellcast buttons, including some class specific.
+
+1-6 circle single target, area, 7+ single target, area, Healing, Harm, Undead, and others
+;;30,bard
+Bard/Battlechanter Commands
+
+stopmusic  - Stop singing
+
+ 1 regen   - Song of Regeneration           1 prot    - Song of Protection
+11 slow    - Song of Offensive Disruption  11 haste   - Song of Offensive Harmony
+11 renew   - Song of Renewal               21 weak    - Song of Defensive Disruption
+21 defend  - Song of Defensive Harmony     31 heal    - Song of Healing
+31 sorc    - Song of Sorcery               31 travel  - Song of Travel
+31 reveal  - Song of Revelation            41 elements- Song of the Elements
+41 harm    - Song of Harming               41 miscast - Song of Miscast Magic
+46 recover - Song of Recovery
+
+If instruments have been assigned with the set command, using the above commands to start singing a specific song will also switch the instrument you're using if it's the wrong one for the new song.
+
+<green>Related: set_bard
+;;31,set_bard
+Bard/Battlechanter specific set commands
+
+[gigbag]-- keyword of container holding instruments
+
+Example: @set gigbag sack
+
+Instruments: 
+
+[lute]	[piccolo]	[trumpet]	[drum]	[harp]	[mandolin]
+
+Example: set trumpet horn
+;;32,warrior
+	Warrior Information
+
+Warriors have a number of specialized buttons available to them.
+
+Rescue:   Off - No rescue triggers are enabled
+        Basic - Non-warrior classes will be rescued, and warriors at pretty hurt/awful
+          All - Everyone will be rescued
+Bashing:  Off - No bashing triggers are enabled
+           On - If the mob being attacked stands, it will be bashed
+
+The below four buttons all send the named command.
+		 
+Disarm - Kick - Shieldpunch - Headbutt
+
+<green>Related: set_war
+;;33,set_war
+Warrior (and derivative classes) rescue/bash related settings
+
+  [autobash] {true,false} - if the mob being attacked stands, bash it
+[powersbash] {true,false} - use powers bash (bh) or nonpowers (bash)
+   [bashbot] {true,false} - send a bash command if anything stands
+[rescuetype] {off, basic, all} - Rescue is turned off, non-warriors will be rescued, or everyone
+  [autotank] {true, false} - move in a direction if group leader gsays 'tanks dir'
+;;35,psi
+	Psionicist with NyyLIB
+	
+The trigger set is designed to easily handle anything a psi might want to do.
+
+AutoHide - darkness will be called if the psi flees
+WormHole - when enabled, wormhole/rifts can be triggered by tell
+
+Psionicist specific set commands
+
+[psicrystal] {name}
+[wormhole] {true, false}
+[autotower] {true, false}
+[autosustain] {true, false}
+
+Psi specific aliases:
+	sneak[neswud] - the psi will move in that direction, then immediately call darkness
+;;37,enchanter
+	Enchanter Information
+
+Enchanters have a number of specialized buttons available to them.
+
+Dragon Scale:	Scales warriors only if off, warriors+casters when on
+Blur:			Blur warriors only if off, warriors+casters when on
+Globe:			Whether to include globe with spells
+Bard:			Include bards when casting spells
+Self:			Cast blur/scale on self
+Resize:			Reduce/enlarge as needed
+
+<green>Related: spellcast
+;;40,cleric
+Aliases
+
+rc - remove curse
+
+rpoison - use staff of poison curing
+
+cast - resume casting spells (mark as not moving)
+
+set:
+[vit] all|hitter|priest|warrior|tiavit  mask to use when casting vit
+[autovit] true|false  cast vit automatically
+[autoheal] true|false  cast fh/ha automatically
+[cdaura] true|false  cast aura on countdown
+
+<green>Related: spellcast
+;;50,@map
+<red>Torilmud Mapper 
+
+<green>The NyyLIB mapper doesn't allow for adding rooms to the existing map. It contains a large portion of the mud pre-mapped, with all rooms hidden. On entering a room, if the package is able to identify it the room will be displayed. 
+
+<red>@map              <green>- turn the mapper display on/off
+<red>@minimap          <green>- turn the mud minimap on/of
+<red>@map update       <green>- update loaded map image with provided image, keeping previous progress
+<red>@map reset        <green>- reset the loaded map to the provided image - this deletes all previous progress
+
+<green>Related: @afind, @find, @fwalk, @path, speedwalk, astral, fire
+;;51,@find
+<red>@find             
+
+<green>Attempt to locate the currently occupied room on the map and set map position accordingly.
+
+Example: @find
+
+[Searching... Match found: Wayward House Inn : 48603]
+
+@find roomname
+
+Provides a list of previously located rooms matching the roomname pattern.
+
+Example:
+
+@find inn
+
+[Matching rooms in discovered map]
+ Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
+ Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
+;;52,@afind
+<red>@afind roomname
+
+Provides a list of previously located rooms matching the roomname pattern located in the current area.
+
+Example:
+
+@afind inn
+
+[Matching discovered rooms in current area]
+ Silverymoon, Gem of the North Room ID:  48603  Wayward House Inn
+ Silverymoon, Gem of the North Room ID:  48604  The Upstairs of the Wayward House Inn
+ ;;53,@fwalk
+<red>@fwalk
+
+<green>Fastwalking with the script is done with the '@fwalk' command. @fwalk is restricted to the 'known'
+<green>world in the map. The map will also need to be in sync.
+
+<green>Attempting to fastwalk between two room requires that a path has been previously discovered connecting the rooms.
+
+<green>The path taken represents the shortest known path between the two rooms. Some rooms have been weighted to make
+<green>them less likely to be chosen as the path to be used.
+
+<green>Usage:
+
+<red>@fwalk            - <green>show instructions and accessible locations from the current room
+<red>@fwalk roomnumber - <green>fastwalk to specified room number
+<red>@fwalk name       - <green>fastwalk to room indicated by fwalk name
+<red>@fwalk add name   - <green>adds a fastwalk to the currently occupied room using 'name' 
+<red>@fwalk del name   - <green>deletes fastwalk 'name'
+<red>@fwalk all        - <green>list all fwalks regardless of location
+<red>@fwalk area       - <green>list all fwalks in current area
+;;53,speedwalk
+<red>Speedwalk Commands
+
+<red>.<directions>  - <green>executes a fastwalk for directions given behind the single period,
+                 <green>format of .n2eu will go north, 2 east, and up
+<red>..<directions> - <green>executes a reverse fastwalk for directions given behind the double period,
+                 <green>format of ..n2eu will go down, 2 west, and south
+
+<green>Related: @fwalk, @path
+;;80,database
+<red>Katumi Database
+
+<green>The 12/16/2017 version of the Katumi SQL database is included with this package, courtesy of Ynndchiarhlizz.
+
+<green>Some aliases are also included for access to it:
+
+<green>@clist charname - list all characters associated with that character/profile
+<green>@id itemname - identify all items matching 'itemname'
+<green>@statitems - echo identify of glist items to screen
+<green>@statitems gsay - echo identify of glist items to gsay
+;;85,@id
+<red>@id
+
+<green>The @id command will identify all items matching a name pattern known to the Katumi database.
+
+<green>Usage: @id pattern
+
+<green>Example:
+
+<green>@id breeches
+<green>[Attempting to identify breeches]
+<green>some rough leather breeches with bronze studs (Legs) AC:10 Hp:15 Maxint:4 * Wt:5 Val:0p * Zone: SF (Q) * Last ID: 2009-01-22
+<green>some breeches woven of shark hide (Legs) AC:9 Hp:19 Maxint:5 Acid:5% Cold:5% WB * Magic !Bard !Fighter !Priest !Thief * Wt:1 Val:0p * Zone: Ashstone (Q) * Last ID: 2008-10-25
+<green>a pair of silken breeches (Legs) AC:0 * Wt:2 Val:0p * Zone: Citadel * Last ID: 2011-01-29
+<green>[3 matches in database]
+;;86,@clist
+The @clist command will display all of a players characters known to the Katumi database.
+
+Usage: @clist charname
+
+Example:
+
+@clist bonble
+[Matching characters for Bonble as of: 7/28/2015]
+
+[50         Warrior]                 Adud (Ogre)          (@Nyyrazzilyss)
+[50       Enchanter]                 Ajac (Drow Elf)      (@Nyyrazzilyss)
+[50            Bard]               Bonble (Halfling)      (@Nyyrazzilyss)
+[50      Psionicist]         Nyyrazzilyss (Illithid)      (@Nyyrazzilyss)
+[50   Battlechanter]               Vottoc (Orc)           (@Nyyrazzilyss)
+[46     Necromancer]                Aynep (Drow Elf)      (@Nyyrazzilyss)
+[39          Shaman]               Bombad (Ogre)          (@Nyyrazzilyss)
+;;100,alias
+help @gag  - information about gagging text / people  
+help escape
+help @cd
+g itemname - get itemname from container
+p itemname - put itemname into container
+dep - deposit all coins held or in main container to the bank (when at one)
+seal - get a seal from your main container and recite it on yourself
+. - The . alias allows for tintin style speedwalks
+# - The # alias is tintin style repeat
+loot ## - get all coins from 1->@# corpses
+chkstat - issue a status command on all group members (this updates timers)
+food - eat and drink food based on previously set names
+;;101,@cd
+<green>The countdown alias is a timer used for notifying party members of the impending start
+<green>of an engagement and will gsay a countdown from 5 to 1, then move in a specified direction
+<green>and engaging target(s) there. If a target name had been previously specified then that
+<green>target will be attacked.
+
+<red>@attack mobname - <green>sets the name of the desired target to be used for the @cd alias
+
+<green>Example: 
+
+<green>"<red>@attack reaver<green>" will set your target for your "<red>@cd<green>" alias. So now when you type "<red>@cd s<green>"
+<green>it will move south and attack reaver automatically. To clear the current target simply type
+"<red>@attack<green>" and it will clear current target.
+
+<red>@cd s <green>- Issue a 5 second countdown, then move south.
+
+<red>NOTE: <green> Using the alias "@cd" without a pre-selected alias "@attack" target will result in the
+<green>coundown going in the specified directions and using the hitall ability rather than attacking a
+<green>specific target. It will also disable your rescue triggers, so be mindful to turn them back on after the fight
+;;105,@gag
+@gag/@ungag text to gag
+usage:
+ @gag text to gag
+ @gag reset
+;;110,escape
+Escape is a mud command available to rogue, bard, and battlechanter classes. It attempts to flee in a specific direction.
+
+The escape alias is a client command that attempts to simulate this. It will send a flee command to the mud, and if it successfully flees/but in the wrong direction, it returns you to the previous room and attempts to move you in the correct direction.
+
+Usage of the escape alias will also temporarily disable any further commands from being sent by a number of triggers/scripts, such as rescue, spellcasting, etc.
+;;115,rogue
+Rogue Aliases
+
+apb - apply poison blind
+gpb - get blind poison from container
+appb - get blind poison from container and apply
+aps - apply poison slow
+gps - get slow poison from container
+apps - get slow poison from container and apply
+app - blind primary, slow secondary
+gpp - get blind, slow from container
+appp - get/apply blind, slow
+
+pick - hold pick
+weapon - remove pick, wield weapon
+
+@attack target - set target name
+es[nsewud][cbp] - escape [direction] [return and circle, backstab, powers backstab target]
+;;125,@bid
+<red>Bid Script
+
+<green>To initialize the script, type '@bid init'. Open the bidding by typing '@bid start'
+
+<green>After any bid results have been provided, the command to move to the next item is 'nextbid'
+
+<green>Once all bids in a round have completed, type '@bid open' to start the next round.
+
+<red>@bid init <green>- initialize list of bidders from group
+<red>@bid addchar name, bid delchar name <green>- add/delete to bid list
+
+<red>@bid start <green>- open bidding and gsay instructions
+<red>@bid open <green>- open bidding, no instructions
+<red>@bid stop <green>- terminate bid script
+
+<red>@bid add charname itemname <green>- add bid for itemname to charname
+<red>@adddice charname value <green>- set charname's diceroll to value
+
+<red>@bid status <green>- display bid/dice summary to screen
+
+<green>Related: @statitems
+;;140,xptrain
+<red>The Adud XP Train
+
+<green>A script to move a character through a path of rooms, killing a defined mob.
+
+<green>Running this script requires a valid mapper path to exist between all train stops.
+<green>Prior to first running it, from the Silverymoon inn type '@inittrain'. This will
+<green>speedwalk you through Silverymoon unlocking the required rooms.
+
+<green>Sample paths are included for Silverymoon and Ashstone.
+
+<red>@inittrain <green>- Completes a speedwalk through Silverymoon or Ashstone to unlock portions
+	<green>of the map for the train. Running this in Silverymoon requires the map to be in
+	<green>sync starting from the inn.
+
+<red>@starttrain tank		 <green>- Start running the train as the 'engine'
+<red>@starttrain tank moblist <green>- Run the train using an alternate created mob list
+<red>@starttrain fol			 <green>- Start running the train as a follower
+
+<red>@stoptrain  <green>- This command terminates the script after the next mob is killed, and returns to the start room.
+<red>@resettrain <green>- Disables all train triggers if the script was terminated incorrectly.
+;;150,@stats
+ <red>Statistic Package
+ 
+ <green>Warrior defense statistics
+ 
+ <green>Hit/Miss/defensive skill usage is tracked. An entry is stored every 1000 attacks on you.
+ <green>While usable at any level of skills, the generated statistics are much more usable at
+ <green>level 50 / maximum skills.
+ 
+ <green>set statname xxxxxx - Title information for current stat set
+ 
+ <green>@stats - display current information
+ <green>@stats read - display historical statistics information
+ <green>@stats reset - reset statistics counters
+ 
+ <green>Sample entry:
+ 
+ <green>[ hasted : Ogre : STR: (100) AGI Bonus: (-19) SUMMARY:   79 17.7% 41.8% 40.5% 56.3% 31.3% 12.5%]
+<green>[Over  79 attacks on me, 17.7% (14) hit, 41.8% (33) missed, 40.5% (32) skillblocked]
+<green>[0.0% of attacks that hit (0) were critical hits.]
+<green>[The 32 skillblocks are 56.3% weapon (18), 31.3% shield (10), and 12.5% dodge (4)]
+<green>[33.3% (6) of the successful weapon skillblocks were ripostes.]
+<green>[15.2% (12) attacks were partially blocked, 16.7% weapon (2), 33.3% shield (4), and 50.0% dodge (6)]
+<green>[On 21.4% (3) of all shieldblocks, vamp has occured.]
+ ;;250,astral
+Sphere of Fire - To - Ruby Pool (Ribcage): s 
+Sphere of Fire - To - Yggdrasil Tree (Jot/Muspel): 2eu 
+Sphere of Fire - To - Land Mass (Gith): 2d2s2eu 
+Sphere of Fire - To - Sphere of Air (Phoenix's): dnwu 
+
+Worm Hole - To - Ruby Pool (Ribcage): n 
+Worm Hole - To - Yggdrasil Tree (Jot/Muspel): 2s2eu 
+Worm Hole - To - Land Mass (Gith): 2d2eu 
+Worm Hole - To - Sphere of Air (Phoenix's): dw2su 
+
+Ruby Pool (Ribcage) - To - Yggdrasil Tree (Jot/Muspel): 2enu 
+Ruby Pool (Ribcage) - To - Edge of a Small Land Mass (Gith): 2ds2eu 
+Ruby Pool (Ribcage) - To - Sphere of Air (Phoenix's): dw2nu 
+
+Yggdrasil Tree (Jot/Muspel) - To - Ruby Pool (Ribcage): ds2w 
+Yggdrasil Tree (Jot/Muspel) - To - Land Mass (Gith): 2s3u 
+Yggdrasil Tree (Jot/Muspel) - To - Sphere of Air (Phoenix's): 2d2enu 
+
+Land Mass (Gith) - To - Yggdrasil Tree (Jot/Muspel): 3d2n 
+Land Mass (Gith) - To - Ruby Pool (Ribcage): dn2u2w 
+Land Mass (Gith) - To - Sphere of Air (Phoenix's): d2eu2su 
+Land Mass (Gith) - To - Astral Rift (Guardians): 1n1d2e1s
+
+Sphere of Air (Phoenix's) - To - Ruby Pool (Ribcage): d2sue 
+Sphere of Air (Phoenix's) - To - Yggdrasil Tree (Jot/Muspel): ds2u2w 
+Sphere of Air (Phoenix's) - To - Land Mass (Gith): 2d2w2nu
+
+Atop a Towering Stalagmite Jutting from the Astral Sea - To - Land Mass (Gith) .2ne4u
+;;251,fire
+Edge of a Sphere of Air - To - Brass: sw2un
+Jet of Flame - To - Brass: 2esun
+Sphere of Fire - To - Jet of Flame: 2eu
+Edge of a Sphere of Air - To - Jet of Flame: su2en 
+;;252,water
+Since some of the areas usually have aggro mobs there, all dirs will put you 1 room away, except from dirs to fortress.
+
+from - Outside a Floating Coral Reef
+to A Rising Shaft of Bubbles: .ene2u
+to A Rushing Maelstrom: .2eseu
+to The Edge of a Massive Group of Slimes: .e2n2wu
+to The Rushing Waters of the Pale River: .en2ed
+to The Murky Depths: .2e2s2d
+to A Jet Stream in air plane (needs fly): .ene4uneuswune2u
+to ice plane (unless ice invasion is up. aggro): .e2n2wunund
+
+from -The Edge of a Massive Group of Slimes
+to Outside a Floating Coral Reef: .2s2esdw
+
+from - The Murky Depths
+to Outside a Floating Coral Reef: .uw2n2uw
+
+from - A Rising Shaft of Bubbles (Airy)
+to Outside a Floating Coral Reef: .dws2dw
+
+from - A Rushing Maelstrom
+to Outside a Floating Coral Reef: .2wnd2w
+
+from - The Rushing Waters of the Pale River
+to Outside a Floating Coral Reef: .n2wsuw
+;;301,nern1
+Nern 1: 
+Seal:Loads Nern Loads Item:
+WC 2 a thick leather belt with a cyanite buckle
+WS 3 a pair of cyanite alloy armguards
+WG 4 a shimmering lochaber axe of runed cyanite
+PC 5 a silken sash with dangling silver links 
+PS 6 a simple ring of etched ironwood 
+PG 2 a mithril morningstar covered with crystalline
+MC 3 a pair of matte black cloth gloves
+MS 4 a matte black bracer inset with an olive tourma
+MG 5 a shroud of glossy crimson velvet 
+TC 6 a sleek leather wristband with concealed pocket
+TS 2 a skullcap of knit silken string 
+TG 3 a mask of twisted black leather 
+;;302,nern2
+Nern 2: 
+Seal: 
+WC 4 a polished steel wristguard with a cyanite sigil
+WS 5 a mesh faceguard of cyanite alloy
+WG 6 a suit of glowing otherplanar platemail 
+PC 1 a bracer of woven silver links 
+PS 3 a blessed mitre of etched ironwood 
+PG 4 a suit of crystalline chainmail
+MC 5 a pair of matte black cloth leggings 
+MS 6 a ring of roughly cut olive tourmaline
+MG 1 a robe of rune hemmed crimson velvet
+TC 3 a tiny silver ring with a concealed needle
+TS 4 a pair of taut slit-leather armbands
+TG 5 a suit of twisted black leather armor
+;;303,nern3
+Nern 3: 
+Seal: 
+WC 1 an enshrouding cloak with a cyanite clasp
+WS 2 a cyanite alloy eyepatch 
+WG 4 a glowing otherplanar ridged helm 
+PC 5 an eyepatch of woven silver links 
+PS 6 a travelling cloak with an etched ironwood clasp
+PG 1 a single link of a crystalline chain 
+MC 2 a blackened iron choker with a crimson clasp
+MS 4 a pair of silver linked olive tourmaline sleeves
+MG 5 an enshrouding hood of crimson velvet 
+TC 6 an easily concealed silver earpiece 
+TS 1 a pair of taut slit-leather pants 
+TG 2 a pair of twisted black leather fingerless gloves
+;;304,nern4
+Nern 4: 
+Seal: 
+WC 3 a pair of cyanite crested steel boots 
+WS 5 a band of runed cyanite 
+WG 6 an earring of glowing otherplanar ore 
+PC 1 a chainlink veil of woven silver
+PS 2 a pair of layered anointed ironwood cuisses 
+PG 3 a pair of crystalline chain gauntlets 
+MC 5 a loop of stained crimson silver 
+MS 6 a translucent mask of olive tourmaline 
+MG 1 a braided belt of crimson velvet 
+TC 2 a telescopic eyepiece with a crystal lens 
+TS 3 a fur lined gorget of taut slit-leather 
+TG 5 a pair of twisted black leather knee-high boots
+;;305,nern5
+Nern 5: 
+Seal: 
+WC 6 a pair of cyanite crested steel leggings 
+WS 2 a heavy glowing shield of runed cyanite 
+WG 3 a glowing otherplanar neckguard 
+PC 4 a runed oaken holy symbol hanging from a silver link
+PS 6 a round shield of anointed ironwood 
+PG 1 a pair of crystalline chain boots 
+MC 2 a monocle of stained crimson silver 
+MS 3 a slender mithril mageblade with a throbbing sigil
+MG 4 a pair of tasselled crimson velvet slippers 
+TC 6 a small concealed dagger of polished onyx 
+TS 1 a wickedly curved blade with a twisted leather hilt
+TG 2 an enveloping cloak of twisted black leather 
+;;306,nern6
+Nern 6: 
+Seal: 
+WC 3 a pair of cyanite crested steel gauntlets 
+WS 4 a heavy glowing shield of runed cyanite 
+WG 5 a glowing otherplanar neckguard 
+PC 1 a pair of runed oaken munnions 
+PS 2 a round shield of anointed ironwood 
+PG 3 a pair of crystalline chain boots 
+MC 4 a perfect sphere of stained crimson silver 
+MS 5 a slender mithril mageblade with a throbbing sigil
+MG 1 a pair of tasselled crimson velvet slippers 
+TC 2 a thick black leather belt with an onyx clasp 
+TS 3 a wickedly curved blade with a twisted leather hilt
+TG 4 an enveloping cloak of twisted black leather
+;;400,icons
+<green>The icon .png files are created at http://cooltext.com/
+
+<green>Logo Style: White
+<green>Font: AVQest
+<green>Text Size: 15
+<green>Glow Colour (red) F0 05 05  (black) 00 00 00
+<green>Image: Alignment: Centered
+<green>Width: 64
+<green>Height: 30
+<green>Shadow: Shadow Type: Heavy Blur
+;;450,age
+Barbarian - 35
+Drow Elf - 220
+Duergar - 135
+Dwarf - 150
+Gnome - 200
+Grey Elf - 240
+Half Elf - 60
+Halfling - 40
+Human - 34
+Illithid - 103 * This is the best age for fastest PSP regeneration closest to the max HP.
+Ogre - 25
+Orc - 34
+Troll - 21
+Yuan-ti - 40
+;;425,update
+<red>In-place updating of an existing profile: 
+
+<green>1) Prior to updating, use the #backup command to make a backup of your datafiles into another folder. 
+<green>    ** NOTE ** <red>This doesn't backup any changes you might have made to the script itself.
+<green>2) Select the package manager icon inside mudlet, and uninstall the previous package installed. 
+<green>    ** NOTE ** <red>The previous package will be prefixed with NyyLIB - Don't remove anything else!
+<green>3) Import the new NyyLIB zip file you downloaded.
+<green>4) Exit and restart mudlet.
+<green>5) After logging in, type '#map update' to update older maps with the map included with the newer version.
+;;450,@debug
+This command will display some information useful when debugging.
+;;460,@mtank
+<red>This is a placeholder for an unwritten help entry.
+;;470,@target
+<red>This is a placeholder for an unwritten help entry.
+;;480,@save
+<red>This is a placeholder for an unwritten help entry.
+;;490,@backup
+<red>WARNING<green>: This does not copy script changes
+
+<red>@backup set     <green>- choose backup folder
+<red>@backup copy    <green>- copy data files to folder
+<red>@backup restore <green>- overwrite profile data files with backup folder
+<red>@backup logs    <green>- copy profile logfiles into backup folder
+;;500,@at
+@at[nsewud]
+
+Move the specified direction, and attack a previously selected target.
+
+<green>Related: @attack
+;;510,@attack
+Select a target to be attacked
+
+<green>Related: @at
+;;520,@setroom
+<red>This is a placeholder for an unwritten help entry.
+;;530,@path
+<red>@Path
+
+<green>The @path command will display a shortest known path speedwalk to and from the provided 
+<green>room number or @fwalk label starting from the current room.
+
+<green>Usage: @path roomnumber|label
+;;540,@room
+This turns on/off the room display window
+;;545,@statitems
+<red>This is a placeholder for an unwritten help entry.
+;;550,@pracall
+<red>This is a placeholder for an unwritten help entry.
+;;560,@scribeall
+<red>This is a placeholder for an unwritten help entry.
+;;570,@fpet
+<green>@fpet: find pets
+<green>Type '@fpet get' to retrieve lost pets
+;;580,@guide
+This links to Todrael's website at
+http://www.grokh.com/todrael/guides/newbie.html
+;;590,@quest
+This links to the Valkurian Blades website at
+http://z15.invisionfree.com/Triterium_BBS
+;;600,@forum
+This links to the Torilmud forums at
+http://www.torilmud.com/phpBB3/
+;;610,@version
+Displays the current script version.
+;;620,@chkstat
+This command sends a gagged status request on all grouped players.
+;;650,autoloot
+<red>Autoloot
+
+<green>“Autoloot” refers to automatically getting (or “looting”) items from the corpse of a monster (also called
+<green>a “mob” or “mobile”), after you’ve killed it.
+
+<green>There are two ways to set your autoloot options.
+
+<green>Click the icon on the bottom button bar, furthest to the right, which cycles between looting coins only,
+<green>looting all items (including coins), or turning autoloot off completely.
+
+<green>Using the ‘@set autoloot’ command.
+
+<green>Usage:
+
+<green>@set autoloot coins - loots coins only.
+<green>@set autoloot all   - loots all items (including coins).
+<green>@set autoloot off   - turns off autoloot.
+
+<green>See also: @help @set, @set, @help index
+
