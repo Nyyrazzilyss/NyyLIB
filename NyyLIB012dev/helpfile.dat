@@ -15,8 +15,8 @@ freezing, caging, and deletion.
 
 <red>@help index      <green>- list all help entries
 <red>@help gui        <green>- how to use buttons, window setup
-<red>@help sound	     <green>- enabling sound
-<red>@help icons	     <green>- instructions for creating icon png files
+<red>@help sound	 <green>- enabling sound
+<red>@help icons	 <green>- instructions for creating icon png files
 <red>@help @roll      <green>- auto-roller for creation of new characters
 <red>@help @set       <green>- help with use of the 'set' command
 <red>@help @map       <green>- information about use of the mapper
@@ -25,6 +25,7 @@ freezing, caging, and deletion.
 <red>@help @bid       <green>- the included bidding script
 <red>@help xptrain    <green>- The Adud Train
 <red>@help @stats     <green>- a warrior statistics package
+<red>@help @fwalk     <green>- how to fast walk with the script
 ;;12,gui
 <red>GUI information
 
@@ -67,10 +68,10 @@ freezing, caging, and deletion.
 <green>A character auto-roller is included with the script. While rolling, it works by
 <green>assigning a value to dice rolls.
 
- <red>mighty=1 heroic=2 perfect=3
+ <red>90-94=1    95-99=2    100=3
 
 <green>Example: Rolling a character with some stats of 
-<green>	mighty mighty heroic perfect would be 1 + 1 + 2 + 3 = 7
+<green>	90  93   99  100 would be 1 + 1 + 2 + 3 = 7
 
 <green>The autoroller will stop on any score matching or greater than the set value.
 
@@ -248,6 +249,8 @@ set:
 <red>@minimap          <green>- turn the mud minimap on/of
 <red>@map update       <green>- update loaded map image with provided image, keeping previous progress
 <red>@map reset        <green>- reset the loaded map to the provided image - this deletes all previous progress
+<red>@path <roomnum>   <green>- displays a fastwalk path from current room to roomnum parameter
+
 
 <green>Related: @afind, @find, @fwalk, @path, speedwalk, astral, fire
 ;;51,@find
@@ -302,6 +305,8 @@ Example:
 <red>@fwalk del name   - <green>deletes fastwalk 'name'
 <red>@fwalk all        - <green>list all fwalks regardless of location
 <red>@fwalk area       - <green>list all fwalks in current area
+
+<green>See also: @help @path
 ;;53,speedwalk
 <red>Speedwalk Commands
 
