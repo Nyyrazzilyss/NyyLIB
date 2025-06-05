@@ -1,0 +1,10 @@
+{
+       "package": "NyyMAP",
+       "title": "Mapper for torilmud",
+       "description": "",
+       "version": "",
+       "author": "Nyyrazzilyss",
+       "icon": "",
+       "dependencies": "",
+       "outputFile": false
+}

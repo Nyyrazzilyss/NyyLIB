@@ -1,0 +1,86 @@
+[
+       {
+              "name": "@addarea",
+              "isActive": "yes",
+              "regex": "^@addarea (.*)",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@e",
+              "isActive": "yes",
+              "regex": "^@e$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@upd",
+              "isActive": "yes",
+              "regex": "^@upd$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@n",
+              "isActive": "yes",
+              "regex": "^@n$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@s",
+              "isActive": "yes",
+              "regex": "^@s$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@w",
+              "isActive": "yes",
+              "regex": "^@w$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@d",
+              "isActive": "yes",
+              "regex": "^@d$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@u",
+              "isActive": "yes",
+              "regex": "^@u$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@l",
+              "isActive": "yes",
+              "regex": "^@l ([neswud])$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@fpd",
+              "isActive": "yes",
+              "regex": "^@fpd ([0-9]+)$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@renumber",
+              "isActive": "yes",
+              "regex": "^@renumber(?: ([0-9]+) ([0-9]+))?$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@adddoor",
+              "isActive": "yes",
+              "regex": "^@adddoor (%d) (%d) ([neswud])",
+              "script": "",
+              "isFolder": "no"
+       }
+]

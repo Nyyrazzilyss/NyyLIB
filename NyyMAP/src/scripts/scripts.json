@@ -1,0 +1,62 @@
+[
+       {
+              "name": "remGenericmapper",
+              "isActive": "yes",
+              "eventHandlerList": [
+                     "sysInstallPackage"
+              ],
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "MapperScripts",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "mapUpdate",
+              "isActive": "yes",
+              "eventHandlerList": [
+                     "sysDownloadDone"
+              ],
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "initNyyMAP",
+              "isActive": "yes",
+              "eventHandlerList": [
+                     "sysLoadEvent"
+              ],
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "saveNyyMAP",
+              "isActive": "yes",
+              "eventHandlerList": [
+                     "sysExitEvent"
+              ],
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "newRoomEvent",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Map Labels",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "charData script",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       }
+]

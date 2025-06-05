@@ -1,0 +1,470 @@
+[
+       {
+              "name": "Exits",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^Exits: (.*)",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "forcefind",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "Suddenly the darkness falls revealing different surroundings.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You are instantaneously teleported nearby!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You enter something and reappear elsewhere...$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You start to become less and less solid, until you reappear elsewhere!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You recite a scroll of cave escape which turns to dust in your hands.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You recite an ensorcelled scroll of the Mistwalker which turns to dust in your hands.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Your soul is instantly whisked away from the dreary Fugue Plane when you",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Someone demands your presence NOW!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "has summoned you!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You feel a Presence touch you, its divine hand cupping itself",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Your vision descends into darkness as your feel your soul pulled back into",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "The world goes dark.  When you can see again, you are in your guild.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You disembark this ship.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "OH NO!  Something has gone wrong!  You feel lost!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "forceful crunch of the landing.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You ignite with dark energy and charge forward, leaving a trail of nothingness behind.$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "You flee",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "You flee ([nsewud]).*",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You follow .* ([nsewud]).*",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You escape ([nsewud]).*",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You stop fighting and attempt to retreat to the ([nwes]).*!",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You find traces of tracks leading ([nsewud]).*",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Failed movement",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "That isn't the direction to your guild, type look room to view",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Alas, you cannot go that way",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Nah... You feel too relaxed to do that...",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Perhaps you should get on your feet first?",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Oof!  It seems that .* is in your way.",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "The .* seems to be closed.",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "Sorry, you aren't allowed to do that in combat.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "There is no .* here.",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You are too exhausted",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You need a boat to go there.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": ".* is blocking your path!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You would bash your brains out on the roof, better dismount.",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "Stepping off .* at this height might not be such a good idea.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "humiliates you, and blocks your way.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "The passage is too tight to fly.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You'd surely drown!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "An impenetrable wall of ice blocks passage",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "preventing you from going",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You need to board a ship to travel the oceans.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "The entrance is locked and barred tight.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "There is no .* here.",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "Try flapping your arms!  (Couldn't hurt)",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You can't drag something when you're flying.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "What do you want to drag?",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You are much too big to fit through the holes in the floor.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You collapse under your carried load!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "A magic force blocks movement downwards.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You are stuck in a huge spider web!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Animated plants secure your feet and prevent your exit!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Your mount is too exhausted for you to follow.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You crawl past",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "The flesh golem roughly grabs you and tosses you backwards!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Something strikes out at you from the shadows!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You're busy spellcasting!",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Sorry, you aren't allowed to do that in combat.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "a gate guard whispers 'We don't want your type here, get lost.'",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "The unstable tunnel to the west has collapsed on itself. There is absolutely",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "A shady old man whispers 'This area is far below you, unless you wish to fight me.'",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "The deadly cold coming down the mountain's peak makes it impossible to progress any further.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "Alas, you can't go that way.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "But you are busy sucking on a brain already!",
+                            "type": "substring"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "You sit down.",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "You sit down.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You drop to your belly.",
+                            "type": "substring"
+                     },
+                     {
+                            "pattern": "You sit down and relax.",
+                            "type": "substring"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Doorbash movement",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "You (did) it! The door budges under your weight, and you charge into a new place!",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "You feel stupid, about to bash open doorway",
+                            "type": "substring"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "It is pitch black...",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "It is pitch black...",
+                            "type": "substring"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "tells you @room",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^([A-Za-z]+) tells you '@room'",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "ice teleport",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You awake to find yourself in a dark and unfamiliar site, the stench",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "capture mud area list",
+              "isActive": "no",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^Zone    Name$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "areaname capture",
+              "isActive": "no",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^ ? ?([0-9]?[0-9]?[0-9]?) +(.*) +$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       }
+]

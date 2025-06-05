@@ -1,0 +1,1 @@
+map:processMovement("ENTER " .. matches[3])

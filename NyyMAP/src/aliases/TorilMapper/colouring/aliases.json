@@ -1,0 +1,44 @@
+[
+       {
+              "name": "@recol",
+              "isActive": "yes",
+              "regex": "^@recol$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@stylerooms",
+              "isActive": "yes",
+              "regex": "^@stylerooms ([a-z*A-Z'\\(\\) -]+) (\\d+)( \\d+)?$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "save colour table",
+              "isActive": "yes",
+              "regex": "^savecol$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@freqtable",
+              "isActive": "yes",
+              "regex": "^@freqtable( [0-9]+)?$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@listenv",
+              "isActive": "yes",
+              "regex": "^@listenv ([0-9]+)$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "@coltable",
+              "isActive": "yes",
+              "regex": "^@coltable$",
+              "script": "",
+              "isFolder": "no"
+       }
+]

@@ -1,0 +1,2 @@
+mudAreaTable={}
+enableTrigger("areaname capture")
