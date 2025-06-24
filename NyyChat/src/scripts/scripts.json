@@ -1,0 +1,23 @@
+[
+       {
+              "name": "getUrl",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "TextScripts",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "initNyyChat",
+              "isActive": "yes",
+              "eventHandlerList": [
+                     "sysInstallPackage"
+              ],
+              "script": "",
+              "isFolder": "no"
+       }
+]

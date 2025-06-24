@@ -1,0 +1,2 @@
+return {{[ [[activeBorder]] ] = [[green]],[ [[windowBorder]] ] = [[green]],[ [[title]] ] = [[green]],[ [[inactiveColor]] ] = [[black]],[ [[activeColor]] ] = [[black]],[ [[background]] ] = [[black]],[ [[inactiveText]] ] = [[grey]],[ [[activeText]] ] = [[green]],},
+}
