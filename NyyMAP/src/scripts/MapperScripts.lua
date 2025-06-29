@@ -945,11 +945,11 @@ end
 function map:initAreatable()
 
   local tmp=getRoomUserData(1, "areatable")
-    
+  
   if tmp ~= "" then
       NyyLIB.areaTable={}
       
-      for id, name in string.gmatch(tmp, "%[(%d+)%]([a-zA-Z', -]+)") do
+      for id, name in string.gmatch(tmp, "%[(%d+)%]([a-zA-Z0-9',_/ -]+)") do
         NyyLIB.areaTable[tonumber(id)] = name
       end
 
